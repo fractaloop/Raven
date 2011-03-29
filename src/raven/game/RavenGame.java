@@ -6,6 +6,7 @@ import raven.game.armory.RavenProjectile;
 import raven.game.navigation.PathManager;
 import raven.game.navigation.RavenPathPlanner;
 import raven.math.*;
+import raven.ui.GameCanvas;
 
 public class RavenGame {
 	/** the current game map */
@@ -57,7 +58,11 @@ public class RavenGame {
 		
 	}
 	
-	public void update() {
+	/**
+	 * Update the game state over the given timestep in seconds.
+	 * @param delta amount of time to advance in seconds
+	 */
+	public void update(double delta) {
 		
 	}
 	
