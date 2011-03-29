@@ -8,7 +8,8 @@ package raven.math;
  * @author Logan Lowell
  */
 public class Vector2D {
-	private double x, y;
+	public double x;
+	public double y;
 	
 	public Vector2D() {
 		x = y = 0;
