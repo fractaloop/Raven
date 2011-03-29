@@ -175,8 +175,12 @@ public class RavenGame {
 	public void getPlayerInput() {
 		
 	}
+	
+	/** Get the value of a selected bot. null if none is selected */
 	public RavenBot possessedBot() { return selectedBot; }
-	public void changeWeaponOfPossessedBot(int weapon) {
+	
+	/** Change to a new weapon for a possessed bot. */
+	public void changeWeaponOfPossessedBot(RavenObject weapon) {
 		
 	}
 
