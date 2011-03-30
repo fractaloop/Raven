@@ -61,6 +61,7 @@ public abstract class MovingEntity extends BaseGameEntity {
 	
 	public double maxSpeed() { return maxSpeed; }
 	public void setMaxSpeed(double newSpeed) { maxSpeed = newSpeed; }
+	public double getMaxSpeed() { return maxSpeed; }
 	
 	public double maxForce() { return maxForce; }
 	public void setMaxForce(double mf) { maxForce = mf; }

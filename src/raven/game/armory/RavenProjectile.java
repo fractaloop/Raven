@@ -49,17 +49,20 @@ public class RavenProjectile extends MovingEntity {
 	
 	public void update() {}
 	
+	
+	public void setDead(boolean death) { isDead = death; }
 	public boolean IsDead()
 	{
 		return isDead;
 	}
 
+	public void setImpacted(boolean impacted) { isImpacted = impacted; }
 	public boolean HasImpacted()
 	{
 		return isImpacted;
 	}
 
-	private RavenBot GetClosestIntersectingBot(Vector2D from, Vector2D to)
+	public RavenBot GetClosestIntersectingBot(Vector2D from, Vector2D to)
 	{
 		RavenBot closest = null;
 		double closestDistance = Double.MAX_VALUE;
@@ -84,7 +87,7 @@ public class RavenProjectile extends MovingEntity {
 		return closest;
 	}
 	
-	private List<RavenBot> GetListOfIntersectingBots(Vector2D from, Vector2D to)
+	public List<RavenBot> GetListOfIntersectingBots(Vector2D from, Vector2D to)
 	{
 		ArrayList<RavenBot> bots = new ArrayList<RavenBot>();
 		for(RavenBot bot : game.getBots())

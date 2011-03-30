@@ -5,6 +5,7 @@ package raven.game.armory;
 
 import raven.game.RavenBot;
 import raven.math.Vector2D;
+import raven.ui.GameCanvas;
 
 /**
  * @author chester
@@ -44,11 +45,34 @@ public class Bolt extends RavenProjectile {
 	 */
 	@Override
 	public void render() {
-		// TODO Auto-generated method stub
-
+		GameCanvas.thickGreenPen();
+		GameCanvas.line(this.pos(), this.pos().sub(this.velocity()));
 	}
 	
-	
-	private void TestForImpact() {}
-
+	public void update()
+	{
+		if(!HasImpacted())
+		{
+			this.setVelocity(this.heading().mul(this.maxSpeed()));
+			this.velocity().truncate(this.maxSpeed());
+			
+			RavenBot hit = GetClosestIntersectingBot(pos().sub(velocity), pos());
+			if(hit != null)
+			{
+				this.setDead(true);
+				this.setImpacted(true);
+				//TODO: Send message to let hit bot know it was hit, who hit it, and how much the hit was worth.
+			}
+			
+			double dist = this.GetWorld().getDistanceToClosestWall(pos().sub(velocity), pos());
+			if(dist == 0)
+			{
+				setDead(true);
+				setImpacted(true);
+				
+				return;
+			}
+			
+		}
+	}
 }
