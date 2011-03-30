@@ -1,6 +1,5 @@
 package raven.game.triggers;
 
-import java.io.BufferedReader;
 import java.io.Reader;
 
 import raven.game.RavenBot;
