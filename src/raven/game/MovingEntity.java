@@ -24,6 +24,8 @@ public abstract class MovingEntity extends BaseGameEntity {
 	/** the maximum rate (radians per second)this vehicle can rotate */
 	double maxTurnRate;
 	
+	RavenGame world;
+	
 	public MovingEntity(Vector2D position,
 						double radius,
 						Vector2D velocity,
@@ -32,7 +34,8 @@ public abstract class MovingEntity extends BaseGameEntity {
 						double mass,
 						Vector2D scale,
 						double turnRate,
-						double maxForce) {
+						double maxForce,
+						RavenGame game) {
 		super(BaseGameEntity.getNextValidID());
 		this.heading = heading;
 		this.velocity = velocity;
@@ -44,6 +47,7 @@ public abstract class MovingEntity extends BaseGameEntity {
 		this.position = position;
 		this.boundingRadius = radius;
 		this.scale = scale;
+		this.world = game;
 	}
 	
 	// Accessors
@@ -109,6 +113,8 @@ public abstract class MovingEntity extends BaseGameEntity {
 		
 		return false;		
 	}
+	
+	public RavenGame GetWorld() { return this.world; }
 	
 	public double maxTurnRate() { return maxTurnRate; }
 	public void setMaxTurnRate(double val) { maxTurnRate = val; }
