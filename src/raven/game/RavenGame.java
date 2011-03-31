@@ -1,7 +1,9 @@
 package raven.game;
 
+import java.awt.event.KeyEvent;
 import java.util.*;
 
+import raven.Raven;
 import raven.game.armory.RavenProjectile;
 import raven.game.messaging.Dispatcher;
 import raven.game.messaging.RavenMessage;
@@ -10,6 +12,7 @@ import raven.game.navigation.RavenPathPlanner;
 import raven.math.*;
 import raven.script.RavenScript;
 import raven.ui.GameCanvas;
+import raven.utils.KeyState;
 
 public class RavenGame {
 	/** the current game map */
@@ -319,34 +322,68 @@ public class RavenGame {
 		
 		Vector2D curPos = a;
 		
-		while (curPos.distanceSq(B) > boundingRadius * boundingRadius) {
+		while (curPos.distanceSq(b) > boundingRadius * boundingRadius) {
 			// advance curPos one step
 			curPos = curPos.add(toB.mul(0.5).mul(boundingRadius));
+			
+			if (WallIntersectionTest.doWallsIntersectCircle(map.getWalls(), curPos, boundingRadius)) {
+				return true;
+			}
 		}
+		
+		return false;
 	}
 
 	/** returns of bots in the FOV of the given bot */
 	public List<RavenBot> getAllBotsInFOV(final RavenBot bot) {
-		return Collections.emptyList();
+		ArrayList<RavenBot> visibleBots;
+		
+		for (RavenBot other : bots) {
+			// make sure time is not wasted checking against the same bot or
+			// against a bot that is dead or re-spawning
+			if (bot.equals(other) || !other.isAlive())
+				continue;
+		    
+			// first of all test to see if this bot is within the FOV
+			if (isSecondInFOVOfFirst(bot.pos(), bot.facing(), other.pos(), bot.fieldOfView())) {
+				// cast a ray from between the bots to test visibility. If the
+				// bot is visible add it to the vector
+				if (!WallIntersectionTest.doWallsObstructLineSegment(bot.pos(), other.pos(), map.getWalls())) {
+					visibleBots.add(other);
+				}
+				
+			}
+		}
 	}
 
 	/**
 	 * returns true if the second bot is unobstructed by walls and in the field
 	 * of view of the first.
 	 */
-	public boolean isSecondVisibleToFirst(final RavenBot first,
-			final RavenBot second) {
+	public boolean isSecondVisibleToFirst(final RavenBot first, final RavenBot second) {
+		// if the two bots are equal or if one of them is not alive return
+		// false
+		if (!first.equals(second) && second.isAlive()) {
+			if (isSecondInFOVOfFirst(first.pos(), first.facing(), second.pos(), second.fieldOfView())) {
+				if (!WallIntersectionTest.doWallsObstructLineSegment(first.pos(), second.pos(), map.getWalls())) {
+					return true;
+				}
+			}
+		}
+		
 		return false;
 	}
 
 	/** returns true if the ray between A and B is unobstructed. */
 	public boolean isLOSOkay(final Vector2D A, final Vector2D B) {
-		return false;
+		return !WallIntersectionTest.doWallsObstructLineSegment(A, B, map.getWalls());
 	}
 
 	/**
 	 * starting from the given origin and moving in the direction Heading this
 	 * method returns the distance to the closest wall
+	 * 
+	 * Note: This function is not implemented in the C++ version!
 	 */
 	public double getDistanceToClosestWall(Vector2D origin, Vector2D heading) {
 		return 0;
@@ -357,7 +394,32 @@ public class RavenGame {
 	 * of the specified ID
 	 */
 	public Vector2D getPosOfClosestSwitch(Vector2D botPos, int doorID) {
-		return null;
+		List<Integer> switchIDs = new ArrayList<Integer>();
+		
+		for (RavenDoor door : map.getDoors()) {
+			if (door.ID() == doorID) {
+				switchIDs = door.getSwitchIDs();
+				break;
+			}
+		}
+		
+		Vector2D closest = null;
+		double closestDist = Double.MAX_VALUE;
+		
+		for (Integer switchID : switchIDs) {
+			BaseGameEntity trig = EntityManager.getEntityFromID(switchID);
+			
+			if (isLOSOkay(botPos, trig.pos())) {
+				double dist = botPos.distanceSq(trig.pos());
+				
+				if (dist < closestDist) {
+					closestDist = dist;
+					closest = trig.pos();
+				}
+			}
+		}
+		
+		return closest;
 	}
 
 	/**
@@ -369,6 +431,14 @@ public class RavenGame {
 	 * @return
 	 */
 	public RavenBot getBotAtPosition(Vector2D cursorPos) {
+		for (RavenBot bot : bots) {
+			if (bot.pos().distance(cursorPos) < bot.getBRadius()) {
+				if (bot.isAlive()) {
+					return bot;
+				}
+			}
+		}
+		
 		return null;
 	}
 
@@ -386,7 +456,40 @@ public class RavenGame {
 	 *            the location clicked
 	 */
 	public void clickRightMouseButton(Vector2D p) {
-
+		RavenBot bot = getBotAtPosition(p);
+		
+		// if there is no selected bot just return
+		if (bot == null && selectedBot == null)
+			return;
+		
+		// if the cursor is over a different bot to the existing selection,
+		// change selection
+		if (bot != null && !bot.equals(selectedBot)) {
+			if (selectedBot != null) {
+				selectedBot.exorcise();
+			}
+			selectedBot = bot;
+		}
+		
+		// if the user clicks on a selected bot twice it becomes possessed
+		// (under the player's control)
+		if (bot != null && bot.equals(selectedBot)) {
+			selectedBot.takePossession();
+			
+			// clear any current goals
+			selectedBot.getBrain().removeAllSubgoals();
+		}
+		
+		if (selectedBot.isPossessed()) {
+			// if the shift key is pressed down at the same time as clicking
+			// then the movement command will be queued
+			if (Raven.isKeyPressed(KeyEvent.VK_SHIFT)) {
+				selectedBot.getBrain().queueGoal_moveToPosition(p);
+			} else {
+				selectedBot.getBrain().removeAllSubgoals();
+				selectedBot.getBrain().addGoal_moveToPosition(p);
+			}
+		}
 	}
 
 	/**
@@ -397,12 +500,16 @@ public class RavenGame {
 	 *            the location clicked
 	 */
 	public void clickLeftMouseButton(Vector2D p) {
-
+		if (selectedBot != null && selectedBot.isPossessed()) {
+			selectedBot.fireWeapon(p);
+		}
 	}
 
 	/** when called will release any possessed bot from user control */
 	public void exorciseAnyPossessedBot() {
-
+		if (selectedBot != null) {
+			selectedBot.exorcise();
+		}
 	}
 
 	/**
@@ -410,7 +517,9 @@ public class RavenGame {
 	 * relevant bot methods are called appropriately
 	 */
 	public void getPlayerInput() {
-
+		if (selectedBot != null && selectedBot.isPossessed()) {
+			selectedBot.rotateFacingTowardPosition(Raven.getClientCursorPosition());
+		}
 	}
 
 	/** Get the value of a selected bot. null if none is selected */
@@ -420,7 +529,22 @@ public class RavenGame {
 
 	/** Change to a new weapon for a possessed bot. */
 	public void changeWeaponOfPossessedBot(RavenObject weapon) {
-
+		if (selectedBot != null) {
+			switch (weapon) {
+			case BLASTER:
+				possessedBot().changeWeapon(RavenObject.BLASTER);
+				break;
+			case SHOTGUN:
+				possessedBot().changeWeapon(RavenObject.SHOTGUN);
+				break;
+			case ROCKET_LAUNCHER:
+				possessedBot().changeWeapon(RavenObject.ROCKET_LAUNCHER);
+				break;
+			case RAIL_GUN:
+				possessedBot().changeWeapon(RavenObject.ROCKET_LAUNCHER);
+				break;
+			}
+		}
 	}
 
 	// ////////////
