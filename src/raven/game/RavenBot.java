@@ -5,6 +5,7 @@ import java.io.Writer;
 import java.util.ArrayList;
 
 import raven.game.messaging.Telegram;
+import raven.goals.GoalThink;
 import raven.math.Vector2D;
 
 public class RavenBot extends MovingEntity {
