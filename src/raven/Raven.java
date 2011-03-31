@@ -16,16 +16,29 @@ import raven.game.RavenGame;
 import raven.game.RavenObject;
 import raven.math.Vector2D;
 import raven.ui.GameCanvas;
+import raven.utils.KeyState;
 
 public class Raven extends JFrame implements KeyListener, MouseListener {
+	private static class RavenHolder {
+		public static final Raven INSTANCE = new Raven();
+	}
+
+	public static Raven getInstance() {
+		return RavenHolder.INSTANCE;
+	}
 	
 	private static int WIDTH = 500;
 	private static int HEIGHT = 500;
 	private static int FRAMERATE = 60;
 	
 	private RavenGame game;
+	private KeyState keys;
 	
-    public Raven() {
+	public static void start() {
+		getInstance().gameLoop();
+	}
+	
+	private Raven() {
     	// Get the frame's content and use it for the game
     	JPanel panel = (JPanel)this.getContentPane();
     	panel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -147,7 +160,6 @@ public class Raven extends JFrame implements KeyListener, MouseListener {
 	// Entry point
     
     public static void main(String args[]) {
-        Raven raven = new Raven();
-        raven.gameLoop();
+        Raven.start();
     }
 }
