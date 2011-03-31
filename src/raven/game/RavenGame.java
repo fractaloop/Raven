@@ -12,7 +12,7 @@ import raven.game.navigation.RavenPathPlanner;
 import raven.math.*;
 import raven.script.RavenScript;
 import raven.ui.GameCanvas;
-import raven.utils.KeyState;
+import raven.ui.KeyState;
 
 public class RavenGame {
 	/** the current game map */

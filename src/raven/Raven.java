@@ -18,7 +18,7 @@ import raven.game.RavenGame;
 import raven.game.RavenObject;
 import raven.math.Vector2D;
 import raven.ui.GameCanvas;
-import raven.utils.KeyState;
+import raven.ui.KeyState;
 
 public class Raven extends JFrame implements KeyListener, MouseListener {
 	private static class RavenHolder {
