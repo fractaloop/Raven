@@ -12,8 +12,16 @@ public class RavenSensoryMemory {
 	}
 
 	public void renderBoxesAroundRecentlySensed() {
+        // TODO Auto-generated method stub
+    }
+        
+	public void updateWithSoundSource(RavenBot extraInfo) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public void removeBotFromMemory(RavenBot removedBot) {
+		// TODO Auto-generated method stub
 	}
 
 }

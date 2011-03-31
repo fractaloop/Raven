@@ -9,15 +9,13 @@ public class GoalThink extends GoalComposite<RavenBot> {
 	public GoalThink(RavenBot ravenBot) {
 		// TODO Auto-generated constructor stub
 	}
-	
-	public void process()
-	{
-		
+
+	public void process() {
+		// TODO Auto-generated method stub
 	}
 
 	public void arbitrate() {
 		// TODO Auto-generated method stub
-		
 	}
 
 	public boolean handleMessage(Telegram msg) {
@@ -27,31 +25,25 @@ public class GoalThink extends GoalComposite<RavenBot> {
 
 	public void addGoal_Explore() {
 		// TODO Auto-generated method stub
-		
 	}
 
 	public void removeAllSubgoals() {
 		// TODO Auto-generated method stub
-		
 	}
 
 	public void render() {
 		// TODO Auto-generated method stub
-		
 	}
 
 	public void renderAtPos(Vector2D p) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	public void queueGoal_moveToPosition(Vector2D p) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	public void addGoal_moveToPosition(Vector2D p) {
 		// TODO Auto-generated method stub
-		
 	}
 }
