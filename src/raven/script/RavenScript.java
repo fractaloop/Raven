@@ -1,19 +1,41 @@
 package raven.script;
 
-public class RavenScript {
+import java.io.FileNotFoundException;
 
+import javax.script.ScriptException;
+
+public class RavenScript extends GameScript {
+	private static class RavenScriptHolder {
+		public static final RavenScript INSTANCE = new RavenScript();
+	}
+
+	public static RavenScript getInstance() {
+		return RavenScriptHolder.INSTANCE;
+	}
+	
+	private RavenScript() {
+		try {
+			load("params.js");
+		} catch (FileNotFoundException e) {
+			System.err.println("Unable to find params.js! Exiting...");
+			System.exit(1);
+		} catch (ScriptException e) {
+			System.err.println("Unable to load params.js! Reason:");
+			System.err.println(e.getLocalizedMessage());
+			System.exit(1);
+		}
+		System.out.println("Loaded parameters.");
+	}
+	
 	public static String getString(String name) {
-		// TODO Auto-generated method stub
-		return "";
+		return getInstance().get(name).toString();
 	}
 
 	public static int getInt(String name) {
-		// TODO Auto-generated method stub
-		return 0;
+		return ((Number)getInstance().get(name)).intValue();
 	}
 
 	public static double getDouble(String name) {
-		// TODO Auto-generated method stub
-		return 0;
+		return ((Number)getInstance().get(name)).doubleValue();
 	}
 }
