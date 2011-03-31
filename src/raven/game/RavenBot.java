@@ -1,7 +1,10 @@
 package raven.game;
 
+import java.io.Reader;
+import java.io.Writer;
 import java.util.ArrayList;
 
+import raven.game.messaging.Telegram;
 import raven.math.Vector2D;
 
 public class RavenBot extends MovingEntity {
@@ -85,25 +88,177 @@ public class RavenBot extends MovingEntity {
 	/** the buffer for the transformed vertices */
 	private ArrayList<Vector2D> vecBotVBTrans;
 	
+	/** this method is called from the update method. It calculates and
+	 * applies the steering force for this time-step. */
+	private void updateMovement() {
+		
+	}
 	
+	/** initializes the bot's VB with its geometry */
+	private void setUpVertexBuffer() {
+		
+	}
+	
+	//////////////////
+	// Pulic methods
 	
 	public RavenBot(RavenGame world, Vector2D position) {
-		super(position, botScale, new Vector2D(0, 0),
-				botMaxSpeed, new Vector2D(1, 0), 
-				botMass, new Vector2D(botScale, botScale),
-				botMaxHeadTurnRate, botMaxForce, world);
 		// TODO Auto-generated constructor stub
 	}
 
-	public void increaseHealth(int healthGiven) {
-		// TODO Auto-generated method stub
-		
-	}
-
+	// The usual suspects
+	
 	@Override
 	public void render() {
 		// TODO Auto-generated method stub
+	}
+	
+	@Override
+	public void update(double delta) {
+		
+	}
+	
+	@Override
+	public boolean handleMessage(Telegram msg) {
+		
+	}
+	
+	@Override
+	public void write(Writer writer) {
+		
+	}
+	
+	@Override
+	public void read(Reader reader) {
+		
+	}
+	
+	/**
+	 * this rotates the bot's heading until it is facing directly at the
+	 * target position. Returns false if not facing at the target.
+	 * @param target the target to face
+	 * @return
+	 */
+	public boolean rotateFacingTowardPosition(Vector2D target) {
+		
+	}
+	
+	// Attribute access
+	
+	public int health() { return health; }
+	public int maxHealth() { return maxHealth; }
+	public void reduceHealth(int amount) {
+		
+	}
+	public void increaseHealth(int amount) {
+		
+	}
+	public void restoreHealthToMaximum() {
+		
+	}
+	
+	public int score() { return score; }
+	public void incrementScore() { ++score; }
+	
+	public Vector2D facing() { return facing; }
+	public double fieldOfView() { return fieldOfView; }
+	
+	public boolean isPossessed() { return possessed; }
+	public boolean isDead() { return status == Status.DEAD; }
+	public boolean isAlive() { return status == Status.ALIVE; }
+	public boolean isSpawning() { return status == Status.SPAWNING; }
+	
+	public void setSpawning() { status = Status.SPAWNING; }
+	public void setDead() { status = Status.DEAD; }
+	public void setAlive() { status = Status.ALIVE; }
+	
+	/**
+	 * returns a value indicating the time in seconds it will take the bot to
+	 * reach the given position at its current speed.
+	 * @param pos position to reach
+	 * @return seconds until arrival
+	 */
+	public double calculateTimeToReachPosition(Vector2D pos) {
+		
+	}
+	
+	/**
+	 * determines if the bot is close to the given location
+	 * @param pos the position to check
+	 * @return true if the bot is close
+	 */
+	public boolean isAtPosition(Vector2D pos) {
 		
 	}
 
+	// Interface for human player
+	
+	public void fireWeapon(Vector2D pos) {
+		
+	}
+	
+	public void changeWeapon(RavenObject type) {
+		
+	}
+	
+	public void takePossession() {
+		
+	}
+	
+	public void exorcise() {
+		
+	}
+	
+	/** spawns the bot at the given position */
+	public void spawn(Vector2D pos) {
+		
+	}
+	
+	/** returns true if this bot is ready to test against all triggers */
+	public boolean isReadyForTriggerUpdate() {
+		
+	}
+	
+	/** returns true if the bot has line of sight to the given position. */
+	public boolean hasLOSto(Vector2D pos) {
+		
+	}
+	
+	/** returns true if this bot can move directly to the given position
+	 * without bumping into any walls */
+	public boolean canWalkTo(Vector2D pos) {
+		
+	}
+
+	/** similar to above. Returns true if the bot can move between the two
+	 * given positions without bumping into any walls */
+	public boolean canWalkBetween(Vector2D from, Vector2D to) {
+		
+	}
+	
+	// returns true if there is space enough to step in the indicated direction
+	// If true PositionOfStep will be assigned the offset position
+	public boolean canStepLeft(Vector2D positionOfStep) {
+		
+	}
+	public boolean canStepRight(Vector2D positionOfStep) {
+		
+	}
+	public boolean canStepForward(Vector2D positionOfStep) {
+		
+	}
+	public boolean canStepBackward(Vector2D positionOfStep) {
+		
+	}
+	
+	// Generic accessors
+	
+	public RavenGame getWorld() { return world; }
+	public RavenSteering getSteering() { return steering; }
+	public RavenPathPlanner getPathPlanner() { return pathPlanner; }
+	public GoalThink getBrain() { return brain; }
+	public RavenTargetingSystem getTargetSys() { return targSys; }
+	public RavenBot getTargetBot() { return targSys.getTarget(); }
+	public RavenWeaponSystem getWeaponSys() { return weaponSys; }
+	public RavenSensoryMemory getSensoryMem() { return sensoryMem; }
 }
