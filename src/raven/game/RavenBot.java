@@ -454,7 +454,7 @@ public class RavenBot extends MovingEntity {
 	 * @return seconds until arrival
 	 */
 	public double calculateTimeToReachPosition(Vector2D pos) {
-
+		return position.distance(pos) / maxSpeed;
 	}
 
 	/**
@@ -465,40 +465,51 @@ public class RavenBot extends MovingEntity {
 	 * @return true if the bot is close
 	 */
 	public boolean isAtPosition(Vector2D pos) {
-
+		final double tolerance = 10.0;
+		
+		return position.distanceSq(pos) < tolerance * tolerance;
 	}
 
 	// Interface for human player
 
 	public void fireWeapon(Vector2D pos) {
-
+		weaponSys.shootAt(pos);
 	}
 
 	public void changeWeapon(RavenObject type) {
-
+		weaponSys.changeWeapon(type);
 	}
 
 	public void takePossession() {
-
+		if (!(isSpawning() || isDead())) {
+			possessed = true;
+		}
 	}
 
 	public void exorcise() {
-
+		possessed = false;
+		
+		brain.addGoal_Explore();
 	}
 
 	/** spawns the bot at the given position */
 	public void spawn(Vector2D pos) {
-
+		setAlive();
+		brain.removeAllSubgoals();
+		targSys.clearTarget();
+		setPos(pos);
+		weaponSys.initialize();
+		restoreHealthToMaximum();
 	}
 
 	/** returns true if this bot is ready to test against all triggers */
 	public boolean isReadyForTriggerUpdate() {
-
+		return triggerTestRegulator.isReady();
 	}
 
 	/** returns true if the bot has line of sight to the given position. */
 	public boolean hasLOSto(Vector2D pos) {
-
+		return world.isLOSOkay(pos(), pos);
 	}
 
 	/**
@@ -506,7 +517,7 @@ public class RavenBot extends MovingEntity {
 	 * bumping into any walls
 	 */
 	public boolean canWalkTo(Vector2D pos) {
-
+		return !world.isPathObstructed(pos(), pos, getBRadius());
 	}
 
 	/**
@@ -514,25 +525,41 @@ public class RavenBot extends MovingEntity {
 	 * positions without bumping into any walls
 	 */
 	public boolean canWalkBetween(Vector2D from, Vector2D to) {
-
+		return !world.isPathObstructed(from, to, getBRadius());
 	}
 
 	// returns true if there is space enough to step in the indicated direction
 	// If true PositionOfStep will be assigned the offset position
 	public boolean canStepLeft(Vector2D positionOfStep) {
-
+		final double stepDistance = getBRadius() * 2;
+		
+		positionOfStep = pos().sub(facing().perp().mul(stepDistance)).sub(facing().perp().mul(getBRadius()));
+		
+		return canWalkTo(positionOfStep);
 	}
 
 	public boolean canStepRight(Vector2D positionOfStep) {
-
+		final double stepDistance = getBRadius() * 2;
+		
+		positionOfStep = pos().add(facing().perp().mul(stepDistance)).add(facing().perp().mul(getBRadius()));
+		
+		return canWalkTo(positionOfStep);
 	}
 
 	public boolean canStepForward(Vector2D positionOfStep) {
-
+		final double stepDistance = getBRadius() * 2;
+		
+		positionOfStep = pos().add(facing().mul(stepDistance)).add(facing().mul(getBRadius()));
+		
+		return canWalkTo(positionOfStep);
 	}
 
 	public boolean canStepBackward(Vector2D positionOfStep) {
-
+		final double stepDistance = getBRadius() * 2;
+		
+		positionOfStep = pos().sub(facing().mul(stepDistance)).sub(facing().mul(getBRadius()));
+		
+		return canWalkTo(positionOfStep);
 	}
 
 	// Generic accessors
