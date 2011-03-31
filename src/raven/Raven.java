@@ -2,6 +2,8 @@ package raven;
 
 import java.awt.Canvas;
 import java.awt.Dimension;
+import java.awt.MouseInfo;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -64,6 +66,9 @@ public class Raven extends JFrame implements KeyListener, MouseListener {
     	// Listen to input
     	addKeyListener(this);
     	addMouseListener(this);
+    	// Force keyState to listen
+    	keys = new KeyState();
+    	addKeyListener(keys);
     	
     	game = new RavenGame();
     }
@@ -96,6 +101,16 @@ public class Raven extends JFrame implements KeyListener, MouseListener {
 
 	///////////////////
 	// Input handling
+    
+	public static boolean isKeyPressed(int key) {
+		return getInstance().keys.isKeyPressed(key);
+	}
+	
+	public static Vector2D getClientCursorPosition() {
+		Point location = MouseInfo.getPointerInfo().getLocation();
+		Point canvas = GameCanvas.getInstance().getLocationOnScreen();
+		return new Vector2D(location.x - canvas.x, location.y - canvas.y);
+	}
 	
 	@Override
 	public void mouseClicked(MouseEvent event) {}
