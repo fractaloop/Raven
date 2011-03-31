@@ -313,6 +313,9 @@ public class RavenBot extends MovingEntity {
 			}
 
 			return true;
+		
+		default:
+			return false;
 		}
 	}
 

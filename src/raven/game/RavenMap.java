@@ -136,5 +136,10 @@ public class RavenMap {
 	public double getCellSpaceNeighborhoodRange() {
 		return cellSpaceNeighborhoodRange;
 	}
+
+	public void render() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

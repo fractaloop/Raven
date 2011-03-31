@@ -1,5 +1,6 @@
 package raven.game.armory;
 
+import java.lang.annotation.Target;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,20 +35,28 @@ public class RavenProjectile extends MovingEntity {
 						int damage,
 						RavenGame world) 
 	{
-		super(position, radius, velocity, maxSpeed, heading, mass, scale, turnRate, maxForce, world);
+		super(position, radius, velocity, maxSpeed, heading, mass, scale, turnRate, maxForce);
 		this.damageInflicted = damage;
 		this.blastRadius = blastRad;	
 		this.game = world;
 	}
 
 	// Fill these in later
-	public void Write(){}
-	public void Read(){}
+	public void Write(){//TODO: autogen
+	
+	}
+	
+	public void Read(){//TODO: autogen
+		
+	}
 
 	@Override
-	public void render() {}
+	public void render() {//TODO: autogen
+	}
 	
-	public void update() {}
+	public void update() { 
+		//TODO: autogen
+	}
 	
 	
 	public void setDead(boolean death) { isDead = death; }
@@ -115,6 +124,36 @@ public class RavenProjectile extends MovingEntity {
 		return 0.0;
 	}
 	
+	public RavenGame GetWorld()
+	{
+		return game;
+	}
 	
+	public int getShooterID()
+	{
+		return shooterID;
+	}
 	
+	public Vector2D getOrigin()
+	{
+		return origin;
+	}
+	
+	public void setImpactPoint(Vector2D iPoint)
+	{
+		impactPoint = iPoint;
+	}
+	
+	public Vector2D getImpactPoint()
+	{
+		return impactPoint;
+	}
+	
+	public double getBlastRadius(){
+		return blastRadius;
+	}
+	
+	public Vector2D getTarget(){
+		return vTarget;
+	}
 }

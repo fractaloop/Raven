@@ -12,4 +12,9 @@ public class EntityManager {
 		return null;
 	}
 
+	public static void registerEntity(RavenBot bot) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

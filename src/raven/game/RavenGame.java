@@ -4,7 +4,11 @@ import java.awt.event.KeyEvent;
 import java.util.*;
 
 import raven.Raven;
+import raven.game.armory.Bolt;
+import raven.game.armory.Pellet;
 import raven.game.armory.RavenProjectile;
+import raven.game.armory.Rocket;
+import raven.game.armory.Slug;
 import raven.game.messaging.Dispatcher;
 import raven.game.messaging.RavenMessage;
 import raven.game.navigation.PathManager;
@@ -142,7 +146,7 @@ public class RavenGame {
 				GameCanvas.thickRedPen();
 				
 				Vector2D p = selectedBot.getTargetBot().pos();
-				double b = selectedBot.getTargetBox().getBRadius();
+				double b = selectedBot.getTargetBot().getBRadius();
 				
 				GameCanvas.line(p.x - b, p.y - b, p.x + b, p.y - b);
 				GameCanvas.line(p.x + b, p.y - b, p.x + b, p.y + b);
@@ -188,9 +192,9 @@ public class RavenGame {
 		}
 		
 		// update any current projectiles
-		HashSet<RavenProjectile> toRemove = new HashSet<RavenProjectile>()
+		HashSet<RavenProjectile> toRemove = new HashSet<RavenProjectile>();
 		for (RavenProjectile projectile : projectiles) {
-			if (!projectile.isDead()) {
+			if (!projectile.IsDead()) {
 				toRemove.add(projectile);
 			} else {
 				projectile.update(delta);
@@ -265,7 +269,7 @@ public class RavenGame {
 	}
 
 	public void addBots(int numBotsToAdd) {
-		while (--numBotsToAdd) {
+		while (--numBotsToAdd > 0) {
 			// create a bot. (its position is irrelevant at this point because
 			// it will not be rendered until it is spawned)
 			RavenBot bot = new RavenBot(this, new Vector2D());
@@ -336,7 +340,7 @@ public class RavenGame {
 
 	/** returns of bots in the FOV of the given bot */
 	public List<RavenBot> getAllBotsInFOV(final RavenBot bot) {
-		ArrayList<RavenBot> visibleBots;
+		ArrayList<RavenBot> visibleBots = new ArrayList<RavenBot>();
 		
 		for (RavenBot other : bots) {
 			// make sure time is not wasted checking against the same bot or
@@ -350,10 +354,16 @@ public class RavenGame {
 				// bot is visible add it to the vector
 				if (!WallIntersectionTest.doWallsObstructLineSegment(bot.pos(), other.pos(), map.getWalls())) {
 					visibleBots.add(other);
-				}
-				
+				}	
 			}
 		}
+		return visibleBots;
+	}
+
+	private boolean isSecondInFOVOfFirst(Vector2D pos, Vector2D facing,
+			Vector2D pos2, double fieldOfView) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	/**
