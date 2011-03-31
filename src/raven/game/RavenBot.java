@@ -313,9 +313,32 @@ public class RavenBot extends MovingEntity {
 			}
 
 			return true;
+			
+		case MSG_YOU_GOT_ME_YOU_SOB:
+			incrementScore();
+			
+			targSys.clearTarget();
+			
+			return true;
+			
+		case MSG_GUNSHOT_SOUND:
+			getSensoryMem().updateWithSoundSource((RavenBot)msg.extraInfo);
+			
+			return true;
+			
+		case MSG_USER_HAS_REMOVED_BOT:
+			RavenBot removedBot = (RavenBot)msg.extraInfo;
+			
+			getSensoryMem().removeBotFromMemory(removedBot);
+			
+			if (removedBot.equals(targSys.getTarget())) {
+				targSys.clearTarget();
+			}
+			
+			return true;
 		
 		default:
-			return false;
+			return false;	
 		}
 	}
 
