@@ -5,8 +5,6 @@ import java.io.Reader;
 import raven.math.Vector2D;
 
 public class NavGraphNode<T> extends GraphNode implements GraphNodeFactory<NavGraphNode<T>> {
-	protected Vector2D position;
-	
 	protected T extraInfo;
 	
 	public NavGraphNode() {
@@ -24,9 +22,6 @@ public class NavGraphNode<T> extends GraphNode implements GraphNodeFactory<NavGr
 	}
 	
 	// Accessors
-	
-	public Vector2D pos() { return position; }
-	public void setPos(Vector2D newPosition) { position = newPosition; }
 	
 	public T extraInfo() { return extraInfo; }
 	public void setExtraInfo(T info) { extraInfo = info; }
