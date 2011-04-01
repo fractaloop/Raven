@@ -4,7 +4,7 @@ import java.io.Reader;
 
 import raven.math.Vector2D;
 
-public class NavGraphNode<T> extends GraphNode {
+public class NavGraphNode<T> extends GraphNode implements GraphNodeFactory<NavGraphNode<T>> {
 	protected Vector2D position;
 	
 	protected T extraInfo;
@@ -33,6 +33,11 @@ public class NavGraphNode<T> extends GraphNode {
 	
 	public String toString() {
 		return "Index: " + this.index + " PosX: " + position.x + " PosY: " + position.y + "\n";
+	}
+
+	@Override
+	public NavGraphNode<T> createInstance(Reader reader) {
+		return new NavGraphNode<T>(reader);
 	}
 
 }
