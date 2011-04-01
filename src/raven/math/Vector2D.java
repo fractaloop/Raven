@@ -167,4 +167,13 @@ public class Vector2D {
 	public String toString() {
 		return " " + x + " " + y;
 	}
+
+	// Utility functions
+	
+	public static boolean isSecondInFOVOfFirst(Vector2D posFirst, Vector2D facingFirst, Vector2D posSecond, double fieldOfView) {
+		Vector2D toTarget = posSecond.sub(posFirst);
+		toTarget.normalize();
+		
+		return facingFirst.dot(toTarget) >= Math.cos(fieldOfView / 2.0);
+	}
 }

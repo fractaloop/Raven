@@ -349,7 +349,7 @@ public class RavenGame {
 				continue;
 		    
 			// first of all test to see if this bot is within the FOV
-			if (isSecondInFOVOfFirst(bot.pos(), bot.facing(), other.pos(), bot.fieldOfView())) {
+			if (Vector2D.isSecondInFOVOfFirst(bot.pos(), bot.facing(), other.pos(), bot.fieldOfView())) {
 				// cast a ray from between the bots to test visibility. If the
 				// bot is visible add it to the vector
 				if (!WallIntersectionTest.doWallsObstructLineSegment(bot.pos(), other.pos(), map.getWalls())) {
@@ -360,12 +360,6 @@ public class RavenGame {
 		return visibleBots;
 	}
 
-	private boolean isSecondInFOVOfFirst(Vector2D pos, Vector2D facing,
-			Vector2D pos2, double fieldOfView) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 	/**
 	 * returns true if the second bot is unobstructed by walls and in the field
 	 * of view of the first.
@@ -374,7 +368,7 @@ public class RavenGame {
 		// if the two bots are equal or if one of them is not alive return
 		// false
 		if (!first.equals(second) && second.isAlive()) {
-			if (isSecondInFOVOfFirst(first.pos(), first.facing(), second.pos(), second.fieldOfView())) {
+			if (Vector2D.isSecondInFOVOfFirst(first.pos(), first.facing(), second.pos(), second.fieldOfView())) {
 				if (!WallIntersectionTest.doWallsObstructLineSegment(first.pos(), second.pos(), map.getWalls())) {
 					return true;
 				}
