@@ -16,8 +16,8 @@ public class EntityManager {
 	
 	private EntityManager() {}
 	
-	public static void registerEntity(RavenBot bot) {
-		getInstance().entityMap.put(bot.ID(), bot);
+	public static void registerEntity(BaseGameEntity entity) {
+		getInstance().entityMap.put(entity.ID(), entity);
 	}
 
 	public static BaseGameEntity getEntityFromID(int receiverID) {
