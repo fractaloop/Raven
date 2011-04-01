@@ -343,14 +343,10 @@ public class RavenBot extends MovingEntity {
 	}
 
 	@Override
-	public void write(Writer writer) {
-		// TODO I hate these
-	}
+	public void write(Writer writer) {/* Not implemented */}
 
 	@Override
-	public void read(Reader reader) {
-		// TODO I hate these
-	}
+	public void read(Reader reader) {/* Not implemented */}
 
 	/**
 	 * this rotates the bot's heading until it is facing directly at the target
