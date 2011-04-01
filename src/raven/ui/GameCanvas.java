@@ -7,6 +7,8 @@ import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import raven.math.Vector2D;
 
@@ -170,7 +172,7 @@ public class GameCanvas extends Canvas {
 		g.drawLine(x1, y1, x2, y2);
 	}
 	
-	public static void polyLine(final ArrayList<Vector2D> points) {
+	public static void polyLine(final List<Vector2D> points) {
 		if (points.size() < 2)
 			return;
 		
@@ -212,8 +214,8 @@ public class GameCanvas extends Canvas {
 		getInstance().g2d.drawRect(left, top, right - left, bottom - top);
 	}
 	
-	public static void closedShape(final ArrayList<Vector2D> points) {
-		ArrayList<Vector2D> shape = (ArrayList<Vector2D>)points.clone();
+	public static void closedShape(final List<Vector2D> points) {
+		List<Vector2D> shape = new ArrayList<Vector2D>(points);
 		shape.add(shape.get(0));
 		polyLine(shape);
 	}
