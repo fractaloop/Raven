@@ -39,4 +39,9 @@ public class RavenWeaponSystem {
 		
 	}
 
+	public void addWeapon(RavenObject entityType) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

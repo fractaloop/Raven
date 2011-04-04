@@ -9,7 +9,7 @@ import raven.game.triggers.Trigger;
 import raven.game.triggers.TriggerSystem;
 import raven.math.Vector2D;
 import raven.math.Wall2D;
-import raven.utils.CellSpacePartition;
+import raven.math.CellSpacePartition;
 
 public class RavenMap {
 	
