@@ -1,6 +1,6 @@
-package raven.goals;
+package raven.goals.fuzzy;
 
-import raven.goals.FzSet;
+import raven.goals.fuzzy.FzSet;
 
 public class FuzzyVariable {
 

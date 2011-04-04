@@ -1,7 +1,7 @@
 /**
  * 
  */
-package raven.goals;
+package raven.goals.fuzzy;
 
 /**
  * @author chester

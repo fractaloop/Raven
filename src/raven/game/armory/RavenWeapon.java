@@ -8,7 +8,7 @@ import java.util.Vector;
 
 import raven.game.RavenBot;
 import raven.game.RavenObject;
-import raven.goals.FuzzyModule;
+import raven.goals.fuzzy.FuzzyModule;
 import raven.math.Vector2D;
 
 /**
