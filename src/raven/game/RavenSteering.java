@@ -116,10 +116,40 @@ public class RavenSteering {
 		  //TODO
 		  return (flags & bt) == bt;}
 
-	  public boolean AccumulateForce(Vector2D sf, Vector2D ForceToAdd){
-		return false;
-		//TODO
-	}
+	  public boolean AccumulateForce(Vector2D runningTot, Vector2D forceToAdd){
+		//calculate how much steering force the vehicle has used so far
+		  double magnitudeSoFar = runningTot.length();
+
+		  //calculate how much steering force remains to be used by this vehicle
+		  double magnitudeRemaining = ravenBot.maxForce() - magnitudeSoFar;
+
+		  //return false if there is no more force left to use
+		  if (magnitudeRemaining <= 0.0) return false;
+
+		  //calculate the magnitude of the force we want to add
+		  double magnitudeToAdd = forceToAdd.length();
+		  
+		  //if the magnitude of the sum of ForceToAdd and the running total
+		  //does not exceed the maximum force available to this vehicle, just
+		  //add together. Otherwise add as much of the ForceToAdd vector is
+		  //possible without going over the max.
+		  if (magnitudeToAdd < magnitudeRemaining)
+		  {
+		    runningTot.add(forceToAdd);
+		  }
+
+		  else
+		  {
+		    magnitudeToAdd = magnitudeRemaining;
+
+		    //add it to the steering force
+		    //TODO didn't make it normalize
+		    runningTot.add(forceToAdd.mul(magnitudeToAdd)); 
+		  }
+
+		  return true;
+		}
+	
 
 	  //creates the antenna utilized by the wall avoidance behavior
 	  void      CreateFeelers(){
@@ -193,15 +223,14 @@ public class RavenSteering {
 	  //calculates the component of the steering force that is parallel
 	  //with the Raven_Bot heading
 	  public double    ForwardComponent(){
-		//TODO
-		  return 0;
+		  return ravenBot.heading().dot(steeringForce);
+		  
 	}
 
 	  //calculates the component of the steering force that is perpendicuar
 	  //with the Raven_Bot heading
 	  public double    SideComponent(){
-		//TODO
-		  return 0;
+		  return ravenBot.side().dot(steeringForce);
 	}
 
 
