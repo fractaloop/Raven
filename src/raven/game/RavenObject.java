@@ -36,4 +36,8 @@ public enum RavenObject {
 	public String getDescription() {
 		return description;
 	}
+	
+	public int toInteger() {
+		return index;
+	}
 };
