@@ -3,6 +3,8 @@ package raven.game.navigation;
 import java.io.Reader;
 
 import raven.math.Vector2D;
+import raven.math.graph.GraphNode;
+import raven.math.graph.GraphNodeFactory;
 
 public class NavGraphNode<T> extends GraphNode implements GraphNodeFactory<NavGraphNode<T>> {
 	protected T extraInfo;
