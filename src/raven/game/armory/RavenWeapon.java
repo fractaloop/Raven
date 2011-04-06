@@ -99,7 +99,7 @@ public abstract class RavenWeapon {
 	
 	public boolean isReadyForNextShot() { return System.nanoTime() > timeNextAvailable; }
 	
-	private void UpdateTimeWeaponIsNextAvailable() { timeNextAvailable = System.nanoTime() + 1.0/rateOfFire; }
+	public void UpdateTimeWeaponIsNextAvailable() { timeNextAvailable = System.nanoTime() + 1.0/rateOfFire; }
 	
 	private void InitializeFuzzyModule() {}
 }

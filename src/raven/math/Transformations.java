@@ -10,4 +10,7 @@ public class Transformations {
 		return null;
 	}
 
+	public static void Vec2DRotateAroundOrigin(Vector2D target, double amount){
+		
+	}
 }

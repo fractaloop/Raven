@@ -4,9 +4,7 @@
 package raven.game.armory;
 
 import java.util.List;
-import java.util.Vector;
 
-import raven.Raven;
 import raven.game.RavenBot;
 import raven.game.RavenObject;
 import raven.goals.fuzzy.FuzzyModule;
@@ -34,8 +32,6 @@ public class Blaster extends RavenWeapon {
 	{
 		super(RavenObject.BLASTER, blasterDefaultRounds, blasterMaxRounds, blasterFiringFreq, blasterIdealRange, blasterMaxSpeed, owner);
 		
-		//setupVertexBuffers
-		final int numberWeaponBuffers = 4;
 		final Vector2D[] weapon = {new Vector2D(0, -1),
 										new Vector2D(10, -1),
 										new Vector2D(10 , 1),
@@ -67,6 +63,10 @@ public class Blaster extends RavenWeapon {
 		if(isReadyForNextShot()){
 			getOwner().getWorld().addBolt(getOwner(), position);
 		}
+		
+		UpdateTimeWeaponIsNextAvailable();
+		
+		getOwner().getWorld().getMap().addSoundTrigger(getOwner(), RavenScript.getDouble("Blaster_soundrange"));
 	}
 	
 	@Override
