@@ -5,7 +5,7 @@ import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.Map;
 
-import raven.game.armory.Rocket;
+import raven.game.armory.*;
 import raven.math.Transformations;
 import raven.math.Vector2D;
 import raven.ui.GameCanvas;
@@ -163,10 +163,10 @@ public class RavenWeaponSystem {
 		
 		switch (weaponType) {
 		case RAIL_GUN:
-			newWeap = new RailGun(owner);
+			newWeap = new Railgun(owner);
 			break;
 		case SHOTGUN:
-			newWeap = new ShotGun(owner);
+			newWeap = new Shotgun(owner);
 			break;
 		case ROCKET_LAUNCHER:
 			newWeap = new RocketLauncher(owner);
