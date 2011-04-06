@@ -1,4 +1,4 @@
-package raven.game.navigation;
+package raven.math.graph;
 
 import java.io.Reader;
 

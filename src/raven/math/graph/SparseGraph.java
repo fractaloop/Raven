@@ -1,4 +1,4 @@
-package raven.game.navigation;
+package raven.math.graph;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -7,12 +7,15 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
+import raven.util.Pair;
 import raven.utils.StreamUtils;
 
 public class SparseGraph<NodeType extends GraphNode, EdgeType extends GraphEdge> implements Iterable<NodeType> {
@@ -360,6 +363,42 @@ public class SparseGraph<NodeType extends GraphNode, EdgeType extends GraphEdge>
 	@Override
 	public Iterator<NodeType> iterator() {
 		return nodes.iterator();
+	}
+	
+	// Utility functions. These used to be global, but they are generic
+	// and need an instance anyway
+	public double calculateAverageGraphEdgeLength() {
+		double totalLength = 0;
+		int numEdgesCounted = 0;
+
+		for (NodeType node : nodes) {
+			for (EdgeType edge : edges.get(node.index())) {
+				// increment edge counter
+				++numEdgesCounted;
+				// add length of edge to total length
+				totalLength += nodes.get(edge.from()).pos().distance(nodes.get(edge.from()).pos());
+			}
+		}
+		
+		return totalLength / numEdgesCounted;
+	}
+
+	// creates a lookup table of the cost associated from traveling from one
+	public Map<Pair<GraphNode, GraphNode>, Double> createAllPairsCostsTable() {
+		// Map a graph
+		Map<Pair<GraphNode, GraphNode>, Double> pathCosts = new HashMap<Pair<GraphNode, GraphNode>, Double>();
+		
+		for (GraphNode source : nodes) {
+			// Do the search
+			GraphSearchDijkstra search = new GraphSearchDijkstra(this, source, null);
+			for (GraphNode target : nodes) {
+				if (!source.equals(target)) {
+					pathCosts.put(new Pair<GraphNode, GraphNode>(source, target), search.getCostToNode(target));
+				}
+			}
+		}
+		
+		return pathCosts;
 	}
 	
 	
