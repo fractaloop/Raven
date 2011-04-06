@@ -24,8 +24,6 @@ import java.util.List;
 import raven.math.*;
 
 
-enum BehaviorType{none, seek, arrive, wander, separation, wallAvoidance};
-
 //------------------------------------------------------------------------
 
 
@@ -45,8 +43,9 @@ public class RavenSteering {
 
 	
 	public enum SummingMethod{weightedAverage, prioritized, dithered};
-	
 	//a pointer to the owner of this instance
+	private enum BehaviorType{none, seek, arrive, wander, separation, wallAvoidance};
+	private BehaviorType behaviorType;
 	private RavenBot ravenBot;
 	//pointer to the world data
 	private RavenGame world;
@@ -108,7 +107,7 @@ public class RavenSteering {
 	  
 
 	  //what type of method is used to sum any active behavior
-	  SummingMethod  summingMethod;
+	  private SummingMethod  summingMethod;
 
 
 	  //this function tests if a specific bit of m_iFlags is set
@@ -205,10 +204,63 @@ public class RavenSteering {
 	      .......................................................*/
 
 	  //calculates and sums the steering forces from any active behaviors
+	//---------------------- CalculatePrioritized ----------------------------
+	  //
+	  //  this method calls each active steering behavior in order of priority
+	  //  and acumulates their forces until the max steering force magnitude
+	  //  is reached, at which time the function returns the steering force 
+	  //  accumulated to that  point
+	  //------------------------------------------------------------------------
+
 	  private Vector2D CalculatePrioritized(){
 		//TODO
-		  return null;
-	}
+		  Vector2D force;
+
+		  if (On(behaviorType.wallAvoidance))
+		  {
+		    force = WallAvoidance(world.getMap().getWalls()*WeightWallAvoidance;
+
+		    if (!AccumulateForce(m_vSteeringForce, force)) return m_vSteeringForce;
+		  }
+
+		 
+		  //these next three can be combined for flocking behavior (wander is
+		  //also a good behavior to add into this mix)
+
+		    if (On(separation))
+		    {
+		      force = Separation(m_pWorld->GetAllBots()) * m_dWeightSeparation;
+
+		      if (!AccumulateForce(m_vSteeringForce, force)) return m_vSteeringForce;
+		    }
+
+
+		  if (On(seek))
+		  {
+		    force = Seek(m_vTarget) * m_dWeightSeek;
+
+		    if (!AccumulateForce(m_vSteeringForce, force)) return m_vSteeringForce;
+		  }
+
+
+		  if (On(arrive))
+		  {
+		    force = Arrive(m_vTarget, m_Deceleration) * m_dWeightArrive;
+
+		    if (!AccumulateForce(m_vSteeringForce, force)) return m_vSteeringForce;
+		  }
+
+		  if (On(wander))
+		  {
+		    force = Wander() * m_dWeightWander;
+
+		    if (!AccumulateForce(m_vSteeringForce, force)) return m_vSteeringForce;
+		  }
+
+
+		  return m_vSteeringForce;
+		}
+
 
 	  public RavenSteering(RavenGame world, RavenBot ravenBot) {
 		// TODO Auto-generated constructor stub
@@ -264,13 +316,13 @@ public class RavenSteering {
 	  public void ArriveOff(){if(On(arrive)) flags ^=arrive;}
 	  public void WanderOff(){if(On(wander)) flags ^=wander;}
 	  public void SeparationOff(){if(On(separation)) flags ^=separation;}
-	  public void WallAvoidanceOff(){if(On(wallAvoidance)) flags ^=wallAvoidance;}
+	  public void WallAvoidanceOff(){if(On(behaviorType.wallAvoidance)) flags ^=wallAvoidance;}
 
-	  public boolean SeekIsOn(){return On(seek);}
-	  public boolean ArriveIsOn(){return On(arrive);}
-	  public boolean WanderIsOn(){return On(wander);}
-	  public boolean SeparationIsOn(){return On(separation);}
-	  public boolean WallAvoidanceIsOn(){return On(wallAvoidance);}
+	  public boolean SeekIsOn(){return On(behaviorType.seek);}
+	  public boolean ArriveIsOn(){return On(behaviorType.arrive);}
+	  public boolean WanderIsOn(){return On(behaviorType.wander);}
+	  public boolean SeparationIsOn(){return On(behaviorType.separation);}
+	  public boolean WallAvoidanceIsOn(){return On(behaviorType.wallAvoidance);}
 
 	 public final Vector<Vector2D> GetFeelers(){return feelers;}
 	  
