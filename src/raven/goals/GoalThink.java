@@ -1,5 +1,6 @@
 package raven.goals;
 
+import java.util.Iterator;
 import java.util.Random;
 import java.util.Vector;
 
@@ -50,6 +51,12 @@ double AttackBias  = 0;
 	}
 	
 	public void Activate(){
+		  if (!m_pOwner.isPossessed())
+		  {
+		    Arbitrate();
+		  }
+
+		  m_iStatus = Goal.curStatus.active;
 		
 	}
 	
@@ -62,13 +69,80 @@ double AttackBias  = 0;
 
 	
 	
-	public void Process() {
-		// TODO Auto-generated method stub
+	public raven.goals.Goal.curStatus Process() {
+		  ActivateIfInactive();
+		  
+		  raven.goals.Goal.curStatus SubgoalStatus = ProcessSubgoals();
+
+		  if (SubgoalStatus == Goal.curStatus.completed || SubgoalStatus == Goal.curStatus.failed)
+		  {
+		    if (!m_pOwner.isPossessed())
+		    {
+		      m_iStatus = Goal.curStatus.inactive;
+		    }
+		  }
+
+		  return m_iStatus;
 	}
+	
+	public void ActivateIfInactive()
+	{
+		if (isInactive())
+		{
+			Activate();   
+		}
+	}
+	
+	
+	
 
 	public void Arbitrate() {
-		// TODO Auto-generated method stub
+		//----------------------------- Update ----------------------------------------
+		// 
+		//  this method iterates through each goal option to determine which one has
+		//  the highest desirability.
+		//-----------------------------------------------------------------------------
+		  double best = 0;
+		  Goal_Evaluator MostDesirable = null;
+
+		  //iterate through all the evaluators to see which produces the highest score
+		  Iterator<Goal_Evaluator> curDes = m_Evaluators.iterator();
+		  Goal_Evaluator current = null;
+		  while(curDes.hasNext()){
+			  current = curDes.next();
+		    double desirabilty = current.CalculateDesirability(m_pOwner);
+
+		    if (desirabilty >= best)
+		    {
+		      best = desirabilty;
+		      MostDesirable = current;
+		    }
+		  }
+
+		//  assert(MostDesirable && "<Goal_Think::Arbitrate>: no evaluator selected");
+
+		  current.setGoal(m_pOwner);
+		}
+
+
+	
+	
+	
+	//---------------------------- notPresent --------------------------------------
+	//
+	//  returns true if the goal type passed as a parameter is the same as this
+	//  goal or any of its subgoals
+	//-----------------------------------------------------------------------------
+	public boolean notPresent(raven.goals.Goal.goalType goal)
+	{
+	  if(m_SubGoals.contains(goal)){
+		return true;  
+	  }
+	  return false;
 	}
+	
+	
+	
 
 	public boolean handleMessage(Telegram msg) {
 		// TODO Auto-generated method stub
@@ -97,8 +171,13 @@ double AttackBias  = 0;
 		// TODO Auto-generated method stub
 	}
 
-	public void addGoal_moveToPosition(Vector2D p) {
-		// TODO Auto-generated method stub
+	
+	
+	
+	// TODO FIX
+	public void addGoal_moveToPosition(Vector2D p, Integer pos) {
+
+		  AddSubgoal( new Goal_MoveToPosition(m_pOwner, pos));
 	}
 	
 	
@@ -107,12 +186,31 @@ double AttackBias  = 0;
 	}
 	
 	public void addGoal_explore() {
-		// TODO Auto-generated method stub
+
+		  if (notPresent(Goal.goalType.goal_explore))
+		  {
+		    removeAllSubgoals();
+		    AddSubgoal( new Goal_Explore(m_pOwner));
+		  }
 	}
+	
+	
+	
+	
+	
     public void addGoal_getItem(int ItemType){
 	    	
 	}
 	
-	
+    public boolean ForwardMessageToFrontMostSubgoal(Telegram msg)
+    {
+      if (!m_SubGoals.isEmpty())
+      {
+        return m_SubGoals.get(0).HandleMessage(msg);
+      }
+
+      //return false if the message has not been handled
+      return false;
+    }
 	
 }
