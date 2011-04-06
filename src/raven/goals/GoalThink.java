@@ -9,13 +9,13 @@ import raven.game.messaging.Telegram;
 import raven.math.Vector2D;
 
 public class GoalThink extends GoalComposite<RavenBot> {
-Vector<Goal_Evaluator> m_Evaluators = new Vector<Goal_Evaluator>();
-double HealthBias = 0;
-double ShotgunBias = 0;
-double RocketLauncherBias = 0;
-double RailgunBias = 0;
-double ExploreBias = 0;
-double AttackBias  = 0;
+private Vector<Goal_Evaluator> m_Evaluators = new Vector<Goal_Evaluator>();
+private double HealthBias = 0;
+private double ShotgunBias = 0;
+private double RocketLauncherBias = 0;
+private double RailgunBias = 0;
+private double ExploreBias = 0;
+private double AttackBias  = 0;
 
 
 	
@@ -49,7 +49,7 @@ double AttackBias  = 0;
 	public void Terminate(){
 		
 	}
-	
+	@Override
 	public void Activate(){
 		  if (!m_pOwner.isPossessed())
 		  {
@@ -59,18 +59,19 @@ double AttackBias  = 0;
 		  m_iStatus = Goal.curStatus.active;
 		
 	}
-	
-    void AddGoal_MoveToPostion(Vector2D pos){
-    	
-    }
- 
     
-
+	public void activateIfInactive()
+	{
+		if (isInactive())
+		{
+			Activate();   
+		}
+	}
 
 	
 	
 	public raven.goals.Goal.curStatus Process() {
-		  ActivateIfInactive();
+		  activateIfInactive();
 		  
 		  raven.goals.Goal.curStatus SubgoalStatus = ProcessSubgoals();
 
@@ -85,13 +86,7 @@ double AttackBias  = 0;
 		  return m_iStatus;
 	}
 	
-	public void ActivateIfInactive()
-	{
-		if (isInactive())
-		{
-			Activate();   
-		}
-	}
+
 	
 	
 	
@@ -151,39 +146,21 @@ double AttackBias  = 0;
 
 
 
-	public void removeAllSubgoals() {
-		// TODO Auto-generated method stub
-	}
 
-	public void render() {
-		// TODO Auto-generated method stub
-	}
-	
-	public void RenderEvaluations(Integer left, Integer top){
-		
-	}
 
-	public void renderAtPos(Vector2D p) {
-		// TODO Auto-generated method stub
-	}
 
-	public void queueGoal_moveToPosition(Vector2D p) {
-		// TODO Auto-generated method stub
-	}
 
-	
-	
-	
-	// TODO FIX
-	public void addGoal_moveToPosition(Vector2D p, Integer pos) {
+
+
+	public void queueGoal_moveToPosition(Vector2D p, Vector2D pos) {
+		 m_SubGoals.add(new Goal_MoveToPosition(m_pOwner, pos));
+	}
+	public void addGoal_moveToPosition(Vector2D p, Vector2D pos) {
 
 		  AddSubgoal( new Goal_MoveToPosition(m_pOwner, pos));
 	}
 	
-	
-	public void addGoal_attackTarget(){
-		
-	}
+
 	
 	public void addGoal_explore() {
 
@@ -194,23 +171,30 @@ double AttackBias  = 0;
 		  }
 	}
 	
-	
-	
-	
-	
-    public void addGoal_getItem(int ItemType){
-	    	
-	}
-	
-    public boolean ForwardMessageToFrontMostSubgoal(Telegram msg)
-    {
-      if (!m_SubGoals.isEmpty())
-      {
-        return m_SubGoals.get(0).HandleMessage(msg);
-      }
-
-      //return false if the message has not been handled
-      return false;
+	// TODO FIND ITEM TYPE>>>> THIS IS BROKEN AS OF NOW >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    public void addGoal_getItem(Goal.itemType inp){
+    	  if (notPresent(Goal.goalType.goal_get))
+    	  {
+    	    removeAllSubgoals();
+    	    AddSubgoal( new Goal_GetItem(m_pOwner, inp));
+	      }
     }
+    
+    
+	
+	public void addGoal_attackTarget(){
+		  if (notPresent(Goal.goalType.goal_attack_target))
+		  {
+		    removeAllSubgoals();
+		    AddSubgoal( new Goal_AttackTarget(m_pOwner));
+		  }
+	}
+	public void render(){
+		
+	}
+
+	public void renderEvaluations(Integer left, Integer top){
+		
+	}
 	
 }

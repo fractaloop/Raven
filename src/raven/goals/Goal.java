@@ -5,7 +5,8 @@ import raven.game.messaging.Telegram;
 
 public class Goal<T extends BaseGameEntity> {
 	public enum curStatus{active, inactive, completed, failed}
-	public enum goalType{goal_explore}
+	public enum goalType{goal_explore, goal_move,goal_get,goal_attack_target}
+	public enum itemType{item, item2}
 
 	
 
@@ -71,9 +72,24 @@ public class Goal<T extends BaseGameEntity> {
 		// TODO Auto-generated method stub
 		
 	}
-
-
-
+	//if m_iStatus is failed this method sets it to inactive so that the goal
+	//will be reactivated (replanned) on the next update-step.
+	public void reactivateIfFailed()
+	{
+	  if (hasFailed())
+	  {
+	     m_iStatus = Goal.curStatus.inactive;
+	  }
+	}
+	public void activateIfInactive()
+	{
+	  if (isInactive())
+	  {
+	    Activate();   
+	  }
+	}
+	
+	public void Activate(){}
 
 
 
@@ -83,8 +99,8 @@ public class Goal<T extends BaseGameEntity> {
 		return null;
 	}
 		// TODOOO
-	 public T GetType(){
-		return null;
+	 public goalType GetType(){
+		return m_iType;
 	 }
 
 	

@@ -3,6 +3,8 @@ package raven.goals;
 import java.util.ArrayList;
 
 import raven.game.BaseGameEntity;
+import raven.game.messaging.Telegram;
+import raven.math.Vector2D;
 
 public class GoalComposite<T extends BaseGameEntity> extends Goal<T> {
 
@@ -45,7 +47,9 @@ public class GoalComposite<T extends BaseGameEntity> extends Goal<T> {
 	  }
 	}
 	
-	
+	public void removeAllSubgoals() {
+		// TODO Auto-generated method stub
+	}
 	
 	public void AddSubgoal(Goal<T> g)
 	{   
@@ -53,6 +57,26 @@ public class GoalComposite<T extends BaseGameEntity> extends Goal<T> {
 	  m_SubGoals.add(g);
 	}
 
+	
+    public boolean ForwardMessageToFrontMostSubgoal(Telegram msg)
+    {
+      if (!m_SubGoals.isEmpty())
+      {
+        return m_SubGoals.get(0).HandleMessage(msg);
+      }
+
+      //return false if the message has not been handled
+      return false;
+    }
+    
+	public void renderAtPos(Vector2D p) {
+		// TODO Auto-generated method stub
+	}
+	
+	public void render() {
+		// TODO Auto-generated method stub
+	}
+	
 	
 	
 	
