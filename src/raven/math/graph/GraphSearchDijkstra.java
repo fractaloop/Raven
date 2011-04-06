@@ -5,13 +5,15 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.PriorityQueue;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 
 public class GraphSearchDijkstra {
 	
-	private SparseGraph graph;
+	private SparseGraph<? extends GraphNode, ? extends GraphEdge> graph;
 	
 	/** this vector contains the edges that comprise the shortest path tree -
 	 * a directed subtree of the graph that encapsulates the best paths from
@@ -23,15 +25,15 @@ public class GraphSearchDijkstra {
 	 * m_CostToNode.get(5) will hold the total cost of all the edges that
 	 * comprise the best path to node 5, found so far in the search (if node 5
 	 * is present and has been visited) */
-	private Map<GraphNode, Double> costToNode;
+	private List<Double> costToNode;
 	
 	/** this is an indexed (by node) vector of 'parent' edges leading to nodes
 	 * connected to the SPT but that have not been added to the SPT yet. This
 	 * is a little like the stack or queue used in BST and DST searches. */
 	private List<GraphEdge> searchFrontier;
 	
-	GraphNode source;
-	GraphNode target;
+	int source;
+	int target;
 	
 	private void search() {
 
@@ -39,35 +41,77 @@ public class GraphSearchDijkstra {
 		 * (front to back).Note that the maximum number of elements the iPQ
 		 * may contain is N. This is because no node can be represented on
 		 * the queue more than once. */
-		PriorityQueue<GraphNode> queue = new PriorityQueue<GraphNode>();
+		TreeMap<Double,Integer> queue = new TreeMap<Double,Integer>();
 		
 		// put the source node is not empty
-		queue.add(source);
+		queue.put(0.0, source);
 		
 		while (!queue.isEmpty()) {
-			// Get the lowest cost node from the queue
-			GraphNode nextClosestNode = queue.remove();
+			// get lowest cost node from the queue. Don't forget, the return
+			// value is a *node index*, not the node itself. This node is the
+			// node not already on the SPT that is the closest to the source
+			// node
+			Entry<Double,Integer> queueEntry = queue.firstEntry();
+			queue.remove(queueEntry.getKey());
+			int nextClosestNode = queueEntry.getValue();
 			
-			// move this edge from the frontier to the SPT
-//			shortestPathTree
-			
+			// move this edge from the frontier to the shortest path tree
+			shortestPathTree.add(nextClosestNode, searchFrontier.get(nextClosestNode));
+
 			// if the target has been found exit
-			if (nextClosestNode.equals(target)) {
+			if (nextClosestNode == target) {
 				return;
 			}
 			
-			// now relax the edges
-//			for (GraphNode neighbor : graph.get)
+			// for each edge connected to the next closest node
+			for (GraphEdge edge : graph.getEdges(nextClosestNode)) {
+				double newCost = costToNode.get(nextClosestNode) + edge.cost();
+				
+				// if this edge has never been on the frontier make a note of
+				// the cost to get to the node it points to, then add the edge
+				// to the frontier and the destination node to the PQ.
+				if (searchFrontier.get(edge.to()) == null) {
+					costToNode.set(edge.to(), newCost);
+					searchFrontier.set(edge.to(), edge);
+					queue.put(newCost, edge.to());
+				}
+				// else test to see if the cost to reach the destination node
+				// via the current node is cheaper than the cheapest cost
+				// found so far. If this path is cheaper, we assign the new
+				// cost to the destination node, update its entry in the PQ to
+				// reflect the change and add the edge to the frontier
+				else if ( (newCost < costToNode.get(edge.to())) && shortestPathTree.get(edge.to()) == null) {
+					costToNode.set(edge.to(), newCost);
+					
+					queue.remove(edge.to());
+					queue.put(newCost, edge.to());
+					
+					searchFrontier.set(edge.to(), edge);
+				}
+
+			}
 		}
 	}
 	
-	public GraphSearchDijkstra(SparseGraph graph, GraphNode source, GraphNode target) {
+	/**
+	 * Create a new Dijkstra search tree of the given graph.
+	 * @param graph the graph to compute on
+	 * @param source the index in the graph of the node to start searching from
+	 * @param target the index in the graph of the node to search to, or -1 if no target
+	 */
+	public GraphSearchDijkstra(SparseGraph graph, int source, int target) {
 		this.graph = graph;
 		this.source = source;
 		this.target = target;
 		this.shortestPathTree = new ArrayList<GraphEdge>(graph.numNodes());
 		this.searchFrontier = new ArrayList<GraphEdge>(graph.numNodes());
-		this.costToNode = new HashMap<GraphNode, Double>(graph.numNodes(), 1.0f);
+		this.costToNode = new ArrayList<Double>(graph.numNodes());
+		
+		// The algorithm requires the array's be filled with 0s
+		for (int i = 0; i < graph.numNodes(); i++) {
+			searchFrontier.add(null);
+			costToNode.add(0.0);
+		}
 		
 		search();
 	}
@@ -81,29 +125,29 @@ public class GraphSearchDijkstra {
 	/** returns a vector of nodes that comprise the shortest path from the
 	 * source to the target. It calculates the path by working backwards
 	 * through the SPT from the target node. */
-	public List<GraphNode> getPathToTarget() {
-		List<GraphNode> path = new ArrayList<GraphNode>();
+	public List<Integer> getPathToTarget() {
+		List<Integer> path = new ArrayList<Integer>();
 		
 		// just return an empty path if no target or no path found
-		if (target == null) {
+		if (target < 0) {
 			return path;
 		}
 		
-		GraphNode node = target;
+		int node = target;
 		
 		path.add(node);
 		
-		while (node != source && shortestPathTree.get(shortestPathTree.indexOf(node)) != null) {
-//			GraphNode node = shortestPathTree.get(shortestPathTree.indexOf(node)).from();
-			// TODO
+		while (node != source && shortestPathTree.get(node) != null) {
+			node = shortestPathTree.get(node).from();
+			path.add(node);
 		}
 		
-		return Collections.emptyList();
+		return path;
 	}
 	
 	/** returns the total cost to the target */
-	public double getCostToTarget() { return 0; } // TODO
+	public double getCostToTarget() { return costToNode.get(target); }
 	
 	/** returns the total cost to the given node */
-	public double getCostToNode(GraphNode node) { return 0; } // TODO
+	public double getCostToNode(int node) { return costToNode.get(node); }
 }

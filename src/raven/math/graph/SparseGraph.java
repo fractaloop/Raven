@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import raven.util.Pair;
+import raven.utils.Pair;
 import raven.utils.StreamUtils;
 
 public class SparseGraph<NodeType extends GraphNode, EdgeType extends GraphEdge> implements Iterable<NodeType> {
@@ -78,7 +78,12 @@ public class SparseGraph<NodeType extends GraphNode, EdgeType extends GraphEdge>
 		
 		return nodes.get(idx);
 	}
-	
+
+	/** method to get all the neighbors of a node */
+	public List<? extends GraphEdge> getEdges(int index) {
+		return edges.get(index);
+	}
+
 	/** const method for obtaining a reference to an edge */
 	public EdgeType getEdge(int from, int to) {
 		if (from < 0 || from > nodes.size() || from == GraphNode.INVALID_NODE_INDEX)
@@ -384,22 +389,23 @@ public class SparseGraph<NodeType extends GraphNode, EdgeType extends GraphEdge>
 	}
 
 	// creates a lookup table of the cost associated from traveling from one
-	public Map<Pair<GraphNode, GraphNode>, Double> createAllPairsCostsTable() {
+	public Map<Pair<Integer, Integer>, Double> createAllPairsCostsTable() {
 		// Map a graph
-		Map<Pair<GraphNode, GraphNode>, Double> pathCosts = new HashMap<Pair<GraphNode, GraphNode>, Double>();
+		Map<Pair<Integer, Integer>, Double> pathCosts = new HashMap<Pair<Integer, Integer>, Double>(numNodes() * numNodes() - numNodes());
 		
-		for (GraphNode source : nodes) {
+		for (int source = 0; source < numNodes(); source++) {
 			// Do the search
-			GraphSearchDijkstra search = new GraphSearchDijkstra(this, source, null);
-			for (GraphNode target : nodes) {
-				if (!source.equals(target)) {
-					pathCosts.put(new Pair<GraphNode, GraphNode>(source, target), search.getCostToNode(target));
+			GraphSearchDijkstra search = new GraphSearchDijkstra(this, source, -1);
+			
+			// iterate through every node in the graph and grab the cost to
+			// travel to that node
+			for (int target = 0; target < numNodes(); target++) {
+				if (source != target) {
+					pathCosts.put(new Pair<Integer, Integer>(source, target), search.getCostToNode(target));
 				}
 			}
 		}
 		
 		return pathCosts;
 	}
-	
-	
 }
