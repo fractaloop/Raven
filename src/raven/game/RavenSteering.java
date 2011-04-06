@@ -218,6 +218,7 @@ public class RavenSteering {
 	  //  accumulated to that  point
 	  //------------------------------------------------------------------------
 
+	  
 	  private Vector2D CalculatePrioritized(){
 		//TODO
 		  Vector2D force;
