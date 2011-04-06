@@ -25,14 +25,17 @@ public class Pellet extends RavenProjectile {
 				shooter.maxTurnRate(), pelletMaxForce, 
 				pelletBlastRadius, pelletDamage, 
 				shooter.getWorld());
-		
 	}
 
 	
 	private boolean isVisibleToPlayer()
 	{
-		//TODO: need clock time that Logan had an idea on.
-		return false;
+		if(pelletTimePersist > 0)
+		{
+			pelletTimePersist -= System.nanoTime(); 
+		}
+		
+		return pelletTimePersist > 0;
 	}
 	
 	public void render()
