@@ -24,11 +24,6 @@ import java.util.List;
 import raven.math.*;
 
 
-<<<<<<< HEAD
-=======
-enum BehaviorType{none, seek, arrive, wander, separation, wallAvoidance};
-
->>>>>>> refs/heads/master
 //------------------------------------------------------------------------
 
 
@@ -48,7 +43,6 @@ public class RavenSteering {
 
 	
 	public enum SummingMethod{weightedAverage, prioritized, dithered};
-<<<<<<< HEAD
 	//a pointer to the owner of this instance
 	private enum BehaviorType{none, seek, arrive, wander, separation, wallAvoidance};
 	private BehaviorType behaviorType;
@@ -218,14 +212,13 @@ public class RavenSteering {
 	  //  accumulated to that  point
 	  //------------------------------------------------------------------------
 
-	  
 	  private Vector2D CalculatePrioritized(){
 		//TODO
 		  Vector2D force;
 
 		  if (On(behaviorType.wallAvoidance))
 		  {
-		    force = WallAvoidance(world.getMap().getWalls()*WeightWallAvoidance;
+		    force = WallAvoidance(world.getMap().getWalls()WeightWallAvoidance;
 
 		    if (!AccumulateForce(m_vSteeringForce, force)) return m_vSteeringForce;
 		  }
@@ -268,142 +261,6 @@ public class RavenSteering {
 		  return m_vSteeringForce;
 		}
 
-=======
-	
-	//a pointer to the owner of this instance
-	private RavenBot ravenBot;
-	//pointer to the world data
-	private RavenGame world;
-	
-	//the steering force created by the combined effect of all
-	//the selected behaviors
-	private Vector2D steeringForce;
-	 
-	  //these can be used to keep track of friends, pursuers, or prey
-	private RavenBot targetAgent1;
-	private RavenBot targetAgent2;
-
-	  //the current target
-	private Vector2D target;
-
-
-	  //a vertex buffer to contain the feelers rqd for wall avoidance  
-	  private Vector<Vector2D> feelers;
-	  
-	  //the length of the 'feeler/s' used in wall detection
-	  private double wallDetectionFeelerLength;
-
-
-	  //the current position on the wander circle the agent is
-	  //attempting to steer towards
-	  private Vector2D     wanderTarget; 
-
-	  //explained above
-	  private double wanderJitter;
-	  private double wanderRadius;
-	  private double wanderDistance;
-
-
-	  //multipliers. These can be adjusted to effect strength of the  
-	  //appropriate behavior.
-	  private double        weightSeparation;
-	  private double        weightWander;
-	  private double        weightWallAvoidance;
-	  private double        weightSeek;
-	  private double        weightArrive;
-
-
-	  //how far the agent can 'see'
-	  private double        wiewDistance;
-
-	  //binary flags to indicate whether or not a behavior should be active
-	  private int           flags;
-
-	  
-	  //Arrive makes use of these to determine how quickly a Raven_Bot
-	  //should decelerate to its target
-	  private enum Deceleration{fast, normal, slow};
-	  //TODO
-	  //default
-	  private Deceleration deceleration;
-
-	  //is cell space partitioning to be used or not?
-	  private boolean cellSpaceOn;
-	  
-
-	  //what type of method is used to sum any active behavior
-	  SummingMethod  summingMethod;
-
-
-	  //this function tests if a specific bit of m_iFlags is set
-	  private boolean On(BehaviorType bt){
-		  //TODO
-		  return (flags & bt) == bt;}
-
-	  public boolean AccumulateForce(Vector2D sf, Vector2D ForceToAdd){
-		return false;
-		//TODO
-	}
-
-	  //creates the antenna utilized by the wall avoidance behavior
-	  void      CreateFeelers(){
-		  //TODO
-	}
-
-
-
-	   /* .......................................................
-
-	                    BEGIN BEHAVIOR DECLARATIONS
-
-	      .......................................................*/
-
-
-	  //this behavior moves the agent towards a target position
-	  private Vector2D Seek(final Vector2D target){
-		
-		  return null;
-	}
-
-	  //this behavior is similar to seek but it attempts to arrive 
-	  //at the target with a zero velocity
-	  private Vector2D Arrive(final Vector2D target, final Deceleration deceleration){
-		//TODO
-		  return null;
-	}
-
-	  //this behavior makes the agent wander about randomly
-	  private Vector2D Wander(){
-		//TODO
-		  return null;
-	}
-
-	  //this returns a steering force which will keep the agent away from any
-	  //walls it may encounter
-	  private Vector2D WallAvoidance(final List<Wall2D> walls){
-		//TODO
-		  return null;
-	}
-
-	  
-	  private Vector2D Separation(final List<RavenBot> agents){
-		//TODO
-		  return null;
-	}
-
-
-	    /* .......................................................
-
-	                       END BEHAVIOR DECLARATIONS
-
-	      .......................................................*/
-
-	  //calculates and sums the steering forces from any active behaviors
-	  private Vector2D CalculatePrioritized(){
-		//TODO
-		  return null;
-	}
->>>>>>> refs/heads/master
 
 	  public RavenSteering(RavenGame world, RavenBot ravenBot) {
 		// TODO Auto-generated constructor stub
@@ -418,7 +275,6 @@ public class RavenSteering {
 	  //calculates the component of the steering force that is parallel
 	  //with the Raven_Bot heading
 	  public double    ForwardComponent(){
-<<<<<<< HEAD
 		  return ravenBot.heading().dot(steeringForce);
 		  
 	}
@@ -427,17 +283,6 @@ public class RavenSteering {
 	  //with the Raven_Bot heading
 	  public double    SideComponent(){
 		  return ravenBot.side().dot(steeringForce);
-=======
-		//TODO
-		  return 0;
-	}
-
-	  //calculates the component of the steering force that is perpendicuar
-	  //with the Raven_Bot heading
-	  public double    SideComponent(){
-		//TODO
-		  return 0;
->>>>>>> refs/heads/master
 	}
 
 
@@ -471,7 +316,6 @@ public class RavenSteering {
 	  public void ArriveOff(){if(On(arrive)) flags ^=arrive;}
 	  public void WanderOff(){if(On(wander)) flags ^=wander;}
 	  public void SeparationOff(){if(On(separation)) flags ^=separation;}
-<<<<<<< HEAD
 	  public void WallAvoidanceOff(){if(On(behaviorType.wallAvoidance)) flags ^=wallAvoidance;}
 
 	  public boolean SeekIsOn(){return On(behaviorType.seek);}
@@ -479,15 +323,6 @@ public class RavenSteering {
 	  public boolean WanderIsOn(){return On(behaviorType.wander);}
 	  public boolean SeparationIsOn(){return On(behaviorType.separation);}
 	  public boolean WallAvoidanceIsOn(){return On(behaviorType.wallAvoidance);}
-=======
-	  public void WallAvoidanceOff(){if(On(wallAvoidance)) flags ^=wallAvoidance;}
-
-	  public boolean SeekIsOn(){return On(seek);}
-	  public boolean ArriveIsOn(){return On(arrive);}
-	  public boolean WanderIsOn(){return On(wander);}
-	  public boolean SeparationIsOn(){return On(separation);}
-	  public boolean WallAvoidanceIsOn(){return On(wallAvoidance);}
->>>>>>> refs/heads/master
 
 	 public final Vector<Vector2D> GetFeelers(){return feelers;}
 	  
