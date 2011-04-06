@@ -4,7 +4,6 @@
 package raven.game.armory;
 
 import java.util.List;
-import java.util.Vector;
 
 import raven.game.RavenBot;
 import raven.game.RavenObject;

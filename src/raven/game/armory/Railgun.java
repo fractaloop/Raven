@@ -17,7 +17,6 @@ import raven.math.Transformations;
 import raven.math.Vector2D;
 import raven.script.RavenScript;
 import raven.ui.GameCanvas;
-import sun.security.action.GetLongAction;
 
 /**
  * @author chester

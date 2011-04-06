@@ -86,7 +86,6 @@ public class Blaster extends RavenWeapon {
 		FzSet Target_Far = DistToTarget.AddRightShoulderSet("Target_Far", 150, 300, 1000);
 	
 		FuzzyVariable Desirability = getFuzzyModule().CreateFLV("Desirability"); 
-		FzSet VeryDesirable = Desirability.AddRightShoulderSet("VeryDesirable", 50, 75, 100);
 		FzSet Desirable = Desirability.AddTriangularSet("Desirable", 25, 50, 75);
 		FzSet Undesirable = Desirability.AddLeftShoulderSet("Undesirable", 0, 25, 50);
 		

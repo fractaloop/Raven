@@ -16,7 +16,7 @@ public class Slug extends RavenProjectile {
 	private static double slugMaxForce = RavenScript.getDouble("slug_maxforce");
 	private static Vector2D slugScale = new Vector2D(RavenScript.getDouble("slug_scale"), RavenScript.getDouble("slug_scale"));
 	private static int slugDamage = RavenScript.getInt("slug_damage");
-	private static double slugBlastRadius = 1; //TODO: Pellet has no blast radius, what is default?
+	private static double slugBlastRadius = 1;
 	private static double slugTimePersist = RavenScript.getDouble("slug_persistance");
 	
 	public Slug(RavenBot shooter, Vector2D target) {
@@ -35,7 +35,7 @@ public class Slug extends RavenProjectile {
 
 		  //first find the closest wall that this ray intersects with. Then we
 		  //can test against all entities within this range.
-		  double DistToClosestImpact = GetWorld().getDistanceToClosestWall(pos().sub(velocity), pos());
+		  //double DistToClosestImpact = GetWorld().getDistanceToClosestWall(pos().sub(velocity), pos());
 		  
 		  //test to see if the ray between the current position of the slug and 
 		  //the start position intersects with any bots.

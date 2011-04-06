@@ -2,11 +2,14 @@ package raven.game.armory;
 
 import java.util.ArrayList;
 
+import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
+
 import raven.game.RavenBot;
 import raven.game.messaging.Dispatcher;
 import raven.game.messaging.RavenMessage;
 import raven.math.Vector2D;
 import raven.script.RavenScript;
+import raven.ui.GameCanvas;
 
 public class Rocket extends RavenProjectile {
 
@@ -19,7 +22,6 @@ public class Rocket extends RavenProjectile {
 	private static double currentBlastRadius;
 	
 	public Rocket(RavenBot shooter, Vector2D target) {
-		// TODO Auto-generated constructor stub
 		super(target, 0.0, shooter.velocity(), rocketMaxSpeed, shooter.heading(), rocketMass, rocketScale, shooter.maxTurnRate(), rocketMaxForce, rocketBlastRadius, rocketDamage, shooter.getWorld());
 		currentBlastRadius = 0.0;
 	}
@@ -99,7 +101,15 @@ public class Rocket extends RavenProjectile {
 	}
 	
 	public void render(){
-		//TODO: implements
+		  GameCanvas.redPen();
+		  GameCanvas.orangeBrush();
+		  GameCanvas.circle(pos(), 2);
+
+		  if (HasImpacted())
+		  {
+		    GameCanvas.hollowBrush();
+		    GameCanvas.circle(pos(), currentBlastRadius);
+		  }
 	}
 	
 	public void update(){
