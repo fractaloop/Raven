@@ -15,6 +15,7 @@ import raven.game.navigation.NavGraphEdge;
 import raven.game.navigation.NavGraphNode;
 import raven.game.triggers.Trigger;
 import raven.game.triggers.TriggerHealthGiver;
+import raven.game.triggers.TriggerOnButtonSendMsg;
 import raven.game.triggers.TriggerSoundNotify;
 import raven.game.triggers.TriggerSystem;
 import raven.game.triggers.TriggerWeaponGiver;
@@ -127,7 +128,7 @@ public class RavenMap {
 	}
 	
 	private void addDoorTrigger(Reader reader) {
-		TriggerOnBottonSendMsg<RavenBot> trigger = new TriggerOnButtonSendMsg<RavenBot>(reader);
+		TriggerOnButtonSendMsg<RavenBot> trigger = new TriggerOnButtonSendMsg<RavenBot>(reader);
 		
 		triggerSystem.register(trigger);
 		
