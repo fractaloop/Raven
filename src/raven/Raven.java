@@ -21,6 +21,11 @@ import raven.ui.GameCanvas;
 import raven.ui.KeyState;
 
 public class Raven extends JFrame implements KeyListener, MouseListener {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3435740439713124161L;
+
 	private static class RavenHolder {
 		public static final Raven INSTANCE = new Raven();
 	}

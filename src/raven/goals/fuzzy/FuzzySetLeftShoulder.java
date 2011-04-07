@@ -9,6 +9,11 @@ package raven.goals.fuzzy;
  */
 public class FuzzySetLeftShoulder extends FuzzySet {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5897724469588203295L;
+
 	public FuzzySetLeftShoulder(double repVal) {
 		super(repVal);
 		// TODO Auto-generated constructor stub

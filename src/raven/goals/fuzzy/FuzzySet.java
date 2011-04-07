@@ -41,6 +41,11 @@ public abstract class FuzzySet implements java.io.Serializable, FuzzyTerm{
 	}
 	
 	/**
+	 * NEVER CREATE THIS DIRECTLY
+	 */
+	public FuzzySet() {}
+	
+	/**
 	 * return the degree of membership in this set of the given value. NOTE,
 	 * this does not set m_dDOM to the DOM of the value passed as the parameter.
 	 * This is because the centroid defuzzification method also uses this method

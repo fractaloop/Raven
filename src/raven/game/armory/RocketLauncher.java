@@ -9,7 +9,7 @@ import raven.game.RavenBot;
 import raven.game.RavenObject;
 import raven.goals.fuzzy.FuzzyModule;
 import raven.goals.fuzzy.FuzzyVariable;
-import raven.goals.fuzzy.FzAND;
+import raven.goals.fuzzy.FzAnd;
 import raven.goals.fuzzy.FzSet;
 import raven.script.RavenScript;
 import raven.ui.GameCanvas;
@@ -67,17 +67,17 @@ public class RocketLauncher extends RavenWeapon {
 		  FzSet Ammo_Low = AmmoStatus.AddTriangularSet("Ammo_Low", 0, 0, 10);
 
 
-		  getFuzzyModule().AddRule(new FzAND(Target_Close, Ammo_Loads), Undesirable);
-		  getFuzzyModule().AddRule(new FzAND(Target_Close, Ammo_Okay), Undesirable);
-		  getFuzzyModule().AddRule(new FzAND(Target_Close, Ammo_Low), Undesirable);
+		  getFuzzyModule().AddRule(new FzAnd(Target_Close, Ammo_Loads), Undesirable);
+		  getFuzzyModule().AddRule(new FzAnd(Target_Close, Ammo_Okay), Undesirable);
+		  getFuzzyModule().AddRule(new FzAnd(Target_Close, Ammo_Low), Undesirable);
 
-		  getFuzzyModule().AddRule(new FzAND(Target_Medium, Ammo_Loads), VeryDesirable);
-		  getFuzzyModule().AddRule(new FzAND(Target_Medium, Ammo_Okay), VeryDesirable);
-		  getFuzzyModule().AddRule(new FzAND(Target_Medium, Ammo_Low), Desirable);
+		  getFuzzyModule().AddRule(new FzAnd(Target_Medium, Ammo_Loads), VeryDesirable);
+		  getFuzzyModule().AddRule(new FzAnd(Target_Medium, Ammo_Okay), VeryDesirable);
+		  getFuzzyModule().AddRule(new FzAnd(Target_Medium, Ammo_Low), Desirable);
 
-		  getFuzzyModule().AddRule(new FzAND(Target_Far, Ammo_Loads), Desirable);
-		  getFuzzyModule().AddRule(new FzAND(Target_Far, Ammo_Okay), Undesirable);
-		  getFuzzyModule().AddRule(new FzAND(Target_Far, Ammo_Low), Undesirable);
+		  getFuzzyModule().AddRule(new FzAnd(Target_Far, Ammo_Loads), Desirable);
+		  getFuzzyModule().AddRule(new FzAnd(Target_Far, Ammo_Okay), Undesirable);
+		  getFuzzyModule().AddRule(new FzAnd(Target_Far, Ammo_Low), Undesirable);
 	}
 	
 	public void render(){

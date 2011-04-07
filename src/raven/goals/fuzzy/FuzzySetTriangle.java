@@ -9,6 +9,11 @@ package raven.goals.fuzzy;
  */
 public class FuzzySetTriangle extends FuzzySet {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2416795701517500624L;
+
 	public FuzzySetTriangle(double repVal) {
 		super(repVal);
 		// TODO Auto-generated constructor stub

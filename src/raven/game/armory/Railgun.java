@@ -9,7 +9,7 @@ import raven.game.RavenBot;
 import raven.game.RavenObject;
 import raven.goals.fuzzy.FuzzyModule;
 import raven.goals.fuzzy.FuzzyVariable;
-import raven.goals.fuzzy.FzAND;
+import raven.goals.fuzzy.FzAnd;
 import raven.goals.fuzzy.FzFairly;
 import raven.goals.fuzzy.FzSet;
 import raven.goals.fuzzy.FzVery;
@@ -64,17 +64,17 @@ public class Railgun extends RavenWeapon {
 
 		  
 
-		  getFuzzyModule().AddRule(new FzAND(Target_Close, Ammo_Loads), new FzFairly(Desirable));
-		  getFuzzyModule().AddRule(new FzAND(Target_Close, Ammo_Okay),  new FzFairly(Desirable));
-		  getFuzzyModule().AddRule(new FzAND(Target_Close, Ammo_Low), Undesirable);
+		  getFuzzyModule().AddRule(new FzAnd(Target_Close, Ammo_Loads), new FzFairly(Desirable));
+		  getFuzzyModule().AddRule(new FzAnd(Target_Close, Ammo_Okay),  new FzFairly(Desirable));
+		  getFuzzyModule().AddRule(new FzAnd(Target_Close, Ammo_Low), Undesirable);
 
-		  getFuzzyModule().AddRule(new FzAND(Target_Medium, Ammo_Loads), VeryDesirable);
-		  getFuzzyModule().AddRule(new FzAND(Target_Medium, Ammo_Okay), Desirable);
-		  getFuzzyModule().AddRule(new FzAND(Target_Medium, Ammo_Low), Desirable);
+		  getFuzzyModule().AddRule(new FzAnd(Target_Medium, Ammo_Loads), VeryDesirable);
+		  getFuzzyModule().AddRule(new FzAnd(Target_Medium, Ammo_Okay), Desirable);
+		  getFuzzyModule().AddRule(new FzAnd(Target_Medium, Ammo_Low), Desirable);
 
-		  getFuzzyModule().AddRule(new FzAND(Target_Far, Ammo_Loads), new FzVery(VeryDesirable));
-		  getFuzzyModule().AddRule(new FzAND(Target_Far, Ammo_Okay), new FzVery(VeryDesirable));
-		  getFuzzyModule().AddRule(new FzAND(Target_Far, new FzFairly(Ammo_Low)), VeryDesirable);
+		  getFuzzyModule().AddRule(new FzAnd(Target_Far, Ammo_Loads), new FzVery(VeryDesirable));
+		  getFuzzyModule().AddRule(new FzAnd(Target_Far, Ammo_Okay), new FzVery(VeryDesirable));
+		  getFuzzyModule().AddRule(new FzAnd(Target_Far, new FzFairly(Ammo_Low)), VeryDesirable);
 	}
 	
 	public void render(){

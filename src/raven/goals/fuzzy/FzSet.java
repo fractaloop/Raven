@@ -18,6 +18,11 @@ public class FzSet implements FuzzyTerm, Serializable {
 	
 	private FuzzySet set;
 	
+	/**
+	 * NEVER CREATE THIS DIRECTLY
+	 */
+	public FzSet() {}
+	
 	public FzSet(FuzzySet fs){
 		set = fs;
 	}

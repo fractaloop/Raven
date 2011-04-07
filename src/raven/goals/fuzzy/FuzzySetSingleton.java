@@ -9,6 +9,11 @@ package raven.goals.fuzzy;
  */
 public class FuzzySetSingleton extends FuzzySet {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6467990518325560801L;
+
 	public FuzzySetSingleton(double repVal) {
 		super(repVal);
 		// TODO Auto-generated constructor stub

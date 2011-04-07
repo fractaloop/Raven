@@ -216,7 +216,7 @@ public class RavenSteering {
 		//TODO
 		  Vector2D force;
 
-		  if (On(behaviorType.wallAvoidance))
+		  if (On(BehaviorType.wallAvoidance))
 		  {
 		    force = WallAvoidance(world.getMap().getWalls()WeightWallAvoidance;
 
@@ -316,13 +316,13 @@ public class RavenSteering {
 	  public void ArriveOff(){if(On(arrive)) flags ^=arrive;}
 	  public void WanderOff(){if(On(wander)) flags ^=wander;}
 	  public void SeparationOff(){if(On(separation)) flags ^=separation;}
-	  public void WallAvoidanceOff(){if(On(behaviorType.wallAvoidance)) flags ^=wallAvoidance;}
+	  public void WallAvoidanceOff(){if(On(BehaviorType.wallAvoidance)) flags ^=wallAvoidance;}
 
-	  public boolean SeekIsOn(){return On(behaviorType.seek);}
-	  public boolean ArriveIsOn(){return On(behaviorType.arrive);}
-	  public boolean WanderIsOn(){return On(behaviorType.wander);}
-	  public boolean SeparationIsOn(){return On(behaviorType.separation);}
-	  public boolean WallAvoidanceIsOn(){return On(behaviorType.wallAvoidance);}
+	  public boolean SeekIsOn(){return On(BehaviorType.seek);}
+	  public boolean ArriveIsOn(){return On(BehaviorType.arrive);}
+	  public boolean WanderIsOn(){return On(BehaviorType.wander);}
+	  public boolean SeparationIsOn(){return On(BehaviorType.separation);}
+	  public boolean WallAvoidanceIsOn(){return On(BehaviorType.wallAvoidance);}
 
 	 public final Vector<Vector2D> GetFeelers(){return feelers;}
 	  
