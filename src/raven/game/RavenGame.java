@@ -224,7 +224,7 @@ public class RavenGame {
 		}
 		
 		// update the triggers
-		map.updateTriggerSystem();
+		map.updateTriggerSystem(delta);
 		
 		// if the user has requested that the number of bots be decreased,
 		// remove one

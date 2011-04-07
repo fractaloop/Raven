@@ -525,6 +525,7 @@ public class RavenBot extends MovingEntity {
 	}
 
 	/** returns true if this bot is ready to test against all triggers */
+	@Override
 	public boolean isReadyForTriggerUpdate() {
 		return triggerTestRegulator.isReady();
 	}

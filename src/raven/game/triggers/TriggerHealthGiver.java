@@ -17,7 +17,8 @@ public class TriggerHealthGiver extends TriggerRespawning<RavenBot> {
 
 	@Override
 	public void tryTrigger(RavenBot bot) {
-		if (isActive() && isTouchingTrigger(bot.pos(), bot.getBRadius())) {
+		if (isActive() && isTouchingTrigger(bot.pos(), bot.getBRadius())
+				&& bot.isReadyForTriggerUpdate() && bot.isAlive()) {
 			bot.increaseHealth(healthGiven);
 		}
 		

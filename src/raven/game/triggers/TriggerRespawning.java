@@ -1,6 +1,8 @@
 package raven.game.triggers;
 
-public abstract class TriggerRespawning<T> extends Trigger<T> {
+import raven.game.BaseGameEntity;
+
+public abstract class TriggerRespawning<T extends BaseGameEntity> extends Trigger<T> {
 	protected double numSecondsBetweenRespawns;
 	protected double numSecondsRemainingUntilRespawn;
 	

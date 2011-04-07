@@ -1,6 +1,8 @@
 package raven.game.triggers;
 
-public abstract class TriggerLimitedLifetime<T> extends Trigger<T>{
+import raven.game.BaseGameEntity;
+
+public abstract class TriggerLimitedLifetime<T extends BaseGameEntity> extends Trigger<T>{
 	protected double lifetime;
 	
 	public TriggerLimitedLifetime(double lifetime) {

@@ -3,7 +3,7 @@ package raven.game.triggers;
 import raven.game.BaseGameEntity;
 import raven.math.Vector2D;
 	
-public abstract class Trigger<T> extends BaseGameEntity {
+public abstract class Trigger<T extends BaseGameEntity> extends BaseGameEntity {
 	private TriggerRegion regionOfInfluence;
 	
 	private boolean removeFromGame;
