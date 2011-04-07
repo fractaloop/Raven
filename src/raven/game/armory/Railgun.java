@@ -112,7 +112,7 @@ public class Railgun extends RavenWeapon {
 		  getFuzzyModule().Fuzzify("DistanceToTarget", distToTarget);
 		  getFuzzyModule().Fuzzify("AmmoStatus", (double)getRoundsRemaining());
 	
-		  desire = getFuzzyModule().Defuzzify("Desirability", FuzzyModule.maxAv);
+		  desire = getFuzzyModule().Defuzzify("Desirability", FuzzyModule.DefuzzifyMethod.max_av);
 		  setLastDesireability(desire);
 		  }
 

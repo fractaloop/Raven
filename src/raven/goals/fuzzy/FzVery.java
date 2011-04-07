@@ -3,6 +3,8 @@
  */
 package raven.goals.fuzzy;
 
+import raven.utils.Cloner;
+
 /**
  * @author chester
  *
@@ -23,8 +25,7 @@ public class FzVery implements FuzzyTerm{
 
 	@Override
 	public FuzzyTerm Clone() {
-		// TODO Auto-generated method stub
-		return null;
+		return Cloner.Clone(this);
 	}
 
 	@Override
@@ -35,7 +36,6 @@ public class FzVery implements FuzzyTerm{
 	@Override
 	public void ORwithDOM(double value) {
 		set.ORwithDOM(value * value);
-		
 	}
 	
 	

@@ -49,4 +49,6 @@ public class FzSet implements FuzzyTerm, Serializable {
 		set.ORwithDOM(value);		
 	}
 	
+	public FuzzySet set() { return set; }
+	
 }
