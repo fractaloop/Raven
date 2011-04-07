@@ -101,4 +101,9 @@ public abstract class RavenWeapon {
 	public void UpdateTimeWeaponIsNextAvailable() { timeNextAvailable = System.nanoTime() + 1.0/rateOfFire; }
 	
 	private void InitializeFuzzyModule() {}
+
+
+	public double getLastDesirabilityScore() {
+		return lastDesireabilityScore;
+	}
 }

@@ -250,7 +250,7 @@ public class RavenBot extends MovingEntity {
 		// the bot is under user control. This is because a goal is created
 		// whenever a user clicks on an area of the map that necessitates a
 		// path planning request.
-		brain.process();
+		brain.Process();
 
 		// Calculate the steering force and update the bot's velocity and
 		// position
@@ -266,7 +266,7 @@ public class RavenBot extends MovingEntity {
 
 			// appraise and arbitrate between all possible high level goals
 			if (goalArbitrationRegulator.isReady()) {
-				brain.arbitrate();
+				brain.Arbitrate();
 			}
 
 			// update the sensory memory with any visual stimulus
@@ -511,7 +511,7 @@ public class RavenBot extends MovingEntity {
 	public void exorcise() {
 		possessed = false;
 		
-		brain.addGoal_Explore();
+		brain.addGoal_explore();
 	}
 
 	/** spawns the bot at the given position */
@@ -525,7 +525,6 @@ public class RavenBot extends MovingEntity {
 	}
 
 	/** returns true if this bot is ready to test against all triggers */
-	@Override
 	public boolean isReadyForTriggerUpdate() {
 		return triggerTestRegulator.isReady();
 	}

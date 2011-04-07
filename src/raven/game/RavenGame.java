@@ -496,10 +496,10 @@ public class RavenGame {
 			// if the shift key is pressed down at the same time as clicking
 			// then the movement command will be queued
 			if (Raven.isKeyPressed(KeyEvent.VK_SHIFT)) {
-				selectedBot.getBrain().queueGoal_moveToPosition(p);
+				selectedBot.getBrain().queueGoal_moveToPosition(selectedBot.pos(), p);
 			} else {
 				selectedBot.getBrain().removeAllSubgoals();
-				selectedBot.getBrain().addGoal_moveToPosition(p);
+				selectedBot.getBrain().addGoal_moveToPosition(selectedBot.pos(), p);
 			}
 		}
 	}

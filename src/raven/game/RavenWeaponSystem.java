@@ -108,7 +108,7 @@ public class RavenWeaponSystem {
 						&& owner.hasLOSto(aimingPos)) {
 					addNoiseToAim(aimingPos);
 					
-					getCurrentWeapon().shootAt(aimingPos);
+					getCurrentWeapon().ShootAt(aimingPos);
 
 				}
 			}
@@ -121,7 +121,7 @@ public class RavenWeaponSystem {
 						&& owner.hasLOSto(aimingPos)) {
 					addNoiseToAim(aimingPos);
 					
-					getCurrentWeapon().shootAt(aimingPos);
+					getCurrentWeapon().ShootAt(aimingPos);
 				}
 			}
 		}
@@ -146,7 +146,7 @@ public class RavenWeaponSystem {
 			for (RavenWeapon weapon : weaponMap.values()) {
 				// grab the desirability of this weapon (desirability is based
 				// upon distance to target and ammo remaining)
-				double score = weapon.getDesirability(distToTarget);
+				double score = weapon.GetDesireability(distToTarget);
 				
 				if (score > bestSoFar) {
 					bestSoFar = score;
@@ -159,7 +159,7 @@ public class RavenWeaponSystem {
 	}
 
 	public void addWeapon(RavenObject weaponType) {
-		RavenWeapon newWeap;
+		RavenWeapon newWeap = null;
 		
 		switch (weaponType) {
 		case RAIL_GUN:
@@ -171,11 +171,13 @@ public class RavenWeaponSystem {
 		case ROCKET_LAUNCHER:
 			newWeap = new RocketLauncher(owner);
 			break;
+		default:
+			newWeap = new Blaster(owner);
 		}
 		
 		RavenWeapon present = getWeaponFromInventory(weaponType);
 		if (present != null) {
-			present.incrementRounds(newWeap.numRoundsRemaining());
+			present.incrementRounds(newWeap.getRoundsRemaining());
 		} else {
 			weaponMap.put(weaponType, newWeap);
 		}
@@ -190,7 +192,7 @@ public class RavenWeaponSystem {
 	}
 
 	public void shootAt(Vector2D pos) {
-		getCurrentWeapon().shootAt(pos);
+		getCurrentWeapon().ShootAt(pos);
 	}
 	
 	/** returns a pointer to the current weapon */
@@ -202,7 +204,7 @@ public class RavenWeaponSystem {
 	
 	public int getAmmoRemainingForWeapon(RavenObject weaponType) {
 		if (weaponMap.containsKey(weaponType)) {
-			return weaponMap.get(weaponType).numRoundsRemaining();
+			return weaponMap.get(weaponType).getRoundsRemaining();
 		}
 		
 		return 0;
@@ -221,7 +223,7 @@ public class RavenWeaponSystem {
 		
 		for (RavenObject weaponKey : weaponMap.keySet()) {
 			double score = weaponMap.get(weaponKey).getLastDesirabilityScore();
-			final DecimalFormat formatter = new DecimalFormat("0.00")
+			final DecimalFormat formatter = new DecimalFormat("0.00");
 			GameCanvas.textAtPos(p.x + 10, p.y - offset, formatter.format(score) + " " + weaponKey.getDescription());
 		}
 	}
