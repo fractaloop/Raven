@@ -61,5 +61,55 @@ public class Geometry {
 			return false;
 		}
 	}
+	
+	/**
+	 * given a line segment AB and a circle position and radius, this function
+	 * determines if there is an intersection and stores the position of the
+	 * closest intersection in the reference IntersectionPoint
+	 * @param a
+	 * @param b
+	 * @param pos
+	 * @param radius
+	 * @return null if no intersection point is found
+	 */
+	public Vector2D getLineSegmentCircleClosestIntersectionPoint(
+			Vector2D a, Vector2D b, Vector2D pos, double radius) {
+		
+		Vector2D toBNorm = b.sub(a);
+		toBNorm.normalize();
 
+		// move the circle into the local space defined by the vector B-A with
+		// origin at A
+		Vector2D localPos = Transformations.pointToLocalSpace(pos, toBNorm, toBNorm.perp(), a);
+
+		// if the local position + the radius is negative then the circle lays
+		// behind point A so there is no intersection possible. If the local x
+		// pos minus the radius is greater than length A-B then the circle
+		// cannot intersect the line segment
+		if ( (localPos.x + radius >= 0) && ( (localPos.x - radius) * (localPos.x - radius) <= b.distanceSq(a)) )
+		{
+			//if the distance from the x axis to the object's position is less
+			//than its radius then there is a potential intersection.
+			if (Math.abs(localPos.y) < radius)
+			{
+				//now to do a line/circle intersection test. The center of the 
+				//circle is represented by A, B. The intersection points are 
+				//given by the formulae x = A +/-sqrt(r^2-B^2), y=0. We only 
+				//need to look at the smallest positive value of x.
+				double x = localPos.x;
+				double y = localPos.y;       
+
+				double ip = x - Math.sqrt(radius * radius - y * y);
+
+				if (ip <= 0)
+				{
+					ip = x + Math.sqrt(radius * radius - y * y);
+				}
+
+				return a.add(toBNorm.mul(ip));
+			}
+		}
+
+		return null;
+	}
 }
