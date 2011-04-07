@@ -46,6 +46,8 @@ public abstract class Trigger<T extends BaseGameEntity> extends BaseGameEntity {
 	
 	public abstract void tryTrigger(T entity);
 	
+	public abstract void update(double delta);
+	
 	// Accessors
 	
 	public int graphNodeIndex() { return graphNodeIndex; }
