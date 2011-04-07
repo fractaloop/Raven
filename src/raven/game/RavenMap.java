@@ -15,6 +15,7 @@ import raven.game.navigation.NavGraphEdge;
 import raven.game.navigation.NavGraphNode;
 import raven.game.triggers.Trigger;
 import raven.game.triggers.TriggerHealthGiver;
+import raven.game.triggers.TriggerSoundNotify;
 import raven.game.triggers.TriggerSystem;
 import raven.game.triggers.TriggerWeaponGiver;
 import raven.math.CellSpacePartition;
@@ -23,7 +24,8 @@ import raven.math.Wall2D;
 import raven.math.graph.GraphNode;
 import raven.math.graph.SparseGraph;
 import raven.script.RavenScript;
-import raven.util.Pair;
+import raven.ui.GameCanvas;
+import raven.utils.Pair;
 import raven.utils.StreamUtils;
 
 public class RavenMap {
@@ -70,7 +72,7 @@ public class RavenMap {
 	
 	/* this will hold a pre-calculated lookup table of the cost to travel
 	 * from */
-	private Map<Pair<GraphNode, GraphNode>, Double> pathCosts;
+	private Map<Pair<Integer, Integer>, Double> pathCosts;
 	
 
 	// stream constructors for loading from a file
@@ -161,9 +163,9 @@ public class RavenMap {
 	 * loads an environment from a file
 	 * @param filename the filename to load
 	 * @return true only if the file loaded successfully
-	 * @throws FileNotFoundException 
+	 * @throws IOException 
 	 */
-	public boolean loadMap(String filename) throws FileNotFoundException {
+	public boolean loadMap(String filename) throws IOException {
 		FileReader reader = new FileReader(filename);
 		BufferedReader buffered = new BufferedReader(reader);
 		
@@ -196,34 +198,34 @@ public class RavenMap {
 			int entityType = (Integer)StreamUtils.getValueFromStream(reader);
 			
 			// create the object
-			switch (entityType) {
-			case RavenObject.WALL:
+			
+			switch (RavenObject.resolveType(entityType)) {
+			case WALL:
 				addWall(reader);
 				break;
-			case RavenObject.SLIDING_DOOR.getIndex():
+			case SLIDING_DOOR:
 				addDoor(reader);
 				break;
-			case RavenObject.DOOR_TRIGGER.getIndex():
+			case DOOR_TRIGGER:
 				addDoorTrigger(reader);
 				break;
-			case RavenObject.SPAWN_POINT.getIndex():
+			case SPAWN_POINT:
 				addSpawnPoint(reader);
 				break;
-			case RavenObject.HEALTH.getIndex():
+			case HEALTH:
 				addHealthGiver(reader);
 				break;
-			case RavenObject.SHOTGUN.getIndex():
+			case SHOTGUN:
 				addWeaponGiver(RavenObject.SHOTGUN, reader);
 				break;
-			case RavenObject.RAIL_GUN.getIndex():
+			case RAIL_GUN:
 				addWeaponGiver(RavenObject.RAIL_GUN, reader);
 				break;
-			case RavenObject.ROCKET_LAUNCHER.getIndex():
+			case ROCKET_LAUNCHER:
 				addWeaponGiver(RavenObject.ROCKET_LAUNCHER, reader);
 				break;
 			default:
 				throw new RuntimeErrorException(new Error("Map error: Attempted to load an undefined object"));
-				break;
 			}
 		}
 		
@@ -246,20 +248,37 @@ public class RavenMap {
 	}
 	
 	public void addSoundTrigger(RavenBot soundSource, double range) {
-		
+		triggerSystem.register(new TriggerSoundNotify(soundSource, range));
 	}
 	
 	public double calculateCostToTravelBetweenNodes(int node1, int node2) {
-		return 0;
+		if (node1 < 0 || node2 < 0 || node1 >= navGraph.numNodes() || node2 >= navGraph.numNodes())
+			throw new IndexOutOfBoundsException("Invalid node index: " + node1 + " to " + node2);
+		
+		return pathCosts.get(new Pair<Integer,Integer>(node1, node2));
 	}
 	
 	/** returns the position of a graph node selected at random */
 	public Vector2D getRandomNodeLocation() {
-		return null;
+		int randIndex = (int)(Math.random() * navGraph.numActiveNodes());
+		
+		GraphNode node = null;
+		for (int i = 0; i < navGraph.numNodes(); i++) {
+			node = navGraph.getNode(i);
+			if (node.index() != GraphNode.INVALID_NODE_INDEX) {
+				randIndex--;
+			}
+			if (randIndex < 0) {
+				break;
+			}
+		}
+		
+		return node.pos();
+		
 	}
 	
-	public void updateTriggerSystem() {
-		
+	public void updateTriggerSystem(double delta, List<RavenBot> bots) {
+		triggerSystem.update(delta, bots);
 	}
 	
 	// Accessors
@@ -309,7 +328,31 @@ public class RavenMap {
 	}
 
 	public void render() {
-		// TODO Auto-generated method stub
+		// render the navgraph
+		if (RavenUserOptions.showGraph) {
+//			navGraph.render(RavenUserOptions.showNodeIndices);
+		}
+		
+		// render any doors
+		for (RavenDoor door : doors) {
+			door.render();
+		}
+		
+		// render all triggers
+		triggerSystem.render();
+		
+		// render all walls
+		for (Wall2D wall : walls) {
+			GameCanvas.thickBlackPen();
+			wall.render();
+		}
+		
+		// render spawn points
+		for (Vector2D point : spawnPoints) {
+			GameCanvas.greyBrush();
+			GameCanvas.greyPen();
+			GameCanvas.circle(point, 7);
+		}
 		
 	}
 	

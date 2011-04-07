@@ -1,5 +1,7 @@
 package raven.game;
 
+import java.lang.reflect.Field;
+
 /**
  * Generic type definitions for Raven objects.
  * 
@@ -39,5 +41,13 @@ public enum RavenObject {
 	
 	public int toInteger() {
 		return index;
+	}
+
+	public static RavenObject resolveType(int entityType) {
+		for (RavenObject object : RavenObject.class.getEnumConstants()) {
+			if (object.toInteger() == entityType)
+				return object;
+		}
+		return RavenObject.UNUSED;
 	}
 };
