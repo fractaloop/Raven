@@ -1,6 +1,8 @@
 package raven.game;
 
 import java.awt.event.KeyEvent;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.*;
 
 import raven.Raven;
@@ -97,7 +99,12 @@ public class RavenGame {
 	// Public methods
 
 	public RavenGame() {
-		loadMap(RavenScript.getString("StartMap"));
+		try {
+			loadMap(RavenScript.getString("StartMap"));
+		} catch (IOException e) {
+			System.err.println("Failed to load map: " + RavenScript.getString("StartMap") + ". Reason: \n" + e.getLocalizedMessage());
+			System.exit(1);
+		}
 	}
 
 	/** The usual suspects */
@@ -224,7 +231,7 @@ public class RavenGame {
 		}
 		
 		// update the triggers
-		map.updateTriggerSystem(delta);
+		map.updateTriggerSystem(delta, bots);
 		
 		// if the user has requested that the number of bots be decreased,
 		// remove one
@@ -242,8 +249,9 @@ public class RavenGame {
 		}
 	}
 
-	/** Loads an environment from a file */
-	public boolean loadMap(String fileName) {
+	/** Loads an environment from a file 
+	 * @throws IOException */
+	public boolean loadMap(String fileName) throws IOException {
 		// clear any current bots and projectiles
 		clear();
 
