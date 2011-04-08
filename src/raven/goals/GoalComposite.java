@@ -78,6 +78,4 @@ public class GoalComposite<T extends BaseGameEntity> extends Goal<T> {
 	}
 	
 	
-	
-	
 }

@@ -5,15 +5,16 @@ import java.util.Random;
 import java.util.Vector;
 
 import raven.game.RavenBot;
+import raven.game.RavenObject;
 import raven.game.messaging.Telegram;
 import raven.math.Vector2D;
 
 public class GoalThink extends GoalComposite<RavenBot> {
 private Vector<Goal_Evaluator> m_Evaluators = new Vector<Goal_Evaluator>();
-private double HealthBias = 0;
-private double ShotgunBias = 0;
-private double RocketLauncherBias = 0;
-private double RailgunBias = 0;
+private double HealthBias = 0.0;
+private double ShotgunBias = 0.0;
+private double RocketLauncherBias = 0.0;
+private double RailgunBias = 0.0;
 private double ExploreBias = 0;
 private double AttackBias  = 0;
 
@@ -152,7 +153,7 @@ private double AttackBias  = 0;
 
 
 
-	public void queueGoal_moveToPosition(Vector2D p, Vector2D pos) {
+	public void queueGoal_moveToPosition(Vector2D pos) {
 		 m_SubGoals.add(new Goal_MoveToPosition(m_pOwner, pos));
 	}
 	public void addGoal_moveToPosition(Vector2D p, Vector2D pos) {
@@ -171,8 +172,7 @@ private double AttackBias  = 0;
 		  }
 	}
 	
-	// TODO FIND ITEM TYPE>>>> THIS IS BROKEN AS OF NOW >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    public void addGoal_getItem(Goal.itemType inp){
+    public void addGoal_getItem(RavenObject inp){
     	  if (notPresent(Goal.goalType.goal_get))
     	  {
     	    removeAllSubgoals();
