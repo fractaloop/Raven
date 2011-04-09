@@ -1,5 +1,6 @@
 package raven.game;
 
+<<<<<<< HEAD
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.HashMap;
@@ -7,6 +8,9 @@ import java.util.Map;
 
 import raven.game.armory.*;
 import raven.math.Transformations;
+=======
+import raven.goals.Goal.weaponType;
+>>>>>>> iskar909/master
 import raven.math.Vector2D;
 import raven.ui.GameCanvas;
 

@@ -1,28 +1,11 @@
 package raven.game;
 
-import java.awt.Canvas;
-import java.awt.Dimension;
-import java.awt.MouseInfo;
-import java.awt.Point;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.util.List;
 import java.util.Vector;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
 import raven.game.RavenGame;
-import raven.game.RavenObject;
-import raven.math.Vector2D;
-import raven.ui.GameCanvas;
-import raven.ui.KeyState;
-import java.util.List;
 import raven.math.*;
-
+import raven.math.Vector2D;
 
 //------------------------------------------------------------------------
 
@@ -312,24 +295,25 @@ public class RavenSteering {
 		// TODO Auto-generated method stub
 		
 	}
-	  public void SeekOff()  {if(On(seek))   flags ^=seek;}
-	  public void ArriveOff(){if(On(arrive)) flags ^=arrive;}
-	  public void WanderOff(){if(On(wander)) flags ^=wander;}
-	  public void SeparationOff(){if(On(separation)) flags ^=separation;}
-	  public void WallAvoidanceOff(){if(On(BehaviorType.wallAvoidance)) flags ^=wallAvoidance;}
+	
+	public void SeekOff()  {if(On(seek))   flags ^=seek;}
+	public void ArriveOff(){if(On(arrive)) flags ^=arrive;}
+	public void WanderOff(){if(On(wander)) flags ^=wander;}
+	public void SeparationOff(){if(On(separation)) flags ^=separation;}
+	public void WallAvoidanceOff(){if(On(BehaviorType.wallAvoidance)) flags ^=wallAvoidance;}
+    
+	public boolean SeekIsOn(){return On(BehaviorType.seek);}
+	public boolean ArriveIsOn(){return On(BehaviorType.arrive);}
+	public boolean WanderIsOn(){return On(BehaviorType.wander);}
+	public boolean SeparationIsOn(){return On(BehaviorType.separation);}
+	public boolean WallAvoidanceIsOn(){return On(BehaviorType.wallAvoidance);}
+    
+	ublic final Vector<Vector2D> GetFeelers(){return feelers;}
+	
+	public final double WanderJitter(){return wanderJitter;}
+	public final double WanderDistance(){return wanderDistance;}
+	public final double WanderRadius(){return wanderRadius;}
+    
+	public final double SeparationWeight(){return weightSeparation;}
 
-	  public boolean SeekIsOn(){return On(BehaviorType.seek);}
-	  public boolean ArriveIsOn(){return On(BehaviorType.arrive);}
-	  public boolean WanderIsOn(){return On(BehaviorType.wander);}
-	  public boolean SeparationIsOn(){return On(BehaviorType.separation);}
-	  public boolean WallAvoidanceIsOn(){return On(BehaviorType.wallAvoidance);}
-
-	 public final Vector<Vector2D> GetFeelers(){return feelers;}
-	  
-	  public final double WanderJitter(){return wanderJitter;}
-	  public final double WanderDistance(){return wanderDistance;}
-	  public final double WanderRadius(){return wanderRadius;}
-
-	  public final double SeparationWeight(){return weightSeparation;}
-	  
 }
