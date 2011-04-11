@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import raven.game.navigation.GraphNode;
+import raven.math.graph.GraphNode;
 
 public class CellSpacePartition<T extends GraphNode> implements Iterable<T> {
 	protected class Cell<E> {

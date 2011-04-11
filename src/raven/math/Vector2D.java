@@ -20,6 +20,11 @@ public class Vector2D {
 		this.y = y;
 	}
 	
+	public Vector2D(Vector2D pos) {
+		this.x = pos.x;
+		this.y = pos.y;
+	}
+
 	/** Set x and y to zero */
 	public void Zero() {
 		x = y = 0;

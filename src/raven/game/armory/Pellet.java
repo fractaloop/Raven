@@ -14,7 +14,7 @@ public class Pellet extends RavenProjectile {
 	private static double pelletMaxForce = RavenScript.getDouble("pellet_maxforce");
 	private static Vector2D pelletScale = new Vector2D(RavenScript.getDouble("pellet_scale"), RavenScript.getDouble("pellet_scale"));
 	private static int pelletDamage = RavenScript.getInt("pellet_damage");
-	private static double pelletBlastRadius = 1; //TODO: Pellet has no blast radius, what is default?
+	private static double pelletBlastRadius = 1;
 	private static double pelletTimePersist = RavenScript.getDouble("pellet_persistance");
 	
 		
@@ -25,14 +25,17 @@ public class Pellet extends RavenProjectile {
 				shooter.maxTurnRate(), pelletMaxForce, 
 				pelletBlastRadius, pelletDamage, 
 				shooter.getWorld());
-		
 	}
 
 	
 	private boolean isVisibleToPlayer()
 	{
-		//TODO: need clock time that Logan had an idea on.
-		return false;
+		if(pelletTimePersist > 0)
+		{
+			pelletTimePersist -= System.nanoTime(); 
+		}
+		
+		return pelletTimePersist > 0;
 	}
 	
 	public void render()
@@ -82,7 +85,7 @@ public class Pellet extends RavenProjectile {
 
 		  //first find the closest wall that this ray intersects with. Then we
 		  //can test against all entities within this range.
-		  double distToClosestImpact = this.GetWorld().getDistanceToClosestWall(pos().sub(velocity), pos());
+		  //double distToClosestImpact = this.GetWorld().getDistanceToClosestWall(pos().sub(velocity), pos());
 
 		  //test to see if the ray between the current position of the shell and 
 		  //the start position intersects with any bots.

@@ -34,7 +34,8 @@ public class TriggerWeaponGiver extends TriggerRespawning<RavenBot> {
 
 	@Override
 	public void tryTrigger(RavenBot entity) {
-		if (this.isActive() && this.isTouchingTrigger(entity.pos(), entity.getBRadius())) {
+		if (this.isActive() && this.isTouchingTrigger(entity.pos(), entity.getBRadius())
+				&& entity.isReadyForTriggerUpdate() && entity.isAlive()) {
 			entity.getWeaponSys().addWeapon(this.entityType());
 			
 			this.deactivate();

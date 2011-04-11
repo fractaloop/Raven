@@ -3,8 +3,6 @@
  */
 package raven.game.armory;
 
-import com.sun.org.apache.bcel.internal.generic.NEW;
-
 import raven.game.RavenBot;
 import raven.game.messaging.Dispatcher;
 import raven.game.messaging.RavenMessage;
@@ -23,7 +21,7 @@ public class Bolt extends RavenProjectile {
 	private static double boltMaxForce = RavenScript.getDouble("bolt_maxforce");
 	private static Vector2D boltScale = new Vector2D(RavenScript.getDouble("bolt_scale"), RavenScript.getDouble("bolt_scale"));
 	private static int boltDamage = RavenScript.getInt("bolt_damage");
-	private static double boltBlastRadius = 1; //TODO: Bolt has no blast radius, what is default?
+	private static double boltBlastRadius = 1;
 	
 	
 	public Bolt(RavenBot shooter, Vector2D target)

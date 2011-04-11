@@ -1,4 +1,4 @@
-package raven.game.navigation;
+package raven.math.graph;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -7,12 +7,15 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
+import raven.utils.Pair;
 import raven.utils.StreamUtils;
 
 public class SparseGraph<NodeType extends GraphNode, EdgeType extends GraphEdge> implements Iterable<NodeType> {
@@ -63,7 +66,8 @@ public class SparseGraph<NodeType extends GraphNode, EdgeType extends GraphEdge>
 	public SparseGraph(boolean digraph, GraphNodeFactory<NodeType> nodeFactory, GraphEdgeFactory<EdgeType> edgeFactory) {
 		this.nodeFactory = nodeFactory;
 		this.edgeFactory = edgeFactory;
-		
+		edges = new ArrayList<List<EdgeType>>();
+		nodes = new ArrayList<NodeType>();
 		nextNodeIndex = 0;
 		isDigraph = digraph;
 	}
@@ -75,7 +79,12 @@ public class SparseGraph<NodeType extends GraphNode, EdgeType extends GraphEdge>
 		
 		return nodes.get(idx);
 	}
-	
+
+	/** method to get all the neighbors of a node */
+	public List<? extends GraphEdge> getEdges(int index) {
+		return edges.get(index);
+	}
+
 	/** const method for obtaining a reference to an edge */
 	public EdgeType getEdge(int from, int to) {
 		if (from < 0 || from > nodes.size() || from == GraphNode.INVALID_NODE_INDEX)
@@ -362,5 +371,42 @@ public class SparseGraph<NodeType extends GraphNode, EdgeType extends GraphEdge>
 		return nodes.iterator();
 	}
 	
-	
+	// Utility functions. These used to be global, but they are generic
+	// and need an instance anyway
+	public double calculateAverageGraphEdgeLength() {
+		double totalLength = 0;
+		int numEdgesCounted = 0;
+
+		for (NodeType node : nodes) {
+			for (EdgeType edge : edges.get(node.index())) {
+				// increment edge counter
+				++numEdgesCounted;
+				// add length of edge to total length
+				totalLength += nodes.get(edge.from()).pos().distance(nodes.get(edge.from()).pos());
+			}
+		}
+		
+		return totalLength / numEdgesCounted;
+	}
+
+	// creates a lookup table of the cost associated from traveling from one
+	public Map<Pair<Integer, Integer>, Double> createAllPairsCostsTable() {
+		// Map a graph
+		Map<Pair<Integer, Integer>, Double> pathCosts = new HashMap<Pair<Integer, Integer>, Double>(numNodes() * numNodes() - numNodes());
+		
+		for (int source = 0; source < numNodes(); source++) {
+			// Do the search
+			GraphSearchDijkstra search = new GraphSearchDijkstra(this, source, -1);
+			
+			// iterate through every node in the graph and grab the cost to
+			// travel to that node
+			for (int target = 0; target < numNodes(); target++) {
+				if (source != target) {
+					pathCosts.put(new Pair<Integer, Integer>(source, target), search.getCostToNode(target));
+				}
+			}
+		}
+		
+		return pathCosts;
+	}
 }

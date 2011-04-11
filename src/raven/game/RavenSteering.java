@@ -1,27 +1,11 @@
 package raven.game;
 
-import java.awt.Canvas;
-import java.awt.Dimension;
-import java.awt.MouseInfo;
-import java.awt.Point;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.util.List;
 import java.util.Vector;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
 import raven.game.RavenGame;
-import raven.game.RavenObject;
-import raven.math.Vector2D;
-import raven.ui.GameCanvas;
-import raven.ui.KeyState;
-import java.util.List;
 import raven.math.*;
+<<<<<<< HEAD
 import raven.script.RavenScript;
 import sun.font.Script;
 import java.util.Random;
@@ -30,6 +14,9 @@ import java.lang.Math;
 
 
 
+=======
+import raven.math.Vector2D;
+>>>>>>> refs/remotes/choose_remote_name/master
 
 //------------------------------------------------------------------------
 
@@ -49,9 +36,25 @@ public class RavenSteering {
 	//public static final double WaypointSeekDist   = 20;                                          
 
 	
-	public enum SummingMethod{weightedAverage, prioritized, dithered};
-	//a pointer to the owner of this instance
-	private enum BehaviorType{none, seek, arrive, wander, separation, wallAvoidance};
+	public enum SummingMethod{
+		weightedAverage, 
+		prioritized, 
+		dithered
+	};
+	
+	private enum BehaviorType{
+		none(1), 
+		seek(2),
+		arrive(4),
+		wander(8),
+		separation(16),
+		wallAvoidance(32);
+		
+		private int value;
+		private BehaviorType(int i) {value = i;}
+		public int getValue() {return value;}
+	};
+	
 	private BehaviorType behaviorType;
 	private RavenBot ravenBot;
 	//pointer to the world data
@@ -99,7 +102,7 @@ public class RavenSteering {
 	  private double        viewDistance;
 
 	  //binary flags to indicate whether or not a behavior should be active
-	  private int           flags;
+	  private int flags;
 
 	  
 	  //Arrive makes use of these to determine how quickly a Raven_Bot
@@ -120,7 +123,7 @@ public class RavenSteering {
 	  //this function tests if a specific bit of m_iFlags is set
 	  private boolean On(BehaviorType bt){
 		  //TODO
-		  return (flags & bt) == bt;}
+		  return (flags & bt.getValue()) == bt.getValue();}
 
 	  public boolean AccumulateForce(Vector2D runningTot, Vector2D forceToAdd){
 		//calculate how much steering force the vehicle has used so far
@@ -199,7 +202,8 @@ public class RavenSteering {
 		//TODO    double speed =  dist / (deceleration* decelerationTweaker);     
 		    double speed;
 		    //make sure the velocity does not exceed the max
-		    speed = MinOf(speed, ravenBot.maxSpeed());
+		    speed = Math.min(speed, ravenBot.maxSpeed());
+		    
 
 		    //from here proceed just like Seek except we don't need to normalize 
 		    //the ToTarget vector because we have already gone to the trouble
@@ -231,7 +235,7 @@ public class RavenSteering {
 		  Vector2D target = wanderTarget.add(new Vector2D(wanderDistance, 0));
 
 		  //project the target into world space
-		  Vector2D Target = pointToWorldSpace(target, ravenBot.heading(), ravenBot.side(), ravenBot.pos());
+		  Vector2D Target = Transformations.pointToLocalSpace(target, ravenBot.heading(), ravenBot.side(), ravenBot.pos());
 
 		  //and steer towards it
 		  return Target.sub(ravenBot.pos()); 
@@ -260,7 +264,7 @@ public class RavenSteering {
 		    //run through each wall checking for any intersection points
 		    for (int w=0; w<walls.size(); ++w)
 		    {
-		      if (lineIntersection2D(ravenBot.pos(),
+		      if (Geometry.lineIntersection2D(ravenBot.pos(),
 		                             feelers.get(flr),
 		                             walls.get(w).from(),
 		                             walls.get(w).to()))
@@ -323,7 +327,7 @@ public class RavenSteering {
 		//TODO
 		  Vector2D force;
 
-		  if (On(behaviorType.wallAvoidance))
+		  if (On(BehaviorType.wallAvoidance))
 		  {
 		    force = WallAvoidance(world.getMap().getWalls()).mul(weightWallAvoidance);
 
@@ -333,31 +337,47 @@ public class RavenSteering {
 		 
 		  //these next three can be combined for flocking behavior (wander is
 		  //also a good behavior to add into this mix)
-
+/*
+<<<<<<< HEAD
 		    if (On(behaviorType.separation))
+=======*/
+		    if (On(BehaviorType.separation))
+//>>>>>>> refs/remotes/choose_remote_name/master
 		    {
 		      force = Separation(world.getBots()).mul(weightSeparation);
 
 		      if (!AccumulateForce(steeringForce, force)) return steeringForce;
 		    }
 
-
+/*
+<<<<<<< HEAD
 		  if (On(behaviorType.seek))
+=======*/
+		  if (On(BehaviorType.seek))
+//>>>>>>> refs/remotes/choose_remote_name/master
 		  {
 		    force = Seek(target).mul(weightSeek);
 
 		    if (!AccumulateForce(steeringForce, force)) return steeringForce;
 		  }
 
-
+/*
+<<<<<<< HEAD
 		  if (On(behaviorType.arrive))
+=======*/
+		  if (On(BehaviorType.arrive))
+//>>>>>>> refs/remotes/choose_remote_name/master
 		  {
 		    force = Arrive(target, deceleration).mul(weightArrive);
 
 		    if (!AccumulateForce(steeringForce, force)) return steeringForce;
 		  }
-
+/*
+<<<<<<< HEAD
 		  if (On(behaviorType.wander))
+=======*/
+		  if (On(BehaviorType.wander))
+//>>>>>>> refs/remotes/choose_remote_name/master
 		  {
 		    force = Wander().mul(weightWander);
 
@@ -381,7 +401,7 @@ public class RavenSteering {
           weightWallAvoidance=RavenScript.getDouble("WallAvoidanceWeight");
           viewDistance=RavenScript.getDouble("ViewDistance");
           wallDetectionFeelerLength=RavenScript.getDouble("WallDetectionFeelerLength");
-          feelers=3;
+    //TODO      feelers=3;
           deceleration=Deceleration.normal;
           targetAgent1=null;
           targetAgent2=null;
@@ -409,9 +429,9 @@ public class RavenSteering {
 		  steeringForce.Zero();
 
 		  //tag neighbors if any of the following 3 group behaviors are switched on
-		  if (On(behaviorType.separation))
+		  if (On(BehaviorType.separation))
 		  {
-		    world.tagRavenBotsWithinViewRange(ravenBot, viewDistance);
+	//TODO world.tagRavenBotsWithinViewRange(ravenBot, viewDistance);
 		  }
 
 		  steeringForce = CalculatePrioritized();
@@ -445,10 +465,18 @@ public class RavenSteering {
 
 	  public void SetSummingMethod(SummingMethod sm){summingMethod = sm;}
 
-	  public void SeekOn(){flags |= behaviorType.seek;}
-	  public void ArriveOn(){flags |= behaviorType.arrive;}
-	  public void WanderOn(){flags |= behaviorType.wander;}
-	  public void SeparationOn(){flags |= behaviorType.separation;}
+/*<<<<<<< HEAD
+	  public void SeekOn(){flags |= behaviorType.seek.getValue();}
+	  public void ArriveOn(){flags |= behaviorType.arrive.getValue();}
+	  public void WanderOn(){flags |= behaviorType.wander.getValue();}
+	  public void SeparationOn(){flags |= behaviorType.separation.getValue();}
+=======
+*/
+	  public void SeekOn(){flags |= BehaviorType.seek.getValue();}
+	  public void ArriveOn(){flags |= BehaviorType.arrive.getValue();}
+	  public void WanderOn(){flags |= BehaviorType.wander.getValue();}
+	  public void SeparationOn(){flags |= BehaviorType.separation.getValue();}
+//>>>>>>> refs/remotes/choose_remote_name/master
 
 	  
 	public void wallAvoidanceOn() {
@@ -459,25 +487,33 @@ public class RavenSteering {
 	public void separationOn() {
 		// TODO Auto-generated method stub
 		
-	}
-	  public void SeekOff()  {if(On(behaviorType.seek))flags ^= behaviorType.seek;}
-	  public void ArriveOff(){if(On(behaviorType.arrive)) flags ^=behaviorType.arrive;}
-	  public void WanderOff(){if(On(behaviorType.wander)) flags ^=behaviorType.wander;}
-	  public void SeparationOff(){if(On(behaviorType.separation)) flags ^=behaviorType.separation;}
-	  public void WallAvoidanceOff(){if(On(behaviorType.wallAvoidance)) flags ^=behaviorType.wallAvoidance;}
+	}/*
+<<<<<<< HEAD
+	  public void SeekOff()  {if(On(behaviorType.seek))flags ^= behaviorType.seek.getValue();}
+	  public void ArriveOff(){if(On(behaviorType.arrive)) flags ^=behaviorType.arrive.getValue();}
+	  public void WanderOff(){if(On(BehaviorType.wander))flags ^=behaviorType.wander.getValue();}
+	  public void SeparationOff(){if(On(behaviorType.separation)) flags ^=behaviorType.separation.getValue();}
+	  public void WallAvoidanceOff(){if(On(behaviorType.wallAvoidance)) flags ^=behaviorType.wallAvoidance.getValue();}
+=======
+	*/
+	public void SeekOff()  {if(On(BehaviorType.seek))   flags ^=BehaviorType.seek.getValue();}
+	public void ArriveOff(){if(On(BehaviorType.arrive)) flags ^=BehaviorType.arrive.getValue();}
+	public void WanderOff(){if(On(BehaviorType.wander)) flags ^=BehaviorType.wander.getValue();}
+	public void SeparationOff(){if(On(BehaviorType.separation)) flags ^=BehaviorType.separation.getValue();}
+	public void WallAvoidanceOff(){if(On(BehaviorType.wallAvoidance)) flags ^=BehaviorType.wallAvoidance.getValue();}
+	public boolean SeekIsOn(){return On(BehaviorType.seek);}
+	public boolean ArriveIsOn(){return On(BehaviorType.arrive);}
+	public boolean WanderIsOn(){return On(BehaviorType.wander);}
+	public boolean SeparationIsOn(){return On(BehaviorType.separation);}
+	public boolean WallAvoidanceIsOn(){return On(BehaviorType.wallAvoidance);}
+    
+	public final Vector<Vector2D> GetFeelers(){return feelers;}
+	
+	public final double WanderJitter(){return wanderJitter;}
+	public final double WanderDistance(){return wanderDistance;}
+	public final double WanderRadius(){return wanderRadius;}
+    
+	public final double SeparationWeight(){return weightSeparation;}
+//>>>>>>> refs/remotes/choose_remote_name/master
 
-	  public boolean SeekIsOn(){return On(behaviorType.seek);}
-	  public boolean ArriveIsOn(){return On(behaviorType.arrive);}
-	  public boolean WanderIsOn(){return On(behaviorType.wander);}
-	  public boolean SeparationIsOn(){return On(behaviorType.separation);}
-	  public boolean WallAvoidanceIsOn(){return On(behaviorType.wallAvoidance);}
-
-	 public final Vector<Vector2D> GetFeelers(){return feelers;}
-	  
-	  public final double WanderJitter(){return wanderJitter;}
-	  public final double WanderDistance(){return wanderDistance;}
-	  public final double WanderRadius(){return wanderRadius;}
-
-	  public final double SeparationWeight(){return weightSeparation;}
-	  
 }

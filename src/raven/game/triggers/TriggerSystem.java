@@ -4,9 +4,17 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
-public class TriggerSystem<T extends Trigger<?>> {
+import raven.game.BaseGameEntity;
+import raven.game.RavenBot;
+
+public class TriggerSystem<T extends Trigger> {
 	
 	private LinkedList<T> triggers;
+	
+	public TriggerSystem()
+	{
+		triggers = new LinkedList<T>();
+	}
 	
 	private void updateTriggers(double delta) {
 		HashSet<T> toRemove = new HashSet<T>();
@@ -21,17 +29,31 @@ public class TriggerSystem<T extends Trigger<?>> {
 		triggers.removeAll(toRemove);
 	}
 	
-	private void tryTriggers(List<T> entities) {
-		// TODO Auto-generated method stub
+	/** this method iterates through the container of entities passed as a
+	 * parameter and passes each one to the Try method of each trigger
+	 * *provided* the entity is alive and provided the entity is ready for a
+	 * trigger update.
+	 * @param entities
+	 */
+
+	private void tryTriggers(List<? extends BaseGameEntity> entities) {
+		// test each entity against the triggers
+		for (BaseGameEntity ent : entities) {
+			// an entity must be ready for its next trigger update and it must
+			// be alive before it is tested against each trigger.
+			for (T trigger : triggers) {
+				trigger.tryTrigger(ent);
+			}
+		}
 	}
 	
 	public void clear() {
 		triggers.clear();
 	}
 	
-	public void update(double delta, List<T> entities) {
+	public void update(double delta, List<? extends BaseGameEntity> bots) {
 		updateTriggers(delta);
-		tryTriggers(entities);
+		tryTriggers(bots);
 	}
 	
 	public void register(T trigger) {

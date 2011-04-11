@@ -2,6 +2,9 @@ package raven.game.navigation;
 
 import java.io.Reader;
 
+import raven.math.graph.GraphEdge;
+import raven.math.graph.GraphEdgeFactory;
+import raven.math.graph.GraphNode;
 import raven.utils.StreamUtils;
 
 public class NavGraphEdge extends GraphEdge implements GraphEdgeFactory<NavGraphEdge> {
