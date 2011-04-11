@@ -1,22 +1,20 @@
 package raven.game;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Vector;
 
 import raven.game.RavenGame;
 import raven.math.*;
-<<<<<<< HEAD
+
 import raven.script.RavenScript;
 import sun.font.Script;
 import java.util.Random;
 import java.lang.Math;
-
-
-
-
-=======
 import raven.math.Vector2D;
->>>>>>> refs/remotes/choose_remote_name/master
+
+import raven.game.BaseGameEntity;
 
 //------------------------------------------------------------------------
 
@@ -108,7 +106,6 @@ public class RavenSteering {
 	  //Arrive makes use of these to determine how quickly a Raven_Bot
 	  //should decelerate to its target
 	  private enum Deceleration{fast, normal, slow};
-	  //TODO
 	  //default
 	  private Deceleration deceleration;
 
@@ -122,7 +119,7 @@ public class RavenSteering {
 
 	  //this function tests if a specific bit of m_iFlags is set
 	  private boolean On(BehaviorType bt){
-		  //TODO
+		  
 		  return (flags & bt.getValue()) == bt.getValue();}
 
 	  public boolean AccumulateForce(Vector2D runningTot, Vector2D forceToAdd){
@@ -152,7 +149,7 @@ public class RavenSteering {
 		    magnitudeToAdd = magnitudeRemaining;
 
 		    //add it to the steering force
-		    //TODO didn't make it normalize
+		    forceToAdd.normalize();
 		    runningTot.add(forceToAdd.mul(magnitudeToAdd)); 
 		  }
 
@@ -160,10 +157,6 @@ public class RavenSteering {
 		}
 	
 
-	  //creates the antenna utilized by the wall avoidance behavior
-	  void      CreateFeelers(){
-		  //TODO
-	}
 
 
 
@@ -200,7 +193,7 @@ public class RavenSteering {
 		    //calculate the speed required to reach the target given the desired
 		    //deceleration
 		//TODO    double speed =  dist / (deceleration* decelerationTweaker);     
-		    double speed;
+		    double speed= target.distance(ravenBot.pos())/ (Double.valueOf(deceleration.toString())*DecelerationTweaker);
 		    //make sure the velocity does not exceed the max
 		    speed = Math.min(speed, ravenBot.maxSpeed());
 		    
@@ -254,9 +247,9 @@ public class RavenSteering {
 		  //this will hold an index into the vector of walls
 		  int ClosestWall = -1;
 
-		  Vector2D SteeringForce,
-		            point,         //used for storing temporary info
-		            ClosestPoint;  //holds the closest intersection point
+		  Vector2D SteeringForce = new Vector2D(),
+		            point = new Vector2D(),         //used for storing temporary info
+		            ClosestPoint=new Vector2D();  //holds the closest intersection point
 
 		  //examine each feeler in turn
 		  for (int flr=0; flr<feelers.size(); ++flr)
@@ -300,11 +293,54 @@ public class RavenSteering {
 		  return SteeringForce;
 
 	  }
+	  private void CreateFeelers(){
+		  //feeler pointing straight in front
+		  Vector2D tmpFeeler;
+		  tmpFeeler =new Vector2D(ravenBot.pos());
+		  tmpFeeler= tmpFeeler.mul(ravenBot.heading().length());
+		  tmpFeeler = tmpFeeler.mul(ravenBot.speed());
+		  tmpFeeler = tmpFeeler.mul(wallDetectionFeelerLength);
+		  
+		  
+		  feelers.add(0, tmpFeeler);
 
+		  //feeler to left
+		  Vector2D temp = ravenBot.heading();
+		  Transformations.Vec2DRotateAroundOrigin(temp, Math.PI*.5* 3.5);
+		  feelers.add(1,ravenBot.pos().add(temp.mul((wallDetectionFeelerLength/2.0))));
+
+		  //feeler to right
+		  temp = ravenBot.heading();
+		  Transformations.Vec2DRotateAroundOrigin(temp, Math.PI*.5 * 0.5);
+		  feelers.add(2, ravenBot.pos().add(temp.mul(wallDetectionFeelerLength/2.0))); 
+	  }
+	  
 	  
 	  private Vector2D Separation(final List<RavenBot> agents){
-		//TODO
-		  return null;
+		  //iterate through all the neighbors and calculate the vector from the
+		  Vector2D SteeringForce=new Vector2D();
+		  Iterator it = agents.iterator();
+		  //for (it; it != neighbors.end(); ++it)
+		while (it.hasNext())  
+		{
+			Vector2D element= (Vector2D) it.next();
+		    //make sure this agent isn't included in the calculations and that
+		    //the agent being examined is close enough. ***also make sure it doesn't
+		    //include the evade target ***
+		    if((it.next() != ravenBot) && (ravenBot.isTagged()) &&
+		      (it.next() != targetAgent1))
+		    {
+		      Vector2D ToAgent = ravenBot.pos().sub(element);
+
+		      //scale the force inversely proportional to the agents distance  
+		      //from its neighbor.
+		      ToAgent.normalize();
+		      SteeringForce = SteeringForce.add(ToAgent.div(ToAgent.length()));
+		    }
+		  }
+
+		  return SteeringForce;
+
 	}
 
 
@@ -324,8 +360,8 @@ public class RavenSteering {
 	  //------------------------------------------------------------------------
 
 	  private Vector2D CalculatePrioritized(){
-		//TODO
-		  Vector2D force;
+		
+		  Vector2D force = new Vector2D();
 
 		  if (On(BehaviorType.wallAvoidance))
 		  {
@@ -395,13 +431,13 @@ public class RavenSteering {
           //ravenBot(agent);
 		  
           flags=0;
-          RavenScript script;
+         // RavenScript script;
           weightSeparation=RavenScript.getDouble("SeparationWeight");
           weightWander=RavenScript.getDouble("WanderWeight");
           weightWallAvoidance=RavenScript.getDouble("WallAvoidanceWeight");
           viewDistance=RavenScript.getDouble("ViewDistance");
           wallDetectionFeelerLength=RavenScript.getDouble("WallDetectionFeelerLength");
-    //TODO      feelers=3;
+          feelers.ensureCapacity(3);
           deceleration=Deceleration.normal;
           targetAgent1=null;
           targetAgent2=null;
@@ -430,8 +466,8 @@ public class RavenSteering {
 
 		  //tag neighbors if any of the following 3 group behaviors are switched on
 		  if (On(BehaviorType.separation))
-		  {
-	//TODO world.tagRavenBotsWithinViewRange(ravenBot, viewDistance);
+		  {world.getAllBotsInFOV(ravenBot);
+	// world.tagRavenBotsWithinViewRange(ravenBot, viewDistance);
 		  }
 
 		  steeringForce = CalculatePrioritized();
@@ -472,22 +508,18 @@ public class RavenSteering {
 	  public void SeparationOn(){flags |= behaviorType.separation.getValue();}
 =======
 */
+	  
 	  public void SeekOn(){flags |= BehaviorType.seek.getValue();}
 	  public void ArriveOn(){flags |= BehaviorType.arrive.getValue();}
 	  public void WanderOn(){flags |= BehaviorType.wander.getValue();}
 	  public void SeparationOn(){flags |= BehaviorType.separation.getValue();}
+	  public void WallAvoidanceOn(){flags |= BehaviorType.wallAvoidance.getValue();}
+
 //>>>>>>> refs/remotes/choose_remote_name/master
 
 	  
-	public void wallAvoidanceOn() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void separationOn() {
-		// TODO Auto-generated method stub
-		
-	}/*
+	
+/*
 <<<<<<< HEAD
 	  public void SeekOff()  {if(On(behaviorType.seek))flags ^= behaviorType.seek.getValue();}
 	  public void ArriveOff(){if(On(behaviorType.arrive)) flags ^=behaviorType.arrive.getValue();}
