@@ -22,6 +22,13 @@ import raven.ui.GameCanvas;
 import raven.ui.KeyState;
 import java.util.List;
 import raven.math.*;
+import raven.script.RavenScript;
+import sun.font.Script;
+import java.util.Random;
+import java.lang.Math;
+
+
+
 
 
 //------------------------------------------------------------------------
@@ -89,7 +96,7 @@ public class RavenSteering {
 
 
 	  //how far the agent can 'see'
-	  private double        wiewDistance;
+	  private double        viewDistance;
 
 	  //binary flags to indicate whether or not a behavior should be active
 	  private int           flags;
@@ -166,29 +173,129 @@ public class RavenSteering {
 
 	  //this behavior moves the agent towards a target position
 	  private Vector2D Seek(final Vector2D target){
-		
-		  return null;
+		  
+		  Vector2D desiredVelocity = (target.sub(ravenBot.pos()).mul(ravenBot.maxSpeed));
+
+          return (desiredVelocity.sub(ravenBot.velocity()));
+
 	}
 
 	  //this behavior is similar to seek but it attempts to arrive 
 	  //at the target with a zero velocity
 	  private Vector2D Arrive(final Vector2D target, final Deceleration deceleration){
-		//TODO
-		  return null;
+		  Vector2D toTarget = target.sub(ravenBot.pos());
+
+		  //calculate the distance to the target
+		  double dist = toTarget.length();
+
+		  if (dist > 0)
+		  {
+		    //because Deceleration is enumerated as an int, this value is required
+		    //to provide fine tweaking of the deceleration..
+		    final double DecelerationTweaker = 0.3;
+
+		    //calculate the speed required to reach the target given the desired
+		    //deceleration
+		//TODO    double speed =  dist / (deceleration* decelerationTweaker);     
+		    double speed;
+		    //make sure the velocity does not exceed the max
+		    speed = MinOf(speed, ravenBot.maxSpeed());
+
+		    //from here proceed just like Seek except we don't need to normalize 
+		    //the ToTarget vector because we have already gone to the trouble
+		    //of calculating its length: dist. 
+		    Vector2D DesiredVelocity =  toTarget.mul(speed / dist);
+
+		    return (DesiredVelocity.sub(ravenBot.velocity()));
+		  }
+
+		  return new Vector2D(0,0);
+
 	}
 
 	  //this behavior makes the agent wander about randomly
 	  private Vector2D Wander(){
-		//TODO
-		  return null;
+
+		  //first, add a small random vector to the target's position
+		  wanderTarget = wanderTarget.add(new Vector2D( new Random().nextDouble()* wanderJitter,
+		                              new Random().nextDouble() * wanderJitter));
+
+		  //reproject this new vector back on to a unit circle
+		  wanderTarget.normalize();
+
+		  //increase the length of the vector to the same as the radius
+		  //of the wander circle
+		  wanderTarget = wanderTarget.mul(wanderRadius);
+
+		  //move the target into a position WanderDist in front of the agent
+		  Vector2D target = wanderTarget.add(new Vector2D(wanderDistance, 0));
+
+		  //project the target into world space
+		  Vector2D Target = pointToWorldSpace(target, ravenBot.heading(), ravenBot.side(), ravenBot.pos());
+
+		  //and steer towards it
+		  return Target.sub(ravenBot.pos()); 
+
 	}
 
 	  //this returns a steering force which will keep the agent away from any
 	  //walls it may encounter
 	  private Vector2D WallAvoidance(final List<Wall2D> walls){
-		//TODO
-		  return null;
-	}
+		  //the feelers are contained in a std::vector, m_Feelers
+		  CreateFeelers();
+		  
+		  double DistToThisIP    = 0.0;
+		  double DistToClosestIP = Double.MAX_VALUE;
+
+		  //this will hold an index into the vector of walls
+		  int ClosestWall = -1;
+
+		  Vector2D SteeringForce,
+		            point,         //used for storing temporary info
+		            ClosestPoint;  //holds the closest intersection point
+
+		  //examine each feeler in turn
+		  for (int flr=0; flr<feelers.size(); ++flr)
+		  {
+		    //run through each wall checking for any intersection points
+		    for (int w=0; w<walls.size(); ++w)
+		    {
+		      if (lineIntersection2D(ravenBot.pos(),
+		                             feelers.get(flr),
+		                             walls.get(w).from(),
+		                             walls.get(w).to()))
+		      {
+		        //is this the closest found so far? If so keep a record
+		        if (DistToThisIP < DistToClosestIP)
+		        {
+		          DistToClosestIP = DistToThisIP;
+
+		          ClosestWall = w;
+
+		          ClosestPoint = point;
+		        }
+		      }
+		    }//next wall
+
+		  
+		    //if an intersection point has been detected, calculate a force  
+		    //that will direct the agent away
+		    if (ClosestWall >=0)
+		    {
+		      //calculate by what distance the projected position of the agent
+		      //will overshoot the wall
+		      Vector2D overShoot = feelers.get(flr).sub(ClosestPoint);
+
+		      //create a force in the direction of the wall normal, with a 
+		      //magnitude of the overshoot
+		      SteeringForce = walls.get(ClosestWall).normal().mul(overShoot.length());
+		    }
+
+		  }//next feeler
+
+		  return SteeringForce;
+
+	  }
 
 	  
 	  private Vector2D Separation(final List<RavenBot> agents){
@@ -218,58 +325,99 @@ public class RavenSteering {
 
 		  if (On(behaviorType.wallAvoidance))
 		  {
-		    force = WallAvoidance(world.getMap().getWalls()WeightWallAvoidance;
+		    force = WallAvoidance(world.getMap().getWalls()).mul(weightWallAvoidance);
 
-		    if (!AccumulateForce(m_vSteeringForce, force)) return m_vSteeringForce;
+		    if (!AccumulateForce(steeringForce, force)) return steeringForce;
 		  }
 
 		 
 		  //these next three can be combined for flocking behavior (wander is
 		  //also a good behavior to add into this mix)
 
-		    if (On(separation))
+		    if (On(behaviorType.separation))
 		    {
-		      force = Separation(m_pWorld->GetAllBots()) * m_dWeightSeparation;
+		      force = Separation(world.getBots()).mul(weightSeparation);
 
-		      if (!AccumulateForce(m_vSteeringForce, force)) return m_vSteeringForce;
+		      if (!AccumulateForce(steeringForce, force)) return steeringForce;
 		    }
 
 
-		  if (On(seek))
+		  if (On(behaviorType.seek))
 		  {
-		    force = Seek(m_vTarget) * m_dWeightSeek;
+		    force = Seek(target).mul(weightSeek);
 
-		    if (!AccumulateForce(m_vSteeringForce, force)) return m_vSteeringForce;
+		    if (!AccumulateForce(steeringForce, force)) return steeringForce;
 		  }
 
 
-		  if (On(arrive))
+		  if (On(behaviorType.arrive))
 		  {
-		    force = Arrive(m_vTarget, m_Deceleration) * m_dWeightArrive;
+		    force = Arrive(target, deceleration).mul(weightArrive);
 
-		    if (!AccumulateForce(m_vSteeringForce, force)) return m_vSteeringForce;
+		    if (!AccumulateForce(steeringForce, force)) return steeringForce;
 		  }
 
-		  if (On(wander))
+		  if (On(behaviorType.wander))
 		  {
-		    force = Wander() * m_dWeightWander;
+		    force = Wander().mul(weightWander);
 
-		    if (!AccumulateForce(m_vSteeringForce, force)) return m_vSteeringForce;
+		    if (!AccumulateForce(steeringForce, force)) return steeringForce;
 		  }
 
 
-		  return m_vSteeringForce;
+		  return steeringForce;
 		}
 
 
 	  public RavenSteering(RavenGame world, RavenBot ravenBot) {
-		// TODO Auto-generated constructor stub
+
+          //world(world);
+          //ravenBot(agent);
+		  
+          flags=0;
+          RavenScript script;
+          weightSeparation=RavenScript.getDouble("SeparationWeight");
+          weightWander=RavenScript.getDouble("WanderWeight");
+          weightWallAvoidance=RavenScript.getDouble("WallAvoidanceWeight");
+          viewDistance=RavenScript.getDouble("ViewDistance");
+          wallDetectionFeelerLength=RavenScript.getDouble("WallDetectionFeelerLength");
+          feelers=3;
+          deceleration=Deceleration.normal;
+          targetAgent1=null;
+          targetAgent2=null;
+          wanderDistance=WanderDist;
+          wanderJitter=WanderJitterPerSec;
+          wanderRadius=WanderRad;
+          weightSeek=RavenScript.getDouble("SeekWeight");
+          weightArrive=RavenScript.getDouble("ArriveWeight");
+          cellSpaceOn=false;
+          summingMethod= SummingMethod.prioritized;
+          
+          //stuff for the wander behavior
+          double theta = new Random().nextFloat() * (2* Math.PI);
+
+          //create a vector to a target position on the wander circle
+          wanderTarget = new Vector2D(wanderRadius * Math.cos(theta),
+                           wanderRadius * Math.sin(theta));
+
+
 	}
 
 	  //calculates and sums the steering forces from any active behaviors
 	  public Vector2D Calculate(){
-		//TODO
-		  return null;
+		  //reset the steering force
+		  steeringForce.Zero();
+
+		  //tag neighbors if any of the following 3 group behaviors are switched on
+		  if (On(behaviorType.separation))
+		  {
+		    world.tagRavenBotsWithinViewRange(ravenBot, viewDistance);
+		  }
+
+		  steeringForce = CalculatePrioritized();
+
+		  return steeringForce;
+
 	}
 
 	  //calculates the component of the steering force that is parallel
@@ -297,10 +445,10 @@ public class RavenSteering {
 
 	  public void SetSummingMethod(SummingMethod sm){summingMethod = sm;}
 
-	  public void SeekOn(){flags |= seek;}
-	  public void ArriveOn(){flags |= arrive;}
-	  public void WanderOn(){flags |= wander;}
-	  public void SeparationOn(){flags |= separation;}
+	  public void SeekOn(){flags |= behaviorType.seek;}
+	  public void ArriveOn(){flags |= behaviorType.arrive;}
+	  public void WanderOn(){flags |= behaviorType.wander;}
+	  public void SeparationOn(){flags |= behaviorType.separation;}
 
 	  
 	public void wallAvoidanceOn() {
@@ -312,11 +460,11 @@ public class RavenSteering {
 		// TODO Auto-generated method stub
 		
 	}
-	  public void SeekOff()  {if(On(seek))   flags ^=seek;}
-	  public void ArriveOff(){if(On(arrive)) flags ^=arrive;}
-	  public void WanderOff(){if(On(wander)) flags ^=wander;}
-	  public void SeparationOff(){if(On(separation)) flags ^=separation;}
-	  public void WallAvoidanceOff(){if(On(behaviorType.wallAvoidance)) flags ^=wallAvoidance;}
+	  public void SeekOff()  {if(On(behaviorType.seek))flags ^= behaviorType.seek;}
+	  public void ArriveOff(){if(On(behaviorType.arrive)) flags ^=behaviorType.arrive;}
+	  public void WanderOff(){if(On(behaviorType.wander)) flags ^=behaviorType.wander;}
+	  public void SeparationOff(){if(On(behaviorType.separation)) flags ^=behaviorType.separation;}
+	  public void WallAvoidanceOff(){if(On(behaviorType.wallAvoidance)) flags ^=behaviorType.wallAvoidance;}
 
 	  public boolean SeekIsOn(){return On(behaviorType.seek);}
 	  public boolean ArriveIsOn(){return On(behaviorType.arrive);}
