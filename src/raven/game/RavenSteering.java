@@ -512,7 +512,7 @@ public class RavenSteering {
 	  public void SeekOn(){flags |= BehaviorType.seek.getValue();}
 	  public void ArriveOn(){flags |= BehaviorType.arrive.getValue();}
 	  public void WanderOn(){flags |= BehaviorType.wander.getValue();}
-	  public void SeparationOn(){flags |= BehaviorType.separation.getValue();}
+	  public void separationOn(){flags |= BehaviorType.separation.getValue();}
 	  public void WallAvoidanceOn(){flags |= BehaviorType.wallAvoidance.getValue();}
 
 //>>>>>>> refs/remotes/choose_remote_name/master
