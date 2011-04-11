@@ -11,6 +11,11 @@ public class TriggerSystem<T extends Trigger> {
 	
 	private LinkedList<T> triggers;
 	
+	public TriggerSystem()
+	{
+		triggers = new LinkedList<T>();
+	}
+	
 	private void updateTriggers(double delta) {
 		HashSet<T> toRemove = new HashSet<T>();
 		

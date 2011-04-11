@@ -155,6 +155,10 @@ public class RavenMap {
 	}
 	
 	public RavenMap() {
+		triggerSystem = new TriggerSystem<Trigger<RavenBot>>();
+		doors = new ArrayList<RavenDoor>();
+		walls = new ArrayList<Wall2D>();
+		spawnPoints = new ArrayList<Vector2D>();
 		sizeX = sizeY = 0;
 		
 		cellSpaceNeighborhoodRange = 0.0;

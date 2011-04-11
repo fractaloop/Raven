@@ -66,7 +66,8 @@ public class SparseGraph<NodeType extends GraphNode, EdgeType extends GraphEdge>
 	public SparseGraph(boolean digraph, GraphNodeFactory<NodeType> nodeFactory, GraphEdgeFactory<EdgeType> edgeFactory) {
 		this.nodeFactory = nodeFactory;
 		this.edgeFactory = edgeFactory;
-		
+		edges = new ArrayList<List<EdgeType>>();
+		nodes = new ArrayList<NodeType>();
 		nextNodeIndex = 0;
 		isDigraph = digraph;
 	}
