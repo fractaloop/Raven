@@ -99,6 +99,8 @@ public class RavenGame {
 	// Public methods
 
 	public RavenGame() {
+		bots = new ArrayList<RavenBot>();
+		projectiles = new ArrayList<RavenProjectile>();
 		try {
 			loadMap(RavenScript.getString("StartMap"));
 		} catch (IOException e) {
