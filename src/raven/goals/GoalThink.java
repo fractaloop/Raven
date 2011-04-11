@@ -156,6 +156,7 @@ private double AttackBias  = 0;
 	public void queueGoal_moveToPosition(Vector2D pos) {
 		 m_SubGoals.add(new Goal_MoveToPosition(m_pOwner, pos));
 	}
+	
 	public void addGoal_moveToPosition(Vector2D p, Vector2D pos) {
 
 		  AddSubgoal( new Goal_MoveToPosition(m_pOwner, pos));
@@ -195,6 +196,10 @@ private double AttackBias  = 0;
 
 	public void renderEvaluations(Integer left, Integer top){
 		
+	}
+
+	public void queueGoal_moveToPosition(Vector2D pos, Vector2D p) {
+		m_SubGoals.add(new Goal_MoveToPosition(m_pOwner, p));
 	}
 	
 }

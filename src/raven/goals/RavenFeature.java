@@ -1,9 +1,11 @@
 package raven.goals;
 
 import raven.game.RavenBot;
-import raven.game.RavenWeaponSystem;
-import raven.goals.Goal.weaponType;
-import raven.script.RavenScript;
+import raven.game.RavenObject;
+import raven.game.armory.Railgun;
+import raven.game.armory.RavenWeapon;
+import raven.game.armory.RocketLauncher;
+import raven.game.armory.Shotgun;
 
 public class RavenFeature {
 
@@ -30,7 +32,7 @@ public class RavenFeature {
 			  double MaxDistance = 500.0;
 			  double MinDistance = 50.0;
 
-			  Clamp(DistanceToItem, MinDistance, MaxDistance);
+			  DistanceToItem = Clamp(DistanceToItem, MinDistance, MaxDistance);
 
 			  return DistanceToItem / MaxDistance;}
 		  
@@ -43,14 +45,23 @@ public class RavenFeature {
 		  
 		  
 		  
-		  public static double IndividualWeaponStrength(RavenBot pBot, Goal.weaponType WeaponType) throws Exception{
+		  private static double Clamp(double distanceToItem, double minDistance,
+				double maxDistance) {
+			if(distanceToItem < minDistance)
+				return minDistance;
+			else if (distanceToItem > maxDistance)
+				return maxDistance;
+			else return distanceToItem;
+		}
+
+		public static double IndividualWeaponStrength(RavenBot pBot, RavenObject WeaponType) throws Exception{
 			  
 			  //grab a pointer to the gun (if the bot owns an instance)
-			  RavenWeaponSystem wp = pBot.getWeaponSys().getWeaponFromInventory(WeaponType);
+			  RavenWeapon wp = pBot.getWeaponSys().getWeaponFromInventory(WeaponType);
 
 			  if (wp != null)
 			  {
-			    return wp.NumRoundsRemaining() / GetMaxRoundsBotCanCarryForWeapon(WeaponType);
+			    return wp.getRoundsRemaining() / wp.getMaxRounds();
 			  }
 
 			  else
@@ -65,14 +76,14 @@ public class RavenFeature {
 		  //is carrying a RL and a RG and has max ammo for the RG but only half max
 		  //for the RL the rating will be 1/3 + 1/6 + 0 = 0.5
 		  public static double TotalWeaponStrength(RavenBot pBot) throws Exception{
-			 double MaxRoundsForShotgun = GetMaxRoundsBotCanCarryForWeapon(Goal.weaponType.type_shotgun);
-			  double MaxRoundsForRailgun = GetMaxRoundsBotCanCarryForWeapon(Goal.weaponType.type_rail_gun);
-			  double MaxRoundsForRocketLauncher = GetMaxRoundsBotCanCarryForWeapon(Goal.weaponType.type_rocket_launcher);
+			 double MaxRoundsForShotgun = Shotgun.shotgunMaxRounds;
+			  double MaxRoundsForRailgun = Railgun.railgunMaxRounds;
+			  double MaxRoundsForRocketLauncher = RocketLauncher.rlMaxRounds;
 			  double TotalRoundsCarryable = MaxRoundsForShotgun + MaxRoundsForRailgun + MaxRoundsForRocketLauncher;
 
-			  double NumSlugs      = (double)pBot.getWeaponSys().getAmmoRemainingForWeapon(Goal.weaponType.type_rail_gun);
-			  double NumCartridges = (double)pBot.getWeaponSys().getAmmoRemainingForWeapon(Goal.weaponType.type_shotgun);
-			  double NumRockets    = (double)pBot.getWeaponSys().getAmmoRemainingForWeapon(Goal.weaponType.type_rocket_launcher);
+			  double NumSlugs      = (double)pBot.getWeaponSys().getAmmoRemainingForWeapon(RavenObject.RAIL_GUN);
+			  double NumCartridges = (double)pBot.getWeaponSys().getAmmoRemainingForWeapon(RavenObject.SHOTGUN);
+			  double NumRockets    = (double)pBot.getWeaponSys().getAmmoRemainingForWeapon(RavenObject.ROCKET_LAUNCHER);
 
 			  //the value of the tweaker (must be in the range 0-1) indicates how much
 			  //desirability value is returned even if a bot has not picked up any weapons.
@@ -81,32 +92,6 @@ public class RavenFeature {
 
 			  return Tweaker + (1-Tweaker)*(NumSlugs + NumCartridges + NumRockets)/(MaxRoundsForShotgun + MaxRoundsForRailgun + MaxRoundsForRocketLauncher);
 		  }
-		  
-		  
-		  static double GetMaxRoundsBotCanCarryForWeapon(Goal.weaponType WeaponType) throws Exception{
-		    switch(WeaponType)
-		    {
-		    case type_rail_gun:
-
-		      return RavenScript.getDouble("RailGun_MaxRoundsCarried");
-
-		    case type_rocket_launcher:
-
-		      return RavenScript.getDouble("RocketLauncher_MaxRoundsCarried");
-
-		    case type_shotgun:
-
-		      return RavenScript.getDouble("ShotGun_MaxRoundsCarried");
-
-		    default:
-
-		      throw new Exception("trying to calculate of unknown weapon");
-
-		    }//end switch
-		  }
-		  
-		  
-		  
 }
 		  
 

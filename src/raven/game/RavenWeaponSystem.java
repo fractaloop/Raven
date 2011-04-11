@@ -1,16 +1,15 @@
 package raven.game;
 
-<<<<<<< HEAD
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.Map;
 
-import raven.game.armory.*;
+import raven.game.armory.Blaster;
+import raven.game.armory.Railgun;
+import raven.game.armory.RavenWeapon;
+import raven.game.armory.RocketLauncher;
+import raven.game.armory.Shotgun;
 import raven.math.Transformations;
-=======
-import raven.goals.Goal.weaponType;
->>>>>>> iskar909/master
 import raven.math.Vector2D;
 import raven.ui.GameCanvas;
 
@@ -40,6 +39,7 @@ public class RavenWeaponSystem {
 	/** the amount of time a bot will continue aiming at the position of the
 	 * target even if the target disappears from view. */
 	private double aimPersistance;
+	
 	
 	/** predicts where the target will be by the time it takes the current
 	 * weapon's projectile type to reach it. Used by TakeAimAndShoot */

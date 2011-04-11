@@ -23,7 +23,7 @@ import raven.ui.GameCanvas;
 public class Blaster extends RavenWeapon {
 
 	private static int blasterDefaultRounds = RavenScript.getInt("blaster_defaultRounds");
-	private static int blasterMaxRounds = RavenScript.getInt("blaster_maxRoundsCarried");
+	private static final int blasterMaxRounds = RavenScript.getInt("blaster_maxRoundsCarried");
 	private static double blasterFiringFreq = RavenScript.getDouble("blaster_firingFreq");
 	private static double blasterIdealRange = RavenScript.getDouble("blaster_idealRange");
 	private static double blasterMaxSpeed = RavenScript.getDouble("blaster_maxSpeed");
@@ -93,4 +93,6 @@ public class Blaster extends RavenWeapon {
 		getFuzzyModule().AddRule(Target_Medium, new FzVery(Undesirable));
 		getFuzzyModule().AddRule(Target_Far, new FzVery(Undesirable));
 	}
+	
+	
 }

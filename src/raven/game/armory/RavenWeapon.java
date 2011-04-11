@@ -106,4 +106,11 @@ public abstract class RavenWeapon {
 	public double getLastDesirabilityScore() {
 		return lastDesireabilityScore;
 	}
+	
+	public int getMaxRounds()
+	{
+		return maxRoundCapacity;
+	}
+	
+	
 }

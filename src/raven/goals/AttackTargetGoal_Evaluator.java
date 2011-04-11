@@ -37,14 +37,16 @@ public class AttackTargetGoal_Evaluator extends Goal_Evaluator {
 	  }
 
 	  public void RenderInfo(Vector2D Position, RavenBot pBot){
-		 GameCanvas.textAtPos(Position, "AT: " + String.valueOf(CalculateDesirability(pBot)), 2));
-		  return;
-		    
-		  String s = String.valueOf(RavenFeature.Health(pBot)) + ", " + String.valueOf(RavenFeature.TotalWeaponStrength(pBot));
-		  GameCanvas.textAtPos(Position, String.valueOf(new Vector2D(0,12)), s);
-		 
+		  GameCanvas.textAtPos(Position, "AT: " + String.valueOf(CalculateDesirability(pBot)));
+		  
+		  String s = "";
+		try {
+			s = String.valueOf(RavenFeature.Health(pBot)) + ", " + String.valueOf(RavenFeature.TotalWeaponStrength(pBot));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		  GameCanvas.textAtPos(Position, s);
 	  }
-	  
-	  
 }
 

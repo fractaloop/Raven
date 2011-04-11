@@ -25,7 +25,7 @@ import raven.ui.GameCanvas;
 public class Railgun extends RavenWeapon {
 
 	private static int railgunDefaultRounds = RavenScript.getInt("railgun_defaultRounds");
-	private static int railgunMaxRounds = RavenScript.getInt("railgun_maxRoundsCarried");
+	public static final int railgunMaxRounds = RavenScript.getInt("railgun_maxRoundsCarried");
 	private static double railgunFiringFreq = RavenScript.getDouble("railgun_firingFreq");
 	private static double railgunIdealRange = RavenScript.getDouble("railgun_idealRange");
 	private static double railgunMaxSpeed = RavenScript.getDouble("railgun_maxSpeed");

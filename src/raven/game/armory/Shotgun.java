@@ -24,12 +24,13 @@ import raven.ui.GameCanvas;
 public class Shotgun extends RavenWeapon {
 
 	private static int shotgunDefaultRounds = RavenScript.getInt("shotgun_defaultRounds");
-	private static int shotgunMaxRounds = RavenScript.getInt("shotgun_maxRoundsCarried");
+	public static final int shotgunMaxRounds = RavenScript.getInt("shotgun_maxRoundsCarried");
 	private static double shotgunFiringFreq = RavenScript.getDouble("shotgun_firingFreq");
 	private static double shotgunIdealRange = RavenScript.getDouble("shotgun_idealRange");
 	private static double shotgunMaxSpeed = RavenScript.getDouble("shotgun_maxSpeed");
 	private static int shotgunPellets = RavenScript.getInt("shotgun_numBallsInShell");
 	private static double shotgunSpread = RavenScript.getDouble("shotgun_spread");
+		
 	
 	public Shotgun(RavenBot owner){
 		super(RavenObject.SHOTGUN, shotgunDefaultRounds, shotgunMaxRounds, shotgunFiringFreq,
