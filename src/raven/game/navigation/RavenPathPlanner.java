@@ -19,7 +19,7 @@ public class RavenPathPlanner {
 		return null;
 	}
 
-	public double GetCostToClosestItem(int itemType) {
+	public double GetCostToClosestItem(RavenObject itemType) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
