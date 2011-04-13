@@ -7,14 +7,15 @@ import raven.math.Vector2D;
 public class Goal_Explore extends GoalComposite<RavenBot> {
 	  
 	  Vector2D  m_CurrentDestination;
-
 	  
-	  boolean      m_bDestinationIsSet;
+	  
+	  private boolean m_bDestinationIsSet;
 	
 	
 	
 	
 	public Goal_Explore(RavenBot m_pOwner) {
+		setM_pOwner(m_pOwner);
 		this.m_bDestinationIsSet = false;
 	}
 	
@@ -32,18 +33,18 @@ public class Goal_Explore extends GoalComposite<RavenBot> {
 		  if (!m_bDestinationIsSet)
 		  {
 		    //grab a random location
-		    m_CurrentDestination = m_pOwner.getWorld().getMap().getRandomNodeLocation();
+		    m_CurrentDestination = getM_pOwner().getWorld().getMap().getRandomNodeLocation();
 
 		    m_bDestinationIsSet = true;
 		  }
 
 		  //and request a path to that position
-		  m_pOwner.getPathPlanner().RequestPathToPosition(m_CurrentDestination);
+		  getM_pOwner().getPathPlanner().RequestPathToPosition(m_CurrentDestination);
 
 		  //the bot may have to wait a few update cycles before a path is calculated
 		  //so for appearances sake it simple ARRIVES at the destination until a path
 		  //has been found
-		  AddSubgoal(new Goal_SeekToPosition(m_pOwner, m_CurrentDestination));
+		  AddSubgoal(new Goal_SeekToPosition(getM_pOwner(), m_CurrentDestination));
 		 
 		 
 		 
@@ -74,8 +75,8 @@ public class Goal_Explore extends GoalComposite<RavenBot> {
 		      //clear any existing goals
 		      removeAllSubgoals();
 
-		      AddSubgoal(new Goal_FollowPath(m_pOwner,
-		                                     m_pOwner.getPathPlanner().getPath()));
+		      AddSubgoal(new Goal_FollowPath(getM_pOwner(),
+		                                     getM_pOwner().getPathPlanner().getPath()));
 
 		      return true; //msg handled
 

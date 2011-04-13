@@ -55,7 +55,7 @@ private double AttackBias  = 0;
 	}
 	@Override
 	public void Activate(){
-		  if (!m_pOwner.isPossessed())
+		  if (!getM_pOwner().isPossessed())
 		  {
 		    Arbitrate();
 		  }
@@ -81,7 +81,7 @@ private double AttackBias  = 0;
 
 		  if (SubgoalStatus == Goal.curStatus.completed || SubgoalStatus == Goal.curStatus.failed)
 		  {
-		    if (!m_pOwner.isPossessed())
+		    if (!getM_pOwner().isPossessed())
 		    {
 		      m_iStatus = Goal.curStatus.inactive;
 		    }
@@ -109,7 +109,7 @@ private double AttackBias  = 0;
 		  Goal_Evaluator current = null;
 		  while(curDes.hasNext()){
 			  current = curDes.next();
-		    double desirabilty = current.calculateDesirability(m_pOwner);
+		    double desirabilty = current.calculateDesirability(getM_pOwner());
 
 		    if (desirabilty >= best)
 		    {
@@ -120,7 +120,7 @@ private double AttackBias  = 0;
 
 		//  assert(MostDesirable && "<Goal_Think::Arbitrate>: no evaluator selected");
 
-		  current.setGoal(m_pOwner);
+		  current.setGoal(getM_pOwner());
 		}
 
 
@@ -157,12 +157,12 @@ private double AttackBias  = 0;
 
 
 	public void queueGoal_moveToPosition(Vector2D pos) {
-		 m_SubGoals.add(new Goal_MoveToPosition(m_pOwner, pos));
+		 m_SubGoals.add(new Goal_MoveToPosition(getM_pOwner(), pos));
 	}
 	
 	public void addGoal_moveToPosition(Vector2D p, Vector2D pos) {
 
-		  AddSubgoal( new Goal_MoveToPosition(m_pOwner, pos));
+		  AddSubgoal( new Goal_MoveToPosition(getM_pOwner(), pos));
 	}
 	
 
@@ -172,7 +172,7 @@ private double AttackBias  = 0;
 		  if (notPresent(Goal.goalType.goal_explore))
 		  {
 		    removeAllSubgoals();
-		    AddSubgoal( new Goal_Explore(m_pOwner));
+		    AddSubgoal( new Goal_Explore(getM_pOwner()));
 		  }
 	}
 	
@@ -180,7 +180,7 @@ private double AttackBias  = 0;
     	  if (notPresent(Goal.goalType.goal_get))
     	  {
     	    removeAllSubgoals();
-    	    AddSubgoal( new Goal_GetItem(m_pOwner, inp));
+    	    AddSubgoal( new Goal_GetItem(getM_pOwner(), inp));
 	      }
     }
     
@@ -190,7 +190,7 @@ private double AttackBias  = 0;
 		  if (notPresent(Goal.goalType.goal_attack_target))
 		  {
 		    removeAllSubgoals();
-		    AddSubgoal( new Goal_AttackTarget(m_pOwner));
+		    AddSubgoal( new Goal_AttackTarget(getM_pOwner()));
 		  }
 	}
 	public void render(){
@@ -202,7 +202,7 @@ private double AttackBias  = 0;
 	}
 
 	public void queueGoal_moveToPosition(Vector2D pos, Vector2D p) {
-		m_SubGoals.add(new Goal_MoveToPosition(m_pOwner, p));
+		m_SubGoals.add(new Goal_MoveToPosition(getM_pOwner(), p));
 	}
 
 	@Override
