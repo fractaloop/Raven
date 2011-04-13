@@ -1,7 +1,10 @@
 package raven.goals;
 
+import java.util.Random;
+
 import raven.game.RavenBot;
 import raven.math.Vector2D;
+import raven.ui.GameCanvas;
 
 public class Goal_DodgeSideToSide extends GoalComposite<RavenBot> {
 
@@ -11,15 +14,20 @@ public class Goal_DodgeSideToSide extends GoalComposite<RavenBot> {
 
 	 private boolean m_bClockwise;
 
-	  private Vector2D getStrafeTarget(){
-		// TODO why is this here?
-		  return null;
+	  private Vector2D getStrafeTarget(RavenBot m_pOwner){
+		return m_vStrafeTarget;
+		
+		  //TODO THIS NEEDS TO BE DONE
+		  
+		  //m_pOwner
 	}
 
 	  
 	  
 	public Goal_DodgeSideToSide(RavenBot m_pOwner) {
-		// TODO Auto-generated constructor stub
+		Random Randomgen = new Random();
+		m_bClockwise = Randomgen.nextBoolean();
+		this.m_vStrafeTarget = getStrafeTarget(m_pOwner);
 	}
 
 
@@ -83,14 +91,11 @@ public class Goal_DodgeSideToSide extends GoalComposite<RavenBot> {
 		  }
 
 		  public void Render(){
-			   /* gdi.OrangePen();
-			    gdi->HollowBrush();
+			    GameCanvas.orangePen();
+			    GameCanvas.hollowBrush();
 
-			    gdi->Line(m_pOwner->Pos(), m_vStrafeTarget);
-			    gdi->Circle(m_vStrafeTarget, 3);
-			   x
-			   
-			    */
+			    GameCanvas.line(m_pOwner.pos(), m_vStrafeTarget);
+			    GameCanvas.circle(m_vStrafeTarget, 3);
 			  }
 
 
