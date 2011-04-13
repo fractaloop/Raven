@@ -35,13 +35,16 @@ private double AttackBias  = 0;
 		m_Evaluators.add(new GetHealthGoal_Evaluator(HealthBias));
 		  m_Evaluators.add(new ExploreGoal_Evaluator(ExploreBias));
 		  m_Evaluators.add(new AttackTargetGoal_Evaluator(AttackBias));
+		  
+		  
+		  try{
 		  m_Evaluators.add(new GetWeaponGoal_Evaluator(ShotgunBias,
-				  GetWeaponGoal_Evaluator.Wep.SHOTGUN));
+				  RavenObject.SHOTGUN));
 		  m_Evaluators.add(new GetWeaponGoal_Evaluator(RailgunBias,
-		                                                     GetWeaponGoal_Evaluator.Wep.RAILGUN));
+		                                                     RavenObject.RAIL_GUN));
 		  m_Evaluators.add(new GetWeaponGoal_Evaluator(RocketLauncherBias,
-				  GetWeaponGoal_Evaluator.Wep.ROCKETLAUNCHER));
-		
+				  RavenObject.ROCKET_LAUNCHER));
+		  }catch(Exception ex){System.out.println(ex.getMessage());}
 		
 		
 		
