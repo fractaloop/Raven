@@ -2,7 +2,6 @@ package raven.goals;
 
 import raven.game.BaseGameEntity;
 import raven.game.messaging.Telegram;
-import raven.game.RavenObject;
 
 abstract public class Goal<T extends BaseGameEntity> {
 	public enum curStatus{active, inactive, completed, failed}

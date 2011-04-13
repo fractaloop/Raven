@@ -73,7 +73,8 @@ public class Goal_GetItem extends GoalComposite<RavenBot> {
 		  }
 
 
-		  public boolean HandleMessage(Telegram msg){
+		  @SuppressWarnings("unchecked")
+		public boolean HandleMessage(Telegram msg){
 			  //first, pass the message down the goal hierarchy
 			  boolean bHandled = ForwardMessageToFrontMostSubgoal(msg);
 

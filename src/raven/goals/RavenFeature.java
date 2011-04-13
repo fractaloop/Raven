@@ -79,7 +79,8 @@ public class RavenFeature {
 			 double MaxRoundsForShotgun = Shotgun.shotgunMaxRounds;
 			  double MaxRoundsForRailgun = Railgun.railgunMaxRounds;
 			  double MaxRoundsForRocketLauncher = RocketLauncher.rlMaxRounds;
-			  double TotalRoundsCarryable = MaxRoundsForShotgun + MaxRoundsForRailgun + MaxRoundsForRocketLauncher;
+			  @SuppressWarnings("unused")
+			double TotalRoundsCarryable = MaxRoundsForShotgun + MaxRoundsForRailgun + MaxRoundsForRocketLauncher;
 
 			  double NumSlugs      = (double)pBot.getWeaponSys().getAmmoRemainingForWeapon(RavenObject.RAIL_GUN);
 			  double NumCartridges = (double)pBot.getWeaponSys().getAmmoRemainingForWeapon(RavenObject.SHOTGUN);

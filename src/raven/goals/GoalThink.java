@@ -102,7 +102,8 @@ private double AttackBias  = 0;
 		//  the highest desirability.
 		//-----------------------------------------------------------------------------
 		  double best = 0;
-		  Goal_Evaluator MostDesirable = null;
+		  @SuppressWarnings("unused")
+		Goal_Evaluator MostDesirable;
 
 		  //iterate through all the evaluators to see which produces the highest score
 		  Iterator<Goal_Evaluator> curDes = m_Evaluators.iterator();
