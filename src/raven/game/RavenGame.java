@@ -21,6 +21,7 @@ import raven.math.*;
 import raven.script.RavenScript;
 import raven.ui.GameCanvas;
 import raven.ui.KeyState;
+import raven.utils.MapSerializer;
 
 public class RavenGame {
 	/** the current game map */
@@ -276,17 +277,13 @@ public class RavenGame {
 		graveMarkers = new GraveMarkers(RavenScript.getDouble("GraveLifetime"));
 		pathManager = new PathManager<RavenPathPlanner>(
 				RavenScript.getInt("MaxSearchCyclesPerUpdateStep"));
-		map = new RavenMap();
+		map = MapSerializer.SerializeMapFromPath(fileName);
 
 		EntityManager.reset();
 
-		if (map.loadMap(fileName)) {
-			addBots(RavenScript.getInt("NumBots"));
+		addBots(RavenScript.getInt("NumBots"));
 
-			return true;
-		}
-
-		return false;
+		return true;
 	}
 
 	public void addBots(int numBotsToAdd) {

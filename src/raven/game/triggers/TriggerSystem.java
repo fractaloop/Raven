@@ -71,4 +71,13 @@ public class TriggerSystem<T extends Trigger> {
 	public List<T> getTriggers() {
 		return triggers;
 	}
+	
+	@Override
+	public boolean equals(Object o){
+		if(this == o) return true;
+		if(!(o instanceof TriggerSystem<?>)) return false;
+		
+		TriggerSystem<?> other = (TriggerSystem<?>) o;
+		return this.triggers.equals(other.triggers);
+	}
 }

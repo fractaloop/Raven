@@ -1,7 +1,6 @@
 package raven.game;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
@@ -60,6 +59,12 @@ public class RavenMap {
 	int sizeX;
 	int sizeY;
 	
+	/* this will hold a pre-calculated lookup table of the cost to travel
+	 * from */
+	private Map<Pair<Integer, Integer>, Double> pathCosts;
+	
+
+	
 	private void partitionNavGraph() {
 		spacePartition = new CellSpacePartition<NavGraphNode<Trigger<RavenBot>>>(sizeX, sizeY,
 				RavenScript.getInt("NumCellX"), RavenScript.getInt("NumCellsY"),
@@ -71,24 +76,21 @@ public class RavenMap {
 		}
 	}
 	
-	/* this will hold a pre-calculated lookup table of the cost to travel
-	 * from */
-	private Map<Pair<Integer, Integer>, Double> pathCosts;
-	
-
 	// stream constructors for loading from a file
 	private void addWall(Reader in) throws IOException {
 		walls.add(new Wall2D(in));
 	}
 	
 	private void addSpawnPoint(Reader reader) {
-		double x, y, dummy;
+		double x, y;
 		
-		dummy = (Double)StreamUtils.getValueFromStream(reader);
+		StreamUtils.getValueFromStream(reader);
 		x = (Double)StreamUtils.getValueFromStream(reader);
 		y = (Double)StreamUtils.getValueFromStream(reader);
-		dummy = (Double)StreamUtils.getValueFromStream(reader);
-		dummy = (Double)StreamUtils.getValueFromStream(reader);
+		StreamUtils.getValueFromStream(reader);
+		StreamUtils.getValueFromStream(reader);
+		
+		spawnPoints.add(new Vector2D(x, y));
 	}
 	
 	private void addHealthGiver(Reader reader) {
@@ -160,7 +162,8 @@ public class RavenMap {
 		walls = new ArrayList<Wall2D>();
 		spawnPoints = new ArrayList<Vector2D>();
 		sizeX = sizeY = 0;
-		
+		navGraph = new SparseGraph<NavGraphNode<Trigger<RavenBot>>, NavGraphEdge>();
+		spacePartition = new CellSpacePartition<NavGraphNode<Trigger<RavenBot>>>(0.0, 0.0, 0, 0, 0);
 		cellSpaceNeighborhoodRange = 0.0;
 	}
 	
@@ -308,7 +311,7 @@ public class RavenMap {
 		return spawnPoints;
 	}
 	
-	public CellSpacePartition getCellSpace() {
+	public CellSpacePartition<NavGraphNode<Trigger<RavenBot>>> getCellSpace() {
 		return spacePartition;
 	}
 	
@@ -361,4 +364,39 @@ public class RavenMap {
 		
 	}
 	
+	@Override
+	public boolean equals(Object other){
+		if (this == other) return true;
+		
+		if(! (other instanceof RavenMap)) return false;
+		
+		RavenMap toCompare = (RavenMap) other;
+		
+		if( (walls.equals(toCompare.walls)) && (triggerSystem.equals(toCompare.triggerSystem)) 
+				&& (spawnPoints.equals(toCompare.spawnPoints)) && (doors.equals(toCompare.doors)) && 
+				(navGraph.equals(toCompare.navGraph)) && (spacePartition.equals(toCompare.spacePartition)) &&
+				(cellSpaceNeighborhoodRange == toCompare.cellSpaceNeighborhoodRange) && 
+				(sizeX == toCompare.sizeX) && (sizeY == toCompare.sizeY)) {
+			return true;
+		}
+		else return false;		
+	}
+	
+	@Override
+	public int hashCode() {
+		int result = 0;
+		result += walls.hashCode();
+		result += triggerSystem.hashCode();
+		result += spawnPoints.hashCode();
+		result += doors.hashCode();
+		result += navGraph.hashCode();
+		result += spacePartition.hashCode();
+		result += cellSpaceNeighborhoodRange;
+		result += sizeX;
+		result += sizeY;
+		
+		// modded by a prime.  I chose 101 because I don;t think we'll have a lot more that that
+		// many maps total.
+		return result % 101;
+	}
 }

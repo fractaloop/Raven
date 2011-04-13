@@ -72,6 +72,13 @@ public class SparseGraph<NodeType extends GraphNode, EdgeType extends GraphEdge>
 		isDigraph = digraph;
 	}
 	
+	// must fill in details for this....
+	public SparseGraph(){
+		nodes = new ArrayList<NodeType>();
+		edges = new ArrayList<List<EdgeType>>();
+		isDigraph = false;
+	}
+	
 	/** returns the node at the given index */
 	public NodeType getNode(int idx) {
 		if (idx < 0 || idx > nodes.size())
@@ -408,5 +415,15 @@ public class SparseGraph<NodeType extends GraphNode, EdgeType extends GraphEdge>
 		}
 		
 		return pathCosts;
+	}
+
+	@Override
+	public boolean equals(Object o){
+		if(this == o) return true;
+		if(! (o instanceof SparseGraph<?, ?>)) return false;
+	
+		//The only things that matter are list of edges and nodes, and isDigraph
+		SparseGraph<?, ?> other = (SparseGraph<?, ?>) o;
+		return (nodes.equals(other.nodes) && edges.equals(other.edges) && isDigraph == other.isDigraph);
 	}
 }

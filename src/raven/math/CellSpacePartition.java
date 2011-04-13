@@ -43,6 +43,7 @@ public class CellSpacePartition<T extends GraphNode> implements Iterable<T> {
 	}
 	
 	public CellSpacePartition(double width, double height, int cellsX, int cellsY, int maxEntities) {
+		cells = new ArrayList<Cell<T>>();
 		spaceWidth = width;
 		spaceHeight = height;
 		numCellsX = cellsX;
@@ -131,5 +132,17 @@ public class CellSpacePartition<T extends GraphNode> implements Iterable<T> {
 		return neighbors.iterator();
 	}
 	
+	@Override
+	public boolean equals(Object o){
+		if( this == o ) return true;
+		if(!(o instanceof CellSpacePartition<?>)) return false;
+	
+		CellSpacePartition<?> other = (CellSpacePartition<?>) o;
+		return (cells.equals(other.cells) && neighbors.equals(other.neighbors) &&
+				spaceHeight == other.spaceHeight && spaceWidth == other.spaceWidth &&
+				numCellsX == other.numCellsX && numCellsY == other.numCellsY &&
+				cellSizeX == other.cellSizeX && cellSizeY == other.cellSizeY);
+		
+	}
 	
 }
