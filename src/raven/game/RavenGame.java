@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 
+import javax.swing.JFileChooser;
+
 import raven.Raven;
 import raven.game.armory.Bolt;
 import raven.game.armory.Pellet;
@@ -102,11 +104,20 @@ public class RavenGame {
 		bots = new ArrayList<RavenBot>();
 		projectiles = new ArrayList<RavenProjectile>();
 		try {
-			loadMap(RavenScript.getString("StartMap"));
+			loadMap(ChooseMapFile());
 		} catch (IOException e) {
 			System.err.println("Failed to load map: " + RavenScript.getString("StartMap") + ". Reason: \n" + e.getLocalizedMessage());
 			System.exit(1);
 		}
+	}
+
+	private String ChooseMapFile() {
+		JFileChooser chooser = new JFileChooser();
+		int chooseResult = chooser.showOpenDialog(null);
+		
+		if(chooseResult == JFileChooser.APPROVE_OPTION){
+			return chooser.getSelectedFile().getPath();
+		} else return "";
 	}
 
 	/** The usual suspects */
