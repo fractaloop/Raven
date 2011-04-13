@@ -2,6 +2,7 @@ package raven.game.navigation;
 
 import raven.game.RavenBot;
 import raven.game.RavenObject;
+import raven.math.Vector2D;
 
 public class RavenPathPlanner {
 
@@ -22,6 +23,11 @@ public class RavenPathPlanner {
 	public double GetCostToClosestItem(RavenObject itemType) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	public void RequestPathToPosition(Vector2D m_CurrentDestination) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
