@@ -5,9 +5,8 @@ import raven.math.Vector2D;
 import raven.ui.GameCanvas;
 
 public class ExploreGoal_Evaluator extends Goal_Evaluator {
-	Double m_iBias;
 	public ExploreGoal_Evaluator(Double inp) {
-		m_iBias = inp;
+		setM_iBias(inp);
 	}
 	
 	
@@ -19,7 +18,7 @@ public class ExploreGoal_Evaluator extends Goal_Evaluator {
 	{
 	  double Desirability = 0.05;
 
-	  Desirability *= m_iBias;
+	  Desirability *= getM_iBias();
 
 	  return Desirability;
 	}
@@ -35,7 +34,7 @@ public class ExploreGoal_Evaluator extends Goal_Evaluator {
 	//-----------------------------------------------------------------------------
 	public void renderInfo(Vector2D Position, RavenBot pBot)
 	{
-	  GameCanvas.textAtPos(Position, "EX: " + "Desire: "+ CalculateDesirability(pBot));
+	  GameCanvas.textAtPos(Position, "EX: " + "Desire: "+ calculateDesirability(pBot));
 	}
 
 }

@@ -7,7 +7,7 @@ import raven.ui.GameCanvas;
 
 public class GetWeaponGoal_Evaluator extends Goal_Evaluator {
 	private RavenObject weptype;
-	private Double m_iBias;
+	public Double m_iBias;
 	
 	
 	
@@ -86,7 +86,7 @@ public class GetWeaponGoal_Evaluator extends Goal_Evaluator {
 
 
 	//------------------------------ SetGoal --------------------------------------
-	public void SetGoal(RavenBot pBot)
+	public void setGoal(RavenBot pBot)
 	{
 	  pBot.getBrain().addGoal_getItem(weptype); 
 	}
@@ -108,7 +108,7 @@ public class GetWeaponGoal_Evaluator extends Goal_Evaluator {
 		s="BS: "; break;
 	  }
 	  
-	  GameCanvas.textAtPos(Position, s + String.valueOf( (CalculateDesirability(pBot))));
+	  GameCanvas.textAtPos(Position, s + String.valueOf( (calculateDesirability(pBot))));
 	}
 	
 	

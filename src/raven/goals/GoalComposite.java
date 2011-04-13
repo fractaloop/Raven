@@ -6,7 +6,7 @@ import raven.game.BaseGameEntity;
 import raven.game.messaging.Telegram;
 import raven.math.Vector2D;
 
-public class GoalComposite<T extends BaseGameEntity> extends Goal<T> {
+abstract public class GoalComposite<T extends BaseGameEntity> extends Goal<T> {
 
 	  ArrayList <Goal<T> > m_SubGoals;
 	

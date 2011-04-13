@@ -7,11 +7,8 @@ import raven.math.Vector2D;
 import raven.ui.GameCanvas;
 
 public class GetHealthGoal_Evaluator extends Goal_Evaluator {
-	Double m_iBias;
-	
-	
 	GetHealthGoal_Evaluator(Double inp){
-		m_iBias = inp;
+		setM_iBias(inp);
 	}
 	
 	
@@ -46,7 +43,7 @@ public class GetHealthGoal_Evaluator extends Goal_Evaluator {
 	    RavenFeature.Clamp(Desirability, 0, 1);
 	  
 	    //bias the value according to the personality of the bot
-	    Desirability *= m_iBias;
+	    Desirability *= getM_iBias();
 
 	    return Desirability;
 	  }
@@ -65,7 +62,7 @@ public class GetHealthGoal_Evaluator extends Goal_Evaluator {
 	//-----------------------------------------------------------------------------
 	public void RenderInfo(Vector2D Position, RavenBot pBot)
 	{
-	  GameCanvas.textAtPos(Position, "H: " + String.valueOf( (CalculateDesirability(pBot))));
+	  GameCanvas.textAtPos(Position, "H: " + String.valueOf( (calculateDesirability(pBot))));
 	  String s = String.valueOf( (1-RavenFeature.Health(pBot)) + ", " + String.valueOf(RavenFeature.DistanceToItem(pBot,RavenObject.HEALTH)));
 	  
 	  Position.add(new Vector2D(0,15));

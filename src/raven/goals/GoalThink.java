@@ -109,7 +109,7 @@ private double AttackBias  = 0;
 		  Goal_Evaluator current = null;
 		  while(curDes.hasNext()){
 			  current = curDes.next();
-		    double desirabilty = current.CalculateDesirability(m_pOwner);
+		    double desirabilty = current.calculateDesirability(m_pOwner);
 
 		    if (desirabilty >= best)
 		    {
