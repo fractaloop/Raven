@@ -48,7 +48,7 @@ abstract public class GoalComposite<T extends BaseGameEntity> extends Goal<T> {
 	}
 	
 	public void removeAllSubgoals() {
-		// TODO Auto-generated method stub
+		m_SubGoals = new ArrayList<Goal <T>>();
 	}
 	
 	public void AddSubgoal(Goal<T> g)
@@ -69,13 +69,9 @@ abstract public class GoalComposite<T extends BaseGameEntity> extends Goal<T> {
       return false;
     }
     
-	public void renderAtPos(Vector2D p) {
-		// TODO Auto-generated method stub
-	}
+	abstract public void renderAtPos(Vector2D p);
 	
-	public void render() {
-		// TODO Auto-generated method stub
-	}
+	abstract public void render();
 	
 	
 }

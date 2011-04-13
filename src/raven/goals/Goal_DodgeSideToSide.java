@@ -90,7 +90,7 @@ public class Goal_DodgeSideToSide extends GoalComposite<RavenBot> {
 			  return m_iStatus;
 		  }
 
-		  public void Render(){
+		  public void render(){
 			    GameCanvas.orangePen();
 			    GameCanvas.hollowBrush();
 
@@ -102,4 +102,12 @@ public class Goal_DodgeSideToSide extends GoalComposite<RavenBot> {
 		  public void Terminate(){
 			    m_pOwner.getSteering().SeekOff();
 			  }
+
+
+
+		@Override
+		public void renderAtPos(Vector2D p) {
+			// // do nothing
+			
+		}
 		  }

@@ -73,4 +73,14 @@ public class Goal_AttackTarget extends GoalComposite<RavenBot> {
 		m_iStatus = Goal.curStatus.completed;
 	}
 
+	@Override
+	public void renderAtPos(Vector2D p) {
+		// do nothing
+	}
+
+	@Override
+	public void render() {
+		// do nothing
+	}
+
 }

@@ -4,6 +4,7 @@ import raven.game.RavenBot;
 import raven.game.RavenObject;
 import raven.game.messaging.Telegram;
 import raven.game.triggers.Trigger;
+import raven.math.Vector2D;
 
 public class Goal_GetItem extends GoalComposite<RavenBot> {
 
@@ -168,6 +169,22 @@ public class Goal_GetItem extends GoalComposite<RavenBot> {
 		  throw new Exception("Goal_GetItem cannot determine item type");
 
 	  }//end switch
+	}
+
+
+
+	@Override
+	public void renderAtPos(Vector2D p) {
+		// do nothing
+		
+	}
+
+
+
+	@Override
+	public void render() {
+		// do nothing
+		
 	}
 	
 	

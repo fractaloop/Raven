@@ -204,5 +204,11 @@ private double AttackBias  = 0;
 	public void queueGoal_moveToPosition(Vector2D pos, Vector2D p) {
 		m_SubGoals.add(new Goal_MoveToPosition(m_pOwner, p));
 	}
+
+	@Override
+	public void renderAtPos(Vector2D p) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
