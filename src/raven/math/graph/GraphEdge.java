@@ -2,6 +2,7 @@ package raven.math.graph;
 
 import java.io.Reader;
 
+import raven.math.Vector2D;
 import raven.utils.StreamUtils;
 
 public class GraphEdge {
@@ -60,6 +61,18 @@ public class GraphEdge {
 	public String toString() {
 		return "from: " + from + " to: " + to + " cost: " + cost + "\n"; 
 	}
+
+	public int doorID() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public Vector2D source() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 
 	
 }
