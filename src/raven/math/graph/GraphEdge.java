@@ -59,5 +59,6 @@ public class GraphEdge {
 	public String toString() {
 		return "from: " + from + " to: " + to + " cost: " + cost + "\n"; 
 	}
+
 	
 }
