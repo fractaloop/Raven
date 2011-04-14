@@ -71,6 +71,11 @@ public class GraphEdge {
 		return null;
 	}
 
+	public Vector2D destination() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 
 	
