@@ -6,6 +6,7 @@ import raven.game.BaseGameEntity;
 import raven.game.RavenBot;
 import raven.game.messaging.Telegram;
 import raven.math.Vector2D;
+import raven.ui.GameCanvas;
 
 abstract public class GoalComposite<T extends BaseGameEntity> extends Goal<T> {
 
@@ -68,9 +69,31 @@ abstract public class GoalComposite<T extends BaseGameEntity> extends Goal<T> {
       return false;
     }
     
-	abstract public void renderAtPos(Vector2D p);
+	public void renderAtPos(Vector2D pos, String tts) {
+		 renderAtPos(pos, tts);
+
+		  pos.x += 10;
+
+		  GameCanvas.transparentText();
+		  
+		  for (int it = 0; it < m_SubGoals.size() - 1; it++)
+		  {
+		    m_SubGoals.get(it).renderAtPos(pos, tts);
+		  }
+
+		  pos.x -= 10;
 	
-	abstract public void render();
+	
+	
+	
+	}
+	
+	public void render(){
+		  if (!m_SubGoals.isEmpty())
+		  {
+		    m_SubGoals.get(0).render();
+		  }
+	}
 
 	public void setM_pOwner(RavenBot m_pOwner) {
 		this.m_pOwner = m_pOwner;

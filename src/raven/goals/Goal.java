@@ -2,6 +2,8 @@ package raven.goals;
 
 import raven.game.BaseGameEntity;
 import raven.game.messaging.Telegram;
+import raven.math.Vector2D;
+import raven.ui.GameCanvas;
 
 abstract public class Goal<T extends BaseGameEntity> {
 	public enum curStatus{active, inactive, completed, failed}
@@ -83,11 +85,11 @@ abstract public class Goal<T extends BaseGameEntity> {
 	{
 	  if (isInactive())
 	  {
-	    Activate();   
+	    activate();   
 	  }
 	}
 	
-	public void Activate(){}
+	abstract public void activate();
 
 
 
@@ -100,6 +102,23 @@ abstract public class Goal<T extends BaseGameEntity> {
 	 public goalType GetType(){
 		return m_iType;
 	 }
+
+
+
+	abstract public void render();
+
+
+
+	void renderAtPos(Vector2D pos, String tts){
+		  pos.y += 15;
+		  GameCanvas.transparentText();
+		  if (isComplete()) GameCanvas.textColor(0,255,0);
+		  if (isInactive()) GameCanvas.textColor(0,0,0);
+		  if (hasFailed()) GameCanvas.textColor(255,0,0);
+		  if (isActive()) GameCanvas.textColor(0,0,255);
+
+		  GameCanvas.textAtPos(pos.x, pos.y, tts); 
+	}
 
 	
 	

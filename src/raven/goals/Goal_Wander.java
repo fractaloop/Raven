@@ -8,4 +8,16 @@ public class Goal_Wander extends Goal<RavenBot> {
 		// TODO Auto-generated constructor stub
 	}
 
+	@Override
+	public void activate() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void render() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

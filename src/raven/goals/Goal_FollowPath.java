@@ -22,7 +22,7 @@ public class Goal_FollowPath extends GoalComposite<RavenBot> {
 	}
 
 
-	void activate() {
+	public void activate() {
 		m_iStatus = Goal.curStatus.active;
 
 		//get a reference to the next edge
@@ -85,42 +85,37 @@ public class Goal_FollowPath extends GoalComposite<RavenBot> {
 		  //remaining. If it does then call activate to grab the next edge.
 		  if (m_iStatus == Goal.curStatus.completed && !m_Path.isEmpty())
 		  {
-		    Activate(); 
+		    activate(); 
 		  }
 
 		  return m_iStatus;
 	}
 	public void render() {
 		
-		// dont under stand this one, and don't want to break it this is what i had.
-//		  //render all the path waypoints remaining on the path list
-//		  Iterator<NavGraphEdge> it = m_Path.iterator();
-//          GraphEdge temp = new GraphEdge();
-//		  while(it.hasNext())
-//		  {  
-//			  temp = it.next();
-//		    GameCanvas.blackPen();
-//		    GameCanvas.lineWithArrow(temp.from()), temp.to(), 5);
-//		    
-//		    GameCanvas.redBrush();
-//		    GameCanvas.blackPen();
-//		    GameCanvas.Circle(temp.Destination(), 3);
-//		  }
-//
-//		  //forward the request to the subgoals
-//		  Goal_Composite<Raven_Bot>::Render();
-//		
+
+//        render all the path waypoints remaining on the path list
+		  Iterator<NavGraphEdge> it = m_Path.iterator();
+          GraphEdge temp = new GraphEdge();
+		  while(it.hasNext())
+		  {  
+			  temp = it.next();
+		    GameCanvas.blackPen();
+		    GameCanvas.lineWithArrow(temp.from()), temp.to(), 5);
+		    
+		    GameCanvas.redBrush();
+		    GameCanvas.blackPen();
+		    GameCanvas.Circle(temp.Destination(), 3);
+		  }
+
+		  //forward the request to the subgoals
+		  // in this case we imitate goalComposite . render()
+		  if (!m_SubGoals.isEmpty())
+		  {
+		    m_SubGoals.get(0).render();
+		  }		
 		
 	}
-	public void terminate(){// do nothing?
 
-	}
-
-	@Override
-	public void renderAtPos(Vector2D p) {
-		//do nothing
-
-	}
 
 
 

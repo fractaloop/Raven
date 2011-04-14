@@ -95,16 +95,4 @@ public class Goal_Explore extends GoalComposite<RavenBot> {
 		  return true;
 	  }
 
-	@Override
-	public void renderAtPos(Vector2D p) {
-		// do nothing
-		
-	}
-
-	@Override
-	public void render() {
-		// do nothing
-		
-	}
-
 }

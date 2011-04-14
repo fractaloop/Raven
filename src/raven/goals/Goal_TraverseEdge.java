@@ -10,14 +10,10 @@ public class Goal_TraverseEdge extends GoalComposite<RavenBot> {
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
-	public void renderAtPos(Vector2D p) {
-		// TODO Auto-generated method stub
-		
-	}
+
 
 	@Override
-	public void render() {
+	public void activate() {
 		// TODO Auto-generated method stub
 		
 	}

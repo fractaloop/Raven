@@ -16,7 +16,7 @@ public class Goal_HuntTarget extends GoalComposite<RavenBot> {
 	
 	
 	
-	  void activate() {
+	  public void activate() {
 		  
 		  m_iStatus = Goal.curStatus.active;
 		  
@@ -87,12 +87,6 @@ public class Goal_HuntTarget extends GoalComposite<RavenBot> {
 	  }
 
 	@Override
-	public void renderAtPos(Vector2D p) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void render() {
 		//#define SHOW_LAST_RECORDED_POSITION
 		  //render last recorded position as a green circle
@@ -103,7 +97,10 @@ public class Goal_HuntTarget extends GoalComposite<RavenBot> {
 		    GameCanvas.circle(getM_pOwner().getTargetSys().getLastRecordedPosition(), 3);
 		  }
 
-		//  Goal_Composite<Raven_Bot>::Render();
+		  if (!m_SubGoals.isEmpty())
+		  {
+		    m_SubGoals.get(0).render();
+		  }
 		
 	}
 

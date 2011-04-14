@@ -10,7 +10,7 @@ public class Goal_AttackTarget extends GoalComposite<RavenBot> {
 		this.setM_pOwner(m_pOwner);
 	}
 
-	public  void Activate(){
+	public  void activate(){
 		  m_iStatus = Goal.curStatus.active;
 
 		  //if this goal is reactivated then there may be some existing subgoals that
@@ -74,14 +74,7 @@ public class Goal_AttackTarget extends GoalComposite<RavenBot> {
 		m_iStatus = Goal.curStatus.completed;
 	}
 
-	@Override
-	public void renderAtPos(Vector2D p) {
-		// do nothing
-	}
 
-	@Override
-	public void render() {
-		// do nothing
-	}
+
 
 }

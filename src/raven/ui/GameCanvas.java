@@ -231,4 +231,14 @@ public class GameCanvas extends Canvas {
 	public static void setColor(Color color) {
 		getInstance().g2d.setColor(color);
 	}
+
+	public static void transparentText() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public static void textColor(int i, int j, int k) {
+		// TODO Auto-generated method stub
+		
+	}
 }

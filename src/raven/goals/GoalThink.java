@@ -54,7 +54,7 @@ private double AttackBias  = 0;
 		
 	}
 	@Override
-	public void Activate(){
+	public void activate(){
 		  if (!getM_pOwner().isPossessed())
 		  {
 		    Arbitrate();
@@ -68,7 +68,7 @@ private double AttackBias  = 0;
 	{
 		if (isInactive())
 		{
-			Activate();   
+			activate();   
 		}
 	}
 
@@ -206,10 +206,4 @@ private double AttackBias  = 0;
 		m_SubGoals.add(new Goal_MoveToPosition(getM_pOwner(), p));
 	}
 
-	@Override
-	public void renderAtPos(Vector2D p) {
-		// TODO Auto-generated method stub
-		
-	}
-	
 }

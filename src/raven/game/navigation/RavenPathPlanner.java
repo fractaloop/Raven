@@ -27,7 +27,8 @@ public class RavenPathPlanner {
 		return 0;
 	}
 
-	public void RequestPathToPosition(Vector2D m_CurrentDestination) {
+	public boolean RequestPathToPosition(Vector2D m_CurrentDestination) {
+		return false;
 		// TODO Auto-generated method stub
 		
 	}
