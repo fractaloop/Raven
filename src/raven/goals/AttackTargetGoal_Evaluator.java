@@ -7,12 +7,11 @@ import raven.ui.GameCanvas;
 public class AttackTargetGoal_Evaluator extends Goal_Evaluator {
 
 	
-	Double m_iBias;
 	public AttackTargetGoal_Evaluator(Double bias) {
-		m_iBias = bias;
+		setM_iBias(bias);
 	}
 	  
-	  public double CalculateDesirability(RavenBot pBot){
+	  public double calculateDesirability(RavenBot pBot){
 		  double Desirability = 0.0;
 
 		  //only do the calculation if there is a target present
@@ -25,19 +24,19 @@ public class AttackTargetGoal_Evaluator extends Goal_Evaluator {
 			} catch (Exception e) {System.out.println(e.getMessage())	;}
 
 		     //bias the value according to the personality of the bot
-		     Desirability *= m_iBias;
+		     Desirability *= getM_iBias();
 		  }
 		    
 		  return Desirability;
 	  
 	  }
 
-	  public void SetGoal(RavenBot pEnt){
+	  public void setGoal(RavenBot pEnt){
 		  pEnt.getBrain().addGoal_attackTarget(); 
 	  }
 
-	  public void RenderInfo(Vector2D Position, RavenBot pBot){
-		  GameCanvas.textAtPos(Position, "AT: " + String.valueOf(CalculateDesirability(pBot)));
+	  public void renderInfo(Vector2D Position, RavenBot pBot){
+		  GameCanvas.textAtPos(Position, "AT: " + String.valueOf(calculateDesirability(pBot)));
 		  
 		  String s = "";
 		try {

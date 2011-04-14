@@ -19,7 +19,7 @@ public class RavenFeature {
 		  //given item. the further the item, the higher the rating. If there is no
 		  //item of the given type present in the game world at the time this method
 		  //is called the value returned is 1
-		  public static double DistanceToItem(RavenBot pBot, int ItemType){
+		  public static double DistanceToItem(RavenBot pBot, RavenObject ItemType){
 			  //determine the distance to the closest instance of the item type
 			  double DistanceToItem = pBot.getPathPlanner().GetCostToClosestItem(ItemType);
 
@@ -45,7 +45,7 @@ public class RavenFeature {
 		  
 		  
 		  
-		  private static double Clamp(double distanceToItem, double minDistance,
+		  public static double Clamp(double distanceToItem, double minDistance,
 				double maxDistance) {
 			if(distanceToItem < minDistance)
 				return minDistance;
@@ -79,7 +79,8 @@ public class RavenFeature {
 			 double MaxRoundsForShotgun = Shotgun.shotgunMaxRounds;
 			  double MaxRoundsForRailgun = Railgun.railgunMaxRounds;
 			  double MaxRoundsForRocketLauncher = RocketLauncher.rlMaxRounds;
-			  double TotalRoundsCarryable = MaxRoundsForShotgun + MaxRoundsForRailgun + MaxRoundsForRocketLauncher;
+			  @SuppressWarnings("unused")
+			double TotalRoundsCarryable = MaxRoundsForShotgun + MaxRoundsForRailgun + MaxRoundsForRocketLauncher;
 
 			  double NumSlugs      = (double)pBot.getWeaponSys().getAmmoRemainingForWeapon(RavenObject.RAIL_GUN);
 			  double NumCartridges = (double)pBot.getWeaponSys().getAmmoRemainingForWeapon(RavenObject.SHOTGUN);

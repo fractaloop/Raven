@@ -9,4 +9,16 @@ public class Goal_MoveToPosition extends GoalComposite<RavenBot>{
 	public Goal_MoveToPosition(RavenBot owner, Vector2D pos){
 	
 }
+
+	@Override
+	public void renderAtPos(Vector2D p) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void render() {
+		// TODO Auto-generated method stub
+		
+	}
 }

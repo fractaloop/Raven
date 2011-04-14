@@ -2,10 +2,11 @@ package raven.goals;
 
 import raven.game.RavenBot;
 import raven.math.Vector2D;
+import raven.math.graph.GraphEdge;
 
-public class Goal_HuntTarget extends GoalComposite<RavenBot> {
+public class Goal_TraverseEdge extends GoalComposite<RavenBot> {
 
-	public Goal_HuntTarget(RavenBot m_pOwner) {
+	public Goal_TraverseEdge(RavenBot ravenBot, GraphEdge edge, boolean empty) {
 		// TODO Auto-generated constructor stub
 	}
 

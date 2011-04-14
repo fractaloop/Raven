@@ -2,9 +2,8 @@ package raven.goals;
 
 import raven.game.BaseGameEntity;
 import raven.game.messaging.Telegram;
-import raven.game.RavenObject;
 
-public class Goal<T extends BaseGameEntity> {
+abstract public class Goal<T extends BaseGameEntity> {
 	public enum curStatus{active, inactive, completed, failed}
 	public enum goalType{goal_explore, goal_move,goal_get,goal_attack_target,goal_get_shotgun, goal_get_railgun, goal_get_rocket_launcher, goal_get_health}
 	

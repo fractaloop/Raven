@@ -3,15 +3,14 @@ package raven.goals;
 import java.util.ArrayList;
 
 import raven.game.BaseGameEntity;
+import raven.game.RavenBot;
 import raven.game.messaging.Telegram;
 import raven.math.Vector2D;
 
-public class GoalComposite<T extends BaseGameEntity> extends Goal<T> {
+abstract public class GoalComposite<T extends BaseGameEntity> extends Goal<T> {
 
-	  ArrayList <Goal<T> > m_SubGoals;
-	
-	
-	
+	  public ArrayList <Goal<T> > m_SubGoals;
+	  private RavenBot m_pOwner;
 	
 	public raven.goals.Goal.curStatus ProcessSubgoals(){ 
 	  //remove all completed and failed goals from the front of the subgoal list
@@ -48,7 +47,7 @@ public class GoalComposite<T extends BaseGameEntity> extends Goal<T> {
 	}
 	
 	public void removeAllSubgoals() {
-		// TODO Auto-generated method stub
+		m_SubGoals = new ArrayList<Goal <T>>();
 	}
 	
 	public void AddSubgoal(Goal<T> g)
@@ -69,12 +68,16 @@ public class GoalComposite<T extends BaseGameEntity> extends Goal<T> {
       return false;
     }
     
-	public void renderAtPos(Vector2D p) {
-		// TODO Auto-generated method stub
-	}
+	abstract public void renderAtPos(Vector2D p);
 	
-	public void render() {
-		// TODO Auto-generated method stub
+	abstract public void render();
+
+	public void setM_pOwner(RavenBot m_pOwner) {
+		this.m_pOwner = m_pOwner;
+	}
+
+	public RavenBot getM_pOwner() {
+		return m_pOwner;
 	}
 	
 	
