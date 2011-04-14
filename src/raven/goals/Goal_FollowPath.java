@@ -34,7 +34,7 @@ public class Goal_FollowPath extends GoalComposite<RavenBot> {
 		//some edges specify that the bot should use a specific behavior when
 		//following them. This switch statement queries the edge behavior flag and
 		//adds the appropriate goals/s to the subgoal list.
-		/*switch(edge.behavior())
+		switch(edge.behavior())
 		{
 		case normal:
 		{
@@ -73,7 +73,6 @@ public class Goal_FollowPath extends GoalComposite<RavenBot> {
 			throw new Exception("<Goal_FollowPath::Activate>: Unrecognized edge type");
 		}
 
-*/
 
 	}
 	public raven.goals.Goal.curStatus process() {
