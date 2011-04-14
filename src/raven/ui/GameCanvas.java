@@ -239,4 +239,12 @@ public class GameCanvas extends Canvas {
 	public static void setGraphics(Graphics g) {
 		getInstance().g2d = (Graphics2D) g;
 	}
+
+	public static void transparentText() {
+		// TODO Auto-generated method stub
+	}
+
+	public static void textColor(int i, int j, int k) {
+		// TODO Auto-generated method stub
+	}
 }

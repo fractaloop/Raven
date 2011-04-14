@@ -32,7 +32,7 @@ public class Goal_DodgeSideToSide extends GoalComposite<RavenBot> {
 	}
 
 
-		 public void Activate(){
+		 public void activate(){
 			  m_iStatus = Goal.curStatus.active;
 
 			  getM_pOwner().getSteering().seekOn();
@@ -105,10 +105,4 @@ public class Goal_DodgeSideToSide extends GoalComposite<RavenBot> {
 			  }
 
 
-
-		@Override
-		public void renderAtPos(Vector2D p) {
-			// // do nothing
-			
-		}
 		  }

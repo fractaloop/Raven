@@ -10,15 +10,11 @@ public class Goal_SeekToPosition extends GoalComposite<RavenBot> {
 	}
 
 	@Override
-	public void renderAtPos(Vector2D p) {
+	public void activate() {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
-	public void render() {
-		// TODO Auto-generated method stub
-		
-	}
+
 
 }

@@ -46,7 +46,7 @@ public class Goal_GetItem extends GoalComposite<RavenBot> {
 			
 			}
 
-		  public void Activate(){
+		  public void activate(){
 			  {
 				  m_iStatus = Goal.curStatus.active;
 				  
@@ -173,20 +173,6 @@ public class Goal_GetItem extends GoalComposite<RavenBot> {
 	}
 
 
-
-	@Override
-	public void renderAtPos(Vector2D p) {
-		// do nothing
-		
-	}
-
-
-
-	@Override
-	public void render() {
-		// do nothing
-		
-	}
 	
 	
 	}
