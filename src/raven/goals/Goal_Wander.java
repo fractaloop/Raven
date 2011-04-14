@@ -10,13 +10,28 @@ public class Goal_Wander extends Goal<RavenBot> {
 
 	@Override
 	public void activate() {
-		// TODO Auto-generated method stub
+		  m_iStatus = Goal.curStatus.active;
+
+		  m_pOwner.getSteering().WanderOn();
 		
+	}
+
+	public raven.goals.Goal.curStatus process(){
+		
+		  activateIfInactive();
+
+		  return m_iStatus;
+	}
+	
+	
+	public void terminate()
+	{
+	  m_pOwner.getSteering().WanderOff();
 	}
 
 	@Override
 	public void render() {
-		// TODO Auto-generated method stub
+		// do noting
 		
 	}
 
