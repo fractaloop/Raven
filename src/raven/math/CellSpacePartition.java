@@ -52,7 +52,9 @@ public class CellSpacePartition<T extends GraphNode> implements Iterable<T> {
 		
 		// Calculate the bounds of each cell
 		cellSizeX = width / cellsX;
+		if(cellSizeX == Double.NaN) cellSizeX = 0;
 		cellSizeY = height / cellsY;
+		if(cellSizeY == Double.NaN) cellSizeY = 0;
 		
 		// Create the cells
 		for (int y = 0; y < numCellsY; y++) {
@@ -138,10 +140,14 @@ public class CellSpacePartition<T extends GraphNode> implements Iterable<T> {
 		if(!(o instanceof CellSpacePartition<?>)) return false;
 	
 		CellSpacePartition<?> other = (CellSpacePartition<?>) o;
-		return (cells.equals(other.cells) && neighbors.equals(other.neighbors) &&
-				spaceHeight == other.spaceHeight && spaceWidth == other.spaceWidth &&
-				numCellsX == other.numCellsX && numCellsY == other.numCellsY &&
-				cellSizeX == other.cellSizeX && cellSizeY == other.cellSizeY);
+		return (cells.equals(other.cells) &&
+				neighbors.equals(other.neighbors) &&
+				Double.compare(spaceHeight, other.spaceHeight) == 0 && 
+				Double.compare(spaceWidth, other.spaceWidth) == 0 &&
+				numCellsX == other.numCellsX &&
+				numCellsY == other.numCellsY &&
+				Double.compare(cellSizeX, other.cellSizeX) == 0 &&
+				Double.compare(cellSizeY, other.cellSizeY) == 0);
 		
 	}
 	
