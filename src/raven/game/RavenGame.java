@@ -595,7 +595,7 @@ public class RavenGame {
 		}
 	}
 
-	// ////////////
+	//////////////
 	// Accessors
 
 	public RavenMap getMap() {
@@ -612,6 +612,13 @@ public class RavenGame {
 
 	public int getNumBots() {
 		return bots.size();
+	}
+	
+	/** Some weird helper method */
+	public void tagRavenBotsWithinViewRange(RavenBot ravenBot,
+			double viewDistance) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
