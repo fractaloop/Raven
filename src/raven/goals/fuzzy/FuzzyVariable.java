@@ -1,6 +1,7 @@
 package raven.goals.fuzzy;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import raven.goals.fuzzy.FzSet;
 
@@ -11,7 +12,7 @@ import raven.goals.fuzzy.FzSet;
  */
 public class FuzzyVariable {
 
-	private HashMap<String, FuzzySet> MemberSets;
+	private Map<String, FuzzySet> MemberSets = new HashMap<String, FuzzySet>();
 	private double minRange = 0, maxRange = 0;
 	
 	private void AdjustRangeToFit(double min, double max){

@@ -3,6 +3,7 @@
  */
 package raven.game.armory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import raven.game.RavenBot;
@@ -35,6 +36,10 @@ public abstract class RavenWeapon {
 		idealRange = iRange;
 		maxProjectileSpeed = projectileSpd;
 		lastDesireabilityScore = 0;
+		
+		fuzzyModule = new FuzzyModule();
+		WeaponVB = new ArrayList<Vector2D>();
+		WeaponVBTrans = new ArrayList<Vector2D>();
 	}
 	
 	
