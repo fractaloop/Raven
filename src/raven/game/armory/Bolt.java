@@ -17,10 +17,10 @@ import raven.ui.GameCanvas;
 public class Bolt extends RavenProjectile {
 	
 	private static double boltMaxSpeed = RavenScript.getDouble("Bolt_MaxSpeed");
-	private static int boltMass = RavenScript.getInt("bolt_mass");
-	private static double boltMaxForce = RavenScript.getDouble("bolt_maxforce");
-	private static Vector2D boltScale = new Vector2D(RavenScript.getDouble("bolt_scale"), RavenScript.getDouble("bolt_scale"));
-	private static int boltDamage = RavenScript.getInt("bolt_damage");
+	private static int boltMass = RavenScript.getInt("Bolt_Mass");
+	private static double boltMaxForce = RavenScript.getDouble("Bolt_MaxForce");
+	private static Vector2D boltScale = new Vector2D(RavenScript.getDouble("bolt_scale"), RavenScript.getDouble("Bolt_Scale"));
+	private static int boltDamage = RavenScript.getInt("Bolt_Damage");
 	private static double boltBlastRadius = 1;
 	
 	

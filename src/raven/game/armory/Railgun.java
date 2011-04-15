@@ -24,11 +24,11 @@ import raven.ui.GameCanvas;
  */
 public class Railgun extends RavenWeapon {
 
-	private static int railgunDefaultRounds = RavenScript.getInt("railgun_defaultRounds");
-	public static final int railgunMaxRounds = RavenScript.getInt("railgun_maxRoundsCarried");
-	private static double railgunFiringFreq = RavenScript.getDouble("railgun_firingFreq");
-	private static double railgunIdealRange = RavenScript.getDouble("railgun_idealRange");
-	private static double railgunMaxSpeed = RavenScript.getDouble("railgun_maxSpeed");
+	private static int railgunDefaultRounds = RavenScript.getInt("RailGun_DefaultRounds");
+	public static final int railgunMaxRounds = RavenScript.getInt("RailGun_MaxRoundsCarried");
+	private static double railgunFiringFreq = RavenScript.getDouble("RailGun_FiringFreq");
+	private static double railgunIdealRange = RavenScript.getDouble("RailGun_IdealRange");
+	private static double railgunMaxSpeed = RavenScript.getDouble("Slug_MaxSpeed");
 	
 	public Railgun(RavenBot owner){
 		super(RavenObject.RAIL_GUN, railgunDefaultRounds, railgunMaxRounds, railgunFiringFreq, railgunIdealRange, railgunMaxSpeed, owner);

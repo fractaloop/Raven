@@ -13,11 +13,11 @@ import raven.ui.GameCanvas;
 
 public class Rocket extends RavenProjectile {
 
-	private static double rocketMaxSpeed = RavenScript.getDouble("rocket_MaxSpeed");
-	private static int rocketMass = RavenScript.getInt("rocket_mass");
-	private static double rocketMaxForce = RavenScript.getDouble("rocket_maxforce");
-	private static Vector2D rocketScale = new Vector2D(RavenScript.getDouble("rocket_scale"), RavenScript.getDouble("rocket_scale"));
-	private static int rocketDamage = RavenScript.getInt("rocket_damage");
+	private static double rocketMaxSpeed = RavenScript.getDouble("Rocket_MaxSpeed");
+	private static int rocketMass = RavenScript.getInt("Rocket_Mass");
+	private static double rocketMaxForce = RavenScript.getDouble("Rocket_MaxForce");
+	private static Vector2D rocketScale = new Vector2D(RavenScript.getDouble("Rocket_Scale"), RavenScript.getDouble("Rocket_Scale"));
+	private static int rocketDamage = RavenScript.getInt("Rocket_Damage");
 	private static double rocketBlastRadius = 1; 
 	private static double currentBlastRadius;
 	

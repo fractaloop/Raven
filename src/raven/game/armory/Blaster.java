@@ -22,11 +22,11 @@ import raven.ui.GameCanvas;
  */
 public class Blaster extends RavenWeapon {
 
-	private static int blasterDefaultRounds = RavenScript.getInt("blaster_defaultRounds");
-	private static final int blasterMaxRounds = RavenScript.getInt("blaster_maxRoundsCarried");
-	private static double blasterFiringFreq = RavenScript.getDouble("blaster_firingFreq");
-	private static double blasterIdealRange = RavenScript.getDouble("blaster_idealRange");
-	private static double blasterMaxSpeed = RavenScript.getDouble("blaster_maxSpeed");
+	private static int blasterDefaultRounds = RavenScript.getInt("Blaster_DefaultRounds");
+	private static final int blasterMaxRounds = RavenScript.getInt("Blaster_MaxRoundsCarried");
+	private static double blasterFiringFreq = RavenScript.getDouble("Blaster_FiringFreq");
+	private static double blasterIdealRange = RavenScript.getDouble("Blaster_IdealRange");
+	private static double blasterMaxSpeed = RavenScript.getDouble("Blaster_MaxSpeed");
 	
 	public Blaster(RavenBot owner)
 	{
@@ -66,7 +66,7 @@ public class Blaster extends RavenWeapon {
 		
 		UpdateTimeWeaponIsNextAvailable();
 		
-		getOwner().getWorld().getMap().addSoundTrigger(getOwner(), RavenScript.getDouble("Blaster_soundrange"));
+		getOwner().getWorld().getMap().addSoundTrigger(getOwner(), RavenScript.getDouble("Blaster_SoundRange"));
 	}
 	
 	@Override

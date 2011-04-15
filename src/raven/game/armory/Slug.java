@@ -11,13 +11,13 @@ import raven.ui.GameCanvas;
 
 public class Slug extends RavenProjectile {
 
-	private static double slugMaxSpeed = RavenScript.getDouble("slug_MaxSpeed");
-	private static int slugMass = RavenScript.getInt("slug_mass");
-	private static double slugMaxForce = RavenScript.getDouble("slug_maxforce");
-	private static Vector2D slugScale = new Vector2D(RavenScript.getDouble("slug_scale"), RavenScript.getDouble("slug_scale"));
-	private static int slugDamage = RavenScript.getInt("slug_damage");
+	private static double slugMaxSpeed = RavenScript.getDouble("Slug_MaxSpeed");
+	private static int slugMass = RavenScript.getInt("Slug_Mass");
+	private static double slugMaxForce = RavenScript.getDouble("Slug_MaxForce");
+	private static Vector2D slugScale = new Vector2D(RavenScript.getDouble("Slug_Scale"), RavenScript.getDouble("Slug_Scale"));
+	private static int slugDamage = RavenScript.getInt("Slug_Damage");
 	private static double slugBlastRadius = 1;
-	private static double slugTimePersist = RavenScript.getDouble("slug_persistance");
+	private static double slugTimePersist = RavenScript.getDouble("Slug_Persistance");
 	
 	public Slug(RavenBot shooter, Vector2D target) {
 		super(target, 0.0, shooter.velocity(), 

@@ -21,11 +21,11 @@ import raven.math.Vector2D;
  */
 public class RocketLauncher extends RavenWeapon {
 
-	private static int rlDefaultRounds = RavenScript.getInt("rocketlauncher_defaultRounds");
-	public static final int rlMaxRounds = RavenScript.getInt("rocketlauncher_maxRoundsCarried");
-	private static double rlFiringFreq = RavenScript.getDouble("rocketlauncher_firingFreq");
-	private static double rlIdealRange = RavenScript.getDouble("rocketlauncher_idealRange");
-	private static double rlMaxSpeed = RavenScript.getDouble("rocket_maxSpeed");
+	private static int rlDefaultRounds = RavenScript.getInt("RocketLauncher_DefaultRounds");
+	public static final int rlMaxRounds = RavenScript.getInt("RocketLauncher_MaxRoundsCarried");
+	private static double rlFiringFreq = RavenScript.getDouble("RocketLauncher_FiringFreq");
+	private static double rlIdealRange = RavenScript.getDouble("RocketLauncher_IdealRange");
+	private static double rlMaxSpeed = RavenScript.getDouble("Rocket_MaxSpeed");
 	
 	public RocketLauncher(RavenBot owner){
 		super(RavenObject.ROCKET_LAUNCHER, rlDefaultRounds, rlMaxRounds, rlFiringFreq, rlIdealRange, rlMaxSpeed, owner);

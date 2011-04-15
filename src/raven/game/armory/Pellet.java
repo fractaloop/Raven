@@ -9,13 +9,13 @@ import raven.ui.GameCanvas;
 
 public class Pellet extends RavenProjectile {
 
-	private static double pelletMaxSpeed = RavenScript.getDouble("pellet_MaxSpeed");
-	private static int pelletMass = RavenScript.getInt("pellet_mass");
-	private static double pelletMaxForce = RavenScript.getDouble("pellet_maxforce");
-	private static Vector2D pelletScale = new Vector2D(RavenScript.getDouble("pellet_scale"), RavenScript.getDouble("pellet_scale"));
-	private static int pelletDamage = RavenScript.getInt("pellet_damage");
+	private static double pelletMaxSpeed = RavenScript.getDouble("Pellet_MaxSpeed");
+	private static int pelletMass = RavenScript.getInt("Pellet_Mass");
+	private static double pelletMaxForce = RavenScript.getDouble("Pellet_MaxForce");
+	private static Vector2D pelletScale = new Vector2D(RavenScript.getDouble("Pellet_Scale"), RavenScript.getDouble("Pellet_Scale"));
+	private static int pelletDamage = RavenScript.getInt("Pellet_Damage");
 	private static double pelletBlastRadius = 1;
-	private static double pelletTimePersist = RavenScript.getDouble("pellet_persistance");
+	private static double pelletTimePersist = RavenScript.getDouble("Pellet_Persistance");
 	
 		
 	public Pellet(RavenBot shooter, Vector2D target) {
