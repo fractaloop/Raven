@@ -1,11 +1,13 @@
 package raven.game;
 
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileFilter;
 
 import raven.Raven;
 import raven.game.armory.Bolt;
@@ -98,27 +100,51 @@ public class RavenGame {
 		}
 	}
 
+	/** Open a Swing file chooser to pick a Raven map */
+	private String chooseMapFile() {
+		JFileChooser chooser = new JFileChooser(new File("./maps"));
+		chooser.setFileFilter(new FileFilter() {
+			@Override
+			public boolean accept(File file) {
+				if (file.isDirectory()) {
+					return false;
+				}
+
+				return file.getName().endsWith(".raven");
+			}
+
+			@Override
+			public String getDescription() {
+				return "Raven levels (*.raven)";
+			}
+		});
+		int chooseResult = chooser.showOpenDialog(null);
+		
+		if (chooseResult == JFileChooser.APPROVE_OPTION) {
+			return chooser.getSelectedFile().getPath();
+		} else {
+			return null;
+		}
+	}
+
 	// /////////////////
 	// Public methods
 
 	public RavenGame() {
 		bots = new ArrayList<RavenBot>();
 		projectiles = new ArrayList<RavenProjectile>();
+		
+		String path = "<undefined>";
 		try {
-			loadMap(ChooseMapFile());
+			path = chooseMapFile();
+			if (path == null)
+				path = RavenScript.getString("StartMap");
+			else
+				loadMap(path);
 		} catch (IOException e) {
-			System.err.println("Failed to load map: " + RavenScript.getString("StartMap") + ". Reason: \n" + e.getLocalizedMessage());
+			System.err.println("Failed to load map: " + path + ". Reason: \n" + e.getLocalizedMessage());
 			System.exit(1);
 		}
-	}
-
-	private String ChooseMapFile() {
-		JFileChooser chooser = new JFileChooser();
-		int chooseResult = chooser.showOpenDialog(null);
-		
-		if(chooseResult == JFileChooser.APPROVE_OPTION){
-			return chooser.getSelectedFile().getPath();
-		} else return "";
 	}
 
 	/** The usual suspects */
