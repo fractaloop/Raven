@@ -437,7 +437,6 @@ public class RavenSteering {
           weightWallAvoidance=RavenScript.getDouble("WallAvoidanceWeight");
           viewDistance=RavenScript.getDouble("ViewDistance");
           wallDetectionFeelerLength=RavenScript.getDouble("WallDetectionFeelerLength");
-          feelers.ensureCapacity(3);
           deceleration=Deceleration.normal;
           targetAgent1=null;
           targetAgent2=null;
@@ -469,6 +468,7 @@ public class RavenSteering {
 		  {world.getAllBotsInFOV(ravenBot);
 	// world.tagRavenBotsWithinViewRange(ravenBot, viewDistance);
 		  }
+		feelers						= new Vector<Vector2D>(3);
 
 		  steeringForce = CalculatePrioritized();
 
