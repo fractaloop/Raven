@@ -29,12 +29,9 @@ import com.thoughtworks.xstream.XStream;
  *
  */
 public class MapSerializer {
-
 	
-	private static XStream streamer = new XStream();
-	private static MapSerializer instance;
-	
-	public MapSerializer(){
+	protected static XStream initXStream() {
+		XStream streamer = new XStream();
 		
 		//setup aliases to prevent fully qualified autogens, this is a purely cosmetic change
 		streamer.alias("RavenMap", RavenMap.class);
@@ -49,42 +46,36 @@ public class MapSerializer {
 		streamer.alias("NavGraphNode", NavGraphNode.class);
 		streamer.alias("NavGraphEdge", NavGraphEdge.class);
 		
+		return streamer;
 	}
 	
 	public static String DeserializeMap(RavenMap map){
-		CheckInstance();
-		return streamer.toXML(map);
+		return initXStream().toXML(map);
 	}
 	
 	public static boolean DeserializeMapToFile(RavenMap map, File file) throws IOException{
 		FileWriter writer = new FileWriter(file);
-		writer.write(streamer.toXML(map));
+		writer.write(initXStream().toXML(map));
 		return true;
 	}
 	
 	public static boolean DeserializeMapToPath(RavenMap map, String filePath) throws IOException{
 		FileWriter writer = new FileWriter(filePath);
-		writer.write(streamer.toXML(map));
+		writer.write(initXStream().toXML(map));
 		return true;
 	}
 	
 	public static RavenMap SerializeMapFromXML(String xml){
-		return (RavenMap) streamer.fromXML(xml);
+		return (RavenMap) initXStream().fromXML(xml);
 	}
 	
 	public static RavenMap SerializeMapFromFile(File file) throws FileNotFoundException{
 		FileReader reader = new FileReader(file);
-		return (RavenMap)streamer.fromXML(reader);
+		return (RavenMap)initXStream().fromXML(reader);
 	}
 	
 	public static RavenMap SerializeMapFromPath(String filePath) throws FileNotFoundException{
 		FileReader reader = new FileReader(filePath);
-		return (RavenMap)streamer.fromXML(reader);
-	}
-	
-	private static void CheckInstance(){
-		if(instance == null){
-			instance = new MapSerializer();
-		}
+		return (RavenMap)initXStream().fromXML(reader);
 	}
 }
