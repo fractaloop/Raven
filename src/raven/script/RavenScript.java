@@ -32,10 +32,18 @@ public class RavenScript extends GameScript {
 	}
 
 	public static int getInt(String name) {
-		return ((Number)getInstance().get(name)).intValue();
+		Object result = getInstance().get(name);
+		if (result == null)
+			throw new RavenScriptException("Unable to find script parameter \"" + name + "\"");
+
+		return ((Number)result).intValue();
 	}
 
 	public static double getDouble(String name) {
-		return ((Number)getInstance().get(name)).doubleValue();
+		Object result = getInstance().get(name);
+		if (result == null)
+			throw new RavenScriptException("Unable to find script parameter \"" + name + "\"");
+
+		return ((Number)result).doubleValue();
 	}
 }
