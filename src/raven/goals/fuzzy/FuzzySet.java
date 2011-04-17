@@ -3,7 +3,6 @@
  */
 package raven.goals.fuzzy;
 
-import java.io.Console;
 
 /**
  * @author chester

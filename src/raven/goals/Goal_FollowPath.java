@@ -1,13 +1,11 @@
 package raven.goals;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import raven.game.RavenBot;
 import raven.game.navigation.NavGraphEdge;
 import raven.math.Vector2D;
 import raven.math.graph.GraphEdge;
-import raven.ui.GameCanvas;
 
 public class Goal_FollowPath extends GoalComposite<RavenBot> {
 

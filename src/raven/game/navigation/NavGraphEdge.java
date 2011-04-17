@@ -39,6 +39,7 @@ public class NavGraphEdge extends GraphEdge implements GraphEdgeFactory<NavGraph
 	}
 
 	public NavGraphEdge(Reader reader) {
+		@SuppressWarnings("unused")
 		Object dummy;
 		
 		dummy = StreamUtils.getValueFromStream(reader);

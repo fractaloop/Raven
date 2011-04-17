@@ -1,7 +1,6 @@
 package raven.game;
 
 import java.io.Reader;
-import java.io.Writer;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -62,10 +61,8 @@ public class RavenDoor extends BaseGameEntity {
 	
 	protected void close() {
 		if (status == Status.CLOSING) {
-			if (currentSize == currentSize) {
-				status = Status.CLOSED;
-				return;
-			}
+			status = Status.CLOSED;
+			return;
 		}
 		
 		// reduce the current size

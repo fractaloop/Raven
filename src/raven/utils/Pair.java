@@ -10,8 +10,8 @@ public class Pair<T1, T2> {
 	}
 	
 	public boolean equals(Object obj) {
-		if (obj instanceof Pair) {
-			Pair other = (Pair)obj;
+		if (obj instanceof Pair<?, ?>) {
+			Pair<?, ?> other = (Pair<?, ?>)obj;
 			if (first.equals(other.first) && second.equals(other.second)) {
 				return true;
 			}

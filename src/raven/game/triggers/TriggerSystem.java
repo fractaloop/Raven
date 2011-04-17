@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import raven.game.BaseGameEntity;
-import raven.game.RavenBot;
 
 public class TriggerSystem<T extends Trigger> {
 	

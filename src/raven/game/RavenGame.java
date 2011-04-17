@@ -2,9 +2,10 @@ package raven.game;
 
 import java.awt.event.KeyEvent;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
@@ -19,10 +20,10 @@ import raven.game.messaging.Dispatcher;
 import raven.game.messaging.RavenMessage;
 import raven.game.navigation.PathManager;
 import raven.game.navigation.RavenPathPlanner;
-import raven.math.*;
+import raven.math.Vector2D;
+import raven.math.WallIntersectionTest;
 import raven.script.RavenScript;
 import raven.ui.GameCanvas;
-import raven.ui.KeyState;
 import raven.utils.MapSerializer;
 
 public class RavenGame {

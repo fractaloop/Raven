@@ -24,7 +24,7 @@ public class Slug extends RavenProjectile {
 				slugMaxSpeed, shooter.heading(), 
 				slugMass, slugScale, 
 				shooter.maxTurnRate(), slugMaxForce, 
-				slugBlastRadius, slugDamage, 
+				slugBlastRadius,
 				shooter.getWorld());
 	}
 	

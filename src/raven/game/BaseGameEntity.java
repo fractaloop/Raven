@@ -19,7 +19,7 @@ public abstract class BaseGameEntity {
 	private static int nextValidID;
 	
 	private void setID(int val) {
-		
+		ID = val;
 	}
 	
 	protected Vector2D position;
@@ -28,7 +28,7 @@ public abstract class BaseGameEntity {
 	protected double boundingRadius;
 	
 	protected BaseGameEntity(int id) {
-		// TODO Auto-generated constructor stub
+		setID(id);
 	}
 
 	public void update(double delta) {}

@@ -23,7 +23,7 @@ public class Pellet extends RavenProjectile {
 				pelletMaxSpeed, shooter.heading(), 
 				pelletMass, pelletScale, 
 				shooter.maxTurnRate(), pelletMaxForce, 
-				pelletBlastRadius, pelletDamage, 
+				pelletBlastRadius, 
 				shooter.getWorld());
 	}
 

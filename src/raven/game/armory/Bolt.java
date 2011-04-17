@@ -36,7 +36,6 @@ public class Bolt extends RavenProjectile {
 				shooter.maxTurnRate(),
 				boltMaxForce, //bolt max force
 				boltBlastRadius,
-				boltDamage,
 				shooter.getWorld()
 			);	
 	}

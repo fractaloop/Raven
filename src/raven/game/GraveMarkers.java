@@ -47,8 +47,6 @@ public class GraveMarkers {
 	}
 
 	public void update(double delta) {
-		long currentTime = System.nanoTime();
-		
 		Set<GraveRecord> toRemove = new HashSet<GraveRecord>();
 		for (GraveRecord grave : graveList) {
 			grave.timeLeft -= delta;

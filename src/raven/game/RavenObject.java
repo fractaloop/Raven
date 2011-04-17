@@ -1,6 +1,5 @@
 package raven.game;
 
-import java.lang.reflect.Field;
 
 /**
  * Generic type definitions for Raven objects.

@@ -2,19 +2,14 @@ package raven.game;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
+import java.util.Random;
 import java.util.Vector;
 
-import raven.game.RavenGame;
-import raven.math.*;
-
-import raven.script.RavenScript;
-import sun.font.Script;
-import java.util.Random;
-import java.lang.Math;
+import raven.math.Geometry;
+import raven.math.Transformations;
 import raven.math.Vector2D;
-
-import raven.game.BaseGameEntity;
+import raven.math.Wall2D;
+import raven.script.RavenScript;
 
 //------------------------------------------------------------------------
 
@@ -53,7 +48,6 @@ public class RavenSteering {
 		public int getValue() {return value;}
 	};
 
-	private BehaviorType behaviorType;
 	private RavenBot ravenBot;
 	/** the world data */
 	private RavenGame world;
@@ -64,8 +58,7 @@ public class RavenSteering {
 
 	/** these can be used to keep track of friends, pursuers, or prey */
 	private RavenBot targetAgent1;
-	private RavenBot targetAgent2;
-
+	
 	/** the current target */
 	private Vector2D target;
 
@@ -116,7 +109,8 @@ public class RavenSteering {
 	/** is cell space partitioning to be used or not? */
 	private boolean cellSpaceOn;
 
-
+	private BehaviorType behaviorType;
+	
 	/** what type of method is used to sum any active behavior */
 	private SummingMethod  summingMethod;
 
@@ -191,7 +185,7 @@ public class RavenSteering {
 
 			//calculate the speed required to reach the target given the desired
 			//deceleration
-			//TODO    double speed =  dist / (deceleration* decelerationTweaker);     
+			//   double speed =  dist / (deceleration* decelerationTweaker);     
 			double speed= target.distance(ravenBot.pos())/ (Double.valueOf(deceleration.toString())*DecelerationTweaker);
 			//make sure the velocity does not exceed the max
 			speed = Math.min(speed, ravenBot.maxSpeed());
@@ -317,30 +311,25 @@ public class RavenSteering {
 
 
 	private Vector2D separation(final List<RavenBot> agents){
-		//iterate through all the neighbors and calculate the vector from the
-		Vector2D SteeringForce=new Vector2D();
-		Iterator it = agents.iterator();
-		//for (it; it != neighbors.end(); ++it)
-		while (it.hasNext())  
-		{
-			Vector2D element= (Vector2D) it.next();
+
+		//iterate through all the neighbors and calculate the vector from them
+		Vector2D steeringForce = new Vector2D();
+		for( RavenBot agent : agents) {
+
 			//make sure this agent isn't included in the calculations and that
 			//the agent being examined is close enough. ***also make sure it doesn't
 			//include the evade target ***
-			if((it.next() != ravenBot) && (ravenBot.isTagged()) &&
-					(it.next() != targetAgent1))
-			{
-				Vector2D ToAgent = ravenBot.pos().sub(element);
+			if(ravenBot.isTagged() && agent != targetAgent1) {
+				Vector2D toAgent = ravenBot.pos().sub(agent.pos());
+				toAgent.normalize();
 
 				//scale the force inversely proportional to the agents distance  
 				//from its neighbor.
-				ToAgent.normalize();
-				SteeringForce = SteeringForce.add(ToAgent.div(ToAgent.length()));
+				steeringForce = steeringForce.add(toAgent.div(toAgent.length()));
 			}
 		}
-
-		return SteeringForce;
-
+		
+		return steeringForce;
 	}
 
 
@@ -414,7 +403,6 @@ public class RavenSteering {
 		feelers						= new Vector<Vector2D>(3);
 		deceleration				= Deceleration.NORMAL;
 		targetAgent1				= null;
-		targetAgent2				= null;
 		wanderDistance				= wanderDist;
 		wanderJitter				= wanderJitterPerSec;
 		wanderRadius				= wanderRad;
@@ -428,8 +416,11 @@ public class RavenSteering {
 
 		//create a vector to a target position on the wander circle
 		wanderTarget = new Vector2D(wanderRadius * Math.cos(theta), wanderRadius * Math.sin(theta));
-
-
+		
+		// These defaults were put int as assumptions.  TODO: Validate my assumptions.
+		cellSpaceOn = false;
+		behaviorType = BehaviorType.NONE;
+		summingMethod = SummingMethod.WEIGHTED_AVERAGE;
 	}
 
 	/** calculates and sums the steering forces from any active behaviors */
@@ -464,7 +455,7 @@ public class RavenSteering {
 	public final Vector2D target() { return target; }
 
 	public void setTargetAgent1(RavenBot Agent) { targetAgent1 = Agent; }
-	public void SetTargetAgent2(RavenBot Agent) { targetAgent2 = Agent; }
+	public void SetTargetAgent2(RavenBot Agent) { }
 
 	public final Vector2D force() { return steeringForce; }
 

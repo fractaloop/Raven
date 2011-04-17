@@ -50,6 +50,7 @@ public class SparseGraph<NodeType extends GraphNode, EdgeType extends GraphEdge>
 	
 	/** iterates through all the edges in the graph and removes any that point
 	 * to an invalidated node */
+	@SuppressWarnings("unused")
 	private void cullInvalidEdges() {
 		for (List<EdgeType> edgeList : edges) {
 			Set<EdgeType> toRemove = new HashSet<EdgeType>();
@@ -172,6 +173,7 @@ public class SparseGraph<NodeType extends GraphNode, EdgeType extends GraphEdge>
 	 * edge passed as a parameter is valid before adding it to the graph. If
 	 * the graph is a digraph then a similar edge connecting the nodes in the
 	 * opposite direction will be automatically added. */
+	@SuppressWarnings("unchecked")
 	public void addEdge(EdgeType edge) {
 		// first make sure the from and to nodes exist within the graph 
 		if (edge.from() >= nextNodeIndex || edge.to() >= nextNodeIndex) {
@@ -192,7 +194,7 @@ public class SparseGraph<NodeType extends GraphNode, EdgeType extends GraphEdge>
 				// check to make sure the edge is unique before adding
 				if (uniqueEdge(edge.to(), edge.from())) {
 					// TODO this probably breaks
-					EdgeType newEdge = (EdgeType)edge.clone();
+					EdgeType newEdge = (EdgeType) edge.clone();
 					newEdge.setTo(edge.from());
 					newEdge.setFrom(edge.to());
 					edges.get(edge.to()).add(newEdge);
@@ -205,8 +207,6 @@ public class SparseGraph<NodeType extends GraphNode, EdgeType extends GraphEdge>
 	 * If a digraph then the edge connecting the nodes in the opposite
 	 * direction will also be removed. */
 	public void removeEdge(int from, int to) {
-		Set<EdgeType> toRemove = new HashSet<EdgeType>();
-		
 		if (!isDigraph) {
 			for (int i = 0; i < edges.get(to).size(); i++) {
 				EdgeType edge = edges.get(to).get(i);

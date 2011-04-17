@@ -1,6 +1,5 @@
 package raven.game.armory;
 
-import java.lang.annotation.Target;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,11 +14,9 @@ public class RavenProjectile extends MovingEntity {
 	private int shooterID;
 	private Vector2D vTarget;
 	private Vector2D origin;
-	private int damageInflicted;
 	private boolean isDead;
 	private boolean isImpacted;
 	private Vector2D impactPoint;
-	private double creationTime;
 	private RavenGame game;
 	
 	public RavenProjectile(Vector2D position,
@@ -32,11 +29,9 @@ public class RavenProjectile extends MovingEntity {
 						double turnRate,
 						double maxForce,
 						double blastRad,
-						int damage,
 						RavenGame world) 
 	{
 		super(position, radius, velocity, maxSpeed, heading, mass, scale, turnRate, maxForce);
-		this.damageInflicted = damage;
 		this.blastRadius = blastRad;	
 		this.game = world;
 	}

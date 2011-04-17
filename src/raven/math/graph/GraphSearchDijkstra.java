@@ -1,14 +1,9 @@
 package raven.math.graph;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.PriorityQueue;
 import java.util.TreeMap;
-import java.util.TreeSet;
+import java.util.Map.Entry;
 
 
 public class GraphSearchDijkstra {
@@ -99,7 +94,7 @@ public class GraphSearchDijkstra {
 	 * @param source the index in the graph of the node to start searching from
 	 * @param target the index in the graph of the node to search to, or -1 if no target
 	 */
-	public GraphSearchDijkstra(SparseGraph graph, int source, int target) {
+	public GraphSearchDijkstra(SparseGraph<? extends GraphNode, ? extends GraphEdge> graph, int source, int target) {
 		this.graph = graph;
 		this.source = source;
 		this.target = target;

@@ -27,6 +27,7 @@ public class GraphEdge {
 	}
 	
 	public GraphEdge(Reader reader) {
+		@SuppressWarnings("unused")
 		Object dummy;
 		dummy = StreamUtils.getValueFromStream(reader);
 		from = (Integer)StreamUtils.getValueFromStream(reader);

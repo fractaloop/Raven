@@ -1,6 +1,5 @@
 package raven.game;
 
-import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
@@ -175,8 +174,6 @@ public class RavenMap {
 	 */
 	public boolean loadMap(String filename) throws IOException {
 		FileReader reader = new FileReader(filename);
-		BufferedReader buffered = new BufferedReader(reader);
-		
 		clear();
 		
 		BaseGameEntity.resetNextValidID();

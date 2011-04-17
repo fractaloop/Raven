@@ -1,6 +1,5 @@
 package raven;
 
-import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.MouseInfo;
 import java.awt.Point;
@@ -147,7 +146,8 @@ public class Raven extends JFrame implements KeyListener, MouseListener {
 	public void keyTyped(KeyEvent event) {
 		switch (event.getKeyCode()) {
 		case KeyEvent.VK_ESCAPE:
-			// TODO Close game somehow
+			this.setVisible(false);
+			this.dispose();
 			break;
 		case KeyEvent.VK_P:
 			game.togglePause();
