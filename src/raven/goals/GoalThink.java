@@ -23,6 +23,9 @@ private double AttackBias  = 0;
 	
 	
 	public GoalThink(RavenBot ravenBot) {
+		super(ravenBot, Goal.goalType.goal_think);
+		
+		
 		 Random randomGenerator = new Random();
 // random values are between 0.0 and 1.0
 		HealthBias = randomGenerator.nextDouble();
@@ -177,7 +180,7 @@ private double AttackBias  = 0;
 		  }
 	}
 	
-    public void addGoal_getItem(RavenObject inp){
+    public void addGoal_getItem(RavenObject inp) throws Exception{
     	  if (notPresent(Goal.goalType.goal_get))
     	  {
     	    removeAllSubgoals();

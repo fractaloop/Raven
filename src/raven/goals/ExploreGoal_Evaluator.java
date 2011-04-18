@@ -6,7 +6,7 @@ import raven.ui.GameCanvas;
 
 public class ExploreGoal_Evaluator extends Goal_Evaluator {
 	public ExploreGoal_Evaluator(Double inp) {
-		setM_iBias(inp);
+		super(inp);
 	}
 	
 	

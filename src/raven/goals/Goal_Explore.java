@@ -15,7 +15,7 @@ public class Goal_Explore extends GoalComposite<RavenBot> {
 	
 	
 	public Goal_Explore(RavenBot m_pOwner) {
-		setM_pOwner(m_pOwner);
+		super(m_pOwner, Goal.goalType.goal_explore);
 		this.m_bDestinationIsSet = false;
 	}
 	

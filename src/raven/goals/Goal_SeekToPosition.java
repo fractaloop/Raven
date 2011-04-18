@@ -28,7 +28,7 @@ public class Goal_SeekToPosition extends GoalComposite<RavenBot> {
 		  return false;
 	  }
 	public Goal_SeekToPosition(RavenBot rbot, Vector2D target) {
-		setM_pOwner(rbot);
+		super(rbot, Goal.goalType.goal_seek_to_position);
 		m_vPosition = target;
 		m_dTimeToReachPos = 0.0;
 		

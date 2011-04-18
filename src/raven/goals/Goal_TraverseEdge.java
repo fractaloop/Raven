@@ -37,7 +37,7 @@ public class Goal_TraverseEdge extends GoalComposite<RavenBot> {
 	public Goal_TraverseEdge(RavenBot ravenBot, GraphEdge edge, boolean lastedgeinpath) {
 
        // Goal<Raven_Bot>(pBot, goal_traverse_edge),
-		setM_pOwner(ravenBot);
+		super(ravenBot, Goal.goalType.goal_traverse_edge);
         m_Edge = edge;
         m_dTimeExpected = 0.0;
         m_bLastEdgeInPath = lastedgeinpath;

@@ -9,7 +9,7 @@ public class Goal_HuntTarget extends GoalComposite<RavenBot> {
 	  //bot has been searched without success
 	  boolean  m_bLVPTried;
 	public Goal_HuntTarget(RavenBot m_pOwner) {
-		setM_pOwner(m_pOwner);
+		super(m_pOwner, Goal.goalType.goal_hunt_target);
 		this.m_bLVPTried = false;
 	}
 
