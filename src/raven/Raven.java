@@ -1,6 +1,7 @@
 package raven;
 
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
@@ -37,10 +38,11 @@ public class Raven extends JFrame implements KeyListener, MouseListener {
 	private static int HEIGHT = 500;
 	private static int FRAMERATE = 60;
 	
-	private RavenGame game;
+	private static RavenGame game;
 	private KeyState keys;
 	
 	public static void start() {
+    	game = new RavenGame(getInstance().getGraphics());
 		getInstance().gameLoop();
 	}
 	
@@ -57,6 +59,7 @@ public class Raven extends JFrame implements KeyListener, MouseListener {
     	
     	this.pack();
 //    	this.setResizable(false);
+    	this.setTitle("Raven");
     	this.setVisible(true);
     	
     	// Add a window listener so we can close the game if they close the
@@ -73,8 +76,6 @@ public class Raven extends JFrame implements KeyListener, MouseListener {
     	// Force keyState to listen
     	keys = new KeyState();
     	addKeyListener(keys);
-    	
-    	game = new RavenGame();
     }
     
     public void gameLoop() {

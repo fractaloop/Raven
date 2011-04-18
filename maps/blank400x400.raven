@@ -1,0 +1,27 @@
+<RavenMap>
+  <walls/>
+  <triggerSystem>
+    <triggers/>
+  </triggerSystem>
+  <spawnPoints/>
+  <doors/>
+  <navGraph>
+    <nodes/>
+    <edges/>
+    <isDigraph>false</isDigraph>
+    <nextNodeIndex>0</nextNodeIndex>
+  </navGraph>
+  <spacePartition>
+    <cells/>
+    <neighbors/>
+    <spaceWidth>0.0</spaceWidth>
+    <spaceHeight>0.0</spaceHeight>
+    <numCellsX>0</numCellsX>
+    <numCellsY>0</numCellsY>
+    <cellSizeX>NaN</cellSizeX>
+    <cellSizeY>NaN</cellSizeY>
+  </spacePartition>
+  <cellSpaceNeighborhoodRange>0.0</cellSpaceNeighborhoodRange>
+  <sizeX>391</sizeX>
+  <sizeY>391</sizeY>
+</RavenMap>

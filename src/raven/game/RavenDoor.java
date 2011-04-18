@@ -7,6 +7,7 @@ import java.util.List;
 import raven.game.messaging.Telegram;
 import raven.math.Vector2D;
 import raven.math.Wall2D;
+import raven.ui.GameCanvas;
 import raven.utils.StreamUtils;
 
 public class RavenDoor extends BaseGameEntity {
@@ -100,8 +101,11 @@ public class RavenDoor extends BaseGameEntity {
 
 	@Override
 	public void render() {
-		// TODO Auto-generated method stub
+		if(status == Status.OPEN) return;
 		
+		GameCanvas.brownPen();
+		//TODO: change length of drawn line pased on state(closing/opening/open/closed
+		if(status == Status.CLOSED) GameCanvas.line(p1, p2);
 	}
 	
 	@Override

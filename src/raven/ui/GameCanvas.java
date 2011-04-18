@@ -3,6 +3,7 @@ package raven.ui;
 import java.awt.BasicStroke;
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
@@ -219,6 +220,10 @@ public class GameCanvas extends Canvas {
 		polyLine(shape);
 	}
 	
+	public static void filledRect(int left, int top, int right, int bottom){
+		getInstance().g2d.fillRect(left, top, right, bottom);
+	}
+	
 	public static void circle(Vector2D pos, double radius) {
 		circle(pos.x, pos.y, radius);
 	}
@@ -229,5 +234,9 @@ public class GameCanvas extends Canvas {
 	
 	public static void setColor(Color color) {
 		getInstance().g2d.setColor(color);
+	}
+
+	public static void setGraphics(Graphics g) {
+		getInstance().g2d = (Graphics2D) g;
 	}
 }

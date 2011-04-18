@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import raven.ui.GameCanvas;
 import raven.utils.Pair;
 import raven.utils.StreamUtils;
 
@@ -425,5 +426,26 @@ public class SparseGraph<NodeType extends GraphNode, EdgeType extends GraphEdge>
 		//The only things that matter are list of edges and nodes, and isDigraph
 		SparseGraph<?, ?> other = (SparseGraph<?, ?>) o;
 		return (nodes.equals(other.nodes) && edges.equals(other.edges) && isDigraph == other.isDigraph);
+	}
+
+	public void render(boolean showNodeIndices) {
+		// TODO Auto-generated method stub
+		
+		//Iterate over list of walls, drawing lines from point to point.
+		if(nodes == null) return;
+		GameCanvas.bluePen();
+		for(NodeType node : nodes) {
+			GameCanvas.circle(node.pos(), 2);
+		}
+		
+		if(edges == null) return;
+		GameCanvas.redPen();
+		for(List<EdgeType> edgesByNode : edges) {
+			for(EdgeType edge : edgesByNode) {
+				NodeType from = nodes.get(edge.from);
+				NodeType to = nodes.get(edge.to);
+				GameCanvas.line(from.pos(), to.pos());
+			}
+		}
 	}
 }

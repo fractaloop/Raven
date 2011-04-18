@@ -55,8 +55,8 @@ public class RavenMap {
 	 * looking for neighbors */
 	double cellSpaceNeighborhoodRange;
 	
-	int sizeX;
-	int sizeY;
+	int sizeX = 0;
+	int sizeY = 0;
 	
 	/* this will hold a pre-calculated lookup table of the cost to travel
 	 * from */
@@ -333,9 +333,14 @@ public class RavenMap {
 	}
 
 	public void render() {
+		//draw basic background
+		GameCanvas.blackPen();
+		int offset = 20;
+		GameCanvas.filledRect(0, offset, sizeX, sizeY+offset);
+		
 		// render the navgraph
 		if (RavenUserOptions.showGraph) {
-//			navGraph.render(RavenUserOptions.showNodeIndices);
+			navGraph.render(RavenUserOptions.showNodeIndices);
 		}
 		
 		// render any doors
