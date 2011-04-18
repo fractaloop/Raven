@@ -9,7 +9,7 @@ GraphEdge mine = new GraphEdge();
 boolean   m_bLastEdgeInPath;
 
 	public Goal_NegotiateDoor(RavenBot ravenBot, GraphEdge edge, boolean flag) {
-		setM_pOwner(ravenBot);
+		super(ravenBot, Goal.goalType.goal_negotiate_door);
 		this.mine = edge;
 		this.m_bLastEdgeInPath = flag;
 	}

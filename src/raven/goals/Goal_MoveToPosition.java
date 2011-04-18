@@ -10,7 +10,7 @@ public class Goal_MoveToPosition extends GoalComposite<RavenBot>{
 	  Vector2D m_vDestination;
 	//TODO
 	public Goal_MoveToPosition(RavenBot owner, Vector2D pos){
-		setM_pOwner(owner);
+		super(owner, Goal.goalType.goal_move);
 		m_vDestination = pos;
 }
 	

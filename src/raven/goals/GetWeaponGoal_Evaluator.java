@@ -7,11 +7,11 @@ import raven.ui.GameCanvas;
 
 public class GetWeaponGoal_Evaluator extends Goal_Evaluator {
 	private RavenObject weptype;
-	public Double m_iBias;
 	
 	
 	
 	public GetWeaponGoal_Evaluator(Double inp, RavenObject weptype) throws Exception {
+		super(inp);
 		switch(weptype){
 		case BLASTER:
 			this.weptype = RavenObject.BLASTER;
@@ -35,7 +35,6 @@ public class GetWeaponGoal_Evaluator extends Goal_Evaluator {
 		
 		
 		
-		this.m_iBias = inp;
 	}
 
 	
@@ -77,7 +76,7 @@ public class GetWeaponGoal_Evaluator extends Goal_Evaluator {
 	    //ensure the value is in the range 0 to 1
 	    RavenFeature.Clamp(Desirability, 0, 1);
 
-	    Desirability *= m_iBias;
+	    Desirability *= getM_iBias();
 
 	    return Desirability;
 	  }
@@ -88,7 +87,12 @@ public class GetWeaponGoal_Evaluator extends Goal_Evaluator {
 	//------------------------------ SetGoal --------------------------------------
 	public void setGoal(RavenBot pBot)
 	{
-	  pBot.getBrain().addGoal_getItem(weptype); 
+	  try {
+		pBot.getBrain().addGoal_getItem(weptype);
+	} catch (Exception e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} 
 	}
 
 	//-------------------------- RenderInfo ---------------------------------------

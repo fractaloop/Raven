@@ -25,10 +25,10 @@ public class Goal_DodgeSideToSide extends GoalComposite<RavenBot> {
 	  
 	  
 	public Goal_DodgeSideToSide(RavenBot m_pOwner) {
+		super(m_pOwner, Goal.goalType.goal_strafe);
 		Random Randomgen = new Random();
 		m_bClockwise = Randomgen.nextBoolean();
 		this.m_vStrafeTarget = getStrafeTarget(m_pOwner);
-		setM_pOwner(m_pOwner);
 	}
 
 

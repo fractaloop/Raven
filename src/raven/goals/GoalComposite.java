@@ -10,7 +10,11 @@ import raven.ui.GameCanvas;
 
 abstract public class GoalComposite<T extends BaseGameEntity> extends Goal<T> {
 
-	  public ArrayList <Goal<T> > m_SubGoals;
+	  public GoalComposite(T PE, raven.goals.Goal.goalType type) {
+		super(PE, type);
+	}
+
+	public ArrayList <Goal<T> > m_SubGoals;
 	  private RavenBot m_pOwner;
 	
 	public raven.goals.Goal.curStatus ProcessSubgoals(){ 

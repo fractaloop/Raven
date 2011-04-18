@@ -8,7 +8,7 @@ import raven.ui.GameCanvas;
 
 public class GetHealthGoal_Evaluator extends Goal_Evaluator {
 	GetHealthGoal_Evaluator(Double inp){
-		setM_iBias(inp);
+		super(inp);
 	}
 	
 	
@@ -55,7 +55,13 @@ public class GetHealthGoal_Evaluator extends Goal_Evaluator {
 	//-----------------------------------------------------------------------------
 	public void setGoal(RavenBot pBot)
 	{
-	  pBot.getBrain().addGoal_getItem(RavenObject.HEALTH); 
+		
+		try{
+	  pBot.getBrain().addGoal_getItem(RavenObject.HEALTH);
+	  
+		}catch(Exception ex){
+			System.out.println( ex.getMessage());
+		}
 	}
 
 	//-------------------------- RenderInfo ---------------------------------------

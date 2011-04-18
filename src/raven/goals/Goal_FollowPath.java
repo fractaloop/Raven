@@ -17,7 +17,7 @@ public class Goal_FollowPath extends GoalComposite<RavenBot> {
 
 
 	public Goal_FollowPath(RavenBot m_pOwner, ArrayList<NavGraphEdge> list) {
-		this.setM_pOwner(m_pOwner);
+        super(m_pOwner, Goal.goalType.goal_follow_path);
 		this.m_Path = list;
 	}
 

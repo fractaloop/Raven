@@ -18,9 +18,10 @@ public class Goal_GetItem extends GoalComposite<RavenBot> {
 		  //returns true if the bot sees that the item it is heading for has been
 		  //picked up by an opponent
 		  
-			public Goal_GetItem(RavenBot m_pOwner, RavenObject inp){
-				m_iItemToGet = inp;
-			//_pGiverTrigger = NEED TO PUT A TRIGGER HERE
+			public Goal_GetItem(RavenBot m_pOwner, RavenObject item) throws Exception{
+				super(m_pOwner, ItemTypeToGoalType(item));
+				m_iItemToGet = item;
+			    m_pGiverTrigger = new Trigger(0); // not sure what to do ere.
 				m_bFollowingPath = false;
 				
 			}
@@ -146,7 +147,7 @@ public class Goal_GetItem extends GoalComposite<RavenBot> {
 	
 	
 
-	Goal.goalType ItemTypeToGoalType(RavenObject gt) throws Exception
+	static Goal.goalType ItemTypeToGoalType(RavenObject gt) throws Exception
 	{
 	  switch(gt)
 	  {

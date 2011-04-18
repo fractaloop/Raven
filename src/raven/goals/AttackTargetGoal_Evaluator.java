@@ -8,7 +8,7 @@ public class AttackTargetGoal_Evaluator extends Goal_Evaluator {
 
 	
 	public AttackTargetGoal_Evaluator(Double bias) {
-		setM_iBias(bias);
+		super(bias);
 	}
 	  
 	  public double calculateDesirability(RavenBot pBot){

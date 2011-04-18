@@ -7,7 +7,7 @@ public class Goal_AttackTarget extends GoalComposite<RavenBot> {
 
 
 	public Goal_AttackTarget(RavenBot m_pOwner) {
-		this.setM_pOwner(m_pOwner);
+		super(m_pOwner, Goal.goalType.goal_attack_target);
 	}
 
 	public  void activate(){
