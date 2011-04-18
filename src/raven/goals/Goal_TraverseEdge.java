@@ -1,13 +1,14 @@
 package raven.goals;
 
 import raven.game.RavenBot;
+import raven.game.navigation.NavGraphEdge;
 import raven.math.Vector2D;
 import raven.math.graph.GraphEdge;
 import raven.ui.GameCanvas;
-
+import raven.script.*;
 public class Goal_TraverseEdge extends GoalComposite<RavenBot> {
 	 //the edge the bot will follow
-	  GraphEdge  m_Edge;
+	  NavGraphEdge  m_Edge;
 
 	  //true if m_Edge is the last in the path.
 	  boolean      m_bLastEdgeInPath;
@@ -20,7 +21,7 @@ public class Goal_TraverseEdge extends GoalComposite<RavenBot> {
 
 	  //returns true if the bot gets stuck
 	  boolean isStuck(){
-		  double TimeTaken = Clock.GetCurrentTime() - m_dStartTime;
+		  double TimeTaken = System.nanoTime()*1000 - m_dStartTime;
 		  if (TimeTaken > m_dTimeExpected){
 		   System.out.println("BOT "  + getM_pOwner().ID() + " IS STUCK!!");
 
@@ -34,7 +35,7 @@ public class Goal_TraverseEdge extends GoalComposite<RavenBot> {
 	  
 	  
 	  
-	public Goal_TraverseEdge(RavenBot ravenBot, GraphEdge edge, boolean lastedgeinpath) {
+	public Goal_TraverseEdge(RavenBot ravenBot, NavGraphEdge edge, boolean lastedgeinpath) {
 
        // Goal<Raven_Bot>(pBot, goal_traverse_edge),
 		super(ravenBot, Goal.goalType.goal_traverse_edge);
@@ -51,18 +52,18 @@ public class Goal_TraverseEdge extends GoalComposite<RavenBot> {
 		  
 		  //the edge behavior flag may specify a type of movement that necessitates a 
 		  //change in the bot's max possible speed as it follows this edge
-		  switch(m_Edge.behavior())
+		  switch(m_Edge.flags())
 		  {
-		    case swim:
+		    case NavGraphEdge.SWIM:
 		    {
-		      getM_pOwner().SetMaxSpeed(script.GetDouble("Bot_MaxSwimmingSpeed"));
+		      getM_pOwner().setMaxSpeed(RavenScript.getDouble("Bot_MaxSwimmingSpeed"));
 		    }
 		   
 		    break;
 		   
-		    case crawl:
+		    case NavGraphEdge.CRAWL:
 		    {
-		       getM_pOwner().SetMaxSpeed(script.GetDouble("Bot_MaxCrawlingSpeed"));
+		       getM_pOwner().setMaxSpeed(RavenScript.getDouble("Bot_MaxCrawlingSpeed"));
 		    }
 		   
 		    break;
@@ -70,7 +71,7 @@ public class Goal_TraverseEdge extends GoalComposite<RavenBot> {
 		  
 
 		  //record the time the bot starts this goal
-		  m_dStartTime = Clock.GetCurrentTime();   
+		  m_dStartTime = System.nanoTime()*1000;   
 		  
 		  //calculate the expected time required to reach the this waypoint. This value
 		  //is used to determine if the bot becomes stuck 
@@ -128,7 +129,7 @@ public class Goal_TraverseEdge extends GoalComposite<RavenBot> {
 		  getM_pOwner().getSteering().ArriveOff();
 
 		  //return max speed back to normal
-		  getM_pOwner().SetMaxSpeed(script.GetDouble("Bot_MaxSpeed"));
+		  getM_pOwner().setMaxSpeed(RavenScript.getDouble("Bot_MaxSpeed"));
 		
 	}
 

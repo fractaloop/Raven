@@ -16,7 +16,7 @@ public class Goal_SeekToPosition extends GoalComposite<RavenBot> {
 	  //returns true if a bot gets stuck
 	  // dont know how to detect this atm.
 	  boolean isStuck(){
-		  double TimeTaken = Clock.GetCurrentTime() - m_dStartTime;
+		  double TimeTaken = System.nanoTime()*1000 - m_dStartTime;
 
 		  if (TimeTaken > m_dTimeToReachPos)
 		  {
@@ -39,7 +39,7 @@ public class Goal_SeekToPosition extends GoalComposite<RavenBot> {
 		  m_iStatus = Goal.curStatus.active;
 		  
 		  //record the time the bot starts this goal
-		  m_dStartTime = Clock.GetCurrentTime();    
+		  m_dStartTime = System.nanoTime()*1000;    
 		  
 		  //This value is used to determine if the bot becomes stuck 
 		  m_dTimeToReachPos = getM_pOwner().calculateTimeToReachPosition(m_vPosition);

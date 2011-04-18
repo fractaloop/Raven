@@ -26,7 +26,7 @@ public class Goal_FollowPath extends GoalComposite<RavenBot> {
 		m_iStatus = Goal.curStatus.active;
 
 		//get a reference to the next edge
-		GraphEdge edge = m_Path.get(0);
+		NavGraphEdge edge = m_Path.get(0);
 
 		//remove the edge from the path
 		m_Path.remove(0); 
@@ -34,16 +34,15 @@ public class Goal_FollowPath extends GoalComposite<RavenBot> {
 		//some edges specify that the bot should use a specific behavior when
 		//following them. This switch statement queries the edge behavior flag and
 		//adds the appropriate goals/s to the subgoal list.
-		switch(edge.behavior())
-		{
-		case normal:
+		switch(edge.flags()){
+		case NavGraphEdge.NORMAL:
 		{
 			AddSubgoal(new Goal_TraverseEdge(getM_pOwner(), edge, m_Path.isEmpty()));
 		}
 
 		break;
 
-		case GraphEdge.goesThroughDoor:
+		case NavGraphEdge.GOES_THROUGH_DOOR:
 		{
 
 			//also add a goal that is able to handle opening the door
@@ -52,7 +51,7 @@ public class Goal_FollowPath extends GoalComposite<RavenBot> {
 
 		break;
 
-		case GraphEdge.jump:
+		case NavGraphEdge.JUMP:
 		{
 			//add subgoal to jump along the edge
 			// not defined in c++ code...
@@ -60,7 +59,7 @@ public class Goal_FollowPath extends GoalComposite<RavenBot> {
 
 		break;
 
-		case GraphEdge.grapple:
+		case NavGraphEdge.GRAPPLE:
 		{
 			//add subgoal to grapple along the edge
 			// not defined in c++ code
@@ -70,7 +69,12 @@ public class Goal_FollowPath extends GoalComposite<RavenBot> {
 
 		default:
 
-			throw new Exception("<Goal_FollowPath::Activate>: Unrecognized edge type");
+			try {
+				throw new Exception("<Goal_FollowPath::Activate>: Unrecognized edge type");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 
@@ -95,7 +99,7 @@ public class Goal_FollowPath extends GoalComposite<RavenBot> {
 
 //        render all the path waypoints remaining on the path list
 		  Iterator<NavGraphEdge> it = m_Path.iterator();
-          GraphEdge temp = new GraphEdge();
+          NavGraphEdge temp = new NavGraphEdge();
 		  while(it.hasNext())
 		  {  
 			  temp = it.next();
@@ -104,7 +108,7 @@ public class Goal_FollowPath extends GoalComposite<RavenBot> {
 		    
 		    GameCanvas.redBrush();
 		    GameCanvas.blackPen();
-		    GameCanvas.Circle(temp.Destination(), 3);
+		    GameCanvas.circle(temp.to(), 3);
 		  }
 
 		  //forward the request to the subgoals
