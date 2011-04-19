@@ -2,13 +2,14 @@ package raven.goals;
 
 import raven.game.RavenBot;
 import raven.game.navigation.NavGraphEdge;
+import raven.game.navigation.PathEdge;
 import raven.math.Vector2D;
 import raven.math.graph.GraphEdge;
 import raven.ui.GameCanvas;
 import raven.script.*;
 public class Goal_TraverseEdge extends GoalComposite<RavenBot> {
 	 //the edge the bot will follow
-	  NavGraphEdge  m_Edge;
+	  PathEdge  m_Edge;
 
 	  //true if m_Edge is the last in the path.
 	  boolean      m_bLastEdgeInPath;
@@ -35,7 +36,7 @@ public class Goal_TraverseEdge extends GoalComposite<RavenBot> {
 	  
 	  
 	  
-	public Goal_TraverseEdge(RavenBot ravenBot, NavGraphEdge edge, boolean lastedgeinpath) {
+	public Goal_TraverseEdge(RavenBot ravenBot, PathEdge edge, boolean lastedgeinpath) {
 
        // Goal<Raven_Bot>(pBot, goal_traverse_edge),
 		super(ravenBot, Goal.goalType.goal_traverse_edge);
@@ -52,7 +53,7 @@ public class Goal_TraverseEdge extends GoalComposite<RavenBot> {
 		  
 		  //the edge behavior flag may specify a type of movement that necessitates a 
 		  //change in the bot's max possible speed as it follows this edge
-		  switch(m_Edge.flags())
+		  switch(m_Edge.Behavior())
 		  {
 		    case NavGraphEdge.SWIM:
 		    {
@@ -75,7 +76,7 @@ public class Goal_TraverseEdge extends GoalComposite<RavenBot> {
 		  
 		  //calculate the expected time required to reach the this waypoint. This value
 		  //is used to determine if the bot becomes stuck 
-		  m_dTimeExpected = getM_pOwner().calculateTimeToReachPosition(m_Edge.destination());
+		  m_dTimeExpected = getM_pOwner().calculateTimeToReachPosition(m_Edge.Destination());
 		  
 		  //factor in a margin of error for any reactive behavior
 		  double MarginOfError = 2.0;
@@ -84,7 +85,7 @@ public class Goal_TraverseEdge extends GoalComposite<RavenBot> {
 
 
 		  //set the steering target
-		  getM_pOwner().getSteering().SetTarget(m_Edge.destination());
+		  getM_pOwner().getSteering().SetTarget(m_Edge.Destination());
 
 		  //Set the appropriate steering behavior. If this is the last edge in the path
 		  //the bot should arrive at the position it points to, else it should seek
@@ -113,7 +114,7 @@ public class Goal_TraverseEdge extends GoalComposite<RavenBot> {
 		  //if the bot has reached the end of the edge return completed
 		  else
 		  { 
-		    if (getM_pOwner().isAtPosition(m_Edge.destination()))
+		    if (getM_pOwner().isAtPosition(m_Edge.Destination()))
 		    {
 		      m_iStatus = Goal.curStatus.completed;
 		    }
@@ -138,10 +139,10 @@ public class Goal_TraverseEdge extends GoalComposite<RavenBot> {
 		  if (m_iStatus == Goal.curStatus.active)
 		  {
 		    GameCanvas.bluePen();
-		    GameCanvas.line(getM_pOwner().pos(), m_Edge.destination());
+		    GameCanvas.line(getM_pOwner().pos(), m_Edge.Destination());
 		    GameCanvas.greenBrush();
 		    GameCanvas.blackPen();
-		    GameCanvas.circle(m_Edge.destination(), 3);
+		    GameCanvas.circle(m_Edge.Destination(), 3);
 		  }
 	}
 	

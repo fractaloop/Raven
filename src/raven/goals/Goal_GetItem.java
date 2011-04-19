@@ -21,7 +21,6 @@ public class Goal_GetItem extends GoalComposite<RavenBot> {
 			public Goal_GetItem(RavenBot m_pOwner, RavenObject item) throws Exception{
 				super(m_pOwner, ItemTypeToGoalType(item));
 				m_iItemToGet = item;
-			    m_pGiverTrigger = new Trigger(0); // not sure what to do ere.
 				m_bFollowingPath = false;
 				
 			}

@@ -5,18 +5,19 @@ import java.util.Iterator;
 
 import raven.game.RavenBot;
 import raven.game.navigation.NavGraphEdge;
+import raven.game.navigation.PathEdge;
 import raven.math.Vector2D;
 import raven.math.graph.GraphEdge;
 import raven.ui.GameCanvas;
 
 public class Goal_FollowPath extends GoalComposite<RavenBot> {
 
-	private ArrayList<NavGraphEdge>  m_Path = new ArrayList<NavGraphEdge>();
+	private ArrayList<PathEdge>  m_Path = new ArrayList<PathEdge>();
 
 
 
 
-	public Goal_FollowPath(RavenBot m_pOwner, ArrayList<NavGraphEdge> list) {
+	public Goal_FollowPath(RavenBot m_pOwner, ArrayList<PathEdge> list) {
         super(m_pOwner, Goal.goalType.goal_follow_path);
 		this.m_Path = list;
 	}
@@ -26,7 +27,7 @@ public class Goal_FollowPath extends GoalComposite<RavenBot> {
 		m_iStatus = Goal.curStatus.active;
 
 		//get a reference to the next edge
-		NavGraphEdge edge = m_Path.get(0);
+		PathEdge edge = m_Path.get(0);
 
 		//remove the edge from the path
 		m_Path.remove(0); 
@@ -34,7 +35,7 @@ public class Goal_FollowPath extends GoalComposite<RavenBot> {
 		//some edges specify that the bot should use a specific behavior when
 		//following them. This switch statement queries the edge behavior flag and
 		//adds the appropriate goals/s to the subgoal list.
-		switch(edge.flags()){
+		switch(edge.Behavior()){
 		case NavGraphEdge.NORMAL:
 		{
 			AddSubgoal(new Goal_TraverseEdge(getM_pOwner(), edge, m_Path.isEmpty()));
@@ -98,17 +99,17 @@ public class Goal_FollowPath extends GoalComposite<RavenBot> {
 		
 
 //        render all the path waypoints remaining on the path list
-		  Iterator<NavGraphEdge> it = m_Path.iterator();
-          NavGraphEdge temp = new NavGraphEdge();
+		  Iterator<PathEdge> it = m_Path.iterator();
+          PathEdge temp;
 		  while(it.hasNext())
 		  {  
 			  temp = it.next();
 		    GameCanvas.blackPen();
-		    GameCanvas.lineWithArrow(temp.from()), temp.to(), 5);
+		    GameCanvas.lineWithArrow(temp.Source(), temp.Destination(), 5);
 		    
 		    GameCanvas.redBrush();
 		    GameCanvas.blackPen();
-		    GameCanvas.circle(temp.to(), 3);
+		    GameCanvas.circle(temp.Destination(), 3);
 		  }
 
 		  //forward the request to the subgoals

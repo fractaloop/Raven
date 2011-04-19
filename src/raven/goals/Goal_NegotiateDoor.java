@@ -1,14 +1,15 @@
 package raven.goals;
 
 import raven.game.RavenBot;
+import raven.game.navigation.PathEdge;
 import raven.math.Vector2D;
 import raven.math.graph.GraphEdge;
 
 public class Goal_NegotiateDoor extends GoalComposite<RavenBot> {
-GraphEdge mine = new GraphEdge();
+PathEdge mine;
 boolean   m_bLastEdgeInPath;
 
-	public Goal_NegotiateDoor(RavenBot ravenBot, GraphEdge edge, boolean flag) {
+	public Goal_NegotiateDoor(RavenBot ravenBot, PathEdge edge, boolean flag) {
 		super(ravenBot, Goal.goalType.goal_negotiate_door);
 		this.mine = edge;
 		this.m_bLastEdgeInPath = flag;
@@ -24,7 +25,7 @@ boolean   m_bLastEdgeInPath;
 		  
 		  //get the position of the closest navigable switch
 		  Vector2D posSw = getM_pOwner().getWorld().getPosOfClosestSwitch(getM_pOwner().pos(),
-		                                                          mine.doorID());
+		                                                          mine.DoorID());
 
 		  //because goals are *pushed* onto the front of the subgoal list they must
 		  //be added in reverse order.
@@ -34,7 +35,7 @@ boolean   m_bLastEdgeInPath;
 
 		  //next, the goal that will move the bot to the beginning of the edge that
 		  //passes through the door
-		  AddSubgoal(new Goal_MoveToPosition(getM_pOwner(), mine.source()));
+		  AddSubgoal(new Goal_MoveToPosition(getM_pOwner(), mine.Source()));
 		  
 		  //finally, the Goal that will direct the bot to the location of the switch
 		  AddSubgoal(new Goal_MoveToPosition(getM_pOwner(), posSw));
