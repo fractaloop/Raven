@@ -1,6 +1,7 @@
 package raven.game.navigation;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import raven.game.RavenBot;
 import raven.game.RavenObject;
@@ -17,7 +18,7 @@ public class RavenPathPlanner {
 		
 	}
 
-	public ArrayList<NavGraphEdge> getPath() {
+	public List<PathEdge> getPath() {
 		// TODO Auto-generated method stub
 		return null;
 	}
