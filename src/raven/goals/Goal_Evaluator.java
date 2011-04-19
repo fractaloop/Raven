@@ -5,8 +5,8 @@ import raven.game.RavenBot;
 public abstract class Goal_Evaluator {
 
 	private Double m_iBias;
-	
-	
+
+
 	public Goal_Evaluator(Double bias) {
 		this.m_iBias = bias;
 	}

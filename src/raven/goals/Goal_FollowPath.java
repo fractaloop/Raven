@@ -18,7 +18,7 @@ public class Goal_FollowPath extends GoalComposite<RavenBot> {
 
 
 	public Goal_FollowPath(RavenBot m_pOwner, ArrayList<PathEdge> list) {
-        super(m_pOwner, Goal.goalType.goal_follow_path);
+		super(m_pOwner, Goal.goalType.goal_follow_path);
 		this.m_Path = list;
 	}
 
@@ -81,44 +81,44 @@ public class Goal_FollowPath extends GoalComposite<RavenBot> {
 
 	}
 	public raven.goals.Goal.curStatus process() {
-		 //if status is inactive, call Activate()
-		  activateIfInactive();
+		//if status is inactive, call Activate()
+		activateIfInactive();
 
-		  m_iStatus = ProcessSubgoals();
+		m_iStatus = ProcessSubgoals();
 
-		  //if there are no subgoals present check to see if the path still has edges.
-		  //remaining. If it does then call activate to grab the next edge.
-		  if (m_iStatus == Goal.curStatus.completed && !m_Path.isEmpty())
-		  {
-		    activate(); 
-		  }
+		//if there are no subgoals present check to see if the path still has edges.
+		//remaining. If it does then call activate to grab the next edge.
+		if (m_iStatus == Goal.curStatus.completed && !m_Path.isEmpty())
+		{
+			activate(); 
+		}
 
-		  return m_iStatus;
+		return m_iStatus;
 	}
 	public void render() {
-		
 
-//        render all the path waypoints remaining on the path list
-		  Iterator<PathEdge> it = m_Path.iterator();
-          PathEdge temp;
-		  while(it.hasNext())
-		  {  
-			  temp = it.next();
-		    GameCanvas.blackPen();
-		    GameCanvas.lineWithArrow(temp.Source(), temp.Destination(), 5);
-		    
-		    GameCanvas.redBrush();
-		    GameCanvas.blackPen();
-		    GameCanvas.circle(temp.Destination(), 3);
-		  }
 
-		  //forward the request to the subgoals
-		  // in this case we imitate goalComposite . render()
-		  if (!m_SubGoals.isEmpty())
-		  {
-		    m_SubGoals.get(0).render();
-		  }		
-		
+		//        render all the path waypoints remaining on the path list
+		Iterator<PathEdge> it = m_Path.iterator();
+		PathEdge temp;
+		while(it.hasNext())
+		{  
+			temp = it.next();
+			GameCanvas.blackPen();
+			GameCanvas.lineWithArrow(temp.Source(), temp.Destination(), 5);
+
+			GameCanvas.redBrush();
+			GameCanvas.blackPen();
+			GameCanvas.circle(temp.Destination(), 3);
+		}
+
+		//forward the request to the subgoals
+		// in this case we imitate goalComposite . render()
+		if (!m_SubGoals.isEmpty())
+		{
+			m_SubGoals.get(0).render();
+		}		
+
 	}
 
 
