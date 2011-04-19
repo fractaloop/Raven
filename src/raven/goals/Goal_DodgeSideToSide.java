@@ -35,14 +35,14 @@ public class Goal_DodgeSideToSide extends GoalComposite<RavenBot> {
 		 public void activate(){
 			  m_iStatus = Goal.curStatus.active;
 
-			  getM_pOwner().getSteering().SeekOn();
+			  getM_pOwner().getSteering().seekOn();
 
 			  
 			    if (m_bClockwise)
 			    {
 			      if (getM_pOwner().canStepRight(m_vStrafeTarget))
 			      {
-			        getM_pOwner().getSteering().SetTarget(m_vStrafeTarget);
+			        getM_pOwner().getSteering().setTarget(m_vStrafeTarget);
 			      }
 			      else
 			      {
@@ -56,7 +56,7 @@ public class Goal_DodgeSideToSide extends GoalComposite<RavenBot> {
 			    {
 			      if (getM_pOwner().canStepLeft(m_vStrafeTarget))
 			      {
-			        getM_pOwner().getSteering().SetTarget(m_vStrafeTarget);
+			        getM_pOwner().getSteering().setTarget(m_vStrafeTarget);
 			      }
 			      else
 			      {
@@ -101,7 +101,7 @@ public class Goal_DodgeSideToSide extends GoalComposite<RavenBot> {
 
 
 		  public void Terminate(){
-			    getM_pOwner().getSteering().SeekOff();
+			    getM_pOwner().getSteering().seekOff();
 			  }
 
 

@@ -50,9 +50,9 @@ public class Goal_SeekToPosition extends GoalComposite<RavenBot> {
 		  m_dTimeToReachPos += MarginOfError;
 
 		  
-		  getM_pOwner().getSteering().SetTarget(m_vPosition);
+		  getM_pOwner().getSteering().setTarget(m_vPosition);
 
-		  getM_pOwner().getSteering().SeekOn();
+		  getM_pOwner().getSteering().seekOn();
 		
 	}
 	
@@ -79,8 +79,8 @@ public class Goal_SeekToPosition extends GoalComposite<RavenBot> {
 	}
 	
 	public void terminate(){
-		  getM_pOwner().getSteering().SeekOff();
-		  getM_pOwner().getSteering().ArriveOff();
+		  getM_pOwner().getSteering().seekOff();
+		  getM_pOwner().getSteering().arriveOff();
 
 		  m_iStatus = Goal.curStatus.completed;
 	}

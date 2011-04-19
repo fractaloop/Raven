@@ -12,7 +12,7 @@ public class Goal_Wander extends Goal<RavenBot> {
 	public void activate() {
 		  m_iStatus = Goal.curStatus.active;
 
-		  m_pOwner.getSteering().WanderOn();
+		  m_pOwner.getSteering().wanderOn();
 		
 	}
 
@@ -26,7 +26,7 @@ public class Goal_Wander extends Goal<RavenBot> {
 	
 	public void terminate()
 	{
-	  m_pOwner.getSteering().WanderOff();
+	  m_pOwner.getSteering().wanderOff();
 	}
 
 	@Override
