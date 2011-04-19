@@ -2,6 +2,7 @@ package raven.goals;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import raven.game.RavenBot;
 import raven.game.navigation.NavGraphEdge;
@@ -12,12 +13,12 @@ import raven.ui.GameCanvas;
 
 public class Goal_FollowPath extends GoalComposite<RavenBot> {
 
-	private ArrayList<PathEdge>  m_Path = new ArrayList<PathEdge>();
+	private List<PathEdge>  m_Path = new ArrayList<PathEdge>();
 
 
 
 
-	public Goal_FollowPath(RavenBot m_pOwner, ArrayList<PathEdge> list) {
+	public Goal_FollowPath(RavenBot m_pOwner, List<PathEdge> list) {
 		super(m_pOwner, Goal.goalType.goal_follow_path);
 		this.m_Path = list;
 	}
