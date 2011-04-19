@@ -8,33 +8,33 @@ public class ExploreGoal_Evaluator extends Goal_Evaluator {
 	public ExploreGoal_Evaluator(Double inp) {
 		super(inp);
 	}
-	
-	
-	
+
+
+
 
 	//---------------- CalculateDesirability -------------------------------------
 	//-----------------------------------------------------------------------------
 	public double calculateDesirability(RavenBot pBot)
 	{
-	  double Desirability = 0.05;
+		double Desirability = 0.05;
 
-	  Desirability *= getM_iBias();
+		Desirability *= getM_iBias();
 
-	  return Desirability;
+		return Desirability;
 	}
 
 	//----------------------------- SetGoal ---------------------------------------
 	//-----------------------------------------------------------------------------
 	public void setGoal(RavenBot pBot)
 	{
-	  pBot.getBrain().addGoal_explore();
+		pBot.getBrain().addGoal_explore();
 	}
 
 	//-------------------------- RenderInfo ---------------------------------------
 	//-----------------------------------------------------------------------------
 	public void renderInfo(Vector2D Position, RavenBot pBot)
 	{
-	  GameCanvas.textAtPos(Position, "EX: " + "Desire: "+ calculateDesirability(pBot));
+		GameCanvas.textAtPos(Position, "EX: " + "Desire: "+ calculateDesirability(pBot));
 	}
 
 }

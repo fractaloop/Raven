@@ -6,46 +6,46 @@ import raven.ui.GameCanvas;
 
 public class AttackTargetGoal_Evaluator extends Goal_Evaluator {
 
-	
+
 	public AttackTargetGoal_Evaluator(Double bias) {
 		super(bias);
 	}
-	  
-	  public double calculateDesirability(RavenBot pBot){
-		  double Desirability = 0.0;
 
-		  //only do the calculation if there is a target present
-		  if (pBot.getTargetSys().isTargetPresent()) 
-		  {
-		     double Tweaker = 1.0;
+	public double calculateDesirability(RavenBot pBot){
+		double Desirability = 0.0;
 
-		     try {
+		//only do the calculation if there is a target present
+		if (pBot.getTargetSys().isTargetPresent()) 
+		{
+			double Tweaker = 1.0;
+
+			try {
 				Desirability = Tweaker * RavenFeature.Health(pBot)* RavenFeature.TotalWeaponStrength(pBot);
 			} catch (Exception e) {System.out.println(e.getMessage())	;}
 
-		     //bias the value according to the personality of the bot
-		     Desirability *= getM_iBias();
-		  }
-		    
-		  return Desirability;
-	  
-	  }
+			//bias the value according to the personality of the bot
+			Desirability *= getM_iBias();
+		}
 
-	  public void setGoal(RavenBot pEnt){
-		  pEnt.getBrain().addGoal_attackTarget(); 
-	  }
+		return Desirability;
 
-	  public void renderInfo(Vector2D Position, RavenBot pBot){
-		  GameCanvas.textAtPos(Position, "AT: " + String.valueOf(calculateDesirability(pBot)));
-		  
-		  String s = "";
+	}
+
+	public void setGoal(RavenBot pEnt){
+		pEnt.getBrain().addGoal_attackTarget(); 
+	}
+
+	public void renderInfo(Vector2D Position, RavenBot pBot){
+		GameCanvas.textAtPos(Position, "AT: " + String.valueOf(calculateDesirability(pBot)));
+
+		String s = "";
 		try {
 			s = String.valueOf(RavenFeature.Health(pBot)) + ", " + String.valueOf(RavenFeature.TotalWeaponStrength(pBot));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		  GameCanvas.textAtPos(Position, s);
-	  }
+		GameCanvas.textAtPos(Position, s);
+	}
 }
 

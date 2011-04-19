@@ -10,29 +10,29 @@ public class Goal_Wander extends Goal<RavenBot> {
 
 	@Override
 	public void activate() {
-		  m_iStatus = Goal.curStatus.active;
+		m_iStatus = Goal.curStatus.active;
 
-		  m_pOwner.getSteering().wanderOn();
-		
+		m_pOwner.getSteering().wanderOn();
+
 	}
 
 	public raven.goals.Goal.curStatus process(){
-		
-		  activateIfInactive();
 
-		  return m_iStatus;
+		activateIfInactive();
+
+		return m_iStatus;
 	}
-	
-	
+
+
 	public void terminate()
 	{
-	  m_pOwner.getSteering().wanderOff();
+		m_pOwner.getSteering().wanderOff();
 	}
 
 	@Override
 	public void render() {
 		// do noting
-		
+
 	}
 
 }
