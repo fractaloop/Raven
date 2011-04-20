@@ -20,8 +20,8 @@ public class Wall2D {
 	public Wall2D() {}
 	
 	public Wall2D(Vector2D a, Vector2D b) {
-		vA = a;
-		vB = b;
+		vA = new Vector2D(a);
+		vB = new Vector2D(b);
 		
 		calculateNormal();
 	}
