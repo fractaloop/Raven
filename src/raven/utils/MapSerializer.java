@@ -49,32 +49,32 @@ public class MapSerializer {
 		return streamer;
 	}
 	
-	public static String DeserializeMap(RavenMap map){
+	public static String serializeMap(RavenMap map){
 		return initXStream().toXML(map);
 	}
 	
-	public static boolean DeserializeMapToFile(RavenMap map, File file) throws IOException{
+	public static boolean serializeMapToFile(RavenMap map, File file) throws IOException{
 		FileWriter writer = new FileWriter(file);
 		writer.write(initXStream().toXML(map));
 		return true;
 	}
 	
-	public static boolean DeserializeMapToPath(RavenMap map, String filePath) throws IOException{
+	public static boolean serializeMapToPath(RavenMap map, String filePath) throws IOException{
 		FileWriter writer = new FileWriter(filePath);
 		writer.write(initXStream().toXML(map));
 		return true;
 	}
 	
-	public static RavenMap SerializeMapFromXML(String xml){
+	public static RavenMap deserializeMapFromXML(String xml){
 		return (RavenMap) initXStream().fromXML(xml);
 	}
 	
-	public static RavenMap SerializeMapFromFile(File file) throws FileNotFoundException{
+	public static RavenMap deserializeMapFromFile(File file) throws FileNotFoundException{
 		FileReader reader = new FileReader(file);
 		return (RavenMap)initXStream().fromXML(reader);
 	}
 	
-	public static RavenMap SerializeMapFromPath(String filePath) throws FileNotFoundException{
+	public static RavenMap deserializeMapFromPath(String filePath) throws FileNotFoundException{
 		FileReader reader = new FileReader(filePath);
 		return (RavenMap)initXStream().fromXML(reader);
 	}

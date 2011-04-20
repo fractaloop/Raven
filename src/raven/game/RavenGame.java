@@ -308,7 +308,7 @@ public class RavenGame {
 		graveMarkers = new GraveMarkers(RavenScript.getDouble("GraveLifetime"));
 		pathManager = new PathManager<RavenPathPlanner>(
 				RavenScript.getInt("MaxSearchCyclesPerUpdateStep"));
-		map = MapSerializer.SerializeMapFromPath(fileName);
+		map = MapSerializer.deserializeMapFromPath(fileName);
 
 		EntityManager.reset();
 

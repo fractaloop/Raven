@@ -51,14 +51,14 @@ public class MapSerializerTests {
 	@Test
 	public void DeserializeEmptyMap() {	
 		RavenMap writeMe = CreateEmptyMap();
-		String emptyMap = MapSerializer.DeserializeMap(writeMe);
+		String emptyMap = MapSerializer.serializeMap(writeMe);
 		Assert.assertEquals(emptyString, emptyMap);
 	}
 	
 	@Test
 	public void SerializedEmptyMapEqualsNewEmptyMap(){
 		RavenMap expected = CreateEmptyMap();
-		RavenMap actual = MapSerializer.SerializeMapFromXML(emptyString);
+		RavenMap actual = MapSerializer.deserializeMapFromXML(emptyString);
 		Assert.assertEquals(expected, actual);
 	}
 	
