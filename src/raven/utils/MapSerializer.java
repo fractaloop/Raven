@@ -49,19 +49,21 @@ public class MapSerializer {
 		return streamer;
 	}
 	
-	public static String serializeMap(RavenMap map){
+	public static String serializeMap(RavenMap map) {
 		return initXStream().toXML(map);
 	}
 	
-	public static boolean serializeMapToFile(RavenMap map, File file) throws IOException{
+	public static boolean serializeMapToFile(RavenMap map, File file) throws IOException {
 		FileWriter writer = new FileWriter(file);
 		writer.write(initXStream().toXML(map));
+		writer.close();
 		return true;
 	}
 	
-	public static boolean serializeMapToPath(RavenMap map, String filePath) throws IOException{
+	public static boolean serializeMapToPath(RavenMap map, String filePath) throws IOException {
 		FileWriter writer = new FileWriter(filePath);
 		writer.write(initXStream().toXML(map));
+		writer.close();
 		return true;
 	}
 	
@@ -69,13 +71,17 @@ public class MapSerializer {
 		return (RavenMap) initXStream().fromXML(xml);
 	}
 	
-	public static RavenMap deserializeMapFromFile(File file) throws FileNotFoundException{
+	public static RavenMap deserializeMapFromFile(File file) throws IOException {
 		FileReader reader = new FileReader(file);
-		return (RavenMap)initXStream().fromXML(reader);
+		RavenMap result = (RavenMap)initXStream().fromXML(reader);
+		reader.close();
+		return result;
 	}
 	
-	public static RavenMap deserializeMapFromPath(String filePath) throws FileNotFoundException{
+	public static RavenMap deserializeMapFromPath(String filePath) throws IOException {
 		FileReader reader = new FileReader(filePath);
-		return (RavenMap)initXStream().fromXML(reader);
+		RavenMap result = (RavenMap)initXStream().fromXML(reader);
+		reader.close();
+		return result;
 	}
 }
