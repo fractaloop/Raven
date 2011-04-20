@@ -164,7 +164,7 @@ public class RavenMap {
 		doors = new ArrayList<RavenDoor>();
 		walls = new ArrayList<Wall2D>();
 		spawnPoints = new ArrayList<Vector2D>();
-		sizeX = sizeY = 0;
+		sizeX = sizeY = 500;
 		navGraph = new SparseGraph<NavGraphNode<Trigger<RavenBot>>, NavGraphEdge>();
 		spacePartition = new CellSpacePartition<NavGraphNode<Trigger<RavenBot>>>(0.0, 0.0, 0, 0, 0);
 		cellSpaceNeighborhoodRange = 0.0;
