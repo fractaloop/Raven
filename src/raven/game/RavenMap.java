@@ -61,9 +61,13 @@ public class RavenMap {
 	/* this will hold a pre-calculated lookup table of the cost to travel
 	 * from */
 	private Map<Pair<Integer, Integer>, Double> pathCosts;
-	
 
-	
+	/** the path this file was loaded from. null if unsaved. */
+	private String path;
+
+	/** the name of this map, as displayed to the user */
+	private String name;
+		
 	private void partitionNavGraph() {
 		spacePartition = new CellSpacePartition<NavGraphNode<Trigger<RavenBot>>>(sizeX, sizeY,
 				RavenScript.getInt("NumCellX"), RavenScript.getInt("NumCellsY"),
@@ -168,7 +172,7 @@ public class RavenMap {
 	
 	/**
 	 * loads an environment from a file
-	 * @param filename the filename to load
+	 * @param filename the path to the file
 	 * @return true only if the file loaded successfully
 	 * @throws IOException 
 	 */
@@ -401,4 +405,9 @@ public class RavenMap {
 		// many maps total.
 		return result % 101;
 	}
+
+	public String getPath() { return path; }
+	public void setPath(String path) { this.path = path; }
+	public String getName() { return name; }
+	public void setName(String name) { this.name = name; }
 }
