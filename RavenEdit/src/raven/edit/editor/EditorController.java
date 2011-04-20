@@ -69,8 +69,7 @@ public class EditorController implements EditorViewDelegate {
 		if (result == JFileChooser.APPROVE_OPTION) {
 			RavenMap level;
 			try {
-				level = new RavenMap();
-				level.loadMap(fileChooser.getSelectedFile().getPath());
+				level = MapSerializer.deserializeMapFromFile(fileChooser.getSelectedFile());
 				changeLevel(level);
 				view.updateStatus("Opened level " + level.getPath());
 			} catch (FileNotFoundException e) {
