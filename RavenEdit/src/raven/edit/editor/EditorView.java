@@ -169,12 +169,10 @@ public class EditorView extends JFrame implements ViewportDelegate {
 		// Icons only if there is one
 		for (int i = 0; i < buttons.size(); i++) {
 			JButton button = buttons.get(i);
-			System.out.print(i);
 			if (button == null) {
 				toolbar.addSeparator();
 			} else {
 				if (button.getIcon() != null) {
-					System.out.println("\tAdding " + button.getText() + ".");
 					button.setText("");
 				}
 				toolbar.add(button);
