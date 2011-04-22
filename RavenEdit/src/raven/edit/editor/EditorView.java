@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
@@ -12,11 +13,16 @@ import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
+import javax.swing.KeyStroke;
 import javax.vecmath.Vector2f;
 
 import raven.edit.editor.actions.*;
@@ -141,8 +147,106 @@ public class EditorView extends JFrame implements ViewportDelegate {
 	}
 	
 	private void createMenu() {
-		// TODO Auto-generated method stub
+		JMenu menu, subMenu;
+		JMenuItem menuItem;
+		JCheckBoxMenuItem checkedMenuItem;
 		
+		// Create the menu bar
+		JMenuBar menuBar = new JMenuBar();
+		
+		// File
+		menu = new JMenu("File");
+		menu.setMnemonic(KeyEvent.VK_F);
+		menuBar.add(menu);
+		// File->New
+		menuItem = new JMenuItem("New...", KeyEvent.VK_N);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.META_MASK));
+		menu.add(menuItem);
+		// File->Open
+		menuItem = new JMenuItem("Open...", KeyEvent.VK_O);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.META_MASK));
+		menu.add(menuItem);
+		// File->Save
+		menuItem = new JMenuItem("Save", KeyEvent.VK_S);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.META_MASK));
+		menu.add(menuItem);
+		// File->Save As...
+		menuItem = new JMenuItem("Save As...", KeyEvent.VK_S);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.META_MASK | ActionEvent.SHIFT_MASK));
+		menu.add(menuItem);
+		
+		// Edit
+		menu = new JMenu("Edit");
+		menu.setMnemonic(KeyEvent.VK_E);
+		menuBar.add(menu);
+		// Edit->Undo
+		menuItem = new JMenuItem("Undo", KeyEvent.VK_Z);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, ActionEvent.META_MASK));
+		menuItem.setEnabled(false);
+		menu.add(menuItem);
+		// Edit->Redo
+		menuItem = new JMenuItem("Redo", KeyEvent.VK_Z);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, ActionEvent.SHIFT_MASK | ActionEvent.META_MASK));
+		menuItem.setEnabled(false);
+		menu.add(menuItem);
+		// Edit->Delete selected
+		menuItem = new JMenuItem("Delete selected", KeyEvent.VK_DELETE);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0));
+		menu.add(menuItem);
+		// Tools
+		menu = new JMenu("Tools");
+		menu.setMnemonic(KeyEvent.VK_T);
+		menuBar.add(menu);
+		// Tools->Grid On
+		checkedMenuItem = new JCheckBoxMenuItem("Grid on");
+		menu.add(checkedMenuItem);
+		// Tools->Snap to Grid
+		checkedMenuItem = new JCheckBoxMenuItem("Snap to grid");
+		menu.add(checkedMenuItem);
+		// Graph
+		menu = new JMenu("Graph");
+		menu.setMnemonic(KeyEvent.VK_G);
+		menuBar.add(menu);
+		// Graph->Clear graph
+		menuItem = new JMenuItem("Clear graph");
+		menu.add(menuItem);
+		// Graph->Rebuild (connections based on current Max Edge Length)
+		menuItem = new JMenuItem("Rebuild (connections based on current Max Edge Length)");
+		menu.add(menuItem);
+		// Graph->Grow from seed
+		menuItem = new JMenuItem("Grow from seed");
+		menu.add(menuItem);
+		// Graph->Show Edges
+		checkedMenuItem = new JCheckBoxMenuItem("Show Edges");
+		menu.add(checkedMenuItem);
+		// Graph->Show Indices
+		checkedMenuItem = new JCheckBoxMenuItem("Show Indices");
+		menu.add(checkedMenuItem);
+		// Graph->Lock
+		checkedMenuItem = new JCheckBoxMenuItem("Lock");
+		menu.add(checkedMenuItem);
+		// Graph->Max Edge Length
+		subMenu = new JMenu("Max Edge Length");
+		menu.add(subMenu);
+		// Graph->Max Edge Length->[20, 40, 60, 80, 100, 150, 200, default]
+		menuItem = new JMenuItem("20");
+		subMenu.add(menuItem);
+		menuItem = new JMenuItem("40");
+		subMenu.add(menuItem);
+		menuItem = new JMenuItem("60");
+		subMenu.add(menuItem);
+		menuItem = new JMenuItem("80");
+		subMenu.add(menuItem);
+		menuItem = new JMenuItem("100");
+		subMenu.add(menuItem);
+		menuItem = new JMenuItem("150");
+		subMenu.add(menuItem);
+		menuItem = new JMenuItem("200");
+		subMenu.add(menuItem);
+		menuItem = new JMenuItem("Default");
+		subMenu.add(menuItem);
+
+		this.setJMenuBar(menuBar);
 	}
 	
 	private void createToolbar() {
