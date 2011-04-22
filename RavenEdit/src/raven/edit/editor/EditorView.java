@@ -9,6 +9,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -35,6 +36,13 @@ public class EditorView extends JFrame implements ViewportDelegate {
 	private OpenLevelAction openLevelAction;
 	private SaveLevelAction saveLevelAction;
 	private SelectToolAction selectToolAction;
+	private WallToolAction wallToolAction;
+	private DoorToolAction doorToolAction;
+	private HealthToolAction healthToolAction;
+	private GraphToolAction graphToolAction;
+	private RocketToolAction rocketToolAction;
+	private ShotgunToolAction shotgunToolAction;
+	private RailgunToolAction railgunToolAction;
 	
 	public EditorView(RavenMap theLevel) {
 		level = theLevel;
@@ -90,7 +98,43 @@ public class EditorView extends JFrame implements ViewportDelegate {
 		selectToolAction = new SelectToolAction("Select",
 											new ImageIcon("images/select.png"),
 											"Select objects within the level.",
-											new Integer(KeyEvent.VK_K),
+											new Integer(KeyEvent.VK_1),
+											delegate);
+		wallToolAction = new WallToolAction("Add walls",
+											new ImageIcon("images/wall.png"),
+											"Draw new walls into the level.",
+											new Integer(KeyEvent.VK_2),
+											delegate);
+		
+		doorToolAction = new DoorToolAction("Add doors",
+											new ImageIcon("images/door.png"),
+											"Draw new doors into the level.",
+											new Integer(KeyEvent.VK_3),
+											delegate);
+		graphToolAction = new GraphToolAction("Add graph node",
+											new ImageIcon("images/graph.png"),
+											"Insert a new graph node into the navigation network.",
+											new Integer(KeyEvent.VK_4),
+											delegate);
+		healthToolAction = new HealthToolAction("Add a health spanwer.",
+											new ImageIcon("images/health.png"),
+											"Add locations where health will respawn.",
+											new Integer(KeyEvent.VK_5),
+											delegate);
+		rocketToolAction = new RocketToolAction("Add a rocket launcher spanwer",
+											new ImageIcon("images/rocket.png"),
+											"Add locations where rocket launchers will respawn.",
+											new Integer(KeyEvent.VK_6),
+											delegate);
+		shotgunToolAction = new ShotgunToolAction("Add a shotgun spawner",
+											new ImageIcon("images/shotgun.png"),
+											"Add locations where shotguns will respawn.",
+											new Integer(KeyEvent.VK_7),
+											delegate);
+		railgunToolAction = new RailgunToolAction("Add a railgun spawner",
+											new ImageIcon("images/railgun.png"),
+											"Add locations where railguns will respawn.",
+											new Integer(KeyEvent.VK_8),
 											delegate);
 		
 		
@@ -112,6 +156,15 @@ public class EditorView extends JFrame implements ViewportDelegate {
 		buttons.add(new JButton(saveLevelAction));
 		buttons.add(null);
 		buttons.add(new JButton(selectToolAction));
+		buttons.add(new JButton(graphToolAction));
+		buttons.add(null);
+		buttons.add(new JButton(wallToolAction));
+		buttons.add(new JButton(doorToolAction));
+		buttons.add(null);
+		buttons.add(new JButton(healthToolAction));
+		buttons.add(new JButton(rocketToolAction));
+		buttons.add(new JButton(shotgunToolAction));
+		buttons.add(new JButton(railgunToolAction));
 		
 		// Icons only if there is one
 		for (int i = 0; i < buttons.size(); i++) {
