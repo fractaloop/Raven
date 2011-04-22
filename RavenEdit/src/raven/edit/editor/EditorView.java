@@ -19,6 +19,7 @@ import javax.swing.JToolBar;
 import javax.vecmath.Vector2f;
 
 import raven.edit.editor.actions.*;
+import raven.edit.tools.EditorTool;
 import raven.game.RavenMap;
 import raven.math.Vector2D;
 import raven.math.Wall2D;
@@ -30,9 +31,10 @@ public class EditorView extends JFrame implements ViewportDelegate {
 	private JLabel statusBar;
 	
 	// Actions
-	NewLevelAction newLevelAction;
-	OpenLevelAction openLevelAction;
-	SaveLevelAction saveLevelAction;
+	private NewLevelAction newLevelAction;
+	private OpenLevelAction openLevelAction;
+	private SaveLevelAction saveLevelAction;
+	private SelectToolAction selectToolAction;
 	
 	public EditorView(RavenMap theLevel) {
 		level = theLevel;
@@ -85,6 +87,13 @@ public class EditorView extends JFrame implements ViewportDelegate {
 											new Integer(KeyEvent.VK_S),
 											delegate);
 		
+		selectToolAction = new SelectToolAction("Select",
+											new ImageIcon("images/select.png"),
+											"Select objects within the level.",
+											new Integer(KeyEvent.VK_K),
+											delegate);
+		
+		
 	}
 	
 	private void createMenu() {
@@ -101,14 +110,22 @@ public class EditorView extends JFrame implements ViewportDelegate {
 		buttons.add(new JButton(newLevelAction));
 		buttons.add(new JButton(openLevelAction));
 		buttons.add(new JButton(saveLevelAction));
+		buttons.add(null);
+		buttons.add(new JButton(selectToolAction));
 		
 		// Icons only if there is one
-		for (JButton button : buttons) {
-			if (button.getIcon() != null) {
-				button.setText("");
+		for (int i = 0; i < buttons.size(); i++) {
+			JButton button = buttons.get(i);
+			System.out.print(i);
+			if (button == null) {
+				toolbar.addSeparator();
+			} else {
+				if (button.getIcon() != null) {
+					System.out.println("\tAdding " + button.getText() + ".");
+					button.setText("");
+				}
+				toolbar.add(button);
 			}
-
-			toolbar.add(button);
 		}
 
 		this.add(toolbar, BorderLayout.NORTH);
@@ -129,6 +146,7 @@ public class EditorView extends JFrame implements ViewportDelegate {
 
 	////////////////
 	// Accessors
+	
 	public synchronized RavenMap getLevel() {
 		return level;
 	}
@@ -153,6 +171,10 @@ public class EditorView extends JFrame implements ViewportDelegate {
 		}
 		
 		delegate.makeDirty();
+	}
+
+	public void setTool(EditorTool newTool) {
+		
 	}
 
 }

@@ -9,13 +9,16 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 
+import raven.edit.tools.EditorTool;
 import raven.game.RavenMap;
 import raven.utils.MapSerializer;
 
 public class EditorController implements EditorViewDelegate {
 	JFileChooser fileChooser;
 	EditorView view;
+	EditorTool tool;
 	RavenMap currentLevel;
+	
 	boolean isDirty;
 	
 	private class LevelFilter extends FileFilter {
@@ -155,6 +158,12 @@ public class EditorController implements EditorViewDelegate {
 	@Override
 	public void makeDirty() {
 		isDirty = true;		
+	}
+
+	@Override
+	public void changeTool(EditorTool newTool) {
+		this.tool = newTool;
+		view.setTool(newTool);
 	}
 
 }
