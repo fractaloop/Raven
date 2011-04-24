@@ -13,6 +13,10 @@ import javax.swing.JPopupMenu;
 
 import raven.edit.tools.EditorTool;
 import raven.game.RavenMap;
+import raven.game.RavenObject;
+import raven.game.triggers.Trigger;
+import raven.game.triggers.TriggerHealthGiver;
+import raven.game.triggers.TriggerWeaponGiver;
 import raven.math.Vector2D;
 import raven.math.Wall2D;
 
@@ -53,6 +57,7 @@ public class Viewport extends JPanel {
 		return delegate;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void paintComponent(Graphics g) {
 		// Clear out background
@@ -110,7 +115,25 @@ public class Viewport extends JPanel {
 		}
 		
 		// Render the guns
-		// TODO!
+		for(Trigger t : level.getTriggers()) {
+			if( t instanceof TriggerHealthGiver) {
+				g2d.setPaint(Color.RED);
+			} else if ( t instanceof TriggerWeaponGiver ) {
+				
+				switch(t.entityType()) {
+					case RAIL_GUN :
+						g2d.setPaint(Color.CYAN);
+						break;
+					case SHOTGUN :
+						g2d.setPaint(Color.YELLOW);
+						break;
+					case ROCKET_LAUNCHER :
+						g2d.setPaint(Color.BLUE);
+						break;
+					}
+				g2d.fill(new Ellipse2D.Double(t.pos().x - 7, t.pos().y - 7, 14, 14));	
+			}
+		}
 		
 		tool.paintComponent(g);
 	}

@@ -36,7 +36,7 @@ public class RocketTool extends EditorTool {
 		// Render the level cursor
 		if (levelCursor != null) {
 			Ellipse2D highlight = new Ellipse2D.Double(levelToView(levelCursor).getX() - 7, levelToView(levelCursor).getY() - 7, 14, 14);
-			g2d.setColor(Color.LIGHT_GRAY);
+			g2d.setColor(Color.BLUE);
 			g2d.draw(highlight);
 		}
 	}

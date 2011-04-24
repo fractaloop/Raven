@@ -57,12 +57,12 @@ public class EditorViewController implements EditorViewDelegate {
 	}
 
 	@Override
-	public boolean doNewLevel() {
+	public boolean doNewLevel() {	
 		if (!doSaveIfDirty())
 			return false;
-		
-		changeLevel(new RavenMap());
-		
+		RavenMap newMap = new RavenMap();
+		view = new EditorView(newMap);
+		changeLevel(newMap);
 		return true;
 	}
 	

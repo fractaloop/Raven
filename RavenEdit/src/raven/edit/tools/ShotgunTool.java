@@ -35,11 +35,10 @@ public class ShotgunTool extends EditorTool {
 	public void paintComponent(Graphics g) {
 		if(shotSpawnPoint != null) {
 			Graphics2D g2d = (Graphics2D)g;
-
 			// Render the level cursor
 			if (levelCursor != null) {
 				Ellipse2D highlight = new Ellipse2D.Double(levelToView(levelCursor).getX() - 7, levelToView(levelCursor).getY() - 7, 14, 14);
-				g2d.setColor(Color.LIGHT_GRAY);
+				g2d.setColor(Color.YELLOW);
 				g2d.draw(highlight);
 			}
 

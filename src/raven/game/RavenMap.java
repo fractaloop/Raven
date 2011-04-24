@@ -88,8 +88,8 @@ public class RavenMap {
 		triggerSystem.register(healthGiver);
 		
 		// Let the corresponding NavGraphNode point to this object
-		NavGraphNode<Trigger<RavenBot>> node = navGraph.getNode(healthGiver.graphNodeIndex());
-		node.setExtraInfo(healthGiver);
+		//NavGraphNode<Trigger<RavenBot>> node = navGraph.getNode(healthGiver.graphNodeIndex());
+		//node.setExtraInfo(healthGiver);
 		
 		// register the entity
 		EntityManager.registerEntity(healthGiver);
@@ -103,8 +103,8 @@ public class RavenMap {
 		triggerSystem.register(weaponGiver);
 		
 		// let the corresponding navgraph node point to this object
-		NavGraphNode<Trigger<RavenBot>> node = navGraph.getNode(weaponGiver.graphNodeIndex());
-		node.setExtraInfo(weaponGiver);
+		//NavGraphNode<Trigger<RavenBot>> node = navGraph.getNode(weaponGiver.graphNodeIndex());
+		//node.setExtraInfo(weaponGiver);
 	}
 	
 	public void addDoor(int id, Vector2D pos1, Vector2D pos2, int timeout) {

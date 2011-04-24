@@ -36,7 +36,7 @@ public class HealthTool extends EditorTool {
 		// Render the level cursor
 		if (levelCursor != null) {
 			Ellipse2D highlight = new Ellipse2D.Double(levelToView(levelCursor).getX() - 7, levelToView(levelCursor).getY() - 7, 14, 14);
-			g2d.setColor(Color.LIGHT_GRAY);
+			g2d.setColor(Color.RED);
 			g2d.draw(highlight);
 		}
 	}
