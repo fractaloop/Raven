@@ -167,9 +167,12 @@ public class RavenMap {
 	 * @param filename the path to the file
 	 * @return true only if the file loaded successfully
 	 * @throws IOException 
+	 * 
+	 * @deprecated
 	 */
 	public boolean loadMap(String filename) throws IOException {
-		FileReader reader = new FileReader(filename);
+		throw new RuntimeException("Deprecated loadMap");
+/*		FileReader reader = new FileReader(filename);
 		clear();
 		
 		BaseGameEntity.resetNextValidID();
@@ -233,7 +236,7 @@ public class RavenMap {
 		pathCosts = navGraph.createAllPairsCostsTable();
 		
 		return true;
-	}
+*/	}
 	
 	/**
 	 * adds a wall and returns a pointer to that wall. (this method can be
