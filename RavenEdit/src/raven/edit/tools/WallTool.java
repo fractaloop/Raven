@@ -185,6 +185,18 @@ public class WallTool extends EditorTool {
 	}
 
 	@Override
+	public void mouseEntered(MouseEvent e) {
+		viewport.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+	}
+	
+	@Override
+	public void mouseExited(MouseEvent e) {
+		viewport.setCursor(Cursor.getDefaultCursor());
+		levelCursor = null;
+	}
+
+	
+	@Override
 	public void mousePressed(MouseEvent e) {
 		mouseLocation = e.getPoint();
 		levelCursor = viewToLevel(mouseLocation);
@@ -195,18 +207,13 @@ public class WallTool extends EditorTool {
 			JPopupMenu popup = new JPopupMenu();
 			popup.add(item);
 			popup.show(e.getComponent(), e.getX(), e.getY());
-		} else if (e.getID() == MouseEvent.MOUSE_PRESSED) {
+		} else if (e.getButton() == MouseEvent.BUTTON1) {
 			isDrawing = true;
 			addDrawingPoint(levelCursor);
-		} else if (e.getID() == MouseEvent.MOUSE_ENTERED) {
-			viewport.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
-		} else if (e.getID() == MouseEvent.MOUSE_EXITED) {
-			viewport.setCursor(Cursor.getDefaultCursor());
-			levelCursor = null;
 		}
 
 		e.consume();
-	}	
+	}
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
