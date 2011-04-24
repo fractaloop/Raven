@@ -24,7 +24,7 @@ public class DoorToolAction extends AbstractAction {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		delegate.changeTool(new DoorTool());
+		delegate.changeTool(new DoorTool(delegate.getView()));
 	}
 
 }

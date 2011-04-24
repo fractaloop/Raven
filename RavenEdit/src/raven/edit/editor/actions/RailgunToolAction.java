@@ -24,7 +24,7 @@ public class RailgunToolAction extends AbstractAction {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		delegate.changeTool(new RailgunTool());
+		delegate.changeTool(new RailgunTool(delegate.getView()));
 	}
 
 }

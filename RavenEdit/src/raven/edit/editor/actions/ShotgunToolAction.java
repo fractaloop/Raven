@@ -23,7 +23,7 @@ public class ShotgunToolAction extends AbstractAction {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		delegate.changeTool(new ShotgunTool());
+		delegate.changeTool(new ShotgunTool(delegate.getView()));
 	}
 
 }

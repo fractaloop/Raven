@@ -24,7 +24,7 @@ public class RocketToolAction extends AbstractAction {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		delegate.changeTool(new RocketTool());
+		delegate.changeTool(new RocketTool(delegate.getView()));
 	}
 
 }

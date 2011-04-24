@@ -1,6 +1,6 @@
 package raven.edit;
 
-import raven.edit.editor.EditorController;
+import raven.edit.editor.EditorViewController;
 
 public class RavenEdit {
 	public static void main(String[] args) {
@@ -8,7 +8,7 @@ public class RavenEdit {
 		
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                new EditorController();
+                new EditorViewController();
             }
         });
 	}

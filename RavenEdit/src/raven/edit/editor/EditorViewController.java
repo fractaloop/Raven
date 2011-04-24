@@ -7,17 +7,20 @@ import java.io.IOException;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JToolBar;
 import javax.swing.filechooser.FileFilter;
 
 import raven.edit.tools.EditorTool;
+import raven.edit.tools.SelectTool;
 import raven.game.RavenMap;
 import raven.utils.MapSerializer;
 
-public class EditorController implements EditorViewDelegate {
+public class EditorViewController implements EditorViewDelegate {
 	JFileChooser fileChooser;
+	
 	EditorView view;
 	EditorTool tool;
-	RavenMap currentLevel;
+	RavenMap level;
 	
 	boolean isDirty;
 	
@@ -38,15 +41,17 @@ public class EditorController implements EditorViewDelegate {
 		}
 	}
 	
-	public EditorController() {		
+	public EditorViewController() {		
 		fileChooser = new JFileChooser();
 		fileChooser.setFileFilter(new LevelFilter());
 		
-		currentLevel = new RavenMap();
+		this.level = new RavenMap();
 		
-		view = new EditorView(currentLevel);
+		view = new EditorView(level);
 		view.setDelegate(this);
-		view.create();		
+		view.create();
+		
+		this.changeTool(new SelectTool(view));
 		
 		isDirty = false;
 	}
@@ -113,12 +118,12 @@ public class EditorController implements EditorViewDelegate {
 	@Override
 	public boolean doSave() {
 		// Ask where to save the file if it doesn't have a filename yet
-		if (currentLevel.getPath() == null) {
-			fileChooser.setSelectedFile(new File(currentLevel.getName() + ".raven"));
+		if (level.getPath() == null) {
+			fileChooser.setSelectedFile(new File(level.getName() + ".raven"));
 			int result = fileChooser.showSaveDialog((Component)view);
 			
 			if (result == JFileChooser.APPROVE_OPTION) {
-				currentLevel.setPath(fileChooser.getSelectedFile().getPath());
+				level.setPath(fileChooser.getSelectedFile().getPath());
 			} else {
 				return false;
 			}
@@ -127,7 +132,7 @@ public class EditorController implements EditorViewDelegate {
 
 		// Write it
 		try {
-			MapSerializer.serializeMapToPath(currentLevel, currentLevel.getPath());
+			MapSerializer.serializeMapToPath(level, level.getPath());
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(view,
 					"Unable to save " + fileChooser.getSelectedFile().getPath() + "\n" + e.getLocalizedMessage(),
@@ -135,7 +140,7 @@ public class EditorController implements EditorViewDelegate {
 					JOptionPane.ERROR_MESSAGE);
 		}
 		
-		view.updateStatus("Level saved to " + currentLevel.getPath());
+		view.updateStatus("Level saved to " + level.getPath());
 		
 		return true;
 	}
@@ -144,8 +149,8 @@ public class EditorController implements EditorViewDelegate {
 	@Override
 	public void changeLevel(RavenMap level) {
 		isDirty = false;
-		currentLevel = level;
-		view.setLevel(currentLevel);	
+		this.level = level;
+		view.setLevel(level);	
 	}
 
 
@@ -164,6 +169,11 @@ public class EditorController implements EditorViewDelegate {
 	public void changeTool(EditorTool newTool) {
 		this.tool = newTool;
 		view.setTool(newTool);
+	}
+
+	@Override
+	public RavenMap getLevel() {
+		return level;
 	}
 
 }

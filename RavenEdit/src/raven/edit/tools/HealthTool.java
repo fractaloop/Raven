@@ -1,57 +1,23 @@
 package raven.edit.tools;
 
+import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 
+import raven.edit.editor.ViewportDelegate;
+import raven.game.RavenMap;
 
-public class HealthTool implements EditorTool {
 
-	@Override
-	public void mouseClicked(MouseEvent arg0) {
-		// TODO Auto-generated method stub
+public class HealthTool extends EditorTool {
 
+	public HealthTool(ViewportDelegate delegate) {
+		super(delegate);
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public void mouseEntered(MouseEvent arg0) {
+	public void paintComponent(Graphics g) {
 		// TODO Auto-generated method stub
-
+		
 	}
-
-	@Override
-	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseDragged(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseMoved(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseWheelMoved(MouseWheelEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
 }

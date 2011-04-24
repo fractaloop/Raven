@@ -24,7 +24,7 @@ public class SelectToolAction extends AbstractAction {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		delegate.changeTool(new SelectTool());
+		delegate.changeTool(new SelectTool(delegate.getView()));
 	}
 
 }

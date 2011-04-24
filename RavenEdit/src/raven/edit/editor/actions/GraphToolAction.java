@@ -24,7 +24,7 @@ public class GraphToolAction extends AbstractAction {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		delegate.changeTool(new GraphTool());
+		delegate.changeTool(new GraphTool(delegate.getView()));
 	}
 
 }

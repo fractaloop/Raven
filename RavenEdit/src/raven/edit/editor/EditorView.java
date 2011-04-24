@@ -9,7 +9,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
+import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -21,8 +23,10 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
+import javax.tools.Tool;
 import javax.vecmath.Vector2f;
 
 import raven.edit.editor.actions.*;
@@ -254,28 +258,32 @@ public class EditorView extends JFrame implements ViewportDelegate {
 		toolbar.setFloatable(false);
 
 		// And add some buttons
-		ArrayList<JButton> buttons = new ArrayList<JButton>();
+		ArrayList<AbstractButton> buttons = new ArrayList<AbstractButton>();
 		buttons.add(new JButton(newLevelAction));
 		buttons.add(new JButton(openLevelAction));
 		buttons.add(new JButton(saveLevelAction));
 		buttons.add(null);
-		buttons.add(new JButton(selectToolAction));
-		buttons.add(new JButton(graphToolAction));
+		buttons.add(new JToggleButton(selectToolAction));
+		buttons.add(new JToggleButton(graphToolAction));
 		buttons.add(null);
-		buttons.add(new JButton(wallToolAction));
-		buttons.add(new JButton(doorToolAction));
+		buttons.add(new JToggleButton(wallToolAction));
+		buttons.add(new JToggleButton(doorToolAction));
 		buttons.add(null);
-		buttons.add(new JButton(healthToolAction));
-		buttons.add(new JButton(rocketToolAction));
-		buttons.add(new JButton(shotgunToolAction));
-		buttons.add(new JButton(railgunToolAction));
+		buttons.add(new JToggleButton(healthToolAction));
+		buttons.add(new JToggleButton(rocketToolAction));
+		buttons.add(new JToggleButton(shotgunToolAction));
+		buttons.add(new JToggleButton(railgunToolAction));
 		
 		// Icons only if there is one
+		ButtonGroup group = new ButtonGroup();
 		for (int i = 0; i < buttons.size(); i++) {
-			JButton button = buttons.get(i);
+			AbstractButton button = buttons.get(i);
 			if (button == null) {
 				toolbar.addSeparator();
 			} else {
+				if (button instanceof JToggleButton) {
+					group.add(button);
+				}
 				if (button.getIcon() != null) {
 					button.setText("");
 				}
@@ -287,13 +295,13 @@ public class EditorView extends JFrame implements ViewportDelegate {
 	}
 
 	private void createInspector() {
-		JToolBar toolbar = new JToolBar();
+/*		JToolBar toolbar = new JToolBar();
 		toolbar.setFloatable(true);
 		// And add some buttons
 		JTextField textField = new JTextField(8);
 		toolbar.add(textField);
 		this.add(toolbar, BorderLayout.EAST);
-	}
+*/	}
 
 	public void setDelegate(EditorViewDelegate delegate) {
 		this.delegate = delegate;
@@ -314,6 +322,7 @@ public class EditorView extends JFrame implements ViewportDelegate {
 
 	//////////////////////
 	// Viewport delegate
+	
 	@Override
 	public void updateStatus(String status) {
 		statusBar.setText(status);		
@@ -329,7 +338,7 @@ public class EditorView extends JFrame implements ViewportDelegate {
 	}
 
 	public void setTool(EditorTool newTool) {
-		
+		viewport.setTool(newTool);
 	}
 
 }

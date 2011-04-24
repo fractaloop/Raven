@@ -23,7 +23,7 @@ public class WallToolAction extends AbstractAction {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		delegate.changeTool(new WallTool());
+		delegate.changeTool(new WallTool(delegate.getView()));
 	}
 
 }

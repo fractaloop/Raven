@@ -24,7 +24,7 @@ public class HealthToolAction extends AbstractAction {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		delegate.changeTool(new HealthTool());
+		delegate.changeTool(new HealthTool(delegate.getView()));
 	}
 
 }

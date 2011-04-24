@@ -1,57 +1,23 @@
 package raven.edit.tools;
 
+import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 
+import raven.edit.editor.ViewportDelegate;
+import raven.game.RavenMap;
 
-public class GraphTool implements EditorTool {
 
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
+public class GraphTool extends EditorTool {
 
+	public GraphTool(ViewportDelegate delegate) {
+		super(delegate);
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public void mouseEntered(MouseEvent e) {
+	public void paintComponent(Graphics g) {
 		// TODO Auto-generated method stub
-
+		
 	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseDragged(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseWheelMoved(MouseWheelEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
 }
