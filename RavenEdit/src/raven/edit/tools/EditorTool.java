@@ -5,6 +5,8 @@ import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.geom.Point2D;
@@ -31,6 +33,21 @@ public abstract class EditorTool implements MouseInputListener, MouseWheelListen
 		
 		this.viewport = delegate.getViewport();
 		
+		// Remove any previous tools that were listening
+		for (KeyListener listener : viewport.getListeners(KeyListener.class))
+			if (listener instanceof EditorTool)
+				viewport.removeKeyListener(listener);
+		for (MouseListener listener : viewport.getListeners(MouseListener.class))
+			if (listener instanceof EditorTool)
+				viewport.removeMouseListener(listener);
+		for (MouseMotionListener listener : viewport.getListeners(MouseMotionListener.class))
+			if (listener instanceof EditorTool)
+				viewport.removeMouseMotionListener(listener);
+		for (MouseWheelListener listener : viewport.getListeners(MouseWheelListener.class))
+			if (listener instanceof EditorTool)
+				viewport.removeMouseWheelListener(listener);
+		
+		// Add this new tool
 		viewport.addKeyListener(this);
 		viewport.addMouseListener(this);
 		viewport.addMouseMotionListener(this);
