@@ -40,6 +40,8 @@ public class WallTool extends EditorTool {
 		super(delegate);
 		
 		levelCursor = null;
+		
+		font = new Font("SansSerif", Font.PLAIN, 12);
 	}
 	
 	// EditorTool needs 
@@ -224,6 +226,8 @@ public class WallTool extends EditorTool {
 		}
 
 		updateCursorSnap();
+		
+		viewport.repaint();
 		
 		e.consume();
 	}

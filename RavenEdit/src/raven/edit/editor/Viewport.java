@@ -37,10 +37,10 @@ public class Viewport extends JPanel {
 		setLayout(new BorderLayout());
 		setBackground(Color.WHITE);
 		setDoubleBuffered(true);
-		enableEvents( AWTEvent.KEY_EVENT_MASK |
-					  AWTEvent.MOUSE_EVENT_MASK |
-					  AWTEvent.MOUSE_MOTION_EVENT_MASK |
-					  AWTEvent.MOUSE_WHEEL_EVENT_MASK );
+//		enableEvents( AWTEvent.KEY_EVENT_MASK |
+//					  AWTEvent.MOUSE_EVENT_MASK |
+//					  AWTEvent.MOUSE_MOTION_EVENT_MASK |
+//					  AWTEvent.MOUSE_WHEEL_EVENT_MASK );
 		requestFocus();
 		
 	}

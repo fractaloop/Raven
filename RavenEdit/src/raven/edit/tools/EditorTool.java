@@ -33,7 +33,10 @@ public abstract class EditorTool implements MouseInputListener, MouseWheelListen
 		
 		viewport.addKeyListener(this);
 		viewport.addMouseListener(this);
+		viewport.addMouseMotionListener(this);
 		viewport.addMouseWheelListener(this);
+		
+		viewport.repaint();
 	}	
 	
 	public abstract void paintComponent(Graphics g);
