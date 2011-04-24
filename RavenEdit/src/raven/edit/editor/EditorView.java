@@ -168,15 +168,18 @@ public class EditorView extends JFrame implements ViewportDelegate {
 		menu.setMnemonic(KeyEvent.VK_F);
 		menuBar.add(menu);
 		// File->New
-		menuItem = new JMenuItem("New...", KeyEvent.VK_N);
+		menuItem = new JMenuItem(newLevelAction);
+		menuItem.setIcon(null);
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.META_MASK));
 		menu.add(menuItem);
 		// File->Open
-		menuItem = new JMenuItem("Open...", KeyEvent.VK_O);
+		menuItem = new JMenuItem(openLevelAction);
+		menuItem.setIcon(null);
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.META_MASK));
 		menu.add(menuItem);
 		// File->Save
-		menuItem = new JMenuItem("Save", KeyEvent.VK_S);
+		menuItem = new JMenuItem(saveLevelAction);
+		menuItem.setIcon(null);
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.META_MASK));
 		menu.add(menuItem);
 		// File->Save As...
