@@ -29,7 +29,7 @@ public class Viewport extends JPanel {
 	
 	private EditorTool tool;
 
-	private boolean drawGrid;
+	private boolean drawGrid = true;
 	
 	public Viewport(RavenMap level) {
 		this.level = level;
@@ -67,12 +67,15 @@ public class Viewport extends JPanel {
 		g2d.setRenderingHints(renderHints);
 
 		// Draw the grid
+		g2d.setColor(Color.LIGHT_GRAY);
 		if (drawGrid) {
 			for (int y = 0; y < getHeight(); y += 10) {
 				line = new Line2D.Float(0, y, getWidth(), y);
+				g2d.draw(line);
 			}
-			for (int x = 0; x < getHeight(); x += 10) {
+			for (int x = 0; x < getWidth(); x += 10) {
 				line = new Line2D.Float(x, 0, x, getHeight());
+				g2d.draw(line);
 			}
 		}
 		
@@ -105,6 +108,9 @@ public class Viewport extends JPanel {
 			g2d.setPaint(Color.LIGHT_GRAY);
 			g2d.fill(new Ellipse2D.Double(point.x - 7, point.y - 7, 14, 14));
 		}
+		
+		// Render the guns
+		// TODO!
 		
 		tool.paintComponent(g);
 	}

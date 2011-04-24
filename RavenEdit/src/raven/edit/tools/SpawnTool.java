@@ -2,26 +2,32 @@ package raven.edit.tools;
 
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Line2D;
+import java.util.ArrayList;
 
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
 import raven.edit.editor.ViewportDelegate;
-import raven.game.RavenObject;
+import raven.game.RavenMap;
 import raven.math.Vector2D;
+import raven.math.Wall2D;
 
-public class RailgunTool extends EditorTool {
+public class SpawnTool extends EditorTool {
 
 	private Point mouseLocation;
 	private Vector2D levelCursor;
 
-	public RailgunTool(ViewportDelegate delegate) {
+	public SpawnTool(ViewportDelegate delegate) {
 		super(delegate);
 		
 		levelCursor = null;
@@ -73,7 +79,7 @@ public class RailgunTool extends EditorTool {
 			popup.add(item);
 			popup.show(e.getComponent(), e.getX(), e.getY());
 		} else if (e.getButton() == MouseEvent.BUTTON1) {
-			level.addWeaponGiver(RavenObject.RAIL_GUN, levelCursor);
+			level.addSpawnPoint(levelCursor);
 		}
 
 		e.consume();

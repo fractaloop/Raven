@@ -1,14 +1,8 @@
 package raven.game;
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
-
-import javax.management.RuntimeErrorException;
 
 import raven.game.messaging.RavenMessage;
 import raven.game.navigation.NavGraphEdge;
@@ -27,7 +21,6 @@ import raven.math.graph.SparseGraph;
 import raven.script.RavenScript;
 import raven.ui.GameCanvas;
 import raven.utils.Pair;
-import raven.utils.StreamUtils;
 
 public class RavenMap {
 	
@@ -87,7 +80,7 @@ public class RavenMap {
 	
 	private void addSpawnPoint(double x, double y) {
 		spawnPoints.add(new Vector2D(x, y));
-	}
+		}
 	
 	private void addHealthGiver(Vector2D position, int radius, int healthPlus) {
 		TriggerHealthGiver healthGiver = new TriggerHealthGiver(position, radius, healthPlus);
@@ -161,41 +154,7 @@ public class RavenMap {
 		cellSpaceNeighborhoodRange = 0.0;
 	}
 	
-	/**
-	 * loads an environment from a file
-	 * @param filename the path to the file
-	 * @return true only if the file loaded successfully
-	 * @throws IOException 
-	 */
-	public boolean loadMap(String filename) throws IOException {
-		FileReader reader = new FileReader(filename);
-		clear();
-		
-		BaseGameEntity.resetNextValidID();
-		
-		// first of all read and create the navgraph. This must be done before
-		// the entities are read from the map file because many of the
-		// entities will be linked to a graph node (the graph node will own a
-		// pointer to an instance of the entity)
-		navGraph = new SparseGraph<NavGraphNode<Trigger<RavenBot>>, NavGraphEdge>(false, new NavGraphNode<Trigger<RavenBot>>(), new NavGraphEdge());
-		
-		navGraph.load(reader);
-		
-		// determine the average distance between graph nodes so that we can
-		// partition them efficiently
-		cellSpaceNeighborhoodRange = navGraph.calculateAverageGraphEdgeLength() + 1;
-		
-		// load in the map size and adjust the client window accordingly
-		sizeX = (Integer)StreamUtils.getValueFromStream(reader);
-		sizeY = (Integer)StreamUtils.getValueFromStream(reader);
-		
-		// partition the graph nodes
-		partitionNavGraph();
-		
-		pathCosts = navGraph.createAllPairsCostsTable();
-		
-		return true;
-	}
+
 	
 	/**
 	 * adds a wall and returns a pointer to that wall. (this method can be
