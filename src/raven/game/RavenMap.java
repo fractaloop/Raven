@@ -84,16 +84,8 @@ public class RavenMap {
 		walls.add(new Wall2D(in));
 	}
 	
-	private void addSpawnPoint(Reader reader) {
-		double x, y;
-		
-		StreamUtils.getValueFromStream(reader);
-		x = (Double)StreamUtils.getValueFromStream(reader);
-		y = (Double)StreamUtils.getValueFromStream(reader);
-		StreamUtils.getValueFromStream(reader);
-		StreamUtils.getValueFromStream(reader);
-		
-		spawnPoints.add(new Vector2D(x, y));
+	public void addSpawnPoint(Vector2D location) {
+		spawnPoints.add(location);
 	}
 	
 	private void addHealthGiver(Reader reader) {

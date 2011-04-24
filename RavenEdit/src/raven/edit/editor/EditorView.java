@@ -48,6 +48,7 @@ public class EditorView extends JFrame implements ViewportDelegate {
 	private SelectToolAction selectToolAction;
 	private WallToolAction wallToolAction;
 	private DoorToolAction doorToolAction;
+	private SpawnToolAction spawnToolAction;
 	private HealthToolAction healthToolAction;
 	private GraphToolAction graphToolAction;
 	private RocketToolAction rocketToolAction;
@@ -121,33 +122,36 @@ public class EditorView extends JFrame implements ViewportDelegate {
 											"Draw new doors into the level.",
 											new Integer(KeyEvent.VK_3),
 											delegate);
+		spawnToolAction = new SpawnToolAction("Add spawn points",
+											new ImageIcon("images/spawn.png"),
+											"Create new locations where bots will enter the world.",
+											new Integer(KeyEvent.VK_4),
+											delegate);
 		graphToolAction = new GraphToolAction("Add graph node",
 											new ImageIcon("images/graph.png"),
 											"Insert a new graph node into the navigation network.",
-											new Integer(KeyEvent.VK_4),
+											new Integer(KeyEvent.VK_5),
 											delegate);
 		healthToolAction = new HealthToolAction("Add a health spanwer.",
 											new ImageIcon("images/health.png"),
 											"Add locations where health will respawn.",
-											new Integer(KeyEvent.VK_5),
+											new Integer(KeyEvent.VK_6),
 											delegate);
 		rocketToolAction = new RocketToolAction("Add a rocket launcher spanwer",
 											new ImageIcon("images/rocket.png"),
 											"Add locations where rocket launchers will respawn.",
-											new Integer(KeyEvent.VK_6),
+											new Integer(KeyEvent.VK_7),
 											delegate);
 		shotgunToolAction = new ShotgunToolAction("Add a shotgun spawner",
 											new ImageIcon("images/shotgun.png"),
 											"Add locations where shotguns will respawn.",
-											new Integer(KeyEvent.VK_7),
+											new Integer(KeyEvent.VK_8),
 											delegate);
 		railgunToolAction = new RailgunToolAction("Add a railgun spawner",
 											new ImageIcon("images/railgun.png"),
 											"Add locations where railguns will respawn.",
-											new Integer(KeyEvent.VK_8),
+											new Integer(KeyEvent.VK_9),
 											delegate);
-		
-		
 	}
 	
 	private void createMenu() {
@@ -268,6 +272,8 @@ public class EditorView extends JFrame implements ViewportDelegate {
 		buttons.add(null);
 		buttons.add(new JToggleButton(wallToolAction));
 		buttons.add(new JToggleButton(doorToolAction));
+		buttons.add(null);
+		buttons.add(new JToggleButton(spawnToolAction));
 		buttons.add(null);
 		buttons.add(new JToggleButton(healthToolAction));
 		buttons.add(new JToggleButton(rocketToolAction));
