@@ -88,8 +88,8 @@ public class RavenMap {
 		spawnPoints.add(location);
 	}
 	
-	private void addHealthGiver(Reader reader) {
-		TriggerHealthGiver healthGiver = new TriggerHealthGiver(reader);
+	public void addHealthGiver(Vector2D location) {
+		TriggerHealthGiver healthGiver = new TriggerHealthGiver(location);
 		
 		triggerSystem.register(healthGiver);
 		
@@ -101,8 +101,8 @@ public class RavenMap {
 		EntityManager.registerEntity(healthGiver);
 	}
 	
-	private void addWeaponGiver(RavenObject typeOfWeapon, Reader reader) {
-		TriggerWeaponGiver weaponGiver = new TriggerWeaponGiver(reader);
+	public void addWeaponGiver(RavenObject typeOfWeapon, Vector2D location) {
+		TriggerWeaponGiver weaponGiver = new TriggerWeaponGiver(location);
 		
 		weaponGiver.setEntityType(typeOfWeapon);
 		

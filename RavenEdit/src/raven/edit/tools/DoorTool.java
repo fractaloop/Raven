@@ -12,7 +12,7 @@ public class DoorTool extends EditorTool {
 
 	public DoorTool(ViewportDelegate delegate) {
 		super(delegate);
-		// TODO Auto-generated constructor stub
+		System.err.println("Door are not implemented yet!");
 	}
 
 	@Override
