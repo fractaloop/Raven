@@ -3,10 +3,9 @@ package raven.goals;
 import raven.game.RavenBot;
 import raven.game.navigation.NavGraphEdge;
 import raven.game.navigation.PathEdge;
-import raven.math.Vector2D;
-import raven.math.graph.GraphEdge;
+import raven.script.RavenScript;
 import raven.ui.GameCanvas;
-import raven.script.*;
+
 public class Goal_TraverseEdge extends GoalComposite<RavenBot> {
 	//the edge the bot will follow
 	PathEdge  m_Edge;

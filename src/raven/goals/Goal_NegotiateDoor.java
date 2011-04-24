@@ -3,7 +3,6 @@ package raven.goals;
 import raven.game.RavenBot;
 import raven.game.navigation.PathEdge;
 import raven.math.Vector2D;
-import raven.math.graph.GraphEdge;
 
 public class Goal_NegotiateDoor extends GoalComposite<RavenBot> {
 	PathEdge mine;

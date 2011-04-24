@@ -1,6 +1,5 @@
 package raven.game.triggers;
 
-import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +8,6 @@ import raven.math.Transformations;
 import raven.math.Vector2D;
 import raven.script.RavenScript;
 import raven.ui.GameCanvas;
-import raven.utils.StreamUtils;
 
 public class TriggerWeaponGiver extends TriggerRespawning<RavenBot> {
 	private List<Vector2D> vecRLVB;
@@ -43,19 +41,19 @@ public class TriggerWeaponGiver extends TriggerRespawning<RavenBot> {
 
 	@Override
 	public void render() {
-		if (this.isActive()) {
+		if (this.isActive() && pos() != null) {
 			switch(this.entityType()) {
 			case RAIL_GUN:
 				GameCanvas.bluePen();
 				GameCanvas.blueBrush();
-				GameCanvas.circle(pos(), 3);
+				GameCanvas.filledCircle(pos(), 3);
 				GameCanvas.line(pos(), new Vector2D(pos().x, pos().y - 9));
 				break;
 			case SHOTGUN:
 				GameCanvas.blackBrush();
 				GameCanvas.brownPen();
 				final double size = 3;
-				GameCanvas.circle(pos().x - size, pos().y, size);
+				GameCanvas.filledCircle(pos().x - size, pos().y, size);
 				GameCanvas.circle(pos().x + size, pos().y, size);
 				break;
 			case ROCKET_LAUNCHER:

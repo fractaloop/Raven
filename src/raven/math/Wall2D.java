@@ -1,8 +1,6 @@
 package raven.math;
 
 import java.io.IOException;
-import java.io.Reader;
-import java.io.StreamTokenizer;
 import java.io.Writer;
 
 import raven.ui.GameCanvas;

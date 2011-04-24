@@ -1,6 +1,5 @@
 package raven.game.navigation;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import raven.game.RavenBot;

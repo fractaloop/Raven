@@ -24,7 +24,6 @@ public class GameCanvas extends Canvas {
 	}
 	
 	private Graphics2D g2d;
-	private Color drawFilled;
 	
 	private GameCanvas() {
     	// Don't redraw on requests
@@ -226,6 +225,14 @@ public class GameCanvas extends Canvas {
 	
 	public static void circle(Vector2D pos, double radius) {
 		circle(pos.x, pos.y, radius);
+	}
+	
+	public static void filledCircle(Vector2D center, double rad) {
+		getInstance().g2d.fillOval((int)(center.x-rad), (int)(center.y-rad), (int)(2*rad), (int)(2*rad));
+	}
+	
+	public static void filledCircle(double centerX, double centerY, double rad) {
+		getInstance().g2d.fillOval((int)(centerX-rad), (int)(centerY-rad), (int)(2*rad), (int)(2*rad));
 	}
 	
 	public static void circle(double x, double y, double radius) {

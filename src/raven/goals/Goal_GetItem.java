@@ -4,7 +4,6 @@ import raven.game.RavenBot;
 import raven.game.RavenObject;
 import raven.game.messaging.Telegram;
 import raven.game.triggers.Trigger;
-import raven.math.Vector2D;
 
 public class Goal_GetItem extends GoalComposite<RavenBot> {
 

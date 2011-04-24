@@ -1,9 +1,10 @@
 package raven;
 
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.MouseInfo;
 import java.awt.Point;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -20,7 +21,7 @@ import raven.math.Vector2D;
 import raven.ui.GameCanvas;
 import raven.ui.KeyState;
 
-public class Raven extends JFrame implements KeyListener, MouseListener {
+public class Raven extends JFrame implements KeyListener, MouseListener, ComponentListener {
 	/**
 	 * 
 	 */
@@ -55,6 +56,7 @@ public class Raven extends JFrame implements KeyListener, MouseListener {
     	// Setup our canvas and add it
     	GameCanvas.getInstance().addKeyListener(this);
     	GameCanvas.getInstance().addMouseListener(this);
+    	GameCanvas.getInstance().addComponentListener(this);
     	panel.add(GameCanvas.getInstance());
     	
     	this.pack();
@@ -183,4 +185,29 @@ public class Raven extends JFrame implements KeyListener, MouseListener {
     public static void main(String args[]) {
         Raven.start();
     }
+
+	@Override
+	public void componentHidden(ComponentEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void componentMoved(ComponentEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void componentResized(ComponentEvent e) {
+		WIDTH = getContentPane().getWidth();
+		HEIGHT = getContentPane().getHeight();
+		game.render();
+	}
+
+	@Override
+	public void componentShown(ComponentEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 }

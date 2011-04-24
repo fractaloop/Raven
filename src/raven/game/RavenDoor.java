@@ -1,14 +1,11 @@
 package raven.game;
 
-import java.io.Reader;
 import java.util.LinkedList;
 import java.util.List;
 
-import raven.game.messaging.Telegram;
 import raven.math.Vector2D;
 import raven.math.Wall2D;
 import raven.ui.GameCanvas;
-import raven.utils.StreamUtils;
 
 public class RavenDoor extends BaseGameEntity {
 	protected enum Status {

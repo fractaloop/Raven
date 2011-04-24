@@ -1,7 +1,6 @@
 package raven.game.triggers;
 
 import raven.game.BaseGameEntity;
-import raven.game.EntityManager;
 import raven.math.Vector2D;
 
 public abstract class TriggerRespawning<T extends BaseGameEntity> extends Trigger<T> {

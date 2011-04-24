@@ -1,11 +1,6 @@
 package raven.game.navigation;
 
-import java.util.ArrayList;
-
-import raven.game.RavenBot;
-import raven.game.RavenObject;
 import raven.math.Vector2D;
-import raven.game.RavenMap;
 
 public class PathEdge{
 
