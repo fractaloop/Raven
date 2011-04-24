@@ -322,7 +322,6 @@ public class EditorView extends JFrame implements ViewportDelegate {
 	}
 
 	public synchronized void setLevel(RavenMap level) {
-		// TODO update the viewport's level!
 		this.level = level;
 		viewport.setLevel(level);
 	}

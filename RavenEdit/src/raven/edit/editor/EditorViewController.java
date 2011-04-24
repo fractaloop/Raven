@@ -60,9 +60,13 @@ public class EditorViewController implements EditorViewDelegate {
 	public boolean doNewLevel() {	
 		if (!doSaveIfDirty())
 			return false;
+
 		RavenMap newMap = new RavenMap();
 		view = new EditorView(newMap);
 		changeLevel(newMap);
+
+		view.updateStatus("Initialized empty level.");
+		
 		return true;
 	}
 	

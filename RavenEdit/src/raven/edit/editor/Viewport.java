@@ -161,7 +161,7 @@ public class Viewport extends JPanel {
 	}
 
 	public synchronized void setLevel(RavenMap level) {
-		level = level;
+		this.level = level;
 		
 		repaint();
 	}
