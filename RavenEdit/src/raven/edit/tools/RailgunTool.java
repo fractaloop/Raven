@@ -73,7 +73,7 @@ public class RailgunTool extends EditorTool {
 			popup.add(item);
 			popup.show(e.getComponent(), e.getX(), e.getY());
 		} else if (e.getButton() == MouseEvent.BUTTON1) {
-			level.addWeaponGiver(RavenObject.RAIL_GUN, levelCursor);
+			level.addWeaponGiver(RavenObject.RAIL_GUN, levelCursor, 5);
 		}
 
 		e.consume();

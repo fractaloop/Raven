@@ -73,7 +73,8 @@ public class HealthTool extends EditorTool {
 			popup.add(item);
 			popup.show(e.getComponent(), e.getX(), e.getY());
 		} else if (e.getButton() == MouseEvent.BUTTON1) {
-			level.addHealthGiver(levelCursor);
+			level.addHealthGiver(levelCursor, 5, 10);
+			//TODO: make these configurable
 		}
 
 		e.consume();

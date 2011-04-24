@@ -13,15 +13,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
 import raven.edit.editor.ViewportDelegate;
-<<<<<<< HEAD
-import raven.game.RavenBot;
-import raven.game.RavenMap;
-import raven.game.triggers.Trigger;
-import raven.game.triggers.TriggerWeaponGiver;
-import raven.math.Vector2D;
-
-=======
 import raven.game.RavenObject;
+import raven.game.triggers.TriggerWeaponGiver;
 import raven.math.Vector2D;
 
 public class ShotgunTool extends EditorTool {
@@ -41,21 +34,21 @@ public class ShotgunTool extends EditorTool {
 	@Override
 	public void paintComponent(Graphics g) {
 		if(shotSpawnPoint != null) {
-			
+			Graphics2D g2d = (Graphics2D)g;
+
+			// Render the level cursor
+			if (levelCursor != null) {
+				Ellipse2D highlight = new Ellipse2D.Double(levelToView(levelCursor).getX() - 7, levelToView(levelCursor).getY() - 7, 14, 14);
+				g2d.setColor(Color.LIGHT_GRAY);
+				g2d.draw(highlight);
+			}
+
 		}
 	}
 	
 	public void mouseClicked( MouseEvent e) {
 		shotSpawnPoint = viewToLevel(e.getPoint());
 		delegate.addTrigger(new TriggerWeaponGiver(shotSpawnPoint, 5));
-		Graphics2D g2d = (Graphics2D)g;
-
-		// Render the level cursor
-		if (levelCursor != null) {
-			Ellipse2D highlight = new Ellipse2D.Double(levelToView(levelCursor).getX() - 7, levelToView(levelCursor).getY() - 7, 14, 14);
-			g2d.setColor(Color.LIGHT_GRAY);
-			g2d.draw(highlight);
-		}
 	}
 	
 	@Override
@@ -90,7 +83,7 @@ public class ShotgunTool extends EditorTool {
 			popup.add(item);
 			popup.show(e.getComponent(), e.getX(), e.getY());
 		} else if (e.getButton() == MouseEvent.BUTTON1) {
-			level.addWeaponGiver(RavenObject.SHOTGUN, levelCursor);
+			level.addWeaponGiver(RavenObject.SHOTGUN, levelCursor, 5);
 		}
 
 		e.consume();

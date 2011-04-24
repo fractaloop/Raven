@@ -73,7 +73,7 @@ public class RocketTool extends EditorTool {
 			popup.add(item);
 			popup.show(e.getComponent(), e.getX(), e.getY());
 		} else if (e.getButton() == MouseEvent.BUTTON1) {
-			level.addWeaponGiver(RavenObject.ROCKET_LAUNCHER, levelCursor);
+			level.addWeaponGiver(RavenObject.ROCKET_LAUNCHER, levelCursor, 5);
 		}
 
 		e.consume();

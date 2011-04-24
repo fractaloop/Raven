@@ -74,15 +74,15 @@ public class RavenMap {
 		}
 	}
 	
-	private void addSpawnPoint(Vector2D point) {
+	public void addSpawnPoint(Vector2D point) {
 		spawnPoints.add(point);
 	}
 	
-	private void addSpawnPoint(double x, double y) {
+	public void addSpawnPoint(double x, double y) {
 		spawnPoints.add(new Vector2D(x, y));
 		}
 	
-	private void addHealthGiver(Vector2D position, int radius, int healthPlus) {
+	public void addHealthGiver(Vector2D position, int radius, int healthPlus) {
 		TriggerHealthGiver healthGiver = new TriggerHealthGiver(position, radius, healthPlus);
 		
 		triggerSystem.register(healthGiver);
@@ -95,7 +95,7 @@ public class RavenMap {
 		EntityManager.registerEntity(healthGiver);
 	}
 	
-	private void addWeaponGiver(RavenObject typeOfWeapon, Vector2D position, int radius) {
+	public void addWeaponGiver(RavenObject typeOfWeapon, Vector2D position, int radius) {
 		TriggerWeaponGiver weaponGiver = new TriggerWeaponGiver(position, radius);
 		weaponGiver.setEntityType(typeOfWeapon);
 		
@@ -107,7 +107,7 @@ public class RavenMap {
 		node.setExtraInfo(weaponGiver);
 	}
 	
-	private void addDoor(int id, Vector2D pos1, Vector2D pos2, int timeout) {
+	public void addDoor(int id, Vector2D pos1, Vector2D pos2, int timeout) {
 		RavenDoor door = new RavenDoor(id, pos1, pos2, timeout);
 		
 		doors.add(door);
@@ -117,7 +117,7 @@ public class RavenMap {
 		EntityManager.registerEntity(door);
 	}
 	
-	private Trigger<RavenBot> addDoorTrigger(Vector2D topLeft, Vector2D bottomRight, RavenMessage msg, int receiver) {
+	public Trigger<RavenBot> addDoorTrigger(Vector2D topLeft, Vector2D bottomRight, RavenMessage msg, int receiver) {
 		TriggerOnButtonSendMsg<RavenBot> trigger = new TriggerOnButtonSendMsg<RavenBot>(topLeft, bottomRight, msg, receiver);
 		triggerSystem.register(trigger);
 		// register the entity
