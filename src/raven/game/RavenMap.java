@@ -80,7 +80,7 @@ public class RavenMap {
 	
 	public void addSpawnPoint(double x, double y) {
 		spawnPoints.add(new Vector2D(x, y));
-		}
+	}
 	
 	public void addHealthGiver(Vector2D position, int radius, int healthPlus) {
 		TriggerHealthGiver healthGiver = new TriggerHealthGiver(position, radius, healthPlus);
