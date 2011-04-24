@@ -63,10 +63,10 @@ public class WallTool extends EditorTool {
 			g2d.draw(line);
 		}
 		
-		// Render the "snapped" highlight
-		if (isSnapped) {
-			Ellipse2D highlight = new Ellipse2D.Double(levelToView(levelCursor).getX() - snapDistance / 2, levelToView(levelCursor).getY() - snapDistance / 2, snapDistance, snapDistance);
-			g2d.setColor(Color.YELLOW);
+		// Render the level cursor
+		if (levelCursor != null) {
+			Ellipse2D highlight = new Ellipse2D.Double(levelToView(levelCursor).getX() - snapDistance, levelToView(levelCursor).getY() - snapDistance, 2 * snapDistance, 2 * snapDistance);
+			g2d.setColor(Color.ORANGE);
 			g2d.draw(highlight);
 		}
 		
@@ -91,14 +91,14 @@ public class WallTool extends EditorTool {
 		drawingPoints.add(point);
 		delegate.updateStatus("Added point at (" + point.x + ", " + point.y + ")");
 		
-		// If this point was snapped to something, commit the drawing. The
-		// user can always begin drawing again snapping to the same point.
-		if (isSnapped)
+		// Always end drawing if you are snapping and endpoint 
+		if (isSnapped && drawingPoints.size() > 1)
 			commitDrawing();
 	}
 	
 	protected void commitDrawing() {
 		isDrawing = false;
+		isSnapped = false;
 		
 		if (drawingPoints == null)
 			return;
@@ -109,6 +109,8 @@ public class WallTool extends EditorTool {
 		drawingPoints = null;
 		
 		updateCursorSnap();
+		
+		viewport.repaint();
 	}
 	
 	private void cancelDrawing() {
@@ -131,12 +133,12 @@ public class WallTool extends EditorTool {
 		double closestSq = Double.MAX_VALUE; 
 		for (Wall2D wall : level.getWalls()) {
 			double dist = wall.from().distanceSq(levelCursor);
-			if (dist < closestSq && dist < snapDistance) {
+			if (dist < closestSq && dist < snapDistance*snapDistance) {
 				nearestPoint = wall.from();
 				closestSq = dist;
 			}
 			dist = wall.to().distanceSq(levelCursor);
-			if (dist < closestSq && dist < snapDistance) {
+			if (dist < closestSq && dist < snapDistance*snapDistance) {
 				nearestPoint = wall.to();
 				closestSq = dist;
 			}
@@ -219,11 +221,9 @@ public class WallTool extends EditorTool {
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		if (isDrawing) {
- 			// Check if we're selecting a nearby point
-			mouseLocation = e.getPoint();
-			levelCursor = viewToLevel(mouseLocation);			
-		}
+		// Check if we're selecting a nearby point
+		mouseLocation = e.getPoint();
+		levelCursor = viewToLevel(mouseLocation);			
 
 		updateCursorSnap();
 		
