@@ -341,4 +341,14 @@ public class EditorView extends JFrame implements ViewportDelegate {
 		viewport.setTool(newTool);
 	}
 
+	@Override
+	public Viewport getViewport() {
+		return viewport;
+	}
+
+	@Override
+	public void setViewport(Viewport viewport) {
+		this.viewport = viewport;
+	}
+
 }

@@ -26,8 +26,14 @@ public abstract class EditorTool implements MouseInputListener, MouseWheelListen
 	
 	public EditorTool(ViewportDelegate delegate) {
 		// TODO Fix me
-//		this.level = delegate.getLevel();
+		this.level = delegate.getLevel();
 		this.delegate = delegate;
+		
+		this.viewport = delegate.getViewport();
+		
+		viewport.addKeyListener(this);
+		viewport.addMouseListener(this);
+		viewport.addMouseWheelListener(this);
 	}	
 	
 	public abstract void paintComponent(Graphics g);
