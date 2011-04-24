@@ -8,6 +8,10 @@ public class EntityManager {
 		public static final EntityManager INSTANCE = new EntityManager();
 	}
 
+	public static int getAvailableID() {
+		return 0;
+		//TODO add id functionality
+	}
 	public static EntityManager getInstance() {
 		return EntityManagerHolder.INSTANCE;
 	}

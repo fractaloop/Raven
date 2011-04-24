@@ -32,10 +32,6 @@ public class Wall2D {
 		vN = n;
 	}
 	
-	public Wall2D(Reader reader) throws IOException {
-		read(reader);
-	}
-	
 	public void render() {
 		render(false);
 	}
@@ -68,29 +64,5 @@ public class Wall2D {
 		writer.write("\n" + from() + "," + to() + "," + normal());
 		
 		return writer;
-	}
-	
-	public void read(Reader reader) throws IOException {
-		double x, y;
-		
-		StreamTokenizer tokenizer = new StreamTokenizer(reader);
-		tokenizer.parseNumbers();
-		
-		x = tokenizer.nval;
-		tokenizer.nextToken();
-		y = tokenizer.nval;
-		tokenizer.nextToken();
-		setFrom(new Vector2D(x, y));
-
-		x = tokenizer.nval;
-		tokenizer.nextToken();
-		y = tokenizer.nval;
-		tokenizer.nextToken();
-		setTo(new Vector2D(x, y));
-
-		x = tokenizer.nval;
-		tokenizer.nextToken();
-		y = tokenizer.nval;
-		setNormal(new Vector2D(x, y));
 	}
 }

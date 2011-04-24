@@ -78,21 +78,19 @@ public class RavenDoor extends BaseGameEntity {
 		// TODO
 	}
 	
-	public RavenDoor(RavenMap map, Reader reader) {
-		super((Integer)StreamUtils.getValueFromStream(reader));
+	public RavenDoor(int id, Vector2D pos1, Vector2D pos2, int timeout) {
+		super(id);
 
 		status = Status.CLOSED;
-		numSecondsStayOpen = 1;
+		numSecondsStayOpen = timeout;
 		
-		read(reader);
-		
-		vectorToP2Norm = p2.sub(p1);
+		vectorToP2Norm = pos2.sub(pos1);
 		vectorToP2Norm.normalize();
-		currentSize = size = p2.distance(p1);
+		currentSize = size = pos2.distance(pos1);
 	}
 	
 	public void addSwitch(int ID) {
-		
+		switches.add(ID);
 	}
 	
 	List<Integer> getSwitchIDs() {
@@ -106,20 +104,5 @@ public class RavenDoor extends BaseGameEntity {
 		GameCanvas.brownPen();
 		//TODO: change length of drawn line pased on state(closing/opening/open/closed
 		if(status == Status.CLOSED) GameCanvas.line(p1, p2);
-	}
-	
-	@Override
-	public void update(double delta) {
-		// TODO
-	}
-	
-	@Override
-	public boolean handleMessage(Telegram msg) {
-		// TODO
-		return false;
-	}
-	
-	public void read(Reader readaer) {
-		// TODO
 	}
 }

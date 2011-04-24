@@ -1,18 +1,15 @@
 package raven.game.triggers;
 
-import java.io.Reader;
-
 import raven.game.RavenBot;
+import raven.math.Vector2D;
 import raven.ui.GameCanvas;
-import raven.utils.StreamUtils;
 
 public class TriggerHealthGiver extends TriggerRespawning<RavenBot> {
 	private int healthGiven;
 	
-	public TriggerHealthGiver(Reader datafile) {
-		super((Integer)StreamUtils.getValueFromStream(datafile));
-		
-		read(datafile);
+	public TriggerHealthGiver( Vector2D position, int radius, int healthGiven) {
+		super(position, radius);
+		this.healthGiven = healthGiven;
 	}
 
 	@Override
@@ -35,10 +32,5 @@ public class TriggerHealthGiver extends TriggerRespawning<RavenBot> {
 			GameCanvas.line(pos().x, pos().y - size, pos().x, pos().y + size + 1);
 			GameCanvas.line(pos().x - size, pos().y, pos().x+size + 1, pos().y);
 		}
-	}
-	
-	@Override
-	public void read(Reader reader) {
-		// TODO
 	}
 }

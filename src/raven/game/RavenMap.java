@@ -6,9 +6,11 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.management.RuntimeErrorException;
 
+import raven.game.messaging.RavenMessage;
 import raven.game.navigation.NavGraphEdge;
 import raven.game.navigation.NavGraphNode;
 import raven.game.triggers.Trigger;
@@ -79,25 +81,16 @@ public class RavenMap {
 		}
 	}
 	
-	// stream constructors for loading from a file
-	private void addWall(Reader in) throws IOException {
-		walls.add(new Wall2D(in));
+	private void addSpawnPoint(Vector2D point) {
+		spawnPoints.add(point);
 	}
 	
-	private void addSpawnPoint(Reader reader) {
-		double x, y;
-		
-		StreamUtils.getValueFromStream(reader);
-		x = (Double)StreamUtils.getValueFromStream(reader);
-		y = (Double)StreamUtils.getValueFromStream(reader);
-		StreamUtils.getValueFromStream(reader);
-		StreamUtils.getValueFromStream(reader);
-		
+	private void addSpawnPoint(double x, double y) {
 		spawnPoints.add(new Vector2D(x, y));
 	}
 	
-	private void addHealthGiver(Reader reader) {
-		TriggerHealthGiver healthGiver = new TriggerHealthGiver(reader);
+	private void addHealthGiver(Vector2D position, int radius, int healthPlus) {
+		TriggerHealthGiver healthGiver = new TriggerHealthGiver(position, radius, healthPlus);
 		
 		triggerSystem.register(healthGiver);
 		
@@ -109,9 +102,8 @@ public class RavenMap {
 		EntityManager.registerEntity(healthGiver);
 	}
 	
-	private void addWeaponGiver(RavenObject typeOfWeapon, Reader reader) {
-		TriggerWeaponGiver weaponGiver = new TriggerWeaponGiver(reader);
-		
+	private void addWeaponGiver(RavenObject typeOfWeapon, Vector2D position, int radius) {
+		TriggerWeaponGiver weaponGiver = new TriggerWeaponGiver(position, radius);
 		weaponGiver.setEntityType(typeOfWeapon);
 		
 		// add it to the appropriate vectors
@@ -119,26 +111,25 @@ public class RavenMap {
 		
 		// let the corresponding navgraph node point to this object
 		NavGraphNode<Trigger<RavenBot>> node = navGraph.getNode(weaponGiver.graphNodeIndex());
-		
 		node.setExtraInfo(weaponGiver);
 	}
 	
-	private void addDoor(Reader reader) {
-		RavenDoor door = new RavenDoor(this, reader);
+	private void addDoor(int id, Vector2D pos1, Vector2D pos2, int timeout) {
+		RavenDoor door = new RavenDoor(id, pos1, pos2, timeout);
 		
 		doors.add(door);
-		
+		Trigger t = addDoorTrigger(pos1, pos2, RavenMessage.MSG_OPEN_SESAME, id);
+		door.addSwitch(t.ID());
 		// register the entity
 		EntityManager.registerEntity(door);
 	}
 	
-	private void addDoorTrigger(Reader reader) {
-		TriggerOnButtonSendMsg<RavenBot> trigger = new TriggerOnButtonSendMsg<RavenBot>(reader);
-		
+	private Trigger<RavenBot> addDoorTrigger(Vector2D topLeft, Vector2D bottomRight, RavenMessage msg, int receiver) {
+		TriggerOnButtonSendMsg<RavenBot> trigger = new TriggerOnButtonSendMsg<RavenBot>(topLeft, bottomRight, msg, receiver);
 		triggerSystem.register(trigger);
-		
 		// register the entity
 		EntityManager.registerEntity(trigger);
+		return trigger;
 	}
 	
 	public void clear() {
@@ -200,43 +191,6 @@ public class RavenMap {
 		
 		// partition the graph nodes
 		partitionNavGraph();
-		
-		// now create the environment entities
-		while (reader.ready()) {
-			// get the type of next map object
-			int entityType = (Integer)StreamUtils.getValueFromStream(reader);
-			
-			// create the object
-			
-			switch (RavenObject.resolveType(entityType)) {
-			case WALL:
-				addWall(reader);
-				break;
-			case SLIDING_DOOR:
-				addDoor(reader);
-				break;
-			case DOOR_TRIGGER:
-				addDoorTrigger(reader);
-				break;
-			case SPAWN_POINT:
-				addSpawnPoint(reader);
-				break;
-			case HEALTH:
-				addHealthGiver(reader);
-				break;
-			case SHOTGUN:
-				addWeaponGiver(RavenObject.SHOTGUN, reader);
-				break;
-			case RAIL_GUN:
-				addWeaponGiver(RavenObject.RAIL_GUN, reader);
-				break;
-			case ROCKET_LAUNCHER:
-				addWeaponGiver(RavenObject.ROCKET_LAUNCHER, reader);
-				break;
-			default:
-				throw new RuntimeErrorException(new Error("Map error: Attempted to load an undefined object"));
-			}
-		}
 		
 		pathCosts = navGraph.createAllPairsCostsTable();
 		

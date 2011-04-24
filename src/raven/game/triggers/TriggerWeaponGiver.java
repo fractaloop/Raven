@@ -15,10 +15,10 @@ public class TriggerWeaponGiver extends TriggerRespawning<RavenBot> {
 	private List<Vector2D> vecRLVB;
 	private List<Vector2D> vecRLVBTrans;
 	
-	public TriggerWeaponGiver(Reader reader) {
-		super((Integer)StreamUtils.getValueFromStream(reader));
+	public TriggerWeaponGiver(Vector2D position, int radius) {
+		super(position, radius);
 		
-		read(reader);
+		setRespawnDelay(RavenScript.getDouble("Weapon_RespawnDelay"));
 
 		// create the vertex buffer for the rocket shape
 		vecRLVB = new ArrayList<Vector2D>(8);
@@ -37,7 +37,6 @@ public class TriggerWeaponGiver extends TriggerRespawning<RavenBot> {
 		if (this.isActive() && this.isTouchingTrigger(entity.pos(), entity.getBRadius())
 				&& entity.isReadyForTriggerUpdate() && entity.isAlive()) {
 			entity.getWeaponSys().addWeapon(this.entityType());
-			
 			this.deactivate();
 		}
 	}
@@ -67,27 +66,6 @@ public class TriggerWeaponGiver extends TriggerRespawning<RavenBot> {
 				break;
 			}
 		}
-		
-	}
-	
-	@Override
-	public void read(Reader reader) {
-		double x, y, r;
-		int graphNodeIndex;
-		
-		x = (Double)StreamUtils.getValueFromStream(reader);
-		y = (Double)StreamUtils.getValueFromStream(reader);
-		r = (Double)StreamUtils.getValueFromStream(reader);
-		graphNodeIndex = (Integer)StreamUtils.getValueFromStream(reader);
-		
-		setPos(new Vector2D(x, y));
-		setBRadius(r);
-		setGraphNodeIndex(graphNodeIndex);
-		
-		// create this trigger's region of fluence
-		addCircularTriggerRegion(pos(), RavenScript.getDouble("DefaultGiverTriggerRange"));
-		
-		setRespawnDelay(RavenScript.getDouble("Weapon_RespawnDelay"));
 		
 	}
 }

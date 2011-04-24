@@ -1,12 +1,19 @@
 package raven.game.triggers;
 
+import java.awt.Image;
+
+import com.sun.xml.internal.stream.Entity;
+
 import raven.game.BaseGameEntity;
+import raven.game.EntityManager;
 import raven.math.Vector2D;
 	
 public abstract class Trigger<T extends BaseGameEntity> extends BaseGameEntity {
 	private TriggerRegion regionOfInfluence;
 	
 	private boolean removeFromGame;
+	
+	private Image triggerImage;
 	
 	private boolean active;
 	
@@ -35,14 +42,24 @@ public abstract class Trigger<T extends BaseGameEntity> extends BaseGameEntity {
 		regionOfInfluence = new TriggerRegionRectangle(topLeft, bottomRight);
 	}
 	
-	public Trigger(int id) {
-		super(id);
-		
+	
+	/**
+	 * Create a new trigger.  These are weapon spawns, health spawns, etc, but NOT Spawn Points!
+	 * @param id Pass in a unique id.
+	 * @param img The image to be drawn.
+	 * @param centerPoint Center point of the trigger.
+	 * @param radius The radius of the trigger circle.
+	 */
+	public Trigger(Image img, Vector2D centerPoint, int radius) {
+		super(EntityManager.getAvailableID());
+		triggerImage = img;
+		if(centerPoint != null) {
+			regionOfInfluence = new TriggerRegionCircle(centerPoint, radius);
+		}
 		removeFromGame = false;
 		active = true;
-		graphNodeIndex = -1;
-		regionOfInfluence = null;
 	}
+	
 	
 	public abstract void tryTrigger(T entity);
 	

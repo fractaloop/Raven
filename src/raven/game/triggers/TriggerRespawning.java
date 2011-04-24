@@ -1,6 +1,8 @@
 package raven.game.triggers;
 
 import raven.game.BaseGameEntity;
+import raven.game.EntityManager;
+import raven.math.Vector2D;
 
 public abstract class TriggerRespawning<T extends BaseGameEntity> extends Trigger<T> {
 	protected double numSecondsBetweenRespawns;
@@ -12,8 +14,8 @@ public abstract class TriggerRespawning<T extends BaseGameEntity> extends Trigge
 		numSecondsRemainingUntilRespawn = numSecondsBetweenRespawns;
 	}
 	
-	public TriggerRespawning(int id) {
-		super(id);
+	public TriggerRespawning(Vector2D position, int radius) {
+		super(null, position, radius);
 		
 		numSecondsBetweenRespawns = 0;
 		numSecondsRemainingUntilRespawn = 0;

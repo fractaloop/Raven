@@ -1,13 +1,15 @@
 package raven.game.triggers;
 
+import java.awt.Image;
+
 import raven.game.BaseGameEntity;
+import raven.math.Vector2D;
 
 public abstract class TriggerLimitedLifetime<T extends BaseGameEntity> extends Trigger<T>{
 	protected double lifetime;
 	
-	public TriggerLimitedLifetime(double lifetime) {
-		super(getNextValidID());
-		
+	public TriggerLimitedLifetime(Vector2D position, int radius, double lifetime, Image img) {
+		super(null, position, radius);
 		this.lifetime = lifetime;
 	}
 	

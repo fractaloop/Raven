@@ -27,11 +27,11 @@ import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 import javax.tools.Tool;
-import javax.vecmath.Vector2f;
-
 import raven.edit.editor.actions.*;
 import raven.edit.tools.EditorTool;
+import raven.game.RavenBot;
 import raven.game.RavenMap;
+import raven.game.triggers.Trigger;
 import raven.math.Vector2D;
 import raven.math.Wall2D;
 
@@ -82,6 +82,7 @@ public class EditorView extends JFrame implements ViewportDelegate {
 		viewport = new Viewport(level);
 		viewport.setDelegate(this);
 		this.add(viewport);
+	
 		
 		this.pack();
         this.setTitle("Editing"); // TODO add names to maps!
@@ -349,6 +350,12 @@ public class EditorView extends JFrame implements ViewportDelegate {
 	@Override
 	public void setViewport(Viewport viewport) {
 		this.viewport = viewport;
+	}
+
+	@Override
+	public void addTrigger(Trigger<RavenBot> trigger) {
+		level.getTriggers().add(trigger);
+		
 	}
 
 }

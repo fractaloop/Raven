@@ -10,7 +10,7 @@ public class TriggerSoundNotify extends TriggerLimitedLifetime<RavenBot> {
 	private RavenBot soundSource;
 	
 	public TriggerSoundNotify(RavenBot source, double range) {
-		super(RavenScript.getDouble("Bot_TriggerUpdateFreq"));
+		super(source.pos(), (int)range, RavenScript.getDouble("Bot_TriggerUpdateFreq"), null);
 		
 		soundSource = source;
 		
