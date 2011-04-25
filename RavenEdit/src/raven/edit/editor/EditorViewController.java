@@ -180,4 +180,16 @@ public class EditorViewController implements EditorViewDelegate {
 		return level;
 	}
 
+	@Override
+	public void toggleGrid() {
+		view.toggleGrid();
+		
+	}
+
+	@Override
+	public void toggleGridSnap() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

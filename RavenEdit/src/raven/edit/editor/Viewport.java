@@ -34,6 +34,7 @@ public class Viewport extends JPanel {
 	private EditorTool tool;
 
 	private boolean drawGrid = true;
+	private boolean gridSnap = true;
 	
 	public Viewport(RavenMap level) {
 		this.level = level;
@@ -172,5 +173,16 @@ public class Viewport extends JPanel {
 
 	public void setTool(EditorTool tool) {
 		this.tool = tool;
+	}
+
+	/**
+	 * Turn the grid off and on
+	 * @return The new state of the grid.
+	 */
+	public boolean toggleGrid() {
+		drawGrid = !drawGrid;
+		repaint();
+		
+		return drawGrid;
 	}
 }

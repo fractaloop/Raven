@@ -1,18 +1,13 @@
 package raven.edit.editor;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import javax.swing.AbstractButton;
-import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
@@ -21,19 +16,17 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
-import javax.tools.Tool;
+
 import raven.edit.editor.actions.*;
+import raven.edit.editor.actions.menu.*;
 import raven.edit.tools.EditorTool;
 import raven.game.RavenBot;
 import raven.game.RavenMap;
 import raven.game.triggers.Trigger;
 import raven.math.Vector2D;
-import raven.math.Wall2D;
 
 public class EditorView extends JFrame implements ViewportDelegate {
 	private RavenMap level;
@@ -54,6 +47,9 @@ public class EditorView extends JFrame implements ViewportDelegate {
 	private RocketToolAction rocketToolAction;
 	private ShotgunToolAction shotgunToolAction;
 	private RailgunToolAction railgunToolAction;
+	private ToggleGridAction toggleGridAction;
+	private ToggleGridSnapAction toggleGridSnapAction;
+	
 	
 	public EditorView(RavenMap theLevel) {
 		level = theLevel;
@@ -153,6 +149,17 @@ public class EditorView extends JFrame implements ViewportDelegate {
 											"Add locations where railguns will respawn.",
 											new Integer(KeyEvent.VK_9),
 											delegate);
+		
+		toggleGridAction = new ToggleGridAction("Grid on",
+											null,
+											"Enables and disables a grid that can be used for drawing.",
+											null,
+											delegate);
+		toggleGridSnapAction = new ToggleGridSnapAction("Snap to grid",
+											null,
+											"Enable and disable snapping to the grid for drawing objects.",
+											null,
+											delegate);
 	}
 	
 	private void createMenu() {
@@ -205,16 +212,20 @@ public class EditorView extends JFrame implements ViewportDelegate {
 		menuItem = new JMenuItem("Delete selected", KeyEvent.VK_DELETE);
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0));
 		menu.add(menuItem);
+
 		// Tools
 		menu = new JMenu("Tools");
 		menu.setMnemonic(KeyEvent.VK_T);
 		menuBar.add(menu);
 		// Tools->Grid On
-		checkedMenuItem = new JCheckBoxMenuItem("Grid on");
+		checkedMenuItem = new JCheckBoxMenuItem(toggleGridAction);
+		checkedMenuItem.setState(true);
 		menu.add(checkedMenuItem);
 		// Tools->Snap to Grid
-		checkedMenuItem = new JCheckBoxMenuItem("Snap to grid");
+		checkedMenuItem = new JCheckBoxMenuItem(toggleGridSnapAction);
+		checkedMenuItem.setState(true);
 		menu.add(checkedMenuItem);
+
 		// Graph
 		menu = new JMenu("Graph");
 		menu.setMnemonic(KeyEvent.VK_G);
@@ -364,6 +375,10 @@ public class EditorView extends JFrame implements ViewportDelegate {
 	public void addTrigger(Trigger<RavenBot> trigger) {
 		level.getTriggers().add(trigger);
 		
+	}
+
+	public void toggleGrid() {
+		toggleGridSnapAction.setEnabled(viewport.toggleGrid());
 	}
 
 }

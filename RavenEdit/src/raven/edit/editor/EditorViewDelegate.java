@@ -15,4 +15,8 @@ public interface EditorViewDelegate {
 	
 	public void makeDirty();
 	public void changeTool(EditorTool selectTool);
+	
+	// Menu item stuff
+	public void toggleGrid();
+	public void toggleGridSnap();
 }
