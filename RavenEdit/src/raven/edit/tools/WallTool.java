@@ -94,6 +94,7 @@ public class WallTool extends EditorTool {
 		// Always end drawing if you are snapping and endpoint 
 		if (isSnapped && drawingPoints.size() > 1)
 			commitDrawing();
+		else if (drawingPoints.size() > 1) commitDrawing();
 	}
 	
 	protected void commitDrawing() {
