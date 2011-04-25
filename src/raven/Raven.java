@@ -35,8 +35,8 @@ public class Raven extends JFrame implements KeyListener, MouseListener, Compone
 		return RavenHolder.INSTANCE;
 	}
 	
-	private static int WIDTH = 500;
-	private static int HEIGHT = 500;
+	private static int WIDTH = 700;
+	private static int HEIGHT = 700;
 	private static int FRAMERATE = 60;
 	
 	private static RavenGame game;

@@ -79,6 +79,7 @@ public class HealthTool extends EditorTool {
 
 		e.consume();
 	}
+	
 
 	@Override
 	public void mouseMoved(MouseEvent e) {

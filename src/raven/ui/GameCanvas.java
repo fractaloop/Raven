@@ -8,6 +8,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 import raven.math.Vector2D;
@@ -112,6 +113,7 @@ public class GameCanvas extends Canvas {
 	public static void thickRedPen() { lineColor(Color.RED); lineWidth(2); }
 	public static void thickGreenPen() { lineColor(Color.GREEN); lineWidth(2); }
 	public static void thickBluePen() { lineColor(Color.BLUE); lineWidth(2); }
+	public static void thickGreyPen() { lineColor(Color.LIGHT_GRAY); lineWidth(2); }
 	
 	public static void blackBrush() { fillWith(Color.BLACK); }
 	public static void whiteBrush() { fillWith(Color.WHITE); }
@@ -175,7 +177,7 @@ public class GameCanvas extends Canvas {
 		if (points.size() < 2)
 			return;
 		
-		for (int i = 0; i < points.size(); i++) {
+		for (int i = 0; i+1 < points.size(); i++) {
 			line(points.get(i), points.get(i+1));
 		}
 	}
@@ -213,8 +215,8 @@ public class GameCanvas extends Canvas {
 		getInstance().g2d.drawRect(left, top, right - left, bottom - top);
 	}
 	
-	public static void closedShape(final List<Vector2D> points) {
-		List<Vector2D> shape = new ArrayList<Vector2D>(points);
+	public static void closedShape(List<Vector2D> points) {
+		List<Vector2D> shape = new LinkedList<Vector2D>(points);
 		shape.add(shape.get(0));
 		polyLine(shape);
 	}

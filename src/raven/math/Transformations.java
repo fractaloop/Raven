@@ -14,8 +14,7 @@ public class Transformations {
 	
 	public static List<Vector2D> WorldTransform(List<Vector2D> vecBotVB,
 			Vector2D pos, Vector2D facing, Vector2D perp, Vector2D scale) {
-		// TODO Auto-generated method stub
-		return null;
+		return vecBotVB;
 	}
 
 	public static Vector2D pointToLocalSpace(Vector2D pos, Vector2D agentHeading, Vector2D agentSide, Vector2D agentPosition) {

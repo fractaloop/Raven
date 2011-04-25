@@ -46,7 +46,7 @@ public class GraphTool extends EditorTool {
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_ENTER:
 			if (levelCursor != null)
-			level.addSpawnPoint(levelCursor);
+				System.out.println("Graph stuff not implemented.");
 		}
 }
 

@@ -47,7 +47,7 @@ public class ShotgunTool extends EditorTool {
 	
 	public void mouseClicked( MouseEvent e) {
 		shotSpawnPoint = viewToLevel(e.getPoint());
-		delegate.addTrigger(new TriggerWeaponGiver(shotSpawnPoint, 5));
+		level.addWeaponGiver(RavenObject.SHOTGUN, shotSpawnPoint, 5);
 	}
 	
 	@Override

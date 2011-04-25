@@ -56,6 +56,7 @@ public abstract class Trigger<T extends BaseGameEntity> extends BaseGameEntity {
 		if(centerPoint != null) {
 			regionOfInfluence = new TriggerRegionCircle(centerPoint, radius);
 		}
+		position = centerPoint;
 		removeFromGame = false;
 		active = true;
 	}

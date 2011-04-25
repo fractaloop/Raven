@@ -270,7 +270,7 @@ public class RavenMap {
 		
 		// render all walls
 		for (Wall2D wall : walls) {
-			GameCanvas.thickBlackPen();
+			GameCanvas.thickGreyPen();
 			wall.render();
 		}
 		
@@ -278,7 +278,7 @@ public class RavenMap {
 		for (Vector2D point : spawnPoints) {
 			GameCanvas.greyBrush();
 			GameCanvas.greyPen();
-			GameCanvas.circle(point, 7);
+			GameCanvas.filledCircle(point, 7);
 		}
 		
 	}

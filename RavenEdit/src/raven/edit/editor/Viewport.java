@@ -117,10 +117,13 @@ public class Viewport extends JPanel {
 		
 		// Render the guns
 		for(Trigger t : level.getTriggers()) {
+			if( t == null || t.pos() == null) continue;
+			
 			if( t instanceof TriggerHealthGiver) {
 				g2d.setPaint(Color.RED);
-			} else if ( t instanceof TriggerWeaponGiver ) {
-				
+			} 
+			else if ( t instanceof TriggerWeaponGiver ) {
+				if(t.entityType() == null) break;
 				switch(t.entityType()) {
 					case RAIL_GUN :
 						g2d.setPaint(Color.CYAN);
@@ -130,12 +133,12 @@ public class Viewport extends JPanel {
 						break;
 					case ROCKET_LAUNCHER :
 						g2d.setPaint(Color.BLUE);
-						break;
-					}
-				g2d.fill(new Ellipse2D.Double(t.pos().x - 7, t.pos().y - 7, 14, 14));	
+						break;	
+				}
+				
 			}
+			g2d.fill(new Ellipse2D.Double(t.pos().x - 7, t.pos().y - 7, 14, 14));	
 		}
-		
 		tool.paintComponent(g);
 	}
 

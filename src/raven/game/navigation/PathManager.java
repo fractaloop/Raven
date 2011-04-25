@@ -1,5 +1,6 @@
 package raven.game.navigation;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import raven.game.messaging.Dispatcher;
@@ -13,6 +14,7 @@ public class PathManager {
 	
 	public PathManager(int numCyclesPerUpdate) {
 		this.numSearchCyclesPerUpdate = numCyclesPerUpdate;
+		searchRequests = new LinkedList<RavenPathPlanner<?>>();
 	}
 
 	public void Register(RavenPathPlanner<?> pathPlanner){
