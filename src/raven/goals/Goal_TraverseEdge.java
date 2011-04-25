@@ -85,18 +85,18 @@ public class Goal_TraverseEdge extends GoalComposite<RavenBot> {
 
 
 		//set the steering target
-		getM_pOwner().getSteering().setTarget(m_Edge.Destination());
+		getM_pOwner().getSteering().SetTarget(m_Edge.Destination());
 
 		//Set the appropriate steering behavior. If this is the last edge in the path
 		//the bot should arrive at the position it points to, else it should seek
 		if (m_bLastEdgeInPath)
 		{
-			getM_pOwner().getSteering().arriveOn();
+			getM_pOwner().getSteering().ArriveOn();
 		}
 
 		else
 		{
-			getM_pOwner().getSteering().seekOn();
+			getM_pOwner().getSteering().SeekOn();
 		}
 
 	}
@@ -126,8 +126,8 @@ public class Goal_TraverseEdge extends GoalComposite<RavenBot> {
 
 	public void terminate(){
 		//turn off steering behaviors.
-		getM_pOwner().getSteering().seekOff();
-		getM_pOwner().getSteering().arriveOff();
+		getM_pOwner().getSteering().SeekOff();
+		getM_pOwner().getSteering().ArriveOff();
 
 		//return max speed back to normal
 		getM_pOwner().setMaxSpeed(RavenScript.getDouble("Bot_MaxSpeed"));
