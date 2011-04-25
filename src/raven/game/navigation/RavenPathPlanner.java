@@ -32,34 +32,34 @@ import raven.script.RavenScript;
 import raven.ui.GameCanvas;
 import raven.utils.Regulator;
 
-public class RavenPathPlanner<NodeType extends NavGraphNode<T>,EdgeType extends NavGraphEdge, T> {
+public class RavenPathPlanner<T> {
 
 	  //indexed into my node. Contains the accumulative cost to that node
 	  
 	private Vector<Double> costToThisNode; 
 
-	private  Vector<EdgeType>  shortestPathTree;
-	 private Vector<EdgeType>  searchFrontier;
+	private  Vector<NavGraphEdge>  shortestPathTree;
+	 private Vector<NavGraphEdge>  searchFrontier;
 
 	 private int source;
 	 private int target;
 	
 	public List<PathEdge> path;
 	private RavenBot ravenBot;
-	private GraphSearchTimeSliced<NodeType,EdgeType,T> currentSearch;
-	private SparseGraph<NodeType, EdgeType> graph=new SparseGraph<NodeType, EdgeType>();
+	private GraphSearchDijkstra currentSearch;
+	private SparseGraph<NavGraphNode<T>, NavGraphEdge> graph= new SparseGraph <NavGraphNode<T>, NavGraphEdge>();
 	//this is the position the bot wishes to plan a path to reach
 	private  Vector2D destinationPos=new Vector2D();
 
 	public RavenPathPlanner(RavenBot ravenBot) {
-		// TODO Auto-generated constructor stub
+		this.ravenBot = ravenBot;
 	}
 	public void GetReadyForNewSearch()
 	{
 		  //unregister any existing search with the path manager
 		  ((RavenGame) ravenBot.getWorld()).getPathManager().UnRegister(this);
 		  //clean up memory used by any existing search
-		  currentSearch=null;
+		  currentSearch = null;
 		}
 	public double getCostToNode(int nodeIdx)
 {
@@ -92,7 +92,7 @@ public class RavenPathPlanner<NodeType extends NavGraphNode<T>,EdgeType extends 
 	  //node found. This will occur if the navgraph is badly designed or if the bot
 	  //has managed to get itself *inside* the geometry (surrounded by walls),
 	  //or an obstacle
-	  if (ClosestNodeToBot == no_closest_node_found)
+	  if (ClosestNodeToBot == 0)
 	  { 	    return false; 
 	  }
 
@@ -100,7 +100,7 @@ public class RavenPathPlanner<NodeType extends NavGraphNode<T>,EdgeType extends 
 	  TriggerSystem<Trigger<RavenBot> > t_con; 
 	  GraphSearchDijkstra DijSearch;
 	  
-	  currentSearch = new DijSearch(m_NavGraph,
+	  currentSearch = new GraphSearchDijkstra(graph,
 	                                   ClosestNodeToBot,
 	                                   ItemType);  
 
@@ -128,7 +128,7 @@ public class RavenPathPlanner<NodeType extends NavGraphNode<T>,EdgeType extends 
 		  
 		  //if the bot requested a path to a location then an edge leading to the
 		  //destination must be added
-		  if (currentSearch.GetType()== GraphSearchTimeSliced<EdgeType> AStar)
+		  if (currentSearch instanceof GraphSearchDijkstra)
 		  {   
 		    path.add(new PathEdge(path.get(path.size()).Destination(), destinationPos,0,0 ));
 		  }
@@ -236,7 +236,7 @@ public class RavenPathPlanner<NodeType extends NavGraphNode<T>,EdgeType extends 
 	  int nd = getClosestNodeToPosition(ravenBot.pos());
 
 	  //if no closest node found return failure
-	  if (nd == invalid_node_index) return -1;
+	  if (nd == -1) return -1.0;
 
 	  double ClosestSoFar = Double.MAX_VALUE;
 
@@ -299,7 +299,7 @@ public class RavenPathPlanner<NodeType extends NavGraphNode<T>,EdgeType extends 
 		  //node found. This will occur if the navgraph is badly designed or if the bot
 		  //has managed to get itself *inside* the geometry (surrounded by walls),
 		  //or an obstacle.
-		  if (ClosestNodeToBot == no_closest_node_found)
+		  if (ClosestNodeToBot == 0)
 		  { 
 		    return false; 
 		  }
@@ -311,14 +311,14 @@ public class RavenPathPlanner<NodeType extends NavGraphNode<T>,EdgeType extends 
 		  //This sort of thing occurs much more frequently than the above. For
 		  //example, if the user clicks inside an area bounded by walls or inside an
 		  //object.
-		  if (ClosestNodeToTarget == no_closest_node_found)
+		  if (ClosestNodeToTarget == 0)
 		  { 
 		    return false; 
 		  }		  //create an instance of a the distributed A* search class
 		  GraphSearchDijkstra di = new GraphSearchDijkstra(graph, ClosestNodeToBot, ClosestNodeToTarget);
 		  
 		 //TODO 		   
-		  currentSearch = new AStar(m_NavGraph,
+		  currentSearch = new GraphSearchDijkstra(graph,
 		                               ClosestNodeToBot,
 		                               ClosestNodeToTarget);
 
@@ -382,16 +382,16 @@ public class RavenPathPlanner<NodeType extends NavGraphNode<T>,EdgeType extends 
 	  //let the bot know of the failure to find a path
 	  if (result == 0)
 	  {
-	     Dispatcher.dispatchMsg(SEND_MSG_IMMEDIATELY,
-	                             SENDER_ID_IRRELEVANT,
-	                             m_pOwner->ID(),
-	                             Msg_NoPathAvailable,
-	                             NO_ADDITIONAL_INFO);
+	     Dispatcher.dispatchMsg(Dispatcher.SEND_MSG_IMMEDIATELY,
+	                             Dispatcher.SENDER_ID_IRRELEVANT,
+	                             ravenBot.ID(),
+	                             RavenMessage.MSG_NO_PATH_AVAILABLE,
+	                             Dispatcher.NO_ADDITIONAL_INFO);
 
 	  }
 
 	  //let the bot know a path has been found
-	  else(result == 1)
+	  else if (result == 1)
 	  {
 	    //if the search was for an item type then the final node in the path will
 	    //represent a giver trigger. Consequently, it's worth passing the pointer
@@ -401,16 +401,18 @@ public class RavenPathPlanner<NodeType extends NavGraphNode<T>,EdgeType extends 
 		  
 	//TODO	  //Trigger<T> pTrigger = this.currentSearch.GetType().(currentSearch.GetType()..D->GetPathToTarget().back()).ExtraInfo();
 
-	    Dispatcher.dispatchMsg(SEND_MSG_IMMEDIATELY,
-	                            SENDER_ID_IRRELEVANT,
-	                            m_pOwner->ID(),
-	                            Msg_PathReady,
-	                            pTrigger);
+	    Dispatcher.dispatchMsg(Dispatcher.SEND_MSG_IMMEDIATELY,
+	                            Dispatcher.SENDER_ID_IRRELEVANT,
+	                            ravenBot.ID(),
+	                            RavenMessage.MSG_PATH_READY,
+	                            null); //TODO interpret the message above to get this trigger.
 	  }
 
 	  return result;
 	}
-		
-		
+	
+	public int getOwnerID() {
+		return ravenBot.ID();
 	}
+}
 	

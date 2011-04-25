@@ -1,31 +1,33 @@
 package raven.game.navigation;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import raven.game.messaging.Dispatcher;
-import raven.game.navigation.RavenPathPlanner;
-import raven.game.navigation.NavGraphEdge;
-import raven.game.navigation.NavGraphNode;
+import raven.game.messaging.RavenMessage;
 
 
-public class PathManager<RavenPathPlanner> {
-	private List<RavenPathPlanner> searchRequests;
+public class PathManager {
+	private List<RavenPathPlanner<?>> searchRequests;
 	private int numSearchCyclesPerUpdate;
+	private RavenPathPlanner<?> currentSearch;
+	
 	public PathManager(int numCyclesPerUpdate) {
-		// TODO Auto-generated constructor stub
+		this.numSearchCyclesPerUpdate = numCyclesPerUpdate;
 	}
 
-	public void Register(RavenPathPlanner pathPlanner){
+	public void Register(RavenPathPlanner<?> pathPlanner){
 		//make sure the bot does not already have a current search in the queue
 		  if(searchRequests.contains(pathPlanner)) return;
 		  else searchRequests.add(pathPlanner);
 		  
+		  if(searchRequests.size() == 1) {
+			  currentSearch = searchRequests.get(1);
+		  }
 	}
 
-	public void UnRegister(RavenPathPlanner pathPlanner){
-	searchRequests.remove(pathPlanner);
+	public void UnRegister(RavenPathPlanner<?> pathPlanner){
+		searchRequests.remove(pathPlanner);
+		if(pathPlanner == currentSearch) currentSearch = null;
 	}
 
 	  //returns the amount of path requests currently active.
@@ -50,9 +52,9 @@ public class PathManager<RavenPathPlanner> {
 
 	  for(int i=0; NumCyclesRemaining-->0 && !searchRequests.isEmpty(); i++)
 	  {	
-		  RavenPathPlanner curSearch;
+		  RavenPathPlanner<?> curSearch;
 		  curSearch = searchRequests.get(i);
-		  int result = this.cycleOnce();
+		  int result = curSearch.cycleOnce();
 		  if(result == 1 ||result == 0){
 			  searchRequests.remove(i);}
 	  
@@ -72,16 +74,16 @@ public class PathManager<RavenPathPlanner> {
 	  //let the bot know of the failure to find a path
 	  if (result == 0)
 	  {
-	     Dispatcher.dispatchMsg(SEND_MSG_IMMEDIATELY,
-	                             SENDER_ID_IRRELEVANT,
-	                             m_pOwner->ID(),
-	                             Msg_NoPathAvailable,
-	                             NO_ADDITIONAL_INFO);
+		     Dispatcher.dispatchMsg(Dispatcher.SEND_MSG_IMMEDIATELY,
+                     Dispatcher.SENDER_ID_IRRELEVANT,
+                     currentSearch.getOwnerID(),
+                     RavenMessage.MSG_NO_PATH_AVAILABLE,
+                     Dispatcher.NO_ADDITIONAL_INFO);
 
 	  }
 
 	  //let the bot know a path has been found
-	  else(result == 1)
+	  else if (result == 1)
 	  {
 	    //if the search was for an item type then the final node in the path will
 	    //represent a giver trigger. Consequently, it's worth passing the pointer
@@ -91,11 +93,11 @@ public class PathManager<RavenPathPlanner> {
 		  
 	//TODO	  //Trigger<T> pTrigger = this.currentSearch.GetType().(currentSearch.GetType()..D->GetPathToTarget().back()).ExtraInfo();
 
-	    Dispatcher.dispatchMsg(SEND_MSG_IMMEDIATELY,
-	                            SENDER_ID_IRRELEVANT,
-	                            m_pOwner->ID(),
-	                            Msg_PathReady,
-	                            pTrigger);
+		    Dispatcher.dispatchMsg(Dispatcher.SEND_MSG_IMMEDIATELY,
+                    Dispatcher.SENDER_ID_IRRELEVANT,
+                    currentSearch.getOwnerID(),
+                    RavenMessage.MSG_PATH_READY,
+                    null); //TODO interpret the message above to get this trigger.
 	  }
 
 	  return result;

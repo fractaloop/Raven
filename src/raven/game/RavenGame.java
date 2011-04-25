@@ -41,7 +41,7 @@ public class RavenGame {
 	private ArrayList<RavenProjectile> projectiles;
 
 	/** manages all the path planning requests */
-	PathManager<RavenPathPlanner> pathManager;
+	PathManager pathManager;
 
 	/** true if the game is paused */
 	boolean paused;
@@ -306,7 +306,7 @@ public class RavenGame {
 		pathManager = null;
 
 		graveMarkers = new GraveMarkers(RavenScript.getDouble("GraveLifetime"));
-		pathManager = new PathManager<RavenPathPlanner>(
+		pathManager = new PathManager(
 				RavenScript.getInt("MaxSearchCyclesPerUpdateStep"));
 		map = MapSerializer.deserializeMapFromPath(fileName);
 
@@ -611,7 +611,7 @@ public class RavenGame {
 		return bots;
 	}
 
-	public PathManager<RavenPathPlanner> getPathManager() {
+	public PathManager getPathManager() {
 		return pathManager;
 	}
 
