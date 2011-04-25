@@ -251,7 +251,7 @@ public class RavenMap {
 
 	public void render() {
 		//draw basic background
-		GameCanvas.blackPen();
+		GameCanvas.whitePen();
 		int offset = 20;
 		GameCanvas.filledRect(0, offset, sizeX, sizeY+offset);
 		
@@ -270,7 +270,7 @@ public class RavenMap {
 		
 		// render all walls
 		for (Wall2D wall : walls) {
-			GameCanvas.thickGreyPen();
+			GameCanvas.thickBlackPen();
 			wall.render();
 		}
 		
