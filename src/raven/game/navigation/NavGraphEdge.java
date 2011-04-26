@@ -1,13 +1,9 @@
 package raven.game.navigation;
 
-import java.io.Reader;
-
 import raven.math.graph.GraphEdge;
-import raven.math.graph.GraphEdgeFactory;
 import raven.math.graph.GraphNode;
-import raven.utils.StreamUtils;
 
-public class NavGraphEdge extends GraphEdge implements GraphEdgeFactory<NavGraphEdge> {
+public class NavGraphEdge extends GraphEdge {
 	public static final int NORMAL	= 0;
 	public static final int SWIM	= 1 << 0;
 	public static final int CRAWL	= 1 << 1;
@@ -38,22 +34,16 @@ public class NavGraphEdge extends GraphEdge implements GraphEdgeFactory<NavGraph
 		this(GraphNode.INVALID_NODE_INDEX, GraphNode.INVALID_NODE_INDEX, 0);
 	}
 
-	public NavGraphEdge(Reader reader) {
-		@SuppressWarnings("unused")
-		Object dummy;
-		
-		dummy = StreamUtils.getValueFromStream(reader);
-		from = (Integer)StreamUtils.getValueFromStream(reader);
-		dummy = StreamUtils.getValueFromStream(reader);
-		to = (Integer)StreamUtils.getValueFromStream(reader);
-		dummy = StreamUtils.getValueFromStream(reader);
-		cost = (Double)StreamUtils.getValueFromStream(reader);
-		dummy = StreamUtils.getValueFromStream(reader);
-		flags = (Integer)StreamUtils.getValueFromStream(reader);
-		dummy = StreamUtils.getValueFromStream(reader);
-		IDOfIntersectingEntity = (Integer)StreamUtils.getValueFromStream(reader);
+	protected NavGraphEdge(NavGraphEdge copy) {
+		from = copy.from;
+		to = copy.to;
+		cost = copy.cost;
+		flags = copy.flags;
+		IDOfIntersectingEntity = copy.IDOfIntersectingEntity;
 	}
-
+	
+	public NavGraphEdge clone() { return new NavGraphEdge(this); }
+	
 	public int flags() { return flags; }
 	public void setFlags(int flags) { this.flags = flags; }
 	public int IDOfIntersectingEntity() { return IDOfIntersectingEntity; }
@@ -61,10 +51,5 @@ public class NavGraphEdge extends GraphEdge implements GraphEdgeFactory<NavGraph
 	
 	public String toString() {
 		return "from: " + from + " to: " + to + " cost: " + cost + " flags: " + flags + " ID: " + IDOfIntersectingEntity + "\n";
-	}
-	
-	@Override
-	public NavGraphEdge createInstance(Reader reader) {
-		return new NavGraphEdge(reader);
 	}
 }

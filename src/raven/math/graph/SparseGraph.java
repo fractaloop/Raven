@@ -1,11 +1,5 @@
 package raven.math.graph;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Reader;
-import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -17,7 +11,6 @@ import java.util.Set;
 
 import raven.ui.GameCanvas;
 import raven.utils.Pair;
-import raven.utils.StreamUtils;
 
 public class SparseGraph<NodeType extends GraphNode, EdgeType extends GraphEdge> implements Iterable<NodeType> {
 	/** the nodes that comprise this graph */
@@ -32,10 +25,6 @@ public class SparseGraph<NodeType extends GraphNode, EdgeType extends GraphEdge>
 	
 	/** the index of the next node to be added */
 	private int nextNodeIndex;
-
-	/** Factories needed to create generic types at runtime */
-	private GraphNodeFactory<NodeType> nodeFactory;
-	private GraphEdgeFactory<EdgeType> edgeFactory;
 
 	/** returns true if an edge is not already present in the graph. Used when
 	 * adding edges to make sure no duplicates are created. */
@@ -65,9 +54,7 @@ public class SparseGraph<NodeType extends GraphNode, EdgeType extends GraphEdge>
 		}
 	}
 	
-	public SparseGraph(boolean digraph, GraphNodeFactory<NodeType> nodeFactory, GraphEdgeFactory<EdgeType> edgeFactory) {
-		this.nodeFactory = nodeFactory;
-		this.edgeFactory = edgeFactory;
+	public SparseGraph(boolean digraph) {
 		edges = new ArrayList<List<EdgeType>>();
 		nodes = new ArrayList<NodeType>();
 		nextNodeIndex = 0;
@@ -195,7 +182,7 @@ public class SparseGraph<NodeType extends GraphNode, EdgeType extends GraphEdge>
 				// check to make sure the edge is unique before adding
 				if (uniqueEdge(edge.to(), edge.from())) {
 					// TODO this probably breaks
-					EdgeType newEdge = (EdgeType) edge.clone();
+					EdgeType newEdge = (EdgeType)edge.clone();
 					newEdge.setTo(edge.from());
 					newEdge.setFrom(edge.to());
 					edges.get(edge.to()).add(newEdge);
@@ -291,79 +278,6 @@ public class SparseGraph<NodeType extends GraphNode, EdgeType extends GraphEdge>
 		}
 		
 		return false;
-	}
-	
-	
-	/** methods for loading and saving graphs from an open file stream or from
-	 * a file name 
-	 * @throws IOException */
-	public boolean save(String filename) throws IOException {
-		FileWriter writer = new FileWriter(filename);
-		
-		return save(writer);
-	}
-	
-	public boolean save(Writer writer) throws IOException {
-		// save the number of nodes
-		writer.write(nodes.size() + "\n");
-		
-		// iterate through the graph nodes and save them
-		for (NodeType node : nodes) {
-			writer.write(node.toString());
-		}
-		
-		// save the number of edges
-		writer.write(numEdges() + "\n");
-		
-		// iterate through the edges and save them
-		for (List<EdgeType> edgeList : edges) {
-			for (EdgeType edge : edgeList) {
-				writer.write(edge.toString());
-			}
-		}
-		
-		return true;
-	}
-	
-	public boolean load(String filename) throws FileNotFoundException {
-		FileReader reader = new FileReader(filename);
-		
-		return load(reader);
-	}
-	
-	public boolean load(Reader reader) {
-		clear();
-		
-		int numNodes, numEdges;
-		
-		numNodes = (Integer)StreamUtils.getValueFromStream(reader);
-		
-		for (int i = 0; i < numNodes; i++) {
-			NodeType newNode = nodeFactory.createInstance(reader);
-			
-			/** when editing graphs it's possible to end up with a situation
-			 * where some of the nodes have been invalidated (their id's set
-			 * to invalid_node_index). Therefore when a node of index
-			 * INVALID_NODE_INDEX is encountered, it must still be added. */
-			if (newNode.index() != GraphNode.INVALID_NODE_INDEX) {
-				addNode(newNode);
-			} else {
-				nodes.add(newNode);
-				
-				// make sure an edgelist is added for each node
-				edges.add(new ArrayList<EdgeType>());
-				
-				++nextNodeIndex;
-			}
-		}
-		
-		// now add the edges
-		numEdges = (Integer)StreamUtils.getValueFromStream(reader);
-		for (int i = 0; i < numEdges; i++) {
-			addEdge(edgeFactory.createInstance(reader));
-		}
-		
-		return true;
 	}
 	
 	public void clear() { nextNodeIndex = 0; nodes.clear(); edges.clear(); }

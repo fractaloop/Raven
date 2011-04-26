@@ -14,9 +14,12 @@ public abstract class GraphNode {
 	
 	public GraphNode() { index = INVALID_NODE_INDEX; }
 	public GraphNode(int index) { this.index = index; }
-	public GraphNode(Reader reader) {
-		index = (Integer)StreamUtils.getValueFromStream(reader);
+	protected GraphNode(GraphNode copy) {
+		this.position = copy.position;
+		this.index = copy.index;
 	}
+	
+	public abstract GraphNode clone();
 	
 	public Vector2D pos() { return position; }
 	public void setPos(Vector2D newPosition) { position = newPosition; }

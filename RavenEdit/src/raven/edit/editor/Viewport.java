@@ -5,6 +5,7 @@ import java.awt.event.*;
 import java.awt.geom.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.swing.JComponent;
 import javax.swing.JMenuItem;
@@ -12,13 +13,18 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 
 import raven.edit.tools.EditorTool;
+import raven.game.RavenBot;
 import raven.game.RavenMap;
 import raven.game.RavenObject;
+import raven.game.navigation.NavGraphEdge;
+import raven.game.navigation.NavGraphNode;
 import raven.game.triggers.Trigger;
 import raven.game.triggers.TriggerHealthGiver;
 import raven.game.triggers.TriggerWeaponGiver;
 import raven.math.Vector2D;
 import raven.math.Wall2D;
+import raven.math.graph.GraphEdge;
+import raven.math.graph.SparseGraph;
 
 public class Viewport extends JPanel {
 	private ViewportDelegate delegate;
@@ -140,12 +146,24 @@ public class Viewport extends JPanel {
 			g2d.fill(new Ellipse2D.Double(t.pos().x - 7, t.pos().y - 7, 14, 14));	
 		}
 		
-		// Draw the graph nodes
+		// Draw the graph edges and nodes
 		for (int i = 0; i < delegate.getLevel().getNavGraph().numNodes(); i++) {
+			SparseGraph<NavGraphNode<Trigger<RavenBot>>, NavGraphEdge> graph = delegate.getLevel().getNavGraph();
 			final double radius = 5.0;
 			Path2D diamond = new Path2D.Double();
 			Point2D point;
 			
+			// Draw this node's edges
+			List<? extends GraphEdge> edges = graph.getEdges(i);
+			
+			g2d.setColor(Color.CYAN);
+			for (int j = 0; j < edges.size(); j++) {
+				Vector2D from = graph.getNode(edges.get(j).from()).pos();
+				Vector2D to = graph.getNode(edges.get(j).to()).pos();
+				g2d.draw(new Line2D.Double(from.x, from.y, to.x, to.y));
+			}
+
+			// Draw the diamond for this node
 			Vector2D node_pos = level.getNavGraph().getNode(i).pos();	
 			point = levelToView(node_pos.add(new Vector2D(radius, 0)));
 			diamond.moveTo(point.getX(), point.getY());

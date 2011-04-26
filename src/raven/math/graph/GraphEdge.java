@@ -5,7 +5,7 @@ import java.io.Reader;
 import raven.math.Vector2D;
 import raven.utils.StreamUtils;
 
-public class GraphEdge {
+public abstract class GraphEdge {
 	// An edge connects two nodes. Valid node indices are always positive.
 	protected int from;
 	protected int to;
@@ -27,18 +27,13 @@ public class GraphEdge {
 		this(GraphNode.INVALID_NODE_INDEX, GraphNode.INVALID_NODE_INDEX, 1.0);
 	}
 	
-	public GraphEdge(Reader reader) {
-		@SuppressWarnings("unused")
-		Object dummy;
-		dummy = StreamUtils.getValueFromStream(reader);
-		from = (Integer)StreamUtils.getValueFromStream(reader);
-		dummy = StreamUtils.getValueFromStream(reader);
-		to = (Integer)StreamUtils.getValueFromStream(reader);
-		dummy = StreamUtils.getValueFromStream(reader);
-		cost = (Double)StreamUtils.getValueFromStream(reader);
+	protected GraphEdge(GraphEdge copy) {
+		from = copy.from;
+		to = copy.to;
+		cost = copy.cost;
 	}
-	
-	public Object clone() { return this.clone(); } 
+
+	public abstract GraphEdge clone(); 
 	
 	public int from() { return from; }
 	public void setFrom(int newIndex) { from = newIndex; }
@@ -61,23 +56,4 @@ public class GraphEdge {
 	public String toString() {
 		return "from: " + from + " to: " + to + " cost: " + cost + "\n"; 
 	}
-
-	public int doorID() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public Vector2D source() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Vector2D destination() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-
-	
 }

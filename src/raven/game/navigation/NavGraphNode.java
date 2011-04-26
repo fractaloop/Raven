@@ -3,10 +3,10 @@ package raven.game.navigation;
 import java.io.Reader;
 
 import raven.math.Vector2D;
+import raven.math.graph.GraphEdge;
 import raven.math.graph.GraphNode;
-import raven.math.graph.GraphNodeFactory;
 
-public class NavGraphNode<T> extends GraphNode implements GraphNodeFactory<NavGraphNode<T>> {
+public class NavGraphNode<T> extends GraphNode {
 	protected T extraInfo;
 	
 	public NavGraphNode() {
@@ -17,11 +17,14 @@ public class NavGraphNode<T> extends GraphNode implements GraphNodeFactory<NavGr
 		super(index);
 		position = pos;
 	}
-
-	public NavGraphNode(Reader reader) {
-		super(reader);
-		// TODO Auto-generated constructor stub
+	
+	public NavGraphNode(NavGraphNode<T> copy) {
+		position = copy.position;
+		index = copy.index;
+		extraInfo = copy.extraInfo;
 	}
+
+	public NavGraphNode<T> clone() { return new NavGraphNode<T>(this); }
 	
 	// Accessors
 	
@@ -31,10 +34,4 @@ public class NavGraphNode<T> extends GraphNode implements GraphNodeFactory<NavGr
 	public String toString() {
 		return "Index: " + this.index + " PosX: " + position.x + " PosY: " + position.y + "\n";
 	}
-
-	@Override
-	public NavGraphNode<T> createInstance(Reader reader) {
-		return new NavGraphNode<T>(reader);
-	}
-
 }

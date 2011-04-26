@@ -50,6 +50,8 @@ public class EditorViewController implements EditorViewDelegate {
 		
 		this.level = new RavenMap();
 		
+		graphBuilder = new GraphBuilder(level);
+		
 		view = new EditorView(level);
 		view.setDelegate(this);
 		view.create();
@@ -58,7 +60,7 @@ public class EditorViewController implements EditorViewDelegate {
 		
 		isDirty = false;
 		
-		graphBuilder = new GraphBuilder();
+		changeLevel(level);
 	}
 
 	@Override
@@ -159,6 +161,7 @@ public class EditorViewController implements EditorViewDelegate {
 	public void changeLevel(RavenMap level) {
 		isDirty = false;
 		this.level = level;
+		graphBuilder.setLevel(level);
 		view.setLevel(level);	
 	}
 

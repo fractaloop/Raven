@@ -1,17 +1,11 @@
 package raven.edit.editor.actions.menu;
 
-import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
-import java.awt.image.BufferedImage;
 
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 
-import raven.game.RavenMap;
-import raven.game.navigation.NavGraphNode;
-import raven.edit.editor.EditorView;
 import raven.edit.editor.EditorViewDelegate;
-import raven.edit.tools.GraphTool;
 
 public class RebuildGraphAction extends AbstractAction {
 	
@@ -31,7 +25,7 @@ public class RebuildGraphAction extends AbstractAction {
 		// TODO Force a graph rebuild.
 		// This appears to only erase all the edges and then connect every
 		// node to any node that is within the given max edge length
-		System.err.println("Graph rebuild unimplemented!");
+		delegate.getGraphBuilder().rebuild();
 		delegate.getView().repaint();
 	}
 }

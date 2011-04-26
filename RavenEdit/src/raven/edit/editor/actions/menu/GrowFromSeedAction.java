@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 import raven.game.RavenMap;
 import raven.game.navigation.NavGraphNode;
@@ -29,7 +30,19 @@ public class GrowFromSeedAction extends AbstractAction {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Flood fill new graph nodes if there is only 1 node in the graph.
-		System.err.println("Grow from seed unimplemented!");
-		delegate.getView().repaint();
+		if (delegate.getLevel().getNavGraph().numNodes() == 1) {
+			delegate.getGraphBuilder().growFromSeed(delegate.getLevel().getNavGraph().getNode(0), delegate.getLevel().getWalls());
+			delegate.getView().repaint();
+		} else if (delegate.getLevel().getNavGraph().numNodes() > 1) {
+			JOptionPane.showMessageDialog(delegate.getView(),
+										"There are too many graph nodes in this map.\nTo regrow a new graph, reduce the graph to only 1 node.",
+										"Error: Too many graph nodes",
+										JOptionPane.ERROR_MESSAGE);
+		} else {
+			JOptionPane.showMessageDialog(delegate.getView(),
+					"There are too few graph nodes in this map.\nTo regrow a new graph, increase the graph to only 1 node.",
+					"Error: Too few graph nodes",
+					JOptionPane.ERROR_MESSAGE);
+		}
 	}
 }
