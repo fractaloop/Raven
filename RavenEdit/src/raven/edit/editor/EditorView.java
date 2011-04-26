@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
@@ -294,21 +295,33 @@ public class EditorView extends JFrame implements ViewportDelegate {
 		subMenu = new JMenu("Max Edge Length");
 		menu.add(subMenu);
 		// Graph->Max Edge Length->[20, 40, 60, 80, 100, 150, 200, default]
-		menuItem = new JMenuItem(new SetMaxGraphEdgeLengthAction(20, delegate));
+		ButtonGroup group = new ButtonGroup();
+		menuItem = new JRadioButtonMenuItem(new SetMaxGraphEdgeLengthAction(20, delegate));
+		group.add(menuItem);
 		subMenu.add(menuItem);
-		menuItem = new JMenuItem(new SetMaxGraphEdgeLengthAction(40, delegate));
+		menuItem = new JRadioButtonMenuItem(new SetMaxGraphEdgeLengthAction(40, delegate));
+		group.add(menuItem);
 		subMenu.add(menuItem);
-		menuItem = new JMenuItem(new SetMaxGraphEdgeLengthAction(60, delegate));
+		menuItem = new JRadioButtonMenuItem(new SetMaxGraphEdgeLengthAction(60, delegate));
+		group.add(menuItem);
 		subMenu.add(menuItem);
-		menuItem = new JMenuItem(new SetMaxGraphEdgeLengthAction(80, delegate));
+		menuItem = new JRadioButtonMenuItem(new SetMaxGraphEdgeLengthAction(80, delegate));
+		group.add(menuItem);
 		subMenu.add(menuItem);
-		menuItem = new JMenuItem(new SetMaxGraphEdgeLengthAction(100, delegate));
+		menuItem = new JRadioButtonMenuItem(new SetMaxGraphEdgeLengthAction(100, delegate));
+		group.add(menuItem);
 		subMenu.add(menuItem);
-		menuItem = new JMenuItem(new SetMaxGraphEdgeLengthAction(150, delegate));
+		menuItem = new JRadioButtonMenuItem(new SetMaxGraphEdgeLengthAction(150, delegate));
+		group.add(menuItem);
 		subMenu.add(menuItem);
-		menuItem = new JMenuItem(new SetMaxGraphEdgeLengthAction(200, delegate));
+		menuItem = new JRadioButtonMenuItem(new SetMaxGraphEdgeLengthAction(200, delegate));
+		group.add(menuItem);
 		subMenu.add(menuItem);
-		menuItem = new JMenuItem(new SetMaxGraphEdgeLengthAction(delegate));
+		menuItem = new JRadioButtonMenuItem(new SetMaxGraphEdgeLengthAction(delegate));
+		group.add(menuItem);
+		menuItem.setSelected(true);
+		
+		
 		subMenu.add(menuItem);
 
 		this.setJMenuBar(menuBar);
