@@ -7,8 +7,11 @@ import raven.ui.GameCanvas;
 public class TriggerHealthGiver extends TriggerRespawning<RavenBot> {
 	private int healthGiven;
 	
-	public TriggerHealthGiver( Vector2D position, int radius, int healthGiven) {
+	public TriggerHealthGiver( Vector2D position, int radius, int healthGiven, int respawnDelay) {
 		super(position, radius);
+		
+		setRespawnDelay(respawnDelay);
+		
 		this.healthGiven = healthGiven;
 	}
 

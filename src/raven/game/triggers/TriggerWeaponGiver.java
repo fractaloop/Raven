@@ -13,10 +13,10 @@ public class TriggerWeaponGiver extends TriggerRespawning<RavenBot> {
 	private List<Vector2D> vecRLVB;
 	private List<Vector2D> vecRLVBTrans;
 	
-	public TriggerWeaponGiver(Vector2D position, int radius) {
+	public TriggerWeaponGiver(Vector2D position, int radius, int respawnDelay) {
 		super(position, radius);
 		
-		setRespawnDelay(RavenScript.getDouble("Weapon_RespawnDelay"));
+		setRespawnDelay(respawnDelay);
 
 		// create the vertex buffer for the rocket shape
 		vecRLVB = new ArrayList<Vector2D>(8);

@@ -15,6 +15,7 @@ import javax.swing.JPopupMenu;
 import raven.edit.editor.ViewportDelegate;
 import raven.game.RavenObject;
 import raven.math.Vector2D;
+import raven.script.RavenScript;
 
 public class HealthTool extends EditorTool {
 
@@ -73,7 +74,7 @@ public class HealthTool extends EditorTool {
 			popup.add(item);
 			popup.show(e.getComponent(), e.getX(), e.getY());
 		} else if (e.getButton() == MouseEvent.BUTTON1) {
-			level.addHealthGiver(levelCursor, 5, 10);
+			level.addHealthGiver(levelCursor, RavenScript.getInt("DefaultGiverTriggerRange"), RavenScript.getInt("Health_AmountGiven"), RavenScript.getInt("Health_RespawnDelay"));
 			//TODO: make these configurable
 		}
 

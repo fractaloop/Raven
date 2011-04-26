@@ -16,6 +16,7 @@ import raven.edit.editor.ViewportDelegate;
 import raven.game.RavenObject;
 import raven.game.triggers.TriggerWeaponGiver;
 import raven.math.Vector2D;
+import raven.script.RavenScript;
 
 public class ShotgunTool extends EditorTool {
 
@@ -43,11 +44,6 @@ public class ShotgunTool extends EditorTool {
 			}
 
 		}
-	}
-	
-	public void mouseClicked( MouseEvent e) {
-		shotSpawnPoint = viewToLevel(e.getPoint());
-		level.addWeaponGiver(RavenObject.SHOTGUN, shotSpawnPoint, 5);
 	}
 	
 	@Override
@@ -82,7 +78,7 @@ public class ShotgunTool extends EditorTool {
 			popup.add(item);
 			popup.show(e.getComponent(), e.getX(), e.getY());
 		} else if (e.getButton() == MouseEvent.BUTTON1) {
-			level.addWeaponGiver(RavenObject.SHOTGUN, levelCursor, 5);
+			level.addWeaponGiver(RavenObject.SHOTGUN, levelCursor, RavenScript.getInt("DefaultGiverTriggerRange"), RavenScript.getInt("Weapon_RespawnDelay"));
 		}
 
 		e.consume();
