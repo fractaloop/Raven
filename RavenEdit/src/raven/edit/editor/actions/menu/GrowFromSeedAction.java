@@ -31,7 +31,8 @@ public class GrowFromSeedAction extends AbstractAction {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Flood fill new graph nodes if there is only 1 node in the graph.
 		if (delegate.getLevel().getNavGraph().numNodes() == 1) {
-			delegate.getGraphBuilder().growFromSeed(delegate.getLevel().getNavGraph().getNode(0), delegate.getLevel().getWalls());
+			delegate.getGraphBuilder().growFromSeed();
+			delegate.getView().updateStatus("Graph grew to " + delegate.getLevel().getNavGraph().numNodes() + " nodes with " + delegate.getLevel().getNavGraph().numEdges() + " edges.");
 			delegate.getView().repaint();
 		} else if (delegate.getLevel().getNavGraph().numNodes() > 1) {
 			JOptionPane.showMessageDialog(delegate.getView(),

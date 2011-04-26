@@ -181,4 +181,12 @@ public class Vector2D {
 		
 		return facingFirst.dot(toTarget) >= Math.cos(fieldOfView / 2.0);
 	}
+	
+	public boolean equals(Object o) {
+		if (o instanceof Vector2D) {
+			return x == ((Vector2D)o).x && y == ((Vector2D)o).y;
+		}
+		
+		return false;		
+	}
 }
