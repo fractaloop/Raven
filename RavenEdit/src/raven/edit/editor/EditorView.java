@@ -51,6 +51,10 @@ public class EditorView extends JFrame implements ViewportDelegate {
 	private ToggleGridSnapAction toggleGridSnapAction;
 	private ClearGraphAction clearGraphAction;
 	private RebuildGraphAction rebuildGraphAction;
+	private GrowFromSeedAction growFromSeedAction;
+	private ToggleShowEdgesAction showEdgesAction;
+	private ToggleShowIndicesAction showIndicesAction;
+	private ToggleGraphLockAction lockGraphAction;
 	
 	
 	public EditorView(RavenMap theLevel) {
@@ -172,6 +176,26 @@ public class EditorView extends JFrame implements ViewportDelegate {
 											"Rebuild the navigation graph edges with the specified maximum edge length.",
 											null,
 											delegate);
+		growFromSeedAction = new GrowFromSeedAction("Grow from seed",
+											null,
+											"Grow a new navigation mesh from a single graph node.",
+											null,
+											delegate);
+		showEdgesAction = new ToggleShowEdgesAction("Show edges",
+											null,
+											"Toggle the visibility of navigation graph edges.",
+											null,
+											delegate);
+		showIndicesAction = new ToggleShowIndicesAction("Show indices",
+											null,
+											"Toggle the visibility of navigation graph indices.",
+											null,
+											delegate);
+		lockGraphAction = new ToggleGraphLockAction("Lock",
+											null,
+											"Enable and disable editing of the navigation graph.",
+											null,
+											delegate);
 	}
 	
 	private void createMenu() {
@@ -249,16 +273,16 @@ public class EditorView extends JFrame implements ViewportDelegate {
 		menuItem = new JMenuItem(rebuildGraphAction);
 		menu.add(menuItem);
 		// Graph->Grow from seed
-		menuItem = new JMenuItem("Grow from seed");
+		menuItem = new JMenuItem(growFromSeedAction);
 		menu.add(menuItem);
 		// Graph->Show Edges
-		checkedMenuItem = new JCheckBoxMenuItem("Show Edges");
+		checkedMenuItem = new JCheckBoxMenuItem(showEdgesAction);
 		menu.add(checkedMenuItem);
 		// Graph->Show Indices
-		checkedMenuItem = new JCheckBoxMenuItem("Show Indices");
+		checkedMenuItem = new JCheckBoxMenuItem(showIndicesAction);
 		menu.add(checkedMenuItem);
 		// Graph->Lock
-		checkedMenuItem = new JCheckBoxMenuItem("Lock");
+		checkedMenuItem = new JCheckBoxMenuItem(lockGraphAction);
 		menu.add(checkedMenuItem);
 		// Graph->Max Edge Length
 		subMenu = new JMenu("Max Edge Length");
