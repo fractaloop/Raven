@@ -1,5 +1,6 @@
 package raven.edit.editor;
 
+import raven.edit.graph.GraphBuilder;
 import raven.edit.tools.EditorTool;
 import raven.game.RavenMap;
 
@@ -19,4 +20,7 @@ public interface EditorViewDelegate {
 	// Menu items
 	void toggleGrid();
 	void toggleGridSnap();
+	
+	// Graph manipulation
+	public GraphBuilder getGraphBuilder();
 }

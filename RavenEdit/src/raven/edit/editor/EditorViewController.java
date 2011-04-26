@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JToolBar;
 import javax.swing.filechooser.FileFilter;
 
+import raven.edit.graph.GraphBuilder;
 import raven.edit.tools.EditorTool;
 import raven.edit.tools.SelectTool;
 import raven.game.RavenMap;
@@ -23,6 +24,8 @@ public class EditorViewController implements EditorViewDelegate {
 	RavenMap level;
 	
 	boolean isDirty;
+
+	private GraphBuilder graphBuilder;
 	
 	private class LevelFilter extends FileFilter {
 
@@ -54,6 +57,8 @@ public class EditorViewController implements EditorViewDelegate {
 		this.changeTool(new SelectTool(view));
 		
 		isDirty = false;
+		
+		graphBuilder = new GraphBuilder();
 	}
 
 	@Override
@@ -187,8 +192,12 @@ public class EditorViewController implements EditorViewDelegate {
 
 	@Override
 	public void toggleGridSnap() {
-		// TODO Auto-generated method stub
-		
+		view.toggleGridSnap();		
+	}
+
+	@Override
+	public GraphBuilder getGraphBuilder() {
+		return graphBuilder;
 	}
 
 }

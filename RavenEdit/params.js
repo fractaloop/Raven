@@ -1,3 +1,18 @@
+////////////////////////////////////////////////////////////
+var DefaultNodeSpacing = 20;
+
+// edges will only be added if two nodes are less than this length apart
+var DefaultMaxEdgeLength = Math.sqrt(2) * DefaultNodeSpacing;
+
+// a node must be at least this far away from a wall or obstacle. To prevent
+// your agents bumping into walls it's wise to set this to a value slightly 
+// larger than their bounding radius (in raven BRadius is 10 * scale found in
+// params.js)
+NodeMargin = 10;
+
+// how close the mouse cursor has to be to an object to select it
+SelectionTolerance = 5;
+
 // ////////////////////////-[[ giver-trigger parameters ]]////////////////////////////-
 // //////////////////////////////////////////////////////////////////////////////-
 // 

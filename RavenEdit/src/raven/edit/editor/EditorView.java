@@ -55,6 +55,7 @@ public class EditorView extends JFrame implements ViewportDelegate {
 	private ToggleShowEdgesAction showEdgesAction;
 	private ToggleShowIndicesAction showIndicesAction;
 	private ToggleGraphLockAction lockGraphAction;
+	private SetMaxGraphEdgeLengthAction edgeLengthAction;
 	
 	
 	public EditorView(RavenMap theLevel) {
@@ -196,6 +197,11 @@ public class EditorView extends JFrame implements ViewportDelegate {
 											"Enable and disable editing of the navigation graph.",
 											null,
 											delegate);
+		edgeLengthAction = new SetMaxGraphEdgeLengthAction("Unknown",
+											null,
+											"Unknown",
+											null,
+											delegate);
 	}
 	
 	private void createMenu() {
@@ -288,21 +294,21 @@ public class EditorView extends JFrame implements ViewportDelegate {
 		subMenu = new JMenu("Max Edge Length");
 		menu.add(subMenu);
 		// Graph->Max Edge Length->[20, 40, 60, 80, 100, 150, 200, default]
-		menuItem = new JMenuItem("20");
+		menuItem = new JMenuItem(new SetMaxGraphEdgeLengthAction(20, delegate));
 		subMenu.add(menuItem);
-		menuItem = new JMenuItem("40");
+		menuItem = new JMenuItem(new SetMaxGraphEdgeLengthAction(40, delegate));
 		subMenu.add(menuItem);
-		menuItem = new JMenuItem("60");
+		menuItem = new JMenuItem(new SetMaxGraphEdgeLengthAction(60, delegate));
 		subMenu.add(menuItem);
-		menuItem = new JMenuItem("80");
+		menuItem = new JMenuItem(new SetMaxGraphEdgeLengthAction(80, delegate));
 		subMenu.add(menuItem);
-		menuItem = new JMenuItem("100");
+		menuItem = new JMenuItem(new SetMaxGraphEdgeLengthAction(100, delegate));
 		subMenu.add(menuItem);
-		menuItem = new JMenuItem("150");
+		menuItem = new JMenuItem(new SetMaxGraphEdgeLengthAction(150, delegate));
 		subMenu.add(menuItem);
-		menuItem = new JMenuItem("200");
+		menuItem = new JMenuItem(new SetMaxGraphEdgeLengthAction(200, delegate));
 		subMenu.add(menuItem);
-		menuItem = new JMenuItem("Default");
+		menuItem = new JMenuItem(new SetMaxGraphEdgeLengthAction(delegate));
 		subMenu.add(menuItem);
 
 		this.setJMenuBar(menuBar);
