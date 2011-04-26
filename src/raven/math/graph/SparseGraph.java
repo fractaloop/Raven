@@ -134,7 +134,7 @@ public class SparseGraph<NodeType extends GraphNode, EdgeType extends GraphEdge>
 			return nextNodeIndex;
 		} else {
 			// make sure the new node has been indexed correctly
-			if (node.index() == nextNodeIndex) {
+			if (node.index() != nextNodeIndex) {
 				throw new IndexOutOfBoundsException("SparseGraph#addNode: invalid index");
 			}
 			
