@@ -414,7 +414,14 @@ public class EditorView extends JFrame implements ViewportDelegate {
 	}
 
 	public void toggleGrid() {
-		toggleGridSnapAction.setEnabled(viewport.toggleGrid());
+		boolean new_state = viewport.toggleGrid();
+		toggleGridSnapAction.setEnabled(new_state);
+		updateStatus("Grid " + (new_state ? "enabled" : "disabled") + ".");
+	}
+
+	public void toggleGridSnap() {
+		boolean new_state = viewport.toggleGridSnap();
+		updateStatus("Grid snapping " + (new_state ? "enabled" : "disabled") + ".");
 	}
 
 }

@@ -73,8 +73,8 @@ public class Viewport extends JPanel {
 		g2d.setRenderingHints(renderHints);
 
 		// Draw the grid
-		g2d.setColor(Color.LIGHT_GRAY);
 		if (drawGrid) {
+			g2d.setColor(Color.LIGHT_GRAY);
 			for (int y = 0; y < getHeight(); y += 10) {
 				line = new Line2D.Float(0, y, getWidth(), y);
 				g2d.draw(line);
@@ -212,5 +212,16 @@ public class Viewport extends JPanel {
 		repaint();
 		
 		return drawGrid;
+	}
+
+	/** 
+	 * Turn snapping to the grid off and on
+	 * @return The new state of the grid snapping
+	 */
+	public boolean toggleGridSnap() {
+		gridSnap = !gridSnap;
+		repaint();
+		
+		return gridSnap;
 	}
 }

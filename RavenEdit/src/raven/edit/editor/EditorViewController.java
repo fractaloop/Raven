@@ -183,7 +183,6 @@ public class EditorViewController implements EditorViewDelegate {
 	@Override
 	public void toggleGrid() {
 		view.toggleGrid();
-		
 	}
 
 	@Override
