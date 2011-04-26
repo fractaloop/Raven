@@ -325,4 +325,9 @@ public class RavenMap {
 	public void setPath(String path) { this.path = path; }
 	public String getName() { return name; }
 	public void setName(String name) { this.name = name; }
+
+	public void setSize(int width, int height) {
+		this.sizeX = width;
+		this.sizeY = height;		
+	}
 }

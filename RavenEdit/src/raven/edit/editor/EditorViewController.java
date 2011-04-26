@@ -1,6 +1,7 @@
 package raven.edit.editor;
 
 import java.awt.Component;
+import java.awt.event.ComponentEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -54,7 +55,11 @@ public class EditorViewController implements EditorViewDelegate {
 		
 		view = new EditorView(level);
 		view.setDelegate(this);
+		view.addComponentListener(this);
 		view.create();
+		
+		level.setSize(view.getViewport().getWidth(), view.getViewport().getHeight());
+		view.updateStatus("Initialized with empty level sized " + level.getSizeX() + "x" + level.getSizeY());
 		
 		this.changeTool(new SelectTool(view));
 		
@@ -69,7 +74,7 @@ public class EditorViewController implements EditorViewDelegate {
 			return false;
 
 		RavenMap newMap = new RavenMap();
-		view = new EditorView(newMap);
+		
 		changeLevel(newMap);
 
 		view.updateStatus("Initialized empty level.");
@@ -201,6 +206,32 @@ public class EditorViewController implements EditorViewDelegate {
 	@Override
 	public GraphBuilder getGraphBuilder() {
 		return graphBuilder;
+	}
+
+	@Override
+	public void componentHidden(ComponentEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void componentMoved(ComponentEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void componentResized(ComponentEvent e) {
+		int width = view.getViewport().getSize().width;
+		int height = view.getViewport().getSize().height;
+		view.updateStatus("Level resized to " + width + "x" + height);
+		level.setSize(width, height);
+	}
+
+	@Override
+	public void componentShown(ComponentEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

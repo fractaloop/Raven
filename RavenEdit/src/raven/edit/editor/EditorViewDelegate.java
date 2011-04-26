@@ -1,10 +1,12 @@
 package raven.edit.editor;
 
+import java.awt.event.ComponentListener;
+
 import raven.edit.graph.GraphBuilder;
 import raven.edit.tools.EditorTool;
 import raven.game.RavenMap;
 
-public interface EditorViewDelegate {
+public interface EditorViewDelegate extends ComponentListener {
 	public EditorView getView();
 	public RavenMap getLevel();
 
