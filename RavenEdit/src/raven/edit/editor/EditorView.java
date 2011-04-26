@@ -50,6 +50,7 @@ public class EditorView extends JFrame implements ViewportDelegate {
 	private ToggleGridAction toggleGridAction;
 	private ToggleGridSnapAction toggleGridSnapAction;
 	private ClearGraphAction clearGraphAction;
+	private RebuildGraphAction rebuildGraphAction;
 	
 	
 	public EditorView(RavenMap theLevel) {
@@ -166,6 +167,11 @@ public class EditorView extends JFrame implements ViewportDelegate {
 											"Clear the navigation graph of all nodes and edges.",
 											null,
 											delegate);
+		rebuildGraphAction = new RebuildGraphAction("Rebuild graph edges",
+											null,
+											"Rebuild the navigation graph edges with the specified maximum edge length.",
+											null,
+											delegate);
 	}
 	
 	private void createMenu() {
@@ -240,7 +246,7 @@ public class EditorView extends JFrame implements ViewportDelegate {
 		menuItem = new JMenuItem(clearGraphAction);
 		menu.add(menuItem);
 		// Graph->Rebuild (connections based on current Max Edge Length)
-		menuItem = new JMenuItem("Rebuild (connections based on current Max Edge Length)");
+		menuItem = new JMenuItem(rebuildGraphAction);
 		menu.add(menuItem);
 		// Graph->Grow from seed
 		menuItem = new JMenuItem("Grow from seed");
