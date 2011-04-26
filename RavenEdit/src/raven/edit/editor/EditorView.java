@@ -49,6 +49,7 @@ public class EditorView extends JFrame implements ViewportDelegate {
 	private RailgunToolAction railgunToolAction;
 	private ToggleGridAction toggleGridAction;
 	private ToggleGridSnapAction toggleGridSnapAction;
+	private ClearGraphAction clearGraphAction;
 	
 	
 	public EditorView(RavenMap theLevel) {
@@ -160,6 +161,11 @@ public class EditorView extends JFrame implements ViewportDelegate {
 											"Enable and disable snapping to the grid for drawing objects.",
 											null,
 											delegate);
+		clearGraphAction = new ClearGraphAction("Clear graph",
+											null,
+											"Clear the navigation graph of all nodes and edges.",
+											null,
+											delegate);
 	}
 	
 	private void createMenu() {
@@ -231,7 +237,7 @@ public class EditorView extends JFrame implements ViewportDelegate {
 		menu.setMnemonic(KeyEvent.VK_G);
 		menuBar.add(menu);
 		// Graph->Clear graph
-		menuItem = new JMenuItem("Clear graph");
+		menuItem = new JMenuItem(clearGraphAction);
 		menu.add(menuItem);
 		// Graph->Rebuild (connections based on current Max Edge Length)
 		menuItem = new JMenuItem("Rebuild (connections based on current Max Edge Length)");
