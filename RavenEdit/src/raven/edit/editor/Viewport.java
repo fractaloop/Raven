@@ -121,31 +121,6 @@ public class Viewport extends JPanel {
 			g2d.fill(new Ellipse2D.Double(point.x - 7, point.y - 7, 14, 14));
 		}
 		
-		// Render the guns
-		for(Trigger t : level.getTriggers()) {
-			if( t == null || t.pos() == null) continue;
-			
-			if( t instanceof TriggerHealthGiver) {
-				g2d.setPaint(Color.RED);
-			} 
-			else if ( t instanceof TriggerWeaponGiver ) {
-				if(t.entityType() == null) break;
-				switch(t.entityType()) {
-					case RAIL_GUN :
-						g2d.setPaint(Color.CYAN);
-						break;
-					case SHOTGUN :
-						g2d.setPaint(Color.YELLOW);
-						break;
-					case ROCKET_LAUNCHER :
-						g2d.setPaint(Color.BLUE);
-						break;	
-				}
-				
-			}
-			g2d.fill(new Ellipse2D.Double(t.pos().x - 7, t.pos().y - 7, 14, 14));	
-		}
-		
 		// Draw the graph edges and nodes
 		for (int i = 0; i < delegate.getLevel().getNavGraph().numNodes(); i++) {
 			SparseGraph<NavGraphNode<Trigger<RavenBot>>, NavGraphEdge> graph = delegate.getLevel().getNavGraph();
@@ -180,6 +155,31 @@ public class Viewport extends JPanel {
 			g2d.fill(diamond);
 			g2d.setColor(Color.CYAN);
 			g2d.draw(diamond);
+		}
+		
+		// Render the guns
+		for(Trigger t : level.getTriggers()) {
+			if( t == null || t.pos() == null) continue;
+			
+			if( t instanceof TriggerHealthGiver) {
+				g2d.setPaint(Color.RED);
+			} 
+			else if ( t instanceof TriggerWeaponGiver ) {
+				if(t.entityType() == null) break;
+				switch(t.entityType()) {
+					case RAIL_GUN :
+						g2d.setPaint(Color.CYAN);
+						break;
+					case SHOTGUN :
+						g2d.setPaint(Color.YELLOW);
+						break;
+					case ROCKET_LAUNCHER :
+						g2d.setPaint(Color.BLUE);
+						break;	
+				}
+				
+			}
+			g2d.fill(new Ellipse2D.Double(t.pos().x - 7, t.pos().y - 7, 14, 14));	
 		}
 		
 		tool.paintComponent(g);
