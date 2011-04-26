@@ -132,9 +132,7 @@ public class RavenGame {
 	// /////////////////
 	// Public methods
 
-	public RavenGame(Graphics g) {
-		GameCanvas.setGraphics(g);
-		
+	public RavenGame() {
 		EntityManager.reset();
 		
 		String path = "<undefined>";
@@ -314,7 +312,7 @@ public class RavenGame {
 		EntityManager.reset();
 
 		addBots(RavenScript.getInt("NumBots"));
-		map.render();
+		
 		return true;
 	}
 

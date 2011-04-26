@@ -5,6 +5,7 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,6 +27,8 @@ public class GameCanvas extends Canvas {
 	
 	private Graphics2D g2d;
 	
+	private int width, height;
+	
 	private GameCanvas() {
     	// Don't redraw on requests
     	setIgnoreRepaint(true);
@@ -37,15 +40,21 @@ public class GameCanvas extends Canvas {
 	
 	///////////////////////
 	// Drawing start/stop
-	public static void startDrawing() {
-		GameCanvas.getInstance().create();
+	public static void startDrawing(int width, int height) {
+		getInstance().create(width, height);
 	}
 	
-	protected void create() {
+	protected void create(int width, int height) {
+    	// Don't redraw on requests
+    	setIgnoreRepaint(true);
+    	
+		// Ask for input
+		setFocusable(true);
+		requestFocus();
 		if (getBufferStrategy() == null) {
 			// Double buffered for pretty rendering
 	    	createBufferStrategy(2);
-	    	setBounds(0, 0, WIDTH, HEIGHT);
+	    	setBounds(0, 0, width, height);
 		}
 		if (g2d != null) {
 			g2d.dispose();
@@ -53,6 +62,11 @@ public class GameCanvas extends Canvas {
 		}
 		
 		g2d = (Graphics2D)getBufferStrategy().getDrawGraphics();
+		// Shiny gfx
+		RenderingHints renderHints = new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		renderHints.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+		g2d.setRenderingHints(renderHints);
+
 		g2d.setColor(Color.WHITE);
 		g2d.fillRect(0, 0, getWidth(), getHeight());
 	}
@@ -63,8 +77,8 @@ public class GameCanvas extends Canvas {
 	
 	protected void finish() {
 		if (g2d != null) {
-			g2d.dispose();
 			getBufferStrategy().show();
+			g2d.dispose();
 			g2d = null;
 		}
 	}
@@ -243,10 +257,6 @@ public class GameCanvas extends Canvas {
 	
 	public static void setColor(Color color) {
 		getInstance().g2d.setColor(color);
-	}
-
-	public static void setGraphics(Graphics g) {
-		getInstance().g2d = (Graphics2D) g;
 	}
 
 	public static void transparentText() {

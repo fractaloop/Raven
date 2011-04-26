@@ -35,22 +35,27 @@ public class Raven extends JFrame implements KeyListener, MouseListener, Compone
 		return RavenHolder.INSTANCE;
 	}
 	
-	private static int WIDTH = 700;
-	private static int HEIGHT = 700;
-	private static int FRAMERATE = 60;
+	private int width = 700;
+	private int height = 700;
+	private int framerate = 60;
 	
 	private static RavenGame game;
 	private KeyState keys;
 	
 	public static void start() {
-    	game = new RavenGame(getInstance().getGraphics());
-		getInstance().gameLoop();
+    	game = new RavenGame();
+    	
+    	getInstance().gameLoop();
 	}
 	
 	private Raven() {
-    	// Get the frame's content and use it for the game
+		// Ensure we have the right size
+    	width = game.getMap().getSizeX();
+    	height = game.getMap().getSizeY();
+		
+		// Get the frame's content and use it for the game
     	JPanel panel = (JPanel)this.getContentPane();
-    	panel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+    	panel.setPreferredSize(new Dimension(width, height));
     	panel.setLayout(null);
     	
     	// Setup our canvas and add it
@@ -60,8 +65,8 @@ public class Raven extends JFrame implements KeyListener, MouseListener, Compone
     	panel.add(GameCanvas.getInstance());
     	
     	this.pack();
-//    	this.setResizable(false);
-    	this.setTitle("Raven");
+    	this.setResizable(false);
+    	this.setTitle("Raven - " + game.getMap().getName());
     	this.setVisible(true);
     	
     	// Add a window listener so we can close the game if they close the
@@ -90,13 +95,13 @@ public class Raven extends JFrame implements KeyListener, MouseListener, Compone
     		
     		// Always dispose the canvas
     		try {
-    			GameCanvas.startDrawing();
+    			GameCanvas.startDrawing(game.getMap().getSizeX(), game.getMap().getSizeY());
     			game.render();
     		} finally {
     			GameCanvas.stopDrawing();
     		}
     		
-    		long millisToNextUpdate = Math.max(0, (1000 / FRAMERATE) - ((System.nanoTime() - currentTime) / 1000000));
+    		long millisToNextUpdate = Math.max(0, (1000 / framerate) - ((System.nanoTime() - currentTime) / 1000000));
 			lastTime = currentTime;
 			try {
 				Thread.sleep(millisToNextUpdate);
@@ -200,9 +205,8 @@ public class Raven extends JFrame implements KeyListener, MouseListener, Compone
 
 	@Override
 	public void componentResized(ComponentEvent e) {
-		WIDTH = getContentPane().getWidth();
-		HEIGHT = getContentPane().getHeight();
-		game.render();
+		width = getContentPane().getWidth();
+		height = getContentPane().getHeight();
 	}
 
 	@Override
