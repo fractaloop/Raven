@@ -1,5 +1,7 @@
 package raven.math;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 /**
  * 2D Vector class
  * 
@@ -7,6 +9,7 @@ package raven.math;
  * 
  * @author Logan Lowell
  */
+@XStreamAlias("Vector2D")
 public class Vector2D {
 	public double x;
 	public double y;

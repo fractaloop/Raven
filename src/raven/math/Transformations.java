@@ -1,5 +1,6 @@
 package raven.math;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Transformations {
@@ -12,9 +13,28 @@ public class Transformations {
 		mat.transformVector2Ds(v);
 	}
 	
-	public static List<Vector2D> WorldTransform(List<Vector2D> vecBotVB,
-			Vector2D pos, Vector2D facing, Vector2D perp, Vector2D scale) {
-		return vecBotVB;
+	public static List<Vector2D> WorldTransform(List<Vector2D> points,
+			Vector2D pos, Vector2D forward, Vector2D side, Vector2D scale) {
+		List<Vector2D> results = new ArrayList<Vector2D>(points.size());
+		results.addAll(points);
+		
+		C2DMatrix matTransform = new C2DMatrix();
+		
+		// scale
+		if (scale.x != 1.0 || scale.y != 1.0) {
+			matTransform.scale(scale.x, scale.y);
+		}
+		
+		// rotate
+		matTransform.rotate(forward, side);
+		
+		// and translate
+		matTransform.translate(pos.x, pos.y);
+		
+		// now transform
+		matTransform.transformVector2Ds(results);
+		
+		return results;
 	}
 
 	public static Vector2D pointToLocalSpace(Vector2D pos, Vector2D agentHeading, Vector2D agentSide, Vector2D agentPosition) {

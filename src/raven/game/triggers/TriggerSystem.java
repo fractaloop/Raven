@@ -4,15 +4,27 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamImplicit;
+
 import raven.game.BaseGameEntity;
 
+@XStreamAlias("TriggerSystem")
 public class TriggerSystem<T extends Trigger> {
-	
+
+	@XStreamImplicit
 	private LinkedList<T> triggers;
 	
-	public TriggerSystem()
-	{
+	public TriggerSystem() {
 		triggers = new LinkedList<T>();
+	}
+	
+	private Object readResolve() {
+		if (triggers == null) {
+			triggers = new LinkedList<T>();
+		}
+		
+		return this;
 	}
 	
 	private void updateTriggers(double delta) {

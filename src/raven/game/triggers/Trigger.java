@@ -3,11 +3,13 @@ package raven.game.triggers;
 import java.awt.Image;
 
 import com.sun.xml.internal.stream.Entity;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 import raven.game.BaseGameEntity;
 import raven.game.EntityManager;
 import raven.math.Vector2D;
-	
+
+@XStreamAlias("Trigger")
 public abstract class Trigger<T extends BaseGameEntity> extends BaseGameEntity {
 	private TriggerRegion regionOfInfluence;
 	
@@ -54,7 +56,7 @@ public abstract class Trigger<T extends BaseGameEntity> extends BaseGameEntity {
 		if(centerPoint != null) {
 			regionOfInfluence = new TriggerRegionCircle(centerPoint, radius);
 		}
-		position = centerPoint;
+		position = new Vector2D(centerPoint);
 		removeFromGame = false;
 		active = true;
 	}

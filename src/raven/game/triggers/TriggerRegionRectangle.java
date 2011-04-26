@@ -1,8 +1,11 @@
 package raven.game.triggers;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 import raven.math.InvertedAABox2D;
 import raven.math.Vector2D;
 
+@XStreamAlias("TriggerRegionRectangle")
 public class TriggerRegionRectangle implements TriggerRegion {
 
 	private InvertedAABox2D trigger;

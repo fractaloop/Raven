@@ -51,7 +51,7 @@ public class GraphSearchDijkstra {
 			int nextClosestNode = queueEntry.getValue();
 			
 			// move this edge from the frontier to the shortest path tree
-			shortestPathTree.add(nextClosestNode, searchFrontier.get(nextClosestNode));
+			shortestPathTree.set(nextClosestNode, searchFrontier.get(nextClosestNode));
 
 			// if the target has been found exit
 			if (nextClosestNode == target) {
@@ -59,7 +59,8 @@ public class GraphSearchDijkstra {
 			}
 			
 			// for each edge connected to the next closest node
-			for (GraphEdge edge : graph.getEdges(nextClosestNode)) {
+			for (int i = 0; i < graph.getEdges(nextClosestNode).size(); i++) {
+				GraphEdge edge = graph.getEdges(nextClosestNode).get(i);
 				double newCost = costToNode.get(nextClosestNode) + edge.cost();
 				
 				// if this edge has never been on the frontier make a note of
@@ -78,7 +79,7 @@ public class GraphSearchDijkstra {
 				else if ( (newCost < costToNode.get(edge.to())) && shortestPathTree.get(edge.to()) == null) {
 					costToNode.set(edge.to(), newCost);
 					
-					queue.remove(edge.to());
+					queue.remove(edge.cost());
 					queue.put(newCost, edge.to());
 					
 					searchFrontier.set(edge.to(), edge);
@@ -104,6 +105,7 @@ public class GraphSearchDijkstra {
 		
 		// The algorithm requires the array's be filled with 0s
 		for (int i = 0; i < graph.numNodes(); i++) {
+			shortestPathTree.add(null);
 			searchFrontier.add(null);
 			costToNode.add(0.0);
 		}

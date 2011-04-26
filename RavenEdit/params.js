@@ -40,8 +40,8 @@ var Weapon_RespawnDelay         = 15;
 // var StartMap = "maps/Raven_DM1.map";
 // 
 // //cell space partitioning defaults
-// var NumCellsX = 10;
-// var NumCellsY = 10;
+var NumCellsX = 10;
+var NumCellsY = 10;
 // 
 // //how long the graves remain on screen
 // var GraveLifetime = 5;

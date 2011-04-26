@@ -1,9 +1,12 @@
 package raven.game.triggers;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 import raven.game.RavenBot;
 import raven.math.Vector2D;
 import raven.ui.GameCanvas;
 
+@XStreamAlias("TriggerHealthGiver")
 public class TriggerHealthGiver extends TriggerRespawning<RavenBot> {
 	private int healthGiven;
 	

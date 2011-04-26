@@ -15,7 +15,7 @@ public abstract class GraphNode {
 	public GraphNode() { index = INVALID_NODE_INDEX; }
 	public GraphNode(int index) { this.index = index; }
 	protected GraphNode(GraphNode copy) {
-		this.position = copy.position;
+		this.position = new Vector2D(copy.position);
 		this.index = copy.index;
 	}
 	

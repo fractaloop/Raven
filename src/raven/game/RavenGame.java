@@ -32,16 +32,16 @@ public class RavenGame {
 	private RavenMap map;
 
 	/** bots that inhabit the current map */
-	private ArrayList<RavenBot> bots;
+	private ArrayList<RavenBot> bots = new ArrayList<RavenBot>();
 
 	/** A user may control a bot manually. This is that bot */
 	private RavenBot selectedBot;
 
 	/** contains any active projectiles (slugs, rockets, shotgun pellets, etc) */
-	private ArrayList<RavenProjectile> projectiles;
+	private ArrayList<RavenProjectile> projectiles = new ArrayList<RavenProjectile>();
 
 	/** manages all the path planning requests */
-	PathManager pathManager;
+	PathManager pathManager = new PathManager(RavenScript.getInt("MaxSearchCyclesPerUpdateStep"));;
 
 	/** true if the game is paused */
 	boolean paused;
@@ -53,7 +53,7 @@ public class RavenGame {
 	 * When a bot is killed a "grave" is displayed for a few seconds. This class
 	 * manages the graves.
 	 */
-	GraveMarkers graveMarkers;
+	GraveMarkers graveMarkers = new GraveMarkers(RavenScript.getDouble("GraveLifetime"));
 
 	private void clear() {
 		// delete the bots
@@ -133,9 +133,10 @@ public class RavenGame {
 	// Public methods
 
 	public RavenGame(Graphics g) {
-		bots = new ArrayList<RavenBot>();
-		projectiles = new ArrayList<RavenProjectile>();
 		GameCanvas.setGraphics(g);
+		
+		EntityManager.reset();
+		
 		String path = "<undefined>";
 		try {
 			path = chooseMapFile();

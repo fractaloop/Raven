@@ -3,11 +3,23 @@ package raven.math;
 import java.io.IOException;
 import java.io.Writer;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 import raven.ui.GameCanvas;
 
+@XStreamAlias("Wall2D")
 public class Wall2D {
-	protected Vector2D vA, vB, vN;
+	@XStreamAlias("from")
+	protected Vector2D vA;
+	@XStreamAlias("to")
+	protected Vector2D vB;
+	transient protected Vector2D vN;
 	
+	private Object readResolve() {
+		calculateNormal();
+		
+		return this;
+	}
 	protected void calculateNormal() {
 		Vector2D temp = vB.sub(vA);
 		temp.normalize();

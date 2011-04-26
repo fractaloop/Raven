@@ -3,21 +3,28 @@ package raven.game.triggers;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 import raven.game.RavenBot;
 import raven.math.Transformations;
 import raven.math.Vector2D;
 import raven.script.RavenScript;
 import raven.ui.GameCanvas;
 
+@XStreamAlias("TriggerWeaponGiver")
 public class TriggerWeaponGiver extends TriggerRespawning<RavenBot> {
-	private List<Vector2D> vecRLVB;
-	private List<Vector2D> vecRLVBTrans;
+	transient private List<Vector2D> vecRLVB;
+	transient private List<Vector2D> vecRLVBTrans;
 	
 	public TriggerWeaponGiver(Vector2D position, int radius, int respawnDelay) {
 		super(position, radius);
 		
 		setRespawnDelay(respawnDelay);
 
+		readResolve();
+	}
+	
+	private Object readResolve() {
 		// create the vertex buffer for the rocket shape
 		vecRLVB = new ArrayList<Vector2D>(8);
 		vecRLVB.add(new Vector2D(0, 3));
@@ -28,6 +35,8 @@ public class TriggerWeaponGiver extends TriggerRespawning<RavenBot> {
 		vecRLVB.add(new Vector2D(-1, 0));
 		vecRLVB.add(new Vector2D(-1, 2));
 		vecRLVB.add(new Vector2D(0, 3));
+		
+		return this;
 	}
 
 	@Override

@@ -5,7 +5,13 @@ import raven.math.Vector2D;
 
 public abstract class TriggerRespawning<T extends BaseGameEntity> extends Trigger<T> {
 	protected double numSecondsBetweenRespawns;
-	protected double numSecondsRemainingUntilRespawn;
+	transient protected double numSecondsRemainingUntilRespawn;
+	
+	private Object readResolve() {
+		numSecondsRemainingUntilRespawn = 0;
+		
+		return this;
+	}
 	
 	protected void deactivate() {
 		this.setInactive();

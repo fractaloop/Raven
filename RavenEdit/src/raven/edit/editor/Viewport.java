@@ -159,12 +159,12 @@ public class Viewport extends JPanel {
 		
 		// Render the guns
 		for(Trigger t : level.getTriggers()) {
-			if( t == null || t.pos() == null) continue;
+			if (t == null || t.pos() == null) continue;
 			
-			if( t instanceof TriggerHealthGiver) {
+			if (t instanceof TriggerHealthGiver) {
 				g2d.setPaint(Color.RED);
 			} 
-			else if ( t instanceof TriggerWeaponGiver ) {
+			else if (t instanceof TriggerWeaponGiver) {
 				if(t.entityType() == null) break;
 				switch(t.entityType()) {
 					case RAIL_GUN :

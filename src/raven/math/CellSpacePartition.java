@@ -2,6 +2,7 @@ package raven.math;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import raven.math.graph.GraphNode;
@@ -9,7 +10,7 @@ import raven.math.graph.GraphNode;
 public class CellSpacePartition<T extends GraphNode> implements Iterable<T> {
 	protected class Cell<E> {
 		/** all the entities inhabiting this cell */
-		public List<E> members;
+		public List<E> members = new LinkedList<E>();
 		
 		/** the cell's bounding box (it's inverted because the Window's
 		 * default co-ordinate system has a y axis that increases as it

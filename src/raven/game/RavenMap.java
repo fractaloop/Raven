@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 import raven.game.messaging.RavenMessage;
 import raven.game.navigation.NavGraphEdge;
 import raven.game.navigation.NavGraphNode;
@@ -22,6 +24,7 @@ import raven.script.RavenScript;
 import raven.ui.GameCanvas;
 import raven.utils.Pair;
 
+@XStreamAlias("RavenMap")
 public class RavenMap {
 	
 	/** the walls that comprise the current map's architecture. */
@@ -44,28 +47,28 @@ public class RavenMap {
 	private SparseGraph<NavGraphNode<Trigger<RavenBot>>, NavGraphEdge> navGraph;
 	
 	/** the graph nodes will be partitioned enabling fast lookup */
-	private CellSpacePartition<NavGraphNode<Trigger<RavenBot>>> spacePartition;
+	transient private CellSpacePartition<NavGraphNode<Trigger<RavenBot>>> spacePartition;
 	
 	/** the size of the search radius the cellspace partition uses when
 	 * looking for neighbors */
-	double cellSpaceNeighborhoodRange;
+	transient double cellSpaceNeighborhoodRange;
 	
 	int sizeX = 0;
 	int sizeY = 0;
 	
 	/* this will hold a pre-calculated lookup table of the cost to travel
 	 * from */
-	private Map<Pair<Integer, Integer>, Double> pathCosts;
+	transient private Map<Pair<Integer, Integer>, Double> pathCosts;
 
 	/** the path this file was loaded from. null if unsaved. */
-	private String path;
+	transient private String path;
 
 	/** the name of this map, as displayed to the user */
 	private String name;
 		
 	private void partitionNavGraph() {
 		spacePartition = new CellSpacePartition<NavGraphNode<Trigger<RavenBot>>>(sizeX, sizeY,
-				RavenScript.getInt("NumCellX"), RavenScript.getInt("NumCellsY"),
+				RavenScript.getInt("NumCellsX"), RavenScript.getInt("NumCellsY"),
 				navGraph.numNodes());
 		
 		// add the graph nodes to the space partition
@@ -154,6 +157,16 @@ public class RavenMap {
 		navGraph = new SparseGraph<NavGraphNode<Trigger<RavenBot>>, NavGraphEdge>();
 		spacePartition = new CellSpacePartition<NavGraphNode<Trigger<RavenBot>>>(0.0, 0.0, 0, 0, 0);
 		cellSpaceNeighborhoodRange = 0.0;
+	}
+	
+	private Object readResolve() {
+		cellSpaceNeighborhoodRange = navGraph.calculateAverageGraphEdgeLength() + 1;
+		
+		partitionNavGraph();
+		
+		pathCosts = navGraph.createAllPairsCostsTable();
+		
+		return this;
 	}
 	
 

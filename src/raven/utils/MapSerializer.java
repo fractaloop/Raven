@@ -14,7 +14,11 @@ import raven.game.RavenMap;
 import raven.game.navigation.NavGraphEdge;
 import raven.game.navigation.NavGraphNode;
 import raven.game.triggers.Trigger;
+import raven.game.triggers.TriggerHealthGiver;
+import raven.game.triggers.TriggerRegionCircle;
+import raven.game.triggers.TriggerRegionRectangle;
 import raven.game.triggers.TriggerSystem;
+import raven.game.triggers.TriggerWeaponGiver;
 import raven.math.CellSpacePartition;
 import raven.math.Vector2D;
 import raven.math.Wall2D;
@@ -33,17 +37,20 @@ public class MapSerializer {
 		XStream streamer = new XStream();
 		
 		//setup aliases to prevent fully qualified autogens, this is a purely cosmetic change
-		streamer.alias("RavenMap", RavenMap.class);
-		streamer.alias("Wall2D", Wall2D.class);
-		streamer.alias("RavenBot", RavenBot.class);
-		streamer.alias("Vector2D", Vector2D.class);
-		streamer.alias("RavenDoor", RavenDoor.class);
-		streamer.alias("SparseGraph", SparseGraph.class);
-		streamer.alias("CellSpacePartition", CellSpacePartition.class);
-		streamer.alias("Trigger", Trigger.class);
-		streamer.alias("TriggerSystem", TriggerSystem.class);
-		streamer.alias("NavGraphNode", NavGraphNode.class);
-		streamer.alias("NavGraphEdge", NavGraphEdge.class);
+		streamer.processAnnotations(RavenMap.class);
+		streamer.processAnnotations(Wall2D.class);
+		streamer.processAnnotations(RavenBot.class);
+		streamer.processAnnotations(Vector2D.class);
+		streamer.processAnnotations(RavenDoor.class);
+		streamer.processAnnotations(SparseGraph.class);
+		streamer.processAnnotations(Trigger.class);
+		streamer.processAnnotations(TriggerSystem.class);
+		streamer.processAnnotations(TriggerRegionCircle.class);
+		streamer.processAnnotations(TriggerRegionRectangle.class);
+		streamer.processAnnotations(TriggerHealthGiver.class);
+		streamer.processAnnotations(TriggerWeaponGiver.class);
+		streamer.processAnnotations(NavGraphNode.class);
+		streamer.processAnnotations(NavGraphEdge.class);
 		
 		return streamer;
 	}

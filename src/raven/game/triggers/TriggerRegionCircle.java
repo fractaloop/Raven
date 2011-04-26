@@ -1,7 +1,10 @@
 package raven.game.triggers;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 import raven.math.Vector2D;
 
+@XStreamAlias("TriggerRegionCircle")
 public class TriggerRegionCircle implements TriggerRegion {
 
 	private double radius;

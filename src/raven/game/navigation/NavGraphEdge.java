@@ -1,8 +1,11 @@
 package raven.game.navigation;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 import raven.math.graph.GraphEdge;
 import raven.math.graph.GraphNode;
 
+@XStreamAlias("NavGraphEdge")
 public class NavGraphEdge extends GraphEdge {
 	public static final int NORMAL	= 0;
 	public static final int SWIM	= 1 << 0;

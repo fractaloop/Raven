@@ -2,10 +2,13 @@ package raven.game.navigation;
 
 import java.io.Reader;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 import raven.math.Vector2D;
 import raven.math.graph.GraphEdge;
 import raven.math.graph.GraphNode;
 
+@XStreamAlias("NavGraphNode")
 public class NavGraphNode<T> extends GraphNode {
 	protected T extraInfo;
 	
