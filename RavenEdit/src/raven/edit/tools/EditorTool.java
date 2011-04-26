@@ -2,6 +2,8 @@ package raven.edit.tools;
 
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -18,7 +20,7 @@ import raven.edit.editor.ViewportDelegate;
 import raven.game.RavenMap;
 import raven.math.Vector2D;
 
-public abstract class EditorTool implements MouseInputListener, MouseWheelListener, KeyListener {
+public abstract class EditorTool implements MouseInputListener, MouseWheelListener, KeyListener, ComponentListener {
 	
 	protected ViewportDelegate delegate;
 	protected Viewport viewport;
@@ -27,7 +29,6 @@ public abstract class EditorTool implements MouseInputListener, MouseWheelListen
 	
 	
 	public EditorTool(ViewportDelegate delegate) {
-		// TODO Fix me
 		this.level = delegate.getLevel();
 		this.delegate = delegate;
 		
@@ -48,6 +49,7 @@ public abstract class EditorTool implements MouseInputListener, MouseWheelListen
 				viewport.removeMouseWheelListener(listener);
 		
 		// Add this new tool
+		viewport.addComponentListener(this);
 		viewport.addKeyListener(this);
 		viewport.addMouseListener(this);
 		viewport.addMouseMotionListener(this);
@@ -88,4 +90,8 @@ public abstract class EditorTool implements MouseInputListener, MouseWheelListen
 	public void mouseDragged(MouseEvent e) { }
 	public void mouseMoved(MouseEvent e) { }
 	public void mouseWheelMoved(MouseWheelEvent e) { }
+	public void componentHidden(ComponentEvent e) { }
+	public void componentMoved(ComponentEvent e) { viewport.repaint(); }
+	public void componentResized(ComponentEvent e) { viewport.repaint(); }
+	public void componentShown(ComponentEvent e) { viewport.repaint(); }
 }
