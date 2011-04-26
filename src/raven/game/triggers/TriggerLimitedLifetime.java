@@ -9,7 +9,7 @@ public abstract class TriggerLimitedLifetime<T extends BaseGameEntity> extends T
 	protected double lifetime;
 	
 	public TriggerLimitedLifetime(Vector2D position, int radius, double lifetime, Image img) {
-		super(null, position, radius);
+		super(position, radius);
 		this.lifetime = lifetime;
 	}
 	

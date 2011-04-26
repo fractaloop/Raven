@@ -14,7 +14,7 @@ public abstract class TriggerRespawning<T extends BaseGameEntity> extends Trigge
 	}
 	
 	public TriggerRespawning(Vector2D position, int radius) {
-		super(null, position, radius);
+		super(position, radius);
 		
 		numSecondsBetweenRespawns = 0;
 		numSecondsRemainingUntilRespawn = 0;

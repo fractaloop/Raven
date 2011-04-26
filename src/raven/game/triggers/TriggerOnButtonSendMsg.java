@@ -22,7 +22,7 @@ public class TriggerOnButtonSendMsg<T extends BaseGameEntity> extends Trigger<T>
 	 * @param target Target to send the message to
 	 */
 	public TriggerOnButtonSendMsg(Vector2D topLeft, Vector2D bottomRight, RavenMessage message, int target) {
-		super(null, null, 0);
+		super(null, 0);
 		addRectangularTriggerRegion(topLeft, bottomRight);
 		msgToSend = message;
 		

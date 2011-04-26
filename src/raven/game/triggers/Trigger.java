@@ -13,8 +13,6 @@ public abstract class Trigger<T extends BaseGameEntity> extends BaseGameEntity {
 	
 	private boolean removeFromGame;
 	
-	private Image triggerImage;
-	
 	private boolean active;
 	
 	private int graphNodeIndex;
@@ -50,9 +48,9 @@ public abstract class Trigger<T extends BaseGameEntity> extends BaseGameEntity {
 	 * @param centerPoint Center point of the trigger.
 	 * @param radius The radius of the trigger circle.
 	 */
-	public Trigger(Image img, Vector2D centerPoint, int radius) {
+	public Trigger(Vector2D centerPoint, int radius) {
 		super(EntityManager.getAvailableID());
-		triggerImage = img;
+
 		if(centerPoint != null) {
 			regionOfInfluence = new TriggerRegionCircle(centerPoint, radius);
 		}
