@@ -5,16 +5,25 @@ import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Polygon;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Line2D;
+import java.awt.geom.Path2D;
+import java.awt.geom.Point2D;
 
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
 import raven.edit.editor.ViewportDelegate;
+import raven.game.RavenBot;
 import raven.game.RavenObject;
+import raven.game.navigation.NavGraphEdge;
+import raven.game.navigation.NavGraphNode;
+import raven.game.triggers.Trigger;
 import raven.math.Vector2D;
+import raven.math.graph.SparseGraph;
 
 public class GraphTool extends EditorTool {
 
@@ -28,7 +37,7 @@ public class GraphTool extends EditorTool {
 	}
 	
 	// EditorTool needs 
-
+	
 	@Override
 	public void paintComponent(Graphics g) {
 		Graphics2D g2d = (Graphics2D)g;
@@ -41,15 +50,6 @@ public class GraphTool extends EditorTool {
 		}
 	}
 	
-	@Override
-	public void keyPressed(KeyEvent e) {
-		switch (e.getKeyCode()) {
-		case KeyEvent.VK_ENTER:
-			if (levelCursor != null)
-				System.out.println("Graph stuff not implemented.");
-		}
-}
-
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		viewport.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
@@ -73,8 +73,18 @@ public class GraphTool extends EditorTool {
 			popup.add(item);
 			popup.show(e.getComponent(), e.getX(), e.getY());
 		} else if (e.getButton() == MouseEvent.BUTTON1) {
-			// TODO Insert graph node
-			System.err.println("GraphTool not implmented yet!");
+			// Ugliest return type ever!
+			SparseGraph<NavGraphNode<Trigger<RavenBot>>, NavGraphEdge> navGraph;
+			navGraph = level.getNavGraph();
+			
+			level.getNavGraph().addNode(
+					new NavGraphNode<Trigger<RavenBot>>(
+							level.getNavGraph().getNextFreeNodeIndex(),
+							viewToLevel(e.getPoint())));
+			
+			delegate.updateStatus("Added graph node at (" + viewToLevel(e.getPoint()).x + ", " + viewToLevel(e.getPoint()).y + ")");
+			
+			viewport.repaint();
 		}
 
 		e.consume();

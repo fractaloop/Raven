@@ -139,6 +139,31 @@ public class Viewport extends JPanel {
 			}
 			g2d.fill(new Ellipse2D.Double(t.pos().x - 7, t.pos().y - 7, 14, 14));	
 		}
+		
+		// Draw the graph nodes
+		for (int i = 0; i < delegate.getLevel().getNavGraph().numNodes(); i++) {
+			final double radius = 5.0;
+			Path2D diamond = new Path2D.Double();
+			Point2D point;
+			
+			Vector2D node_pos = level.getNavGraph().getNode(i).pos();	
+			point = levelToView(node_pos.add(new Vector2D(radius, 0)));
+			diamond.moveTo(point.getX(), point.getY());
+			point = levelToView(node_pos.add(new Vector2D(0, radius)));
+			diamond.lineTo(point.getX(), point.getY());
+			point = levelToView(node_pos.add(new Vector2D(-radius, 0)));
+			diamond.lineTo(point.getX(), point.getY());
+			point = levelToView(node_pos.add(new Vector2D(0, -radius)));
+			diamond.lineTo(point.getX(), point.getY());
+			point = levelToView(node_pos.add(new Vector2D(radius, 0)));
+			diamond.lineTo(point.getX(), point.getY());
+			
+			g2d.setPaint(Color.WHITE);
+			g2d.fill(diamond);
+			g2d.setColor(Color.CYAN);
+			g2d.draw(diamond);
+		}
+		
 		tool.paintComponent(g);
 	}
 
