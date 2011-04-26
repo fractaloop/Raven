@@ -36,6 +36,7 @@ public class C2DMatrix {
 	}
 
 	public C2DMatrix() {
+		matrix = new Matrix();
 		identity();
 	}
 
