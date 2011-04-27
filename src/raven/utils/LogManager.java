@@ -40,6 +40,8 @@ public class LogManager {
 		try {
 			FileWriter writer = new FileWriter(logFile);
 			writer.write(level + ":\t" + toWrite + "\n");
+			writer.flush();
+			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -49,6 +51,8 @@ public class LogManager {
 		try {
 			FileWriter writer = new FileWriter(logFile);
 			writer.write(LogLevel.INFO + ":\t" + toWrite + "\n");
+			writer.flush();
+			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -59,6 +63,8 @@ public class LogManager {
 			FileWriter writer = new FileWriter(logFile);
 			writer.write(LogLevel.INFO + ":\t" + toWrite + "\n");
 			writer.write(ex.getLocalizedMessage());
+			writer.flush();
+			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -68,6 +74,8 @@ public class LogManager {
 		try {
 			FileWriter writer = new FileWriter(logFile);
 			writer.write(LogLevel.DEBUG + ":\t" + toWrite + "\n");
+			writer.flush();
+			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -78,6 +86,8 @@ public class LogManager {
 			FileWriter writer = new FileWriter(logFile);
 			writer.write(LogLevel.DEBUG + ":\t" + toWrite + "\n");
 			writer.write(ex.getLocalizedMessage());
+			writer.flush();
+			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -87,6 +97,8 @@ public class LogManager {
 		try {
 			FileWriter writer = new FileWriter(logFile);
 			writer.write(LogLevel.WARN + ":\t" + toWrite + "\n");
+			writer.flush();
+			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -97,6 +109,8 @@ public class LogManager {
 			FileWriter writer = new FileWriter(logFile);
 			writer.write(LogLevel.WARN + ":\t" + toWrite + "\n");
 			writer.write(ex.getLocalizedMessage());
+			writer.flush();
+			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -106,6 +120,8 @@ public class LogManager {
 		try {
 			FileWriter writer = new FileWriter(logFile);
 			writer.write(LogLevel.WARN + ":\t" + toWrite + "\n");
+			writer.flush();
+			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -116,6 +132,8 @@ public class LogManager {
 			FileWriter writer = new FileWriter(logFile);
 			writer.write(LogLevel.WARN + ":\t" + toWrite + "\n");
 			writer.write(ex.getLocalizedMessage());
+			writer.flush();
+			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
