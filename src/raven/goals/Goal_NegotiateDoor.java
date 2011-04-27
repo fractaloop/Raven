@@ -23,21 +23,21 @@ public class Goal_NegotiateDoor extends GoalComposite<RavenBot> {
 		removeAllSubgoals();
 
 		//get the position of the closest navigable switch
-		Vector2D posSw = getM_pOwner().getWorld().getPosOfClosestSwitch(getM_pOwner().pos(),
+		Vector2D posSw = m_pOwner.getWorld().getPosOfClosestSwitch(m_pOwner.pos(),
 				mine.DoorID());
 
 		//because goals are *pushed* onto the front of the subgoal list they must
 		//be added in reverse order.
 
 		//first the goal to traverse the edge that passes through the door
-		AddSubgoal(new Goal_TraverseEdge(getM_pOwner(), mine, m_bLastEdgeInPath));
+		AddSubgoal(new Goal_TraverseEdge(m_pOwner, mine, m_bLastEdgeInPath));
 
 		//next, the goal that will move the bot to the beginning of the edge that
 		//passes through the door
-		AddSubgoal(new Goal_MoveToPosition(getM_pOwner(), mine.Source()));
+		AddSubgoal(new Goal_MoveToPosition(m_pOwner, mine.Source()));
 
 		//finally, the Goal that will direct the bot to the location of the switch
-		AddSubgoal(new Goal_MoveToPosition(getM_pOwner(), posSw));
+		AddSubgoal(new Goal_MoveToPosition(m_pOwner, posSw));
 
 	}
 

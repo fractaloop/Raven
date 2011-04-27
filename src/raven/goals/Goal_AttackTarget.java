@@ -19,7 +19,7 @@ public class Goal_AttackTarget extends GoalComposite<RavenBot> {
 
 		//it is possible for a bot's target to die whilst this goal is active so we
 		//must test to make sure the bot always has an active target
-		if (!getM_pOwner().getTargetSys().isTargetPresent())
+		if (!m_pOwner.getTargetSys().isTargetPresent())
 		{
 			m_iStatus = Goal.curStatus.completed;
 			return;
@@ -27,26 +27,26 @@ public class Goal_AttackTarget extends GoalComposite<RavenBot> {
 
 		//if the bot is able to shoot the target (there is LOS between bot and
 		//target), then select a tactic to follow while shooting
-		if (getM_pOwner().getTargetSys().isTargetShootable())
+		if (m_pOwner.getTargetSys().isTargetShootable())
 		{
 			//if the bot has space to strafe then do so
 			Vector2D dummy = new Vector2D();
-			if (getM_pOwner().canStepLeft(dummy) || getM_pOwner().canStepRight(dummy))
+			if (m_pOwner.canStepLeft(dummy) || m_pOwner.canStepRight(dummy))
 			{
-				AddSubgoal(new Goal_DodgeSideToSide(getM_pOwner()));
+				AddSubgoal(new Goal_DodgeSideToSide(m_pOwner));
 			}
 
 			//if not able to strafe, head directly at the target's position 
 			else
 			{
-				AddSubgoal(new Goal_SeekToPosition(getM_pOwner(), getM_pOwner().getTargetBot().pos()));
+				AddSubgoal(new Goal_SeekToPosition(m_pOwner, m_pOwner.getTargetBot().pos()));
 			}
 		}
 
 		//if the target is not visible, go hunt it.
 		else
 		{
-			AddSubgoal(new Goal_HuntTarget(getM_pOwner()));
+			AddSubgoal(new Goal_HuntTarget(m_pOwner));
 		}
 
 

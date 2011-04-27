@@ -28,9 +28,9 @@ public class Goal_MoveToPosition extends GoalComposite<RavenBot>{
 		//before a path is calculated. Consequently, for appearances sake, it just
 		//seeks directly to the target position whilst it's awaiting notification
 		//that the path planning request has succeeded/failed
-		if (getM_pOwner().getPathPlanner().RequestPathToPosition(m_vDestination))
+		if (m_pOwner.getPathPlanner().RequestPathToPosition(m_vDestination))
 		{
-			AddSubgoal(new Goal_SeekToPosition(getM_pOwner(), m_vDestination));
+			AddSubgoal(new Goal_SeekToPosition(m_pOwner, m_vDestination));
 		}
 
 
@@ -69,8 +69,8 @@ public class Goal_MoveToPosition extends GoalComposite<RavenBot>{
 				//clear any existing goals
 				removeAllSubgoals();
 
-				AddSubgoal(new Goal_FollowPath(getM_pOwner(),
-						getM_pOwner().getPathPlanner().getPath()));
+				AddSubgoal(new Goal_FollowPath(m_pOwner,
+						m_pOwner.getPathPlanner().getPath()));
 
 				return true; //msg handled
 

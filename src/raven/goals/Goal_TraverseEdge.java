@@ -23,7 +23,7 @@ public class Goal_TraverseEdge extends GoalComposite<RavenBot> {
 	boolean isStuck(){
 		double TimeTaken = System.nanoTime()*1000 - m_dStartTime;
 		if (TimeTaken > m_dTimeExpected){
-			System.out.println("BOT "  + getM_pOwner().ID() + " IS STUCK!!");
+			System.out.println("BOT "  + m_pOwner.ID() + " IS STUCK!!");
 
 
 			return true;
@@ -56,14 +56,14 @@ public class Goal_TraverseEdge extends GoalComposite<RavenBot> {
 		{
 		case NavGraphEdge.SWIM:
 		{
-			getM_pOwner().setMaxSpeed(RavenScript.getDouble("Bot_MaxSwimmingSpeed"));
+			m_pOwner.setMaxSpeed(RavenScript.getDouble("Bot_MaxSwimmingSpeed"));
 		}
 
 		break;
 
 		case NavGraphEdge.CRAWL:
 		{
-			getM_pOwner().setMaxSpeed(RavenScript.getDouble("Bot_MaxCrawlingSpeed"));
+			m_pOwner.setMaxSpeed(RavenScript.getDouble("Bot_MaxCrawlingSpeed"));
 		}
 
 		break;
@@ -75,7 +75,7 @@ public class Goal_TraverseEdge extends GoalComposite<RavenBot> {
 
 		//calculate the expected time required to reach the this waypoint. This value
 		//is used to determine if the bot becomes stuck 
-		m_dTimeExpected = getM_pOwner().calculateTimeToReachPosition(m_Edge.Destination());
+		m_dTimeExpected = m_pOwner.calculateTimeToReachPosition(m_Edge.Destination());
 
 		//factor in a margin of error for any reactive behavior
 		double MarginOfError = 2.0;
@@ -84,18 +84,18 @@ public class Goal_TraverseEdge extends GoalComposite<RavenBot> {
 
 
 		//set the steering target
-		getM_pOwner().getSteering().setTarget(m_Edge.Destination());
+		m_pOwner.getSteering().setTarget(m_Edge.Destination());
 
 		//Set the appropriate steering behavior. If this is the last edge in the path
 		//the bot should arrive at the position it points to, else it should seek
 		if (m_bLastEdgeInPath)
 		{
-			getM_pOwner().getSteering().arriveOn();
+			m_pOwner.getSteering().arriveOn();
 		}
 
 		else
 		{
-			getM_pOwner().getSteering().seekOn();
+			m_pOwner.getSteering().seekOn();
 		}
 
 	}
@@ -113,7 +113,7 @@ public class Goal_TraverseEdge extends GoalComposite<RavenBot> {
 		//if the bot has reached the end of the edge return completed
 		else
 		{ 
-			if (getM_pOwner().isAtPosition(m_Edge.Destination()))
+			if (m_pOwner.isAtPosition(m_Edge.Destination()))
 			{
 				m_iStatus = Goal.curStatus.completed;
 			}
@@ -125,11 +125,11 @@ public class Goal_TraverseEdge extends GoalComposite<RavenBot> {
 
 	public void terminate(){
 		//turn off steering behaviors.
-		getM_pOwner().getSteering().seekOff();
-		getM_pOwner().getSteering().arriveOff();
+		m_pOwner.getSteering().seekOff();
+		m_pOwner.getSteering().arriveOff();
 
 		//return max speed back to normal
-		getM_pOwner().setMaxSpeed(RavenScript.getDouble("Bot_MaxSpeed"));
+		m_pOwner.setMaxSpeed(RavenScript.getDouble("Bot_MaxSpeed"));
 
 	}
 
@@ -138,7 +138,7 @@ public class Goal_TraverseEdge extends GoalComposite<RavenBot> {
 		if (m_iStatus == Goal.curStatus.active)
 		{
 			GameCanvas.bluePen();
-			GameCanvas.line(getM_pOwner().pos(), m_Edge.Destination());
+			GameCanvas.line(m_pOwner.pos(), m_Edge.Destination());
 			GameCanvas.greenBrush();
 			GameCanvas.blackPen();
 			GameCanvas.circle(m_Edge.Destination(), 3);

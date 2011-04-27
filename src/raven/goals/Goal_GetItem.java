@@ -52,11 +52,11 @@ public class Goal_GetItem extends GoalComposite<RavenBot> {
 			//  m_pGiverTrigger = 0; NEED TO ASSIGN TRIGGER HERE
 
 			//request a path to the item
-			getM_pOwner().getPathPlanner().requestPathToItem(m_iItemToGet.toInteger());
+			m_pOwner.getPathPlanner().requestPathToItem(m_iItemToGet.toInteger());
 
 			//the bot may have to wait a few update cycles before a path is calculated
 			//so for appearances sake it just wanders
-			AddSubgoal(new Goal_Wander(getM_pOwner()));
+			AddSubgoal(new Goal_Wander(m_pOwner));
 
 		}
 	}
@@ -77,7 +77,7 @@ public class Goal_GetItem extends GoalComposite<RavenBot> {
 				//clear any existing goals
 				removeAllSubgoals();
 
-				AddSubgoal(new Goal_FollowPath(getM_pOwner(), getM_pOwner().getPathPlanner().getPath()));
+				AddSubgoal(new Goal_FollowPath(m_pOwner, m_pOwner.getPathPlanner().getPath()));
 
 				//get the pointer to the item
 				m_pGiverTrigger = (Trigger<RavenBot>) msg.extraInfo;
@@ -122,7 +122,7 @@ public class Goal_GetItem extends GoalComposite<RavenBot> {
 		{
 			if (m_pGiverTrigger != null &&
 					!m_pGiverTrigger.isActive() &&
-					getM_pOwner().hasLOSto(m_pGiverTrigger.pos()) )
+					m_pOwner.hasLOSto(m_pGiverTrigger.pos()) )
 			{
 				return true;
 			}

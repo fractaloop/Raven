@@ -37,7 +37,7 @@ public class Goal_FollowPath extends GoalComposite<RavenBot> {
 		switch(edge.Behavior()){
 		case NavGraphEdge.NORMAL:
 		{
-			AddSubgoal(new Goal_TraverseEdge(getM_pOwner(), edge, m_Path.isEmpty()));
+			AddSubgoal(new Goal_TraverseEdge(m_pOwner, edge, m_Path.isEmpty()));
 		}
 
 		break;
@@ -46,7 +46,7 @@ public class Goal_FollowPath extends GoalComposite<RavenBot> {
 		{
 
 			//also add a goal that is able to handle opening the door
-			AddSubgoal(new Goal_NegotiateDoor(getM_pOwner(), edge, m_Path.isEmpty()));
+			AddSubgoal(new Goal_NegotiateDoor(m_pOwner, edge, m_Path.isEmpty()));
 		}
 
 		break;

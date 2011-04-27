@@ -20,7 +20,7 @@ public class Goal_SeekToPosition extends GoalComposite<RavenBot> {
 
 		if (TimeTaken > m_dTimeToReachPos)
 		{
-			System.out.println("BOT "  + getM_pOwner().ID() + " IS STUCK!!");
+			System.out.println("BOT "  + m_pOwner.ID() + " IS STUCK!!");
 
 			return true;
 		}
@@ -42,7 +42,7 @@ public class Goal_SeekToPosition extends GoalComposite<RavenBot> {
 		m_dStartTime = System.nanoTime()*1000;    
 
 		//This value is used to determine if the bot becomes stuck 
-		m_dTimeToReachPos = getM_pOwner().calculateTimeToReachPosition(m_vPosition);
+		m_dTimeToReachPos = m_pOwner.calculateTimeToReachPosition(m_vPosition);
 
 		//factor in a margin of error for any reactive behavior
 		double MarginOfError = 1.0;
@@ -50,9 +50,9 @@ public class Goal_SeekToPosition extends GoalComposite<RavenBot> {
 		m_dTimeToReachPos += MarginOfError;
 
 
-		getM_pOwner().getSteering().setTarget(m_vPosition);
+		m_pOwner.getSteering().setTarget(m_vPosition);
 
-		getM_pOwner().getSteering().seekOn();
+		m_pOwner.getSteering().seekOn();
 
 	}
 
@@ -69,7 +69,7 @@ public class Goal_SeekToPosition extends GoalComposite<RavenBot> {
 		//test to see if the bot has reached the waypoint. If so terminate the goal
 		else
 		{ 
-			if (getM_pOwner().isAtPosition(m_vPosition))
+			if (m_pOwner.isAtPosition(m_vPosition))
 			{
 				m_iStatus = Goal.curStatus.completed;
 			}
@@ -79,8 +79,8 @@ public class Goal_SeekToPosition extends GoalComposite<RavenBot> {
 	}
 
 	public void terminate(){
-		getM_pOwner().getSteering().seekOff();
-		getM_pOwner().getSteering().arriveOff();
+		m_pOwner.getSteering().seekOff();
+		m_pOwner.getSteering().arriveOff();
 
 		m_iStatus = Goal.curStatus.completed;
 	}

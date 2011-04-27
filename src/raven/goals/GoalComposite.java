@@ -15,7 +15,6 @@ abstract public class GoalComposite<T extends BaseGameEntity> extends Goal<T> {
 	}
 
 	public ArrayList <Goal<T> > m_SubGoals;
-	private RavenBot m_pOwner;
 
 	public raven.goals.Goal.curStatus ProcessSubgoals(){ 
 		//remove all completed and failed goals from the front of the subgoal list
@@ -98,14 +97,4 @@ abstract public class GoalComposite<T extends BaseGameEntity> extends Goal<T> {
 			m_SubGoals.get(0).render();
 		}
 	}
-
-	public void setM_pOwner(RavenBot m_pOwner) {
-		this.m_pOwner = m_pOwner;
-	}
-
-	public RavenBot getM_pOwner() {
-		return m_pOwner;
-	}
-
-
 }

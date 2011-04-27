@@ -26,23 +26,23 @@ public class Goal_HuntTarget extends GoalComposite<RavenBot> {
 
 		//it is possible for the target to die whilst this goal is active so we
 		//must test to make sure the bot always has an active target
-		if (getM_pOwner().getTargetSys().isTargetPresent())
+		if (m_pOwner.getTargetSys().isTargetPresent())
 		{
 			//grab a local copy of the last recorded position (LRP) of the target
-			Vector2D lrp = getM_pOwner().getTargetSys().getLastRecordedPosition();
+			Vector2D lrp = m_pOwner.getTargetSys().getLastRecordedPosition();
 
 			//if the bot has reached the LRP and it still hasn't found the target
 			//it starts to search by using the explore goal to move to random
 			//map locations
-			if (lrp.isZero() || getM_pOwner().isAtPosition(lrp))
+			if (lrp.isZero() || m_pOwner.isAtPosition(lrp))
 			{
-				AddSubgoal(new Goal_Explore(getM_pOwner()));
+				AddSubgoal(new Goal_Explore(m_pOwner));
 			}
 
 			//else move to the LRP
 			else
 			{
-				AddSubgoal(new Goal_MoveToPosition(getM_pOwner(), lrp));
+				AddSubgoal(new Goal_MoveToPosition(m_pOwner, lrp));
 			}
 		}
 
@@ -67,7 +67,7 @@ public class Goal_HuntTarget extends GoalComposite<RavenBot> {
 		m_iStatus = ProcessSubgoals();
 
 		//if target is in view this goal is satisfied
-		if (getM_pOwner().getTargetSys().isTargetWithinFOV())
+		if (m_pOwner.getTargetSys().isTargetWithinFOV())
 		{
 			m_iStatus = Goal.curStatus.completed;
 		}
@@ -90,11 +90,11 @@ public class Goal_HuntTarget extends GoalComposite<RavenBot> {
 	public void render() {
 		//#define SHOW_LAST_RECORDED_POSITION
 		//render last recorded position as a green circle
-		if (getM_pOwner().getTargetSys().isTargetPresent())
+		if (m_pOwner.getTargetSys().isTargetPresent())
 		{
 			GameCanvas.greenBrush();
 			GameCanvas.redBrush();
-			GameCanvas.circle(getM_pOwner().getTargetSys().getLastRecordedPosition(), 3);
+			GameCanvas.circle(m_pOwner.getTargetSys().getLastRecordedPosition(), 3);
 		}
 
 		if (!m_SubGoals.isEmpty())

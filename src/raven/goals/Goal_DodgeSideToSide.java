@@ -35,14 +35,14 @@ public class Goal_DodgeSideToSide extends GoalComposite<RavenBot> {
 	public void activate(){
 		m_iStatus = Goal.curStatus.active;
 
-		getM_pOwner().getSteering().seekOn();
+		m_pOwner.getSteering().seekOn();
 
 
 		if (m_bClockwise)
 		{
-			if (getM_pOwner().canStepRight(m_vStrafeTarget))
+			if (m_pOwner.canStepRight(m_vStrafeTarget))
 			{
-				getM_pOwner().getSteering().setTarget(m_vStrafeTarget);
+				m_pOwner.getSteering().setTarget(m_vStrafeTarget);
 			}
 			else
 			{
@@ -54,9 +54,9 @@ public class Goal_DodgeSideToSide extends GoalComposite<RavenBot> {
 
 		else
 		{
-			if (getM_pOwner().canStepLeft(m_vStrafeTarget))
+			if (m_pOwner.canStepLeft(m_vStrafeTarget))
 			{
-				getM_pOwner().getSteering().setTarget(m_vStrafeTarget);
+				m_pOwner.getSteering().setTarget(m_vStrafeTarget);
 			}
 			else
 			{
@@ -76,14 +76,14 @@ public class Goal_DodgeSideToSide extends GoalComposite<RavenBot> {
 		activateIfInactive(); 
 
 		//if target goes out of view terminate
-		if (!getM_pOwner().getTargetSys().isTargetWithinFOV())
+		if (!m_pOwner.getTargetSys().isTargetWithinFOV())
 		{
 			m_iStatus = Goal.curStatus.completed;
 		}
 
 		//else if bot reaches the target position set status to inactive so the goal 
 		//is reactivated on the next update-step
-		else if (getM_pOwner().isAtPosition(m_vStrafeTarget))
+		else if (m_pOwner.isAtPosition(m_vStrafeTarget))
 		{
 			m_iStatus = Goal.curStatus.inactive;
 		}
@@ -95,13 +95,13 @@ public class Goal_DodgeSideToSide extends GoalComposite<RavenBot> {
 		GameCanvas.orangePen();
 		GameCanvas.hollowBrush();
 
-		GameCanvas.line(getM_pOwner().pos(), m_vStrafeTarget);
+		GameCanvas.line(m_pOwner.pos(), m_vStrafeTarget);
 		GameCanvas.circle(m_vStrafeTarget, 3);
 	}
 
 
 	public void Terminate(){
-		getM_pOwner().getSteering().seekOff();
+		m_pOwner.getSteering().seekOff();
 	}
 
 
