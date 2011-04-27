@@ -266,7 +266,7 @@ public class RavenMap {
 
 	public void render() {
 		//draw basic background
-		GameCanvas.whitePen();
+		GameCanvas.whiteBrush();
 		int offset = 20;
 		GameCanvas.filledRect(0, offset, sizeX, sizeY+offset);
 		

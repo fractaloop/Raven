@@ -343,15 +343,6 @@ public class SparseGraph<NodeType extends GraphNode, EdgeType extends GraphEdge>
 	}
 
 	public void render(boolean showNodeIndices) {
-		// TODO Auto-generated method stub
-		
-		//Iterate over list of walls, drawing lines from point to point.
-		if(nodes == null) return;
-		GameCanvas.bluePen();
-		for(NodeType node : nodes) {
-			GameCanvas.circle(node.pos(), 2);
-		}
-		
 		if(edges == null) return;
 		GameCanvas.redPen();
 		for(List<EdgeType> edgesByNode : edges) {
@@ -360,6 +351,12 @@ public class SparseGraph<NodeType extends GraphNode, EdgeType extends GraphEdge>
 				NodeType to = nodes.get(edge.to);
 				GameCanvas.line(from.pos(), to.pos());
 			}
+		}
+
+		if(nodes == null) return;
+		GameCanvas.bluePen();
+		for(NodeType node : nodes) {
+			GameCanvas.circle(node.pos(), 2);
 		}
 	}
 }

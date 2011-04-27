@@ -63,7 +63,7 @@ public class TriggerWeaponGiver extends TriggerRespawning<RavenBot> {
 				GameCanvas.brownPen();
 				final double size = 3;
 				GameCanvas.filledCircle(pos().x - size, pos().y, size);
-				GameCanvas.circle(pos().x + size, pos().y, size);
+				GameCanvas.filledCircle(pos().x + size, pos().y, size);
 				break;
 			case ROCKET_LAUNCHER:
 				Vector2D facing = new Vector2D(-1, 0);
