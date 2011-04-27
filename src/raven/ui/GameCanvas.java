@@ -29,6 +29,10 @@ public class GameCanvas extends Canvas {
 	
 	private int width, height;
 	
+	private Color pen, brush;
+	
+	private float stroke;
+	
 	private GameCanvas() {
     	// Don't redraw on requests
     	setIgnoreRepaint(true);
@@ -36,6 +40,10 @@ public class GameCanvas extends Canvas {
 		// Ask for input
 		setFocusable(true);
 		requestFocus();
+		
+		brush = null;
+		pen = Color.BLACK;
+		stroke = 1;
 	}
 	
 	///////////////////////
@@ -88,21 +96,15 @@ public class GameCanvas extends Canvas {
 	// Pens are the lines, brushes are the fills.
 	
 	protected static void lineColor(Color color) {
-		if (getInstance().g2d != null) {
-			getInstance().g2d.setColor(color);
-		}
+		getInstance().pen = color;
 	}
 	
 	protected static void lineWidth(int width) {
-		if (getInstance().g2d != null) {
-			getInstance().g2d.setStroke(new BasicStroke(width));
-		}
+		getInstance().stroke = width;
 	}
 	
 	protected static void fillWith(Color color) {
-		if (getInstance().g2d != null) {
-			getInstance().g2d.setPaint(color);
-		}		
+		getInstance().brush = color;		
 	}
 	
 	public static void blackPen() { lineColor(Color.BLACK); lineWidth(1); }
@@ -184,6 +186,8 @@ public class GameCanvas extends Canvas {
 
 	public static void line(int x1, int y1, int x2, int y2) {
 		Graphics2D g = getInstance().g2d;
+		g.setStroke(new BasicStroke(getInstance().stroke));
+		g.setColor(getInstance().pen);
 		g.drawLine(x1, y1, x2, y2);
 	}
 	
@@ -226,7 +230,12 @@ public class GameCanvas extends Canvas {
 	}
 	
 	public static void rect(int left, int top, int right, int bottom) {
-		getInstance().g2d.drawRect(left, top, right - left, bottom - top);
+		Graphics2D g = getInstance().g2d;
+		g.setPaint(getInstance().brush);
+		g.fillRect(left, top, right - left, bottom - top);
+		g.setStroke(new BasicStroke(getInstance().stroke));
+		g.setColor(getInstance().pen);
+		g.drawRect(left, top, right - left, bottom - top);
 	}
 	
 	public static void closedShape(List<Vector2D> points) {
@@ -236,7 +245,9 @@ public class GameCanvas extends Canvas {
 	}
 	
 	public static void filledRect(int left, int top, int right, int bottom){
-		getInstance().g2d.fillRect(left, top, right, bottom);
+		Graphics2D g = getInstance().g2d;
+		g.setPaint(getInstance().brush);
+		g.fillRect(left, top, right - left, bottom - top);
 	}
 	
 	public static void circle(Vector2D pos, double radius) {
@@ -244,26 +255,37 @@ public class GameCanvas extends Canvas {
 	}
 	
 	public static void filledCircle(Vector2D center, double rad) {
+		Graphics2D g = getInstance().g2d;
+		g.setPaint(getInstance().brush);
 		getInstance().g2d.fillOval((int)(center.x-rad), (int)(center.y-rad), (int)(2*rad), (int)(2*rad));
+		g.setStroke(new BasicStroke(getInstance().stroke));
+		g.setColor(getInstance().pen);
+		getInstance().g2d.drawOval((int)(center.x-rad), (int)(center.y-rad), (int)(2*rad), (int)(2*rad));
 	}
 	
 	public static void filledCircle(double centerX, double centerY, double rad) {
+		Graphics2D g = getInstance().g2d;
+		g.setPaint(getInstance().brush);
 		getInstance().g2d.fillOval((int)(centerX-rad), (int)(centerY-rad), (int)(2*rad), (int)(2*rad));
+		g.setStroke(new BasicStroke(getInstance().stroke));
+		g.setColor(getInstance().pen);
+		getInstance().g2d.drawOval((int)(centerX-rad), (int)(centerY-rad), (int)(2*rad), (int)(2*rad));
 	}
 	
 	public static void circle(double x, double y, double radius) {
-		getInstance().g2d.draw(new Ellipse2D.Double(x - radius, y - radius, x + radius, y + radius));
-	}
-	
-	public static void setColor(Color color) {
-		getInstance().g2d.setColor(color);
+		Graphics2D g = getInstance().g2d;
+		g.setPaint(getInstance().brush);
+		getInstance().g2d.draw(new Ellipse2D.Double(x - radius, y - radius, 2 * radius, 2 * radius));
+		g.setStroke(new BasicStroke(getInstance().stroke));
+		g.setColor(getInstance().pen);
+		getInstance().g2d.draw(new Ellipse2D.Double(x - radius, y - radius, 2 * radius, 2 * radius));
 	}
 
 	public static void transparentText() {
-		// TODO Auto-generated method stub
+		hollowBrush();
 	}
 
-	public static void textColor(int i, int j, int k) {
-		// TODO Auto-generated method stub
+	public static void textColor(int r, int g, int b) {
+		getInstance().pen = new Color(r, g, b);
 	}
 }
