@@ -20,6 +20,8 @@ import raven.game.RavenObject;
 import raven.math.Vector2D;
 import raven.ui.GameCanvas;
 import raven.ui.KeyState;
+import raven.utils.LogManager;
+import raven.utils.LogManager.LogLevel;
 
 public class Raven extends JFrame implements KeyListener, MouseListener, ComponentListener {
 	/**
@@ -49,10 +51,13 @@ public class Raven extends JFrame implements KeyListener, MouseListener, Compone
 	}
 	
 	private Raven() {
+		log(LogLevel.INFO, "Starting new Raven Game.");
 		// Ensure we have the right size
     	width = game.getMap().getSizeX();
     	height = game.getMap().getSizeY();
 		
+    	log(LogLevel.INFO, "Game dimensions:\t" + width + " x " + height);
+    	
 		// Get the frame's content and use it for the game
     	JPanel panel = (JPanel)this.getContentPane();
     	panel.setPreferredSize(new Dimension(width, height));
@@ -84,8 +89,15 @@ public class Raven extends JFrame implements KeyListener, MouseListener, Compone
     	keys = new KeyState();
     	addKeyListener(keys);
     }
+
+	private void log(LogLevel l, String s) {
+		LogManager.GetInstance().Log(l, s);
+	}
     
     public void gameLoop() {
+    	
+    	log(LogLevel.INFO, "Starting Main Game Loop");
+    	
     	long lastTime = System.nanoTime();
     	
     	while (true) {
@@ -154,31 +166,40 @@ public class Raven extends JFrame implements KeyListener, MouseListener, Compone
 	public void keyTyped(KeyEvent event) {
 		switch (event.getKeyCode()) {
 		case KeyEvent.VK_ESCAPE:
+			log(LogLevel.INFO, "user pressed ESC to exit game.");
 			this.setVisible(false);
 			this.dispose();
 			break;
 		case KeyEvent.VK_P:
+			log(LogLevel.INFO, "user pressed P to pause game.");
 			game.togglePause();
 			break;
 		case KeyEvent.VK_1:
+			log(LogLevel.INFO, "user pressed 1 to select Blaster on possessed bot.");
 			game.changeWeaponOfPossessedBot(RavenObject.BLASTER);
 			break;
 		case KeyEvent.VK_2:
+			log(LogLevel.INFO, "user pressed 2 to select Shotgun on possessed bot.");
 			game.changeWeaponOfPossessedBot(RavenObject.SHOTGUN);
 			break;
 		case KeyEvent.VK_3:
+			log(LogLevel.INFO, "user pressed 3 to select Rocket Launcher on possessed bot.");
 			game.changeWeaponOfPossessedBot(RavenObject.ROCKET_LAUNCHER);
 			break;
 		case KeyEvent.VK_4:
+			log(LogLevel.INFO, "user pressed 4 to select Railgun on possessed bot.");
 			game.changeWeaponOfPossessedBot(RavenObject.RAIL_GUN);
 			break;
 		case KeyEvent.VK_X:
+			log(LogLevel.INFO, "user pressed x to select remove control of any possessed bots.");
 			game.exorciseAnyPossessedBot();
 			break;
 		case KeyEvent.VK_UP:
+			log(LogLevel.INFO, "user pressed UP to add a new bot.");
 			game.addBots(1);
 			break;
 		case KeyEvent.VK_DOWN:
+			log(LogLevel.INFO, "user pressed DOWN to remove a bot.");
 			game.removeBot();
 			break;
 		}
