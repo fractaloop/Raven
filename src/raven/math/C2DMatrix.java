@@ -49,8 +49,12 @@ public class C2DMatrix {
 	public void translate(double x, double y) {
 		Matrix mat = new Matrix();
 
+		mat._11 = 1;
+		mat._22 = 1;
 		mat._31 = x;
 		mat._32 = y;
+		mat._33 = 1;
+		
 
 		matrixMultiply(mat);
 	}
@@ -61,6 +65,7 @@ public class C2DMatrix {
 
 		mat._11 = xScale;
 		mat._22 = yScale;
+		mat._33 = 1;
 
 		matrixMultiply(mat);
 	}
@@ -76,6 +81,7 @@ public class C2DMatrix {
 		mat._12 = sin;
 		mat._21 = -sin;
 		mat._22 = cos;
+		mat._33 = 1;
 
 		matrixMultiply(mat);
 	}
@@ -88,6 +94,7 @@ public class C2DMatrix {
 		mat._12 = fwd.y;
 		mat._21 = side.x;
 		mat._22 = side.y;
+		mat._33 = 1;
 
 		matrixMultiply(mat);
 	}
