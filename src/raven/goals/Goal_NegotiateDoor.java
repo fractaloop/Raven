@@ -9,14 +9,14 @@ public class Goal_NegotiateDoor extends GoalComposite<RavenBot> {
 	boolean   m_bLastEdgeInPath;
 
 	public Goal_NegotiateDoor(RavenBot ravenBot, PathEdge edge, boolean flag) {
-		super(ravenBot, Goal.goalType.goal_negotiate_door);
+		super(ravenBot, Goal.GoalType.goal_negotiate_door);
 		this.mine = edge;
 		this.m_bLastEdgeInPath = flag;
 	}
 
 	@Override
 	public void activate() {
-		m_iStatus = Goal.curStatus.active;
+		m_iStatus = Goal.CurrentStatus.active;
 
 		//if this goal is reactivated then there may be some existing subgoals that
 		//must be removed
@@ -38,11 +38,10 @@ public class Goal_NegotiateDoor extends GoalComposite<RavenBot> {
 
 		//finally, the Goal that will direct the bot to the location of the switch
 		AddSubgoal(new Goal_MoveToPosition(m_pOwner, posSw));
-
 	}
 
 
-	public raven.goals.Goal.curStatus process() {
+	public raven.goals.Goal.CurrentStatus process() {
 		//if status is inactive, call Activate()
 		activateIfInactive();
 

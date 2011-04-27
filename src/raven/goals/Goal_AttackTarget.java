@@ -7,11 +7,11 @@ public class Goal_AttackTarget extends GoalComposite<RavenBot> {
 
 
 	public Goal_AttackTarget(RavenBot m_pOwner) {
-		super(m_pOwner, Goal.goalType.goal_attack_target);
+		super(m_pOwner, Goal.GoalType.goal_attack_target);
 	}
 
 	public  void activate(){
-		m_iStatus = Goal.curStatus.active;
+		m_iStatus = Goal.CurrentStatus.active;
 
 		//if this goal is reactivated then there may be some existing subgoals that
 		//must be removed
@@ -21,7 +21,7 @@ public class Goal_AttackTarget extends GoalComposite<RavenBot> {
 		//must test to make sure the bot always has an active target
 		if (!m_pOwner.getTargetSys().isTargetPresent())
 		{
-			m_iStatus = Goal.curStatus.completed;
+			m_iStatus = Goal.CurrentStatus.completed;
 			return;
 		}
 
@@ -48,16 +48,8 @@ public class Goal_AttackTarget extends GoalComposite<RavenBot> {
 		{
 			AddSubgoal(new Goal_HuntTarget(m_pOwner));
 		}
-
-
-
-
-
-
-
-
 	}
-	public  raven.goals.Goal.curStatus  Process(){
+	public  raven.goals.Goal.CurrentStatus  Process(){
 		//if status is inactive, call Activate()
 		activateIfInactive();
 
@@ -71,7 +63,7 @@ public class Goal_AttackTarget extends GoalComposite<RavenBot> {
 
 
 	public void Terminate(){
-		m_iStatus = Goal.curStatus.completed;
+		m_iStatus = Goal.CurrentStatus.completed;
 	}
 
 

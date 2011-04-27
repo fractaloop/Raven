@@ -1,13 +1,14 @@
 package raven.goals;
 
 import raven.game.BaseGameEntity;
+import raven.game.RavenBot;
 import raven.game.messaging.Telegram;
 import raven.math.Vector2D;
 import raven.ui.GameCanvas;
 
 public class Goal<T extends BaseGameEntity> {
-	public enum curStatus{active, inactive, completed, failed}
-	public enum goalType{goal_explore,goal_hunt_target, goal_follow_path, goal_strafe, goal_move,goal_get,goal_attack_target,goal_get_shotgun, goal_get_railgun, goal_get_rocket_launcher, goal_get_health, goal_negotiate_door, goal_seek_to_position, goal_traverse_edge, goal_wander, goal_think}
+	public enum CurrentStatus{active, inactive, completed, failed}
+	public enum GoalType{goal_explore,goal_hunt_target, goal_follow_path, goal_strafe, goal_move,goal_get,goal_attack_target,goal_get_shotgun, goal_get_railgun, goal_get_rocket_launcher, goal_get_health, goal_negotiate_door, goal_seek_to_position, goal_traverse_edge, goal_wander, goal_think}
 
 
 	// reference to owner of this object.
@@ -15,14 +16,14 @@ public class Goal<T extends BaseGameEntity> {
 	T m_pOwner;
 	//an enumerated value indicating the goal's status (active, inactive,
 	//completed, failed)
-	curStatus m_iStatus;
+	CurrentStatus m_iStatus;
 
-	static goalType m_iType;
+	static GoalType m_iType;
 
-	public Goal(T PE, goalType type ){
+	public Goal(T PE, GoalType type ){
 		m_iType = type;
 		m_pOwner  = PE;
-		m_iStatus = Goal.curStatus.inactive;
+		m_iStatus = Goal.CurrentStatus.inactive;
 	}
 
 
@@ -36,7 +37,7 @@ public class Goal<T extends BaseGameEntity> {
 
 	public boolean isComplete()
 	{
-		if(m_iStatus == Goal.curStatus.completed){
+		if(m_iStatus == Goal.CurrentStatus.completed){
 			return true;
 		}
 		else{
@@ -48,7 +49,7 @@ public class Goal<T extends BaseGameEntity> {
 
 
 	public boolean isActive(){
-		if(m_iStatus == Goal.curStatus.active){
+		if(m_iStatus == Goal.CurrentStatus.active){
 			return true;
 		}
 		else{
@@ -57,7 +58,7 @@ public class Goal<T extends BaseGameEntity> {
 	}
 
 	boolean isInactive(){
-		if(m_iStatus == Goal.curStatus.inactive){
+		if(m_iStatus == Goal.CurrentStatus.inactive){
 			return true;
 		}
 		else{
@@ -65,7 +66,7 @@ public class Goal<T extends BaseGameEntity> {
 		}
 	}
 	boolean hasFailed(){
-		if(m_iStatus == Goal.curStatus.failed){
+		if(m_iStatus == Goal.CurrentStatus.failed){
 			return true;
 		}
 		else{
@@ -86,7 +87,7 @@ public class Goal<T extends BaseGameEntity> {
 	{
 		if (hasFailed())
 		{
-			m_iStatus = Goal.curStatus.inactive;
+			m_iStatus = Goal.CurrentStatus.inactive;
 		}
 	}
 	public void activateIfInactive()
@@ -104,12 +105,12 @@ public class Goal<T extends BaseGameEntity> {
 
 
 
-	public curStatus Process() {
+	public CurrentStatus Process() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	// TODOOO
-	public goalType GetType(){
+	public GoalType GetType(){
 		return m_iType;
 	}
 
@@ -124,11 +125,10 @@ public class Goal<T extends BaseGameEntity> {
 
 	void renderAtPos(Vector2D pos, String tts){
 		pos.y += 15;
-		GameCanvas.transparentText();
-		if (isComplete()) GameCanvas.textColor(0,255,0);
-		if (isInactive()) GameCanvas.textColor(0,0,0);
-		if (hasFailed()) GameCanvas.textColor(255,0,0);
-		if (isActive()) GameCanvas.textColor(0,0,255);
+		GameCanvas.whitePen();
+		if (isComplete()) GameCanvas.greenPen();
+		if (hasFailed()) GameCanvas.redPen();
+		if (isActive()) GameCanvas.bluePen();
 
 		GameCanvas.textAtPos(pos.x, pos.y, tts); 
 	}

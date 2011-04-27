@@ -26,7 +26,7 @@ public class Goal_GetItem extends GoalComposite<RavenBot> {
 
 
 
-	public raven.goals.Goal.curStatus Process(){
+	public raven.goals.Goal.CurrentStatus Process(){
 
 		activateIfInactive();
 
@@ -46,19 +46,16 @@ public class Goal_GetItem extends GoalComposite<RavenBot> {
 	}
 
 	public void activate(){
-		{
-			m_iStatus = Goal.curStatus.active;
+		m_iStatus = Goal.CurrentStatus.active;
 
-			//  m_pGiverTrigger = 0; NEED TO ASSIGN TRIGGER HERE
+		//  m_pGiverTrigger = 0; NEED TO ASSIGN TRIGGER HERE
 
-			//request a path to the item
-			m_pOwner.getPathPlanner().requestPathToItem(m_iItemToGet.toInteger());
+		//request a path to the item
+		m_pOwner.getPathPlanner().requestPathToItem(m_iItemToGet.toInteger());
 
-			//the bot may have to wait a few update cycles before a path is calculated
-			//so for appearances sake it just wanders
-			AddSubgoal(new Goal_Wander(m_pOwner));
-
-		}
+		//the bot may have to wait a few update cycles before a path is calculated
+		//so for appearances sake it just wanders
+		AddSubgoal(new Goal_Wander(m_pOwner));
 	}
 
 
@@ -70,98 +67,45 @@ public class Goal_GetItem extends GoalComposite<RavenBot> {
 		//if the msg was not handled, test to see if this goal can handle it
 		if (bHandled == false)
 		{
-			switch(msg.msg)
-			{
-			case MSG_PATH_READY:
-
-				//clear any existing goals
-				removeAllSubgoals();
-
-				AddSubgoal(new Goal_FollowPath(m_pOwner, m_pOwner.getPathPlanner().getPath()));
-
-				//get the pointer to the item
-				m_pGiverTrigger = (Trigger<RavenBot>) msg.extraInfo;
-
-				return true; //msg handled
-
-
-			case MSG_NO_PATH_AVAILABLE:
-
-				m_iStatus = Goal.curStatus.failed;
-
-				return true; //msg handled
-
-			default: return false;
+			switch(msg.msg)	{
+				case MSG_PATH_READY:
+					//clear any existing goals
+					removeAllSubgoals();
+					AddSubgoal(new Goal_FollowPath(m_pOwner, m_pOwner.getPathPlanner().getPath()));
+					//get the pointer to the item
+					m_pGiverTrigger = (Trigger<RavenBot>) msg.extraInfo;
+					return true; //msg handled
+				case MSG_NO_PATH_AVAILABLE:
+					m_iStatus = Goal.CurrentStatus.failed;
+					return true; //msg handled
+				default: 
+					return false;
 			}
 		}
-
 		//handled by subgoals
 		return true;
 	}
 
+	public void Terminate(){m_iStatus = Goal.CurrentStatus.completed;}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-	public void Terminate(){m_iStatus = Goal.curStatus.completed;}
-
-
-
-
-	public boolean hasItemBeenStolen(){
-		{
-			if (m_pGiverTrigger != null &&
-					!m_pGiverTrigger.isActive() &&
-					m_pOwner.hasLOSto(m_pGiverTrigger.pos()) )
-			{
+	public boolean hasItemBeenStolen(){ 
+		if (m_pGiverTrigger != null && !m_pGiverTrigger.isActive() && m_pOwner.hasLOSto(m_pGiverTrigger.pos())) {
 				return true;
-			}
-
-			return false;
-		}
-
+		} else return false;
 	}
 
-
-
-
-	static Goal.goalType ItemTypeToGoalType(RavenObject gt) throws Exception
-	{
-		switch(gt)
-		{
-		case HEALTH:
-
-			return Goal.goalType.goal_get_health;
-
-		case SHOTGUN:
-
-			return Goal.goalType.goal_get_shotgun;
-
-		case RAIL_GUN:
-
-			return Goal.goalType.goal_get_railgun;
-
-		case ROCKET_LAUNCHER:
-
-			return Goal.goalType.goal_get_rocket_launcher;
-
-		default: 
-			throw new Exception("Goal_GetItem cannot determine item type");
-
+	static Goal.GoalType ItemTypeToGoalType(RavenObject gt) throws Exception {
+		switch(gt) {
+			case HEALTH:
+				return Goal.GoalType.goal_get_health;
+			case SHOTGUN:
+				return Goal.GoalType.goal_get_shotgun;
+			case RAIL_GUN:
+				return Goal.GoalType.goal_get_railgun;
+			case ROCKET_LAUNCHER:
+				return Goal.GoalType.goal_get_rocket_launcher;
+			default: 
+				throw new Exception("Goal_GetItem cannot determine item type");
 		}//end switch
 	}
-
-
-
-
 }

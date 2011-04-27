@@ -9,16 +9,12 @@ public class Goal_HuntTarget extends GoalComposite<RavenBot> {
 	//bot has been searched without success
 	boolean  m_bLVPTried;
 	public Goal_HuntTarget(RavenBot m_pOwner) {
-		super(m_pOwner, Goal.goalType.goal_hunt_target);
+		super(m_pOwner, Goal.GoalType.goal_hunt_target);
 		this.m_bLVPTried = false;
 	}
 
-
-
-
 	public void activate() {
-
-		m_iStatus = Goal.curStatus.active;
+		m_iStatus = Goal.CurrentStatus.active;
 
 		//if this goal is reactivated then there may be some existing subgoals that
 		//must be removed
@@ -26,6 +22,7 @@ public class Goal_HuntTarget extends GoalComposite<RavenBot> {
 
 		//it is possible for the target to die whilst this goal is active so we
 		//must test to make sure the bot always has an active target
+
 		if (m_pOwner.getTargetSys().isTargetPresent())
 		{
 			//grab a local copy of the last recorded position (LRP) of the target
@@ -47,61 +44,38 @@ public class Goal_HuntTarget extends GoalComposite<RavenBot> {
 		}
 
 		//if their is no active target then this goal can be removed from the queue
-		else
-		{
-			m_iStatus = Goal.curStatus.completed;
+		else {
+			m_iStatus = Goal.CurrentStatus.completed;
 		}
-
-
-
-
 	}
 
-
-
-
-	raven.goals.Goal.curStatus  process() {
+	public CurrentStatus  process() {
 		//if status is inactive, call Activate()
 		activateIfInactive();
 
 		m_iStatus = ProcessSubgoals();
 
 		//if target is in view this goal is satisfied
-		if (m_pOwner.getTargetSys().isTargetWithinFOV())
-		{
-			m_iStatus = Goal.curStatus.completed;
+		if (m_pOwner.getTargetSys().isTargetWithinFOV()) {
+			m_iStatus = Goal.CurrentStatus.completed;
 		}
-
 		return m_iStatus;
 	}
 
-
-
-
-	void terminate(){
-
-
-
-
-
-	}
+	void terminate(){ }
 
 	@Override
 	public void render() {
 		//#define SHOW_LAST_RECORDED_POSITION
 		//render last recorded position as a green circle
-		if (m_pOwner.getTargetSys().isTargetPresent())
-		{
+		if (m_pOwner.getTargetSys().isTargetPresent()) {
 			GameCanvas.greenBrush();
 			GameCanvas.redBrush();
 			GameCanvas.circle(m_pOwner.getTargetSys().getLastRecordedPosition(), 3);
 		}
 
-		if (!m_SubGoals.isEmpty())
-		{
+		if (!m_SubGoals.isEmpty()) {
 			m_SubGoals.get(0).render();
 		}
-
 	}
-
 }
