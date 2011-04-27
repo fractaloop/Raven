@@ -6,6 +6,7 @@ import java.util.List;
 import raven.game.MovingEntity;
 import raven.game.RavenBot;
 import raven.game.RavenGame;
+import raven.game.RavenObject;
 import raven.math.Vector2D;
 
 public class RavenProjectile extends MovingEntity {
@@ -29,9 +30,10 @@ public class RavenProjectile extends MovingEntity {
 						double turnRate,
 						double maxForce,
 						double blastRad,
-						RavenGame world) 
+						RavenGame world, 
+						RavenObject type) 
 	{
-		super(position, radius, velocity, maxSpeed, heading, mass, scale, turnRate, maxForce);
+		super(position, radius, velocity, maxSpeed, heading, mass, scale, turnRate, maxForce, type);
 		this.blastRadius = blastRad;	
 		this.game = world;
 	}

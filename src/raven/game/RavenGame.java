@@ -108,10 +108,6 @@ public class RavenGame {
 		chooser.setFileFilter(new FileFilter() {
 			@Override
 			public boolean accept(File file) {
-				if (file.isDirectory()) {
-					return false;
-				}
-
 				return file.getName().endsWith(".raven");
 			}
 

@@ -154,7 +154,8 @@ public class RavenBot extends MovingEntity {
 						RavenScript.getDouble("Bot_Scale"),
 						RavenScript.getDouble("Bot_Scale")), RavenScript
 						.getDouble("Bot_MaxHeadTurnRate"), RavenScript
-						.getDouble("Bot_MaxForce"));
+						.getDouble("Bot_MaxForce"),
+						RavenObject.BOT);
 		maxHealth = RavenScript.getInt("Bot_MaxHealth");
 		health = RavenScript.getInt("Bot_MaxHealth");
 		this.world = world;

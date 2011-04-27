@@ -3,6 +3,7 @@ package raven.game.armory;
 import java.util.List;
 
 import raven.game.RavenBot;
+import raven.game.RavenObject;
 import raven.game.messaging.Dispatcher;
 import raven.game.messaging.RavenMessage;
 import raven.math.Vector2D;
@@ -25,7 +26,8 @@ public class Slug extends RavenProjectile {
 				slugMass, slugScale, 
 				shooter.maxTurnRate(), slugMaxForce, 
 				slugBlastRadius,
-				shooter.getWorld());
+				shooter.getWorld(),
+				RavenObject.PROJECTILE);
 	}
 	
 	private void TestForImpact()

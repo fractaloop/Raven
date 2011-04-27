@@ -32,8 +32,9 @@ public abstract class MovingEntity extends BaseGameEntity {
 						double mass,
 						Vector2D scale,
 						double turnRate,
-						double maxForce) {
-		super(BaseGameEntity.getNextValidID());
+						double maxForce,
+						RavenObject type) {
+		super(BaseGameEntity.getNextValidID(), type);
 		this.heading = heading;
 		this.velocity = velocity;
 		this.mass = mass;

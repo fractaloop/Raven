@@ -246,7 +246,7 @@ public class RavenPathPlanner<T> {
 	 
 	  for (Trigger<RavenBot> trigger: triggers)
 	  {
-		  if(trigger.entityType().hashCode()==giverType && trigger.isActive())
+		  if(trigger.entityType() != null && trigger.entityType().hashCode() == giverType && trigger.isActive())
 	    {
 	      double cost =ravenBot.getWorld().getMap().calculateCostToTravelBetweenNodes(nd, trigger.graphNodeIndex());
 
