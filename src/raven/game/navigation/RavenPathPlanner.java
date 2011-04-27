@@ -1,11 +1,9 @@
 package raven.game.navigation;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
-
 import java.util.Iterator;
-
-import com.sun.org.apache.bcel.internal.generic.NEW;
 
 import raven.game.RavenBot;
 import raven.game.RavenGame;
@@ -27,7 +25,6 @@ import raven.game.navigation.RavenPathPlanner;
 import raven.goals.GoalThink;
 import raven.math.C2DMatrix;
 import raven.math.Transformations;
-import raven.math.Vector2D;
 import raven.script.RavenScript;
 import raven.ui.GameCanvas;
 import raven.utils.Regulator;
@@ -39,10 +36,10 @@ public class RavenPathPlanner<T> {
 	private Vector<Double> costToThisNode; 
 
 	private  Vector<NavGraphEdge>  shortestPathTree;
-	 private Vector<NavGraphEdge>  searchFrontier;
+	private Vector<NavGraphEdge>  searchFrontier;
 
-	 private int source;
-	 private int target;
+    private int source;
+	private int target;
 	
 	public List<PathEdge> path;
 	private RavenBot ravenBot;
@@ -53,6 +50,8 @@ public class RavenPathPlanner<T> {
 
 	public RavenPathPlanner(RavenBot ravenBot) {
 		this.ravenBot = ravenBot;
+		path = new ArrayList<PathEdge>();
+		
 	}
 	public void GetReadyForNewSearch()
 	{
@@ -93,14 +92,10 @@ public class RavenPathPlanner<T> {
 	  //node found. This will occur if the navgraph is badly designed or if the bot
 	  //has managed to get itself *inside* the geometry (surrounded by walls),
 	  //or an obstacle
-	  if (ClosestNodeToBot == 0)
-	  { 	    return false; 
+	  if (ClosestNodeToBot == 0) {
+		  return false; 
 	  }
 
-	  //create an instance of the search algorithm
-	  TriggerSystem<Trigger<RavenBot> > t_con; 
-	  GraphSearchDijkstra DijSearch;
-	  
 	  currentSearch = new GraphSearchDijkstra(graph,
 	                                   ClosestNodeToBot,
 	                                   ItemType);  
@@ -222,7 +217,10 @@ public class RavenPathPlanner<T> {
 	//----------------------------------------------------------------------------- 
 	public Vector2D getNodePosition(int idx)
 	{
-	  return graph.getNode(idx).pos();
+		GraphNode node = graph.getNode(idx);
+		if(node != null) {
+			return node.pos();
+		} else return null;
 	}
 
 	//------------------------ GetCostToClosestItem ---------------------------

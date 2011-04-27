@@ -1,13 +1,12 @@
 package raven.goals;
 
-import java.util.Iterator;
 import java.util.Random;
 import java.util.Vector;
-
 import raven.game.RavenBot;
 import raven.game.RavenObject;
 import raven.game.messaging.Telegram;
 import raven.math.Vector2D;
+import raven.utils.LogManager;
 
 public class GoalThink extends GoalComposite<RavenBot> {
 	private Vector<Goal_Evaluator> m_Evaluators = new Vector<Goal_Evaluator>();
@@ -18,13 +17,9 @@ public class GoalThink extends GoalComposite<RavenBot> {
 	private double ExploreBias = 0;
 	private double AttackBias  = 0;
 
-
-
-
-
 	public GoalThink(RavenBot ravenBot) {
 		super(ravenBot, Goal.GoalType.goal_think);
-
+		LogManager.GetInstance().Info("GOALTHINK - created new brain attached to bot " + ravenBot.ID());
 
 		Random randomGenerator = new Random();
 		// random values are between 0.0 and 1.0
@@ -39,45 +34,37 @@ public class GoalThink extends GoalComposite<RavenBot> {
 		m_Evaluators.add(new ExploreGoal_Evaluator(ExploreBias));
 		m_Evaluators.add(new AttackTargetGoal_Evaluator(AttackBias));
 
-
-		try{
+		try {
 			m_Evaluators.add(new GetWeaponGoal_Evaluator(ShotgunBias,
 					RavenObject.SHOTGUN));
 			m_Evaluators.add(new GetWeaponGoal_Evaluator(RailgunBias,
 					RavenObject.RAIL_GUN));
 			m_Evaluators.add(new GetWeaponGoal_Evaluator(RocketLauncherBias,
 					RavenObject.ROCKET_LAUNCHER));
-		}catch(Exception ex){System.out.println(ex.getMessage());}
-
-
-
+		} catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}
 	}
 
 	public void Terminate(){
 
 	}
+	
 	@Override
 	public void activate(){
-		if (!m_pOwner.isPossessed())
-		{
+		if (!m_pOwner.isPossessed()) {
 			Arbitrate();
 		}
-
 		m_iStatus = Goal.CurrentStatus.active;
-
 	}
 
-	public void activateIfInactive()
-	{
-		if (isInactive())
-		{
+	public void activateIfInactive() {
+		if (isInactive()) {
 			activate();   
 		}
 	}
 
-
-
-	public raven.goals.Goal.CurrentStatus Process() {
+	public CurrentStatus Process() {
 		activateIfInactive();
 
 		raven.goals.Goal.CurrentStatus SubgoalStatus = ProcessSubgoals();
@@ -93,11 +80,6 @@ public class GoalThink extends GoalComposite<RavenBot> {
 		return m_iStatus;
 	}
 
-
-
-
-
-
 	public void Arbitrate() {
 		//----------------------------- Update ----------------------------------------
 		// 
@@ -105,38 +87,25 @@ public class GoalThink extends GoalComposite<RavenBot> {
 		//  the highest desirability.
 		//-----------------------------------------------------------------------------
 		double best = 0;
-		@SuppressWarnings("unused")
-		Goal_Evaluator MostDesirable;
-
+		Goal_Evaluator MostDesirable = new ExploreGoal_Evaluator(1.0);
+		
 		//iterate through all the evaluators to see which produces the highest score
-		Iterator<Goal_Evaluator> curDes = m_Evaluators.iterator();
-		Goal_Evaluator current = null;
-		while(curDes.hasNext()){
-			current = curDes.next();
-			double desirabilty = current.calculateDesirability(m_pOwner);
-
-			if (desirabilty >= best)
-			{
-				best = desirabilty;
-				MostDesirable = current;
+		for( Goal_Evaluator eval : m_Evaluators) {
+			double desire = eval.calculateDesirability(m_pOwner);
+			if( desire >= best ) {
+				best = desire;
+				MostDesirable = eval;
 			}
 		}
-
-		//  assert(MostDesirable && "<Goal_Think::Arbitrate>: no evaluator selected");
-
-		current.setGoal(m_pOwner);
+		MostDesirable.setGoal(m_pOwner);
 	}
-
-
-
-
 
 	//---------------------------- notPresent --------------------------------------
 	//
 	//  returns true if the goal type passed as a parameter is the same as this
 	//  goal or any of its subgoals
 	//-----------------------------------------------------------------------------
-	public boolean notPresent(raven.goals.Goal.GoalType goal)
+	public boolean notPresent(GoalType goal)
 	{
 		if(m_SubGoals.contains(goal)){
 			return true;  
@@ -144,66 +113,51 @@ public class GoalThink extends GoalComposite<RavenBot> {
 		return false;
 	}
 
-
-
-
 	public boolean handleMessage(Telegram msg) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-
-
-
-
-
-
-
-
 	public void queueGoal_moveToPosition(Vector2D pos) {
 		m_SubGoals.add(new Goal_MoveToPosition(m_pOwner, pos));
+		LogManager.GetInstance().Info("GOALTHINK - Queued new Goal_MoveToPosition to bot " + m_pOwner.ID());
 	}
 
 	public void addGoal_moveToPosition(Vector2D p, Vector2D pos) {
 		AddSubgoal( new Goal_MoveToPosition(m_pOwner, pos));
+		LogManager.GetInstance().Info("GOALTHINK - Added new Goal_MoveToPosition to bot " + m_pOwner.ID());
 	}
 
-
-
 	public void addGoal_explore() {
-
-		if (notPresent(Goal.GoalType.goal_explore)) {
+		if (notPresent(GoalType.goal_explore)) {
 			removeAllSubgoals();
 			AddSubgoal( new Goal_Explore(m_pOwner));
+			LogManager.GetInstance().Info("GOALTHINK - Added new Goal_Explore to bot " + m_pOwner.ID());
 		}
 	}
 
 	public void addGoal_getItem(RavenObject inp) throws Exception{
 		if (notPresent(Goal.GoalType.goal_get)) {
 			removeAllSubgoals();
-
 			AddSubgoal( new Goal_GetItem(m_pOwner, inp));
+			LogManager.GetInstance().Info("GOALTHINK - Added new Goal_GetITem to bot " + m_pOwner.ID());
 		}
 	}
-
-
 
 	public void addGoal_attackTarget(){
 		if (notPresent(Goal.GoalType.goal_attack_target)){
 			removeAllSubgoals();
 			AddSubgoal( new Goal_AttackTarget(m_pOwner));
+			LogManager.GetInstance().Info("GOALTHINK - Added new Goal_AttackTarget to bot " + m_pOwner.ID());
 		}
 	}
-	public void render(){
+	
+	public void render(){ }
 
-	}
-
-	public void renderEvaluations(Integer left, Integer top){
-
-	}
+	public void renderEvaluations(Integer left, Integer top){ }
 
 	public void queueGoal_moveToPosition(Vector2D pos, Vector2D p) {
 		m_SubGoals.add(new Goal_MoveToPosition(m_pOwner, p));
+		LogManager.GetInstance().Info("GOALTHINK - Queued new Goal_MoveToPosition to bot " + m_pOwner.ID());
 	}
-
 }

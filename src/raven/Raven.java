@@ -213,16 +213,10 @@ public class Raven extends JFrame implements KeyListener, MouseListener, Compone
     }
 
 	@Override
-	public void componentHidden(ComponentEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void componentHidden(ComponentEvent e) { }
 
 	@Override
-	public void componentMoved(ComponentEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void componentMoved(ComponentEvent e) { }
 
 	@Override
 	public void componentResized(ComponentEvent e) {
@@ -231,8 +225,5 @@ public class Raven extends JFrame implements KeyListener, MouseListener, Compone
 	}
 
 	@Override
-	public void componentShown(ComponentEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void componentShown(ComponentEvent e) { }
 }

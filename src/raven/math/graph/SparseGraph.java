@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Set;
 
 import raven.ui.GameCanvas;
+import raven.utils.LogManager;
 import raven.utils.Pair;
 
 public class SparseGraph<NodeType extends GraphNode, EdgeType extends GraphEdge> implements Iterable<NodeType> {
@@ -70,9 +71,10 @@ public class SparseGraph<NodeType extends GraphNode, EdgeType extends GraphEdge>
 	
 	/** returns the node at the given index */
 	public NodeType getNode(int idx) {
-		if (idx < 0 || idx > nodes.size())
-			throw new IndexOutOfBoundsException("SparseNode#getNode: index " + idx + " is invalid");
-		
+		if ((idx < 0 || idx > nodes.size()) || nodes.size() == 0) {
+			LogManager.GetInstance().Error("SparseGraph - Could not find node with ID " + idx);
+			return null;
+		}
 		return nodes.get(idx);
 	}
 

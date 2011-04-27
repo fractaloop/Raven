@@ -86,10 +86,16 @@ public class RavenGame {
 					available = false;
 				}
 			}
-
+			
 			if (available) {
 				LogManager.GetInstance().Info("Spawned bot " + bot.ID() + " at spawn point " + pos);
 				bot.spawn(pos);
+
+				// Set marching orders
+				int nodeID = bot.getPathPlanner().getClosestNodeToPosition(bot.pos());
+				Vector2D posNode = bot.getPathPlanner().getNodePosition(nodeID);
+				if( posNode == null) return true;
+				bot.getPathPlanner().RequestPathToPosition(posNode);
 				return true;
 			}
 		}
@@ -340,6 +346,11 @@ public class RavenGame {
 			
 			// register the bot with the entity manager
 			EntityManager.registerEntity(bot);
+			
+			// Give this bot a default goal
+			bot.getBrain().addGoal_explore();
+			bot.getBrain().activate();
+			
 		}
 	}
 

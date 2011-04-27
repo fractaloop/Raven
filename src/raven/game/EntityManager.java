@@ -3,14 +3,19 @@ package raven.game;
 import java.util.HashMap;
 import java.util.Map;
 
+import raven.utils.LogManager;
+
 public class EntityManager {
 	private static class EntityManagerHolder {
 		public static final EntityManager INSTANCE = new EntityManager();
 	}
+	
+	private static int availableID = 0;
 
-	public static int getAvailableID() {
-		return 0;
-		//TODO add id functionality
+	public static synchronized int getAvailableID() {
+		int toReturn = availableID;
+		availableID++;
+		return toReturn;
 	}
 	public static EntityManager getInstance() {
 		return EntityManagerHolder.INSTANCE;
@@ -21,6 +26,7 @@ public class EntityManager {
 	private EntityManager() {}
 	
 	public static void registerEntity(BaseGameEntity entity) {
+		LogManager.GetInstance().Info("ENTITY MANAGER - Registered entity of type " + entity.entityType() + " and ID " + entity.ID()); 
 		getInstance().entityMap.put(entity.ID(), entity);
 	}
 
@@ -30,9 +36,11 @@ public class EntityManager {
 	
 	public static void removeEntity(BaseGameEntity entity) {
 		getInstance().entityMap.remove(entity);
+		LogManager.GetInstance().Info("ENTITY MANAGER - Registered entity of type " + entity.entityType() + " and ID " + entity.ID()); 
 	}
 
 	public static void reset() {
+		LogManager.GetInstance().Info("ENTITY MANAGER - Cleared entity listing"); 
 		getInstance().entityMap.clear();
 	}
 

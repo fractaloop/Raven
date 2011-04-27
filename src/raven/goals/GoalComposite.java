@@ -12,11 +12,12 @@ abstract public class GoalComposite<T extends BaseGameEntity> extends Goal<T> {
 
 	public GoalComposite(T PE, raven.goals.Goal.GoalType type) {
 		super(PE, type);
+		m_SubGoals = new ArrayList<Goal<T>>();
 	}
 
 	public ArrayList <Goal<T> > m_SubGoals;
 
-	public raven.goals.Goal.CurrentStatus ProcessSubgoals(){ 
+	public CurrentStatus ProcessSubgoals(){ 
 		//remove all completed and failed goals from the front of the subgoal list
 		while (!m_SubGoals.isEmpty() &&
 				(m_SubGoals.get(0).isComplete() || m_SubGoals.get(0).hasFailed()))
