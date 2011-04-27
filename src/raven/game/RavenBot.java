@@ -106,22 +106,42 @@ public class RavenBot extends MovingEntity {
 	private boolean possessed;
 
 	/** a vertex buffer containing the bot's geometry */
-	private ArrayList<Vector2D> vecBotVB;
+	transient private ArrayList<Vector2D> vecBotVB;
 
 	/** the buffer for the transformed vertices */
-	private ArrayList<Vector2D> vecBotVBTrans;
+	transient private ArrayList<Vector2D> vecBotVBTrans;
 
 	/**
 	 * this method is called from the update method. It calculates and applies
 	 * the steering force for this time-step.
 	 */
 	private void updateMovement() {
-
+		// TODO
 	}
 
 	/** initializes the bot's VB with its geometry */
 	private void setUpVertexBuffer() {
+		//setup the vertex buffers and calculate the bounding radius
+		vecBotVB = new ArrayList<Vector2D>(4);
+		vecBotVB.add(new Vector2D(-3, 8));
+		vecBotVB.add(new Vector2D(3, 10));
+		vecBotVB.add(new Vector2D(3, -10));
+		vecBotVB.add(new Vector2D(-3, -8));
 
+		boundingRadius = 0.0;
+		double scale = RavenScript.getDouble("Bot_Scale");
+
+		for (Vector2D point : vecBotVB) {
+			//set the bounding radius to the length of the 
+			//greatest extent
+			if (Math.abs(point.x) * scale > boundingRadius) {
+				boundingRadius = Math.abs(point.x * scale);
+			}
+
+			if (Math.abs(point.y) * scale > boundingRadius) {
+				boundingRadius = Math.abs(point.y * scale);
+			}
+		}
 	}
 
 	// ////////////////

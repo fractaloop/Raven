@@ -254,7 +254,7 @@ public class RavenGame {
 		projectiles.removeAll(toRemove);
 		
 		// update the bots
-		boolean spawnPossible = false;
+		boolean spawnPossible = true;
 		
 		for (RavenBot bot : bots) {
 			// if this bot's status is 'respawning' attempt to resurrect it
