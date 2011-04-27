@@ -6,6 +6,7 @@ package raven.utils;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Date;
 
 
 /**
@@ -38,8 +39,8 @@ public class LogManager {
 	
 	public void Log(LogLevel level, String toWrite) {
 		try {
-			FileWriter writer = new FileWriter(logFile);
-			writer.write(level + ":\t" + toWrite + "\n");
+			FileWriter writer = new FileWriter(logFile, true);
+			writer.write(new Date() + "\t" + level + ":\t" + toWrite + "\n");
 			writer.flush();
 			writer.close();
 		} catch (IOException e) {
@@ -49,8 +50,8 @@ public class LogManager {
 	
 	public void Info(String toWrite) {
 		try {
-			FileWriter writer = new FileWriter(logFile);
-			writer.write(LogLevel.INFO + ":\t" + toWrite + "\n");
+			FileWriter writer = new FileWriter(logFile, true);
+			writer.write(new Date() + "\t" + LogLevel.INFO + ":\t" + toWrite + "\n");
 			writer.flush();
 			writer.close();
 		} catch (IOException e) {
@@ -60,8 +61,8 @@ public class LogManager {
 	
 	public void InfoException(String toWrite, Exception ex) {
 		try {
-			FileWriter writer = new FileWriter(logFile);
-			writer.write(LogLevel.INFO + ":\t" + toWrite + "\n");
+			FileWriter writer = new FileWriter(logFile, true);
+			writer.write(new Date() + "\t" + LogLevel.INFO + ":\t" + toWrite + "\n");
 			writer.write(ex.getLocalizedMessage());
 			writer.flush();
 			writer.close();
@@ -72,8 +73,8 @@ public class LogManager {
 	
 	public void Debug(String toWrite) {
 		try {
-			FileWriter writer = new FileWriter(logFile);
-			writer.write(LogLevel.DEBUG + ":\t" + toWrite + "\n");
+			FileWriter writer = new FileWriter(logFile, true);
+			writer.write(new Date() + "\t" + LogLevel.DEBUG + ":\t" + toWrite + "\n");
 			writer.flush();
 			writer.close();
 		} catch (IOException e) {
@@ -83,8 +84,8 @@ public class LogManager {
 	
 	public void DebugException(String toWrite, Exception ex) {
 		try {
-			FileWriter writer = new FileWriter(logFile);
-			writer.write(LogLevel.DEBUG + ":\t" + toWrite + "\n");
+			FileWriter writer = new FileWriter(logFile, true);
+			writer.write(new Date() + "\t" + LogLevel.DEBUG + ":\t" + toWrite + "\n");
 			writer.write(ex.getLocalizedMessage());
 			writer.flush();
 			writer.close();
@@ -95,8 +96,8 @@ public class LogManager {
 	
 	public void Warn(String toWrite) {
 		try {
-			FileWriter writer = new FileWriter(logFile);
-			writer.write(LogLevel.WARN + ":\t" + toWrite + "\n");
+			FileWriter writer = new FileWriter(logFile, true);
+			writer.write(new Date() + "\t" + LogLevel.WARN + ":\t" + toWrite + "\n");
 			writer.flush();
 			writer.close();
 		} catch (IOException e) {
@@ -106,8 +107,8 @@ public class LogManager {
 	
 	public void WarnException(String toWrite, Exception ex) {
 		try {
-			FileWriter writer = new FileWriter(logFile);
-			writer.write(LogLevel.WARN + ":\t" + toWrite + "\n");
+			FileWriter writer = new FileWriter(logFile, true);
+			writer.write(new Date() + "\t" + LogLevel.WARN + ":\t" + toWrite + "\n");
 			writer.write(ex.getLocalizedMessage());
 			writer.flush();
 			writer.close();
@@ -118,8 +119,8 @@ public class LogManager {
 	
 	public void Error(String toWrite) {
 		try {
-			FileWriter writer = new FileWriter(logFile);
-			writer.write(LogLevel.WARN + ":\t" + toWrite + "\n");
+			FileWriter writer = new FileWriter(logFile, true);
+			writer.write(new Date() + "\t" + LogLevel.WARN + ":\t" + toWrite + "\n");
 			writer.flush();
 			writer.close();
 		} catch (IOException e) {
@@ -129,8 +130,8 @@ public class LogManager {
 	
 	public void ErrorException(String toWrite, Exception ex) {
 		try {
-			FileWriter writer = new FileWriter(logFile);
-			writer.write(LogLevel.WARN + ":\t" + toWrite + "\n");
+			FileWriter writer = new FileWriter(logFile, true);
+			writer.write(new Date() + "\t" + LogLevel.WARN + ":\t" + toWrite + "\n");
 			writer.write(ex.getLocalizedMessage());
 			writer.flush();
 			writer.close();
