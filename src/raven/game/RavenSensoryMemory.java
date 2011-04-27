@@ -1,6 +1,7 @@
 package raven.game;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -52,7 +53,7 @@ public class RavenSensoryMemory {
 	/** a bot has a memory span equivalent to this value. When a bot requests
 	 * a list of all recently sensed opponents this value is used to determine
 	 * if the bot is able to remember an opponent or not. */
-	private long memorySpan;
+	private double memorySpan;
 
 	private void makeNewRecordIfNotAlreadyPresent(RavenBot bot) {
 		if (!memoryMap.containsKey(bot)) {
@@ -62,8 +63,9 @@ public class RavenSensoryMemory {
 
 	public RavenSensoryMemory(RavenBot owner, double memorySpan) {
 		this.owner = owner;
-		// Store memory length in nanoseconds for ease of use
-		this.memorySpan = (long)(memorySpan * 1e9);
+		// Store memory length in seconds
+		this.memorySpan = memorySpan;
+		this.memoryMap = new HashMap<RavenBot, MemoryRecord>();
 	}
 
 	/**

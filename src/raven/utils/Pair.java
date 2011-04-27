@@ -19,4 +19,8 @@ public class Pair<T1, T2> {
 		
 		return false;
 	}
+	
+	public String toString() {
+		return "<" + first.toString() + ", " + second.toString() + ">";
+	}
 }
