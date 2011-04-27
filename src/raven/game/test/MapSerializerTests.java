@@ -19,9 +19,7 @@ public class MapSerializerTests {
 	private String emptyString = 
 	"<RavenMap>\n" +
 	"  <walls/>\n" +
-	"  <triggerSystem>\n" +
-	"    <triggers/>\n" + 
-	"  </triggerSystem>\n" +
+	"  <triggerSystem/>\n" +
 	"  <spawnPoints/>\n" +
 	"  <doors/>\n" +
 	"  <navGraph>\n" +
@@ -30,19 +28,8 @@ public class MapSerializerTests {
 	"    <isDigraph>false</isDigraph>\n" +
 	"    <nextNodeIndex>0</nextNodeIndex>\n" +
 	"  </navGraph>\n" +
-	"  <spacePartition>\n" +
-	"    <cells/>\n" +
-	"    <neighbors/>\n" +
-	"    <spaceWidth>0.0</spaceWidth>\n" +
-	"    <spaceHeight>0.0</spaceHeight>\n" +
-	"    <numCellsX>0</numCellsX>\n" +
-	"    <numCellsY>0</numCellsY>\n" +
-	"    <cellSizeX>NaN</cellSizeX>\n" +
-	"    <cellSizeY>NaN</cellSizeY>\n" +
-	"  </spacePartition>\n" +
-	"  <cellSpaceNeighborhoodRange>0.0</cellSpaceNeighborhoodRange>\n" + 
-	"  <sizeX>0</sizeX>\n" +
-	"  <sizeY>0</sizeY>\n" +
+	"  <sizeX>500</sizeX>\n" +
+	"  <sizeY>500</sizeY>\n" +
 	"</RavenMap>";
 	
 	/*

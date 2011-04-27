@@ -18,17 +18,15 @@ public class Goal_SeekToPosition extends GoalComposite<RavenBot> {
 	boolean isStuck(){
 		double TimeTaken = System.nanoTime()*1000 - m_dStartTime;
 
-		if (TimeTaken > m_dTimeToReachPos)
-		{
+		if (TimeTaken > m_dTimeToReachPos) {
 			System.out.println("BOT "  + m_pOwner.ID() + " IS STUCK!!");
-
 			return true;
 		}
-
 		return false;
 	}
+	
 	public Goal_SeekToPosition(RavenBot rbot, Vector2D target) {
-		super(rbot, Goal.goalType.goal_seek_to_position);
+		super(rbot, Goal.GoalType.goal_seek_to_position);
 		m_vPosition = target;
 		m_dTimeToReachPos = 0.0;
 
@@ -36,7 +34,7 @@ public class Goal_SeekToPosition extends GoalComposite<RavenBot> {
 
 	@Override
 	public void activate() {
-		m_iStatus = Goal.curStatus.active;
+		m_iStatus = Goal.CurrentStatus.active;
 
 		//record the time the bot starts this goal
 		m_dStartTime = System.nanoTime()*1000;    
@@ -46,54 +44,44 @@ public class Goal_SeekToPosition extends GoalComposite<RavenBot> {
 
 		//factor in a margin of error for any reactive behavior
 		double MarginOfError = 1.0;
-
 		m_dTimeToReachPos += MarginOfError;
-
-
 		m_pOwner.getSteering().setTarget(m_vPosition);
-
 		m_pOwner.getSteering().seekOn();
-
 	}
 
-	public raven.goals.Goal.curStatus process(){
+	public raven.goals.Goal.CurrentStatus process(){
 		//if status is inactive, call Activate()
 		activateIfInactive();
 
 		//test to see if the bot has become stuck
-		if (isStuck())
-		{
-			m_iStatus = Goal.curStatus.failed;
+		if (isStuck()) {
+			m_iStatus = Goal.CurrentStatus.failed;
 		}
 
 		//test to see if the bot has reached the waypoint. If so terminate the goal
-		else
-		{ 
-			if (m_pOwner.isAtPosition(m_vPosition))
-			{
-				m_iStatus = Goal.curStatus.completed;
+		else {
+			if (m_pOwner.isAtPosition(m_vPosition)) {
+				m_iStatus = Goal.CurrentStatus.completed;
 			}
 		}
-
 		return m_iStatus;
 	}
 
 	public void terminate(){
 		m_pOwner.getSteering().seekOff();
 		m_pOwner.getSteering().arriveOff();
-
-		m_iStatus = Goal.curStatus.completed;
+		m_iStatus = Goal.CurrentStatus.completed;
 	}
 
 	public void render(){
-		if (m_iStatus == Goal.curStatus.active)
+		if (m_iStatus == Goal.CurrentStatus.active)
 		{
 			GameCanvas.greenBrush();
 			GameCanvas.blackPen();
 			GameCanvas.circle(m_vPosition, 3);
 		}
 
-		else if (m_iStatus == Goal.curStatus.inactive)
+		else if (m_iStatus == Goal.CurrentStatus.inactive)
 		{
 
 			GameCanvas.redBrush();

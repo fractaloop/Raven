@@ -76,7 +76,7 @@ public class RavenDoor extends BaseGameEntity {
 	}
 	
 	public RavenDoor(int id, Vector2D pos1, Vector2D pos2, int timeout) {
-		super(id);
+		super(id, RavenObject.SLIDING_DOOR);
 
 		status = Status.CLOSED;
 		numSecondsStayOpen = timeout;

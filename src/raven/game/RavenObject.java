@@ -20,7 +20,8 @@ public enum RavenObject {
 	BLASTER(9, "Blaster"),
 	OBSTACLE(10, "Obstacle"),
 	SLIDING_DOOR(11, "Sliding Door"),
-	DOOR_TRIGGER(12, "Door Trigger");
+	TRIGGER(12, "Door Trigger"),
+	PROJECTILE(13, "Projectile");
 	
 	private final int index;
 	private final String description;

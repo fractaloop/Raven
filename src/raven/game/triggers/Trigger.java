@@ -7,6 +7,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 import raven.game.BaseGameEntity;
 import raven.game.EntityManager;
+import raven.game.RavenObject;
 import raven.math.Vector2D;
 
 @XStreamAlias("Trigger")
@@ -51,7 +52,7 @@ public abstract class Trigger<T extends BaseGameEntity> extends BaseGameEntity {
 	 * @param radius The radius of the trigger circle.
 	 */
 	public Trigger(Vector2D centerPoint, int radius) {
-		super(EntityManager.getAvailableID());
+		super(EntityManager.getAvailableID(), RavenObject.TRIGGER);
 
 		if(centerPoint != null) {
 			regionOfInfluence = new TriggerRegionCircle(centerPoint, radius);

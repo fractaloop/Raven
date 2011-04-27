@@ -10,20 +10,16 @@ import raven.game.navigation.PathEdge;
 import raven.ui.GameCanvas;
 
 public class Goal_FollowPath extends GoalComposite<RavenBot> {
-
+	
 	private List<PathEdge>  m_Path = new ArrayList<PathEdge>();
 
-
-
-
 	public Goal_FollowPath(RavenBot m_pOwner, List<PathEdge> list) {
-		super(m_pOwner, Goal.goalType.goal_follow_path);
+		super(m_pOwner, Goal.GoalType.goal_follow_path);
 		this.m_Path = list;
 	}
 
-
 	public void activate() {
-		m_iStatus = Goal.curStatus.active;
+		m_iStatus = Goal.CurrentStatus.active;
 
 		//get a reference to the next edge
 		PathEdge edge = m_Path.get(0);
@@ -35,80 +31,53 @@ public class Goal_FollowPath extends GoalComposite<RavenBot> {
 		//following them. This switch statement queries the edge behavior flag and
 		//adds the appropriate goals/s to the subgoal list.
 		switch(edge.Behavior()){
-		case NavGraphEdge.NORMAL:
-		{
-			AddSubgoal(new Goal_TraverseEdge(m_pOwner, edge, m_Path.isEmpty()));
+			case NavGraphEdge.NORMAL:
+				AddSubgoal(new Goal_TraverseEdge(m_pOwner, edge, m_Path.isEmpty()));
+				break;
+			case NavGraphEdge.GOES_THROUGH_DOOR:
+				//also add a goal that is able to handle opening the door
+				AddSubgoal(new Goal_NegotiateDoor(m_pOwner, edge, m_Path.isEmpty()));
+				break;
+			case NavGraphEdge.JUMP:
+				//add subgoal to jump along the edge
+				// not defined in c++ code...
+				break;
+			case NavGraphEdge.GRAPPLE:
+				//add subgoal to grapple along the edge
+				// not defined in c++ code
+				break;
+			default:
+				try {
+					throw new Exception("<Goal_FollowPath::Activate>: Unrecognized edge type");
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 		}
-
-		break;
-
-		case NavGraphEdge.GOES_THROUGH_DOOR:
-		{
-
-			//also add a goal that is able to handle opening the door
-			AddSubgoal(new Goal_NegotiateDoor(m_pOwner, edge, m_Path.isEmpty()));
-		}
-
-		break;
-
-		case NavGraphEdge.JUMP:
-		{
-			//add subgoal to jump along the edge
-			// not defined in c++ code...
-		}
-
-		break;
-
-		case NavGraphEdge.GRAPPLE:
-		{
-			//add subgoal to grapple along the edge
-			// not defined in c++ code
-		}
-
-		break;
-
-		default:
-
-			try {
-				throw new Exception("<Goal_FollowPath::Activate>: Unrecognized edge type");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-
 	}
-	public raven.goals.Goal.curStatus process() {
+
+	public CurrentStatus process() {
 		//if status is inactive, call Activate()
 		activateIfInactive();
-
 		m_iStatus = ProcessSubgoals();
 
 		//if there are no subgoals present check to see if the path still has edges.
 		//remaining. If it does then call activate to grab the next edge.
-		if (m_iStatus == Goal.curStatus.completed && !m_Path.isEmpty())
-		{
+		if (m_iStatus == Goal.CurrentStatus.completed && !m_Path.isEmpty()) {
 			activate(); 
 		}
-
 		return m_iStatus;
 	}
+
 	public void render() {
-
-
 		//        render all the path waypoints remaining on the path list
-		Iterator<PathEdge> it = m_Path.iterator();
-		PathEdge temp;
-		while(it.hasNext())
-		{  
-			temp = it.next();
+		for(PathEdge path : m_Path) {
 			GameCanvas.blackPen();
-			GameCanvas.lineWithArrow(temp.Source(), temp.Destination(), 5);
+			GameCanvas.lineWithArrow(path.Source(), path.Destination(), 5);
 
 			GameCanvas.redBrush();
 			GameCanvas.blackPen();
-			GameCanvas.circle(temp.Destination(), 3);
+			GameCanvas.circle(path.Destination(), 3);
 		}
 
 		//forward the request to the subgoals
@@ -117,10 +86,5 @@ public class Goal_FollowPath extends GoalComposite<RavenBot> {
 		{
 			m_SubGoals.get(0).render();
 		}		
-
 	}
-
-
-
-
 }

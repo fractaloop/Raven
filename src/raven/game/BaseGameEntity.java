@@ -27,8 +27,9 @@ public abstract class BaseGameEntity {
 	
 	protected double boundingRadius;
 	
-	protected BaseGameEntity(int id) {
+	protected BaseGameEntity(int id, RavenObject type) {
 		setID(id);
+		this.type = type;
 	}
 
 	public void update(double delta) {}

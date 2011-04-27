@@ -24,8 +24,6 @@ public class Goal_TraverseEdge extends GoalComposite<RavenBot> {
 		double TimeTaken = System.nanoTime()*1000 - m_dStartTime;
 		if (TimeTaken > m_dTimeExpected){
 			System.out.println("BOT "  + m_pOwner.ID() + " IS STUCK!!");
-
-
 			return true;
 		}
 
@@ -38,7 +36,7 @@ public class Goal_TraverseEdge extends GoalComposite<RavenBot> {
 	public Goal_TraverseEdge(RavenBot ravenBot, PathEdge edge, boolean lastedgeinpath) {
 
 		// Goal<Raven_Bot>(pBot, goal_traverse_edge),
-		super(ravenBot, Goal.goalType.goal_traverse_edge);
+		super(ravenBot, Goal.GoalType.goal_traverse_edge);
 		m_Edge = edge;
 		m_dTimeExpected = 0.0;
 		m_bLastEdgeInPath = lastedgeinpath;
@@ -48,25 +46,17 @@ public class Goal_TraverseEdge extends GoalComposite<RavenBot> {
 
 	@Override
 	public void activate() {
-		m_iStatus = Goal.curStatus.active;
+		m_iStatus = Goal.CurrentStatus.active;
 
 		//the edge behavior flag may specify a type of movement that necessitates a 
 		//change in the bot's max possible speed as it follows this edge
-		switch(m_Edge.Behavior())
-		{
-		case NavGraphEdge.SWIM:
-		{
-			m_pOwner.setMaxSpeed(RavenScript.getDouble("Bot_MaxSwimmingSpeed"));
-		}
-
-		break;
-
-		case NavGraphEdge.CRAWL:
-		{
-			m_pOwner.setMaxSpeed(RavenScript.getDouble("Bot_MaxCrawlingSpeed"));
-		}
-
-		break;
+		switch(m_Edge.Behavior()) {
+			case NavGraphEdge.SWIM:
+				m_pOwner.setMaxSpeed(RavenScript.getDouble("Bot_MaxSwimmingSpeed"));
+				break;
+			case NavGraphEdge.CRAWL:
+				m_pOwner.setMaxSpeed(RavenScript.getDouble("Bot_MaxCrawlingSpeed"));
+				break;
 		}
 
 
@@ -88,41 +78,33 @@ public class Goal_TraverseEdge extends GoalComposite<RavenBot> {
 
 		//Set the appropriate steering behavior. If this is the last edge in the path
 		//the bot should arrive at the position it points to, else it should seek
-		if (m_bLastEdgeInPath)
-		{
+		if (m_bLastEdgeInPath) {
 			m_pOwner.getSteering().arriveOn();
-		}
-
-		else
-		{
+		} else {
 			m_pOwner.getSteering().seekOn();
 		}
 
 	}
 
-	public raven.goals.Goal.curStatus process(){
+	public raven.goals.Goal.CurrentStatus process(){
 		//if status is inactive, call Activate()
 		activateIfInactive();
 
 		//if the bot has become stuck return failure
 		if (isStuck())
 		{
-			m_iStatus = Goal.curStatus.failed;
+			m_iStatus = Goal.CurrentStatus.failed;
 		}
 
 		//if the bot has reached the end of the edge return completed
-		else
-		{ 
-			if (m_pOwner.isAtPosition(m_Edge.Destination()))
-			{
-				m_iStatus = Goal.curStatus.completed;
+		else { 
+			if (m_pOwner.isAtPosition(m_Edge.Destination())) {
+				m_iStatus = Goal.CurrentStatus.completed;
 			}
 		}
-
 		return m_iStatus;
 	}
-
-
+	
 	public void terminate(){
 		//turn off steering behaviors.
 		m_pOwner.getSteering().seekOff();
@@ -135,7 +117,7 @@ public class Goal_TraverseEdge extends GoalComposite<RavenBot> {
 
 
 	public void render(){
-		if (m_iStatus == Goal.curStatus.active)
+		if (m_iStatus == Goal.CurrentStatus.active)
 		{
 			GameCanvas.bluePen();
 			GameCanvas.line(m_pOwner.pos(), m_Edge.Destination());

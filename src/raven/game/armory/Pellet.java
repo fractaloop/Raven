@@ -1,6 +1,7 @@
 package raven.game.armory;
 
 import raven.game.RavenBot;
+import raven.game.RavenObject;
 import raven.game.messaging.Dispatcher;
 import raven.game.messaging.RavenMessage;
 import raven.math.Vector2D;
@@ -24,7 +25,8 @@ public class Pellet extends RavenProjectile {
 				pelletMass, pelletScale, 
 				shooter.maxTurnRate(), pelletMaxForce, 
 				pelletBlastRadius, 
-				shooter.getWorld());
+				shooter.getWorld(),
+				RavenObject.PROJECTILE);
 	}
 
 	

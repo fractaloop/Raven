@@ -23,7 +23,7 @@ public class GoalThink extends GoalComposite<RavenBot> {
 
 
 	public GoalThink(RavenBot ravenBot) {
-		super(ravenBot, Goal.goalType.goal_think);
+		super(ravenBot, Goal.GoalType.goal_think);
 
 
 		Random randomGenerator = new Random();
@@ -63,7 +63,7 @@ public class GoalThink extends GoalComposite<RavenBot> {
 			Arbitrate();
 		}
 
-		m_iStatus = Goal.curStatus.active;
+		m_iStatus = Goal.CurrentStatus.active;
 
 	}
 
@@ -77,16 +77,16 @@ public class GoalThink extends GoalComposite<RavenBot> {
 
 
 
-	public raven.goals.Goal.curStatus Process() {
+	public raven.goals.Goal.CurrentStatus Process() {
 		activateIfInactive();
 
-		raven.goals.Goal.curStatus SubgoalStatus = ProcessSubgoals();
+		raven.goals.Goal.CurrentStatus SubgoalStatus = ProcessSubgoals();
 
-		if (SubgoalStatus == Goal.curStatus.completed || SubgoalStatus == Goal.curStatus.failed)
+		if (SubgoalStatus == Goal.CurrentStatus.completed || SubgoalStatus == Goal.CurrentStatus.failed)
 		{
 			if (!m_pOwner.isPossessed())
 			{
-				m_iStatus = Goal.curStatus.inactive;
+				m_iStatus = Goal.CurrentStatus.inactive;
 			}
 		}
 
@@ -136,7 +136,7 @@ public class GoalThink extends GoalComposite<RavenBot> {
 	//  returns true if the goal type passed as a parameter is the same as this
 	//  goal or any of its subgoals
 	//-----------------------------------------------------------------------------
-	public boolean notPresent(raven.goals.Goal.goalType goal)
+	public boolean notPresent(raven.goals.Goal.GoalType goal)
 	{
 		if(m_SubGoals.contains(goal)){
 			return true;  
@@ -165,7 +165,6 @@ public class GoalThink extends GoalComposite<RavenBot> {
 	}
 
 	public void addGoal_moveToPosition(Vector2D p, Vector2D pos) {
-
 		AddSubgoal( new Goal_MoveToPosition(m_pOwner, pos));
 	}
 
@@ -173,17 +172,16 @@ public class GoalThink extends GoalComposite<RavenBot> {
 
 	public void addGoal_explore() {
 
-		if (notPresent(Goal.goalType.goal_explore))
-		{
+		if (notPresent(Goal.GoalType.goal_explore)) {
 			removeAllSubgoals();
 			AddSubgoal( new Goal_Explore(m_pOwner));
 		}
 	}
 
 	public void addGoal_getItem(RavenObject inp) throws Exception{
-		if (notPresent(Goal.goalType.goal_get))
-		{
+		if (notPresent(Goal.GoalType.goal_get)) {
 			removeAllSubgoals();
+
 			AddSubgoal( new Goal_GetItem(m_pOwner, inp));
 		}
 	}
@@ -191,8 +189,7 @@ public class GoalThink extends GoalComposite<RavenBot> {
 
 
 	public void addGoal_attackTarget(){
-		if (notPresent(Goal.goalType.goal_attack_target))
-		{
+		if (notPresent(Goal.GoalType.goal_attack_target)){
 			removeAllSubgoals();
 			AddSubgoal( new Goal_AttackTarget(m_pOwner));
 		}

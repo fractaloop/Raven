@@ -3,6 +3,7 @@ package raven.game.armory;
 import java.util.ArrayList;
 
 import raven.game.RavenBot;
+import raven.game.RavenObject;
 import raven.game.messaging.Dispatcher;
 import raven.game.messaging.RavenMessage;
 import raven.math.Vector2D;
@@ -20,7 +21,7 @@ public class Rocket extends RavenProjectile {
 	private static double currentBlastRadius;
 	
 	public Rocket(RavenBot shooter, Vector2D target) {
-		super(target, 0.0, shooter.velocity(), rocketMaxSpeed, shooter.heading(), rocketMass, rocketScale, shooter.maxTurnRate(), rocketMaxForce, rocketBlastRadius, shooter.getWorld());
+		super(target, 0.0, shooter.velocity(), rocketMaxSpeed, shooter.heading(), rocketMass, rocketScale, shooter.maxTurnRate(), rocketMaxForce, rocketBlastRadius, shooter.getWorld(), RavenObject.PROJECTILE);
 		currentBlastRadius = 0.0;
 	}
 	

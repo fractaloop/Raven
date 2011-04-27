@@ -60,18 +60,19 @@ public class RavenPathPlanner<T> {
 		  ((RavenGame) ravenBot.getWorld()).getPathManager().UnRegister(this);
 		  //clean up memory used by any existing search
 		  currentSearch = null;
-		}
+	}
+	
 	public double getCostToNode(int nodeIdx)
-{
-  //find the closest visible node to the bots position
-  int d = getClosestNodeToPosition(ravenBot.pos());
-
-  //add the cost to this node
-  double cost =ravenBot.pos().distance(graph.getNode(d).pos());
-
-  //add the cost to the target node and return
-  return cost + ravenBot.getWorld().getMap().calculateCostToTravelBetweenNodes(d, nodeIdx); 
-}
+	{
+	  //find the closest visible node to the bots position
+	  int d = getClosestNodeToPosition(ravenBot.pos());
+	
+	  //add the cost to this node
+	  double cost =ravenBot.pos().distance(graph.getNode(d).pos());
+	
+	  //add the cost to the target node and return
+	  return cost + ravenBot.getWorld().getMap().calculateCostToTravelBetweenNodes(d, nodeIdx); 
+	}
 
 	//------------------------------ RequestPathToItem -----------------------------
 	//
@@ -246,7 +247,7 @@ public class RavenPathPlanner<T> {
 	 
 	  for (Trigger<RavenBot> trigger: triggers)
 	  {
-		  if(trigger.entityType().hashCode()==giverType && trigger.isActive())
+		  if(trigger.entityType() != null && trigger.entityType().hashCode() == giverType && trigger.isActive())
 	    {
 	      double cost =ravenBot.getWorld().getMap().calculateCostToTravelBetweenNodes(nd, trigger.graphNodeIndex());
 

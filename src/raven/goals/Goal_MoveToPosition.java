@@ -10,14 +10,12 @@ public class Goal_MoveToPosition extends GoalComposite<RavenBot>{
 	Vector2D m_vDestination;
 	//TODO
 	public Goal_MoveToPosition(RavenBot owner, Vector2D pos){
-		super(owner, Goal.goalType.goal_move);
+		super(owner, Goal.GoalType.goal_move);
 		m_vDestination = pos;
 	}
 
-
-
 	public void activate() {
-		m_iStatus = Goal.curStatus.active;
+		m_iStatus = Goal.CurrentStatus.active;
 
 		//make sure the subgoal list is clear.
 		removeAllSubgoals();
@@ -28,15 +26,12 @@ public class Goal_MoveToPosition extends GoalComposite<RavenBot>{
 		//before a path is calculated. Consequently, for appearances sake, it just
 		//seeks directly to the target position whilst it's awaiting notification
 		//that the path planning request has succeeded/failed
-		if (m_pOwner.getPathPlanner().RequestPathToPosition(m_vDestination))
-		{
+		if (m_pOwner.getPathPlanner().RequestPathToPosition(m_vDestination)) {
 			AddSubgoal(new Goal_SeekToPosition(m_pOwner, m_vDestination));
 		}
-
-
-
 	}
-	public raven.goals.Goal.curStatus  process() {
+
+	public raven.goals.Goal.CurrentStatus  process() {
 		//if status is inactive, call Activate()
 		activateIfInactive();
 
@@ -49,9 +44,6 @@ public class Goal_MoveToPosition extends GoalComposite<RavenBot>{
 		return m_iStatus;
 	}
 
-
-
-
 	public void terminate(){}
 
 	//this goal is able to accept messages
@@ -60,43 +52,30 @@ public class Goal_MoveToPosition extends GoalComposite<RavenBot>{
 		boolean bHandled = ForwardMessageToFrontMostSubgoal(msg);
 
 		//if the msg was not handled, test to see if this goal can handle it
-		if (bHandled == false)
-		{
-			switch(msg.msg)
-			{
-			case MSG_PATH_READY:
-
-				//clear any existing goals
-				removeAllSubgoals();
-
-				AddSubgoal(new Goal_FollowPath(m_pOwner,
-						m_pOwner.getPathPlanner().getPath()));
-
-				return true; //msg handled
-
-
-			case MSG_NO_PATH_AVAILABLE:
-
-				m_iStatus = Goal.curStatus.failed;
-
-				return true; //msg handled
-
-			default: return false;
+		if (bHandled == false) {
+			switch(msg.msg)	{
+				case MSG_PATH_READY:
+					//clear any existing goals
+					removeAllSubgoals();
+					AddSubgoal(new Goal_FollowPath(m_pOwner,
+					m_pOwner.getPathPlanner().getPath()));
+					return true; //msg handled
+				case MSG_NO_PATH_AVAILABLE:
+					m_iStatus = Goal.CurrentStatus.failed;
+					return true; //msg handled
+				default: 
+					return false;
 			}
 		}
-
 		//handled by subgoals
 		return true;
 	}
-
-
 
 	@Override
 	public void render() {
 		//forward the request to the subgoal
 		// fake it.
-		if (!m_SubGoals.isEmpty())
-		{
+		if (!m_SubGoals.isEmpty()) 	{
 			m_SubGoals.get(0).render();
 		}
 

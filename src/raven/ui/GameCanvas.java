@@ -280,12 +280,4 @@ public class GameCanvas extends Canvas {
 		g.setColor(getInstance().pen);
 		getInstance().g2d.draw(new Ellipse2D.Double(x - radius, y - radius, 2 * radius, 2 * radius));
 	}
-
-	public static void transparentText() {
-		hollowBrush();
-	}
-
-	public static void textColor(int r, int g, int b) {
-		getInstance().pen = new Color(r, g, b);
-	}
 }
