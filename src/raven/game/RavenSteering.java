@@ -162,7 +162,8 @@ public class RavenSteering {
 	/** this behavior moves the agent towards a target position */
 	private Vector2D seek(final Vector2D target) {
 
-		Vector2D desiredVelocity = (target.sub(ravenBot.pos()).mul(ravenBot.maxSpeed));
+		Vector2D desiredVelocity = target.sub(ravenBot.pos()).mul(ravenBot.maxSpeed);
+		desiredVelocity.normalize();
 
 		return (desiredVelocity.sub(ravenBot.velocity()));
 
@@ -233,7 +234,7 @@ public class RavenSteering {
 		//the feelers are contained in a std::vector, m_Feelers
 		createFeelers();
 
-		double DistToThisIP    = 0.0;
+		Double DistToThisIP    = 0.0;
 		double DistToClosestIP = Double.MAX_VALUE;
 
 		//this will hold an index into the vector of walls
@@ -252,7 +253,9 @@ public class RavenSteering {
 				if (Geometry.lineIntersection2D(ravenBot.pos(),
 						feelers.get(flr),
 						walls.get(w).from(),
-						walls.get(w).to()))
+						walls.get(w).to(),
+						DistToThisIP,
+						point))
 				{
 					//is this the closest found so far? If so keep a record
 							if (DistToThisIP < DistToClosestIP)
@@ -287,25 +290,24 @@ public class RavenSteering {
 	}
 	
 	private void createFeelers(){
+		feelers.clear();
+
+		Vector2D temp;
+
 		//feeler pointing straight in front
-		Vector2D tmpFeeler;
-		tmpFeeler =new Vector2D(ravenBot.pos());
-		tmpFeeler= tmpFeeler.mul(ravenBot.heading().length());
-		tmpFeeler = tmpFeeler.mul(ravenBot.speed());
-		tmpFeeler = tmpFeeler.mul(wallDetectionFeelerLength);
-
-
-		feelers.add(0, tmpFeeler);
+		temp = new Vector2D(ravenBot.pos());
+		temp = temp.add(ravenBot.heading().mul(wallDetectionFeelerLength).mul(ravenBot.speed()));
+		feelers.add(temp);
 
 		//feeler to left
-		Vector2D temp = ravenBot.heading();
+		temp = new Vector2D(ravenBot.heading());
 		Transformations.Vec2DRotateAroundOrigin(temp, Math.PI*.5* 3.5);
-		feelers.add(1,ravenBot.pos().add(temp.mul((wallDetectionFeelerLength/2.0))));
+		feelers.add(ravenBot.pos().add(temp.mul(wallDetectionFeelerLength/2.0)));
 
 		//feeler to right
 		temp = ravenBot.heading();
 		Transformations.Vec2DRotateAroundOrigin(temp, Math.PI*.5 * 0.5);
-		feelers.add(2, ravenBot.pos().add(temp.mul(wallDetectionFeelerLength/2.0))); 
+		feelers.add(ravenBot.pos().add(temp.mul(wallDetectionFeelerLength/2.0))); 
 	}
 
 
@@ -399,6 +401,7 @@ public class RavenSteering {
 		weightWallAvoidance			= RavenScript.getDouble("WallAvoidanceWeight");
 		viewDistance				= RavenScript.getDouble("ViewDistance");
 		wallDetectionFeelerLength	= RavenScript.getDouble("WallDetectionFeelerLength");
+		steeringForce				= new Vector2D();
 		feelers						= new Vector<Vector2D>(3);
 		deceleration				= Deceleration.NORMAL;
 		targetAgent1				= null;
@@ -429,7 +432,6 @@ public class RavenSteering {
 
 		//tag neighbors if any of the following 3 group behaviors are switched on
 		if (On(BehaviorType.SEPARATION)) {
-			world.getAllBotsInFOV(ravenBot);
 			world.tagRavenBotsWithinViewRange(ravenBot, viewDistance);
 		}
 
