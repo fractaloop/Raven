@@ -73,7 +73,7 @@ public class Vector2D {
 		return x * v2.x + y * v2.y;
 	}
 	
-	public static final int ANTICLOCKWISE = 1;
+	public static final int ANTICLOCKWISE = -1;
 	public static final int CLOCKWISE = 1;
 	/**
 	 * Calculates if another vector is clockwise or anticlockwise from this
