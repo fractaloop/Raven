@@ -112,4 +112,37 @@ public class Geometry {
 
 		return null;
 	}
+
+	public static boolean lineIntersection2D(Vector2D A, Vector2D B, Vector2D C, Vector2D D, Double distToThisIP, Vector2D point) {
+		double rTop = (A.y-C.y)*(D.x-C.x)-(A.x-C.x)*(D.y-C.y);
+		double rBot = (B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x);
+
+		double sTop = (A.y-C.y)*(B.x-A.x)-(A.x-C.x)*(B.y-A.y);
+		double sBot = (B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x);
+
+		if ( (rBot == 0) || (sBot == 0))
+		{
+			//lines are parallel
+			return false;
+		}
+
+		double r = rTop/rBot;
+		double s = sTop/sBot;
+
+		if( (r > 0) && (r < 1) && (s > 0) && (s < 1) )
+		{
+			distToThisIP = A.distance(B) * r;
+
+			point = A.add(B.sub(A).mul(r));
+
+			return true;
+		}
+
+		else
+		{
+			distToThisIP = 0.0;
+
+			return false;
+		}
+	}
 }

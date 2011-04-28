@@ -645,8 +645,21 @@ public class RavenGame {
 	/** Some weird helper method */
 	public void tagRavenBotsWithinViewRange(RavenBot ravenBot,
 			double viewDistance) {
-		LogManager.GetInstance().Error("Fill in the RavenGame.tagRavenBotsWithinViewRange method");
-		// TODO
+		//iterate through all entities checking for range
+		for (RavenBot bot : bots) {
+			bot.unTag();
+
+			//work in distance squared to avoid sqrts
+			Vector2D to = bot.pos().sub(ravenBot.pos());
+			
+			//the bounding radius of the other is taken into account by adding it 
+		    //to the range
+			double range = viewDistance + bot.getBRadius();
+			
+			//if entity within range, tag for further consideration
+			if (!bot.equals(ravenBot) && to.lengthSq() < range * range)
+				bot.tag();
+		}//next entity
 	}
 
 }

@@ -116,7 +116,39 @@ public class RavenBot extends MovingEntity {
 	 * the steering force for this time-step.
 	 */
 	private void updateMovement() {
-		// TODO
+		//calculate the combined steering force
+		Vector2D force = steering.calculate();
+
+		//if no steering force is produced decelerate the player by applying a
+		//braking force
+		if (steering.force().isZero())
+		{
+			final double BrakingRate = 0.8; 
+
+			velocity = velocity.mul(BrakingRate);                                     
+		}
+
+		//calculate the acceleration
+		Vector2D accel = force.div(mass);
+
+		//update the velocity
+		velocity = velocity.add(accel);
+
+		//make sure vehicle does not exceed maximum velocity
+		velocity.truncate(maxSpeed);
+
+		//update the position
+		position = position.add(velocity);
+
+		//if the vehicle has a non zero velocity the heading and side vectors must 
+		//be updated
+		if (!velocity.isZero())
+		{    
+			heading = new Vector2D(velocity);
+			heading.normalize();
+
+			side = heading.perp();
+		}
 	}
 
 	/** initializes the bot's VB with its geometry */
@@ -271,7 +303,7 @@ public class RavenBot extends MovingEntity {
 		// the bot is under user control. This is because a goal is created
 		// whenever a user clicks on an area of the map that necessitates a
 		// path planning request.
-		brain.Process();
+		brain.process();
 
 		// Calculate the steering force and update the bot's velocity and
 		// position
