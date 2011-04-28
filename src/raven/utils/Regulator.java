@@ -2,21 +2,25 @@ package raven.utils;
 
 public class Regulator {
 
-	/** updatePeriod in nanoseconds */
-	private long updatePeriod;
+	/** updatePeriod in seconds */
+	private double updatePeriod;
 	
-	/** time of next next update using System.nanoTime() */
-	private long nextUpdateTime;
+	/** time remaining until next update */
+	private double nextUpdateTime;
 	
 	public Regulator(double updatesPerSecondRequested) {
 		// The original implementation had it randomly wait 1 second too
-		nextUpdateTime = System.nanoTime() + (long)(Math.random() * 1e9);
+		nextUpdateTime = Math.random();
 		
 		if (updatesPerSecondRequested > 0) {
-			updatePeriod = (long)(1e9 / updatesPerSecondRequested);
+			updatePeriod = 1 / updatesPerSecondRequested;
 		} else if (updatesPerSecondRequested < 0) {
 			updatePeriod = -1;
 		}
+	}
+	
+	public void update(double delta) {
+		nextUpdateTime -= delta;
 	}
 	
 	public boolean isReady() {
@@ -32,17 +36,15 @@ public class Regulator {
 			return false;
 		}
 		
-		long currentTime = System.nanoTime();
-		
 		// the number of milliseconds the update period can vary per required
 		// update-step. This is here to make sure any multiple clients of this
 		// class have their updates spread evenly
-		final long updatePeriodVariator = 10000000; // 10ms in nanoseconds
+		final double updatePeriodVariator = 0.010; // 10 mS
 		
-		if (currentTime >= nextUpdateTime) {
+		if (nextUpdateTime <= 0) {
 			// Offset is randomly between -1.0 and 1.0
 			double offset = Math.random() * 2.0 - 1.0;
-			nextUpdateTime = currentTime + updatePeriod + (long)(offset * updatePeriodVariator);
+			nextUpdateTime = updatePeriod + offset * updatePeriodVariator;
 			
 			return true;
 		}

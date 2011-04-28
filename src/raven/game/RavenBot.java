@@ -279,6 +279,11 @@ public class RavenBot extends MovingEntity {
 
 		// if the bot is under AI control but not scripted
 		if (!isPossessed()) {
+			weaponSelectionRegulator.update(delta);
+			goalArbitrationRegulator.update(delta);
+			targetSelectionRegulator.update(delta);
+			triggerTestRegulator.update(delta);
+			visionUpdateRegulator.update(delta);
 			// examine all the opponents in the bots sensory memory and select
 			// one to be the current target
 			if (targetSelectionRegulator.isReady()) {
