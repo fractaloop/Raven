@@ -22,7 +22,7 @@ abstract public class GoalComposite<T extends BaseGameEntity> extends Goal<T> {
 		while (!m_SubGoals.isEmpty() &&
 				(m_SubGoals.get(0).isComplete() || m_SubGoals.get(0).hasFailed()))
 		{    
-			m_SubGoals.get(0).Terminate();
+			m_SubGoals.get(0).terminate();
 			m_SubGoals.remove(0);
 		}
 
@@ -30,7 +30,7 @@ abstract public class GoalComposite<T extends BaseGameEntity> extends Goal<T> {
 		if (!m_SubGoals.isEmpty())
 		{ 
 			//grab the status of the front-most subgoal
-			raven.goals.Goal.CurrentStatus StatusOfSubGoals = m_SubGoals.get(0).Process();
+			raven.goals.Goal.CurrentStatus StatusOfSubGoals = m_SubGoals.get(0).process();
 
 			//we have to test for the special case where the front-most subgoal
 			//reports 'completed' *and* the subgoal list contains additional goals.When
@@ -52,13 +52,16 @@ abstract public class GoalComposite<T extends BaseGameEntity> extends Goal<T> {
 	}
 
 	public void removeAllSubgoals() {
-		m_SubGoals = new ArrayList<Goal <T>>();
+		for (Goal<T> goal : m_SubGoals)
+			goal.terminate();
+		
+		m_SubGoals.clear();
 	}
 
 	public void AddSubgoal(Goal<T> g)
 	{   
 		//add the new goal to the front of the list
-		m_SubGoals.add(g);
+		m_SubGoals.add(0, g);
 	}
 
 

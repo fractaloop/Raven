@@ -64,7 +64,8 @@ public class GoalThink extends GoalComposite<RavenBot> {
 		}
 	}
 
-	public CurrentStatus Process() {
+	@Override
+	public CurrentStatus process() {
 		activateIfInactive();
 
 		raven.goals.Goal.CurrentStatus SubgoalStatus = ProcessSubgoals();
@@ -107,10 +108,7 @@ public class GoalThink extends GoalComposite<RavenBot> {
 	//-----------------------------------------------------------------------------
 	public boolean notPresent(GoalType goal)
 	{
-		if(m_SubGoals.contains(goal)){
-			return true;  
-		}
-		return false;
+		return !m_SubGoals.contains(goal);
 	}
 
 	public boolean handleMessage(Telegram msg) {
@@ -160,4 +158,7 @@ public class GoalThink extends GoalComposite<RavenBot> {
 		m_SubGoals.add(new Goal_MoveToPosition(m_pOwner, p));
 		LogManager.GetInstance().Info("GOALTHINK - Queued new Goal_MoveToPosition to bot " + m_pOwner.ID());
 	}
+
+	@Override
+	public void terminate() {}
 }

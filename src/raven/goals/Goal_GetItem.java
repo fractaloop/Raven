@@ -26,13 +26,14 @@ public class Goal_GetItem extends GoalComposite<RavenBot> {
 
 
 
-	public raven.goals.Goal.CurrentStatus Process(){
+	@Override
+	public raven.goals.Goal.CurrentStatus process(){
 
 		activateIfInactive();
 
 		if (hasItemBeenStolen())
 		{
-			Terminate();
+			terminate();
 		}
 
 		else
@@ -45,6 +46,7 @@ public class Goal_GetItem extends GoalComposite<RavenBot> {
 
 	}
 
+	@Override
 	public void activate(){
 		m_iStatus = Goal.CurrentStatus.active;
 
@@ -86,7 +88,8 @@ public class Goal_GetItem extends GoalComposite<RavenBot> {
 		return true;
 	}
 
-	public void Terminate(){m_iStatus = Goal.CurrentStatus.completed;}
+	@Override
+	public void terminate(){m_iStatus = Goal.CurrentStatus.completed;}
 
 	public boolean hasItemBeenStolen(){ 
 		if (m_pGiverTrigger != null && !m_pGiverTrigger.isActive() && m_pOwner.hasLOSto(m_pGiverTrigger.pos())) {

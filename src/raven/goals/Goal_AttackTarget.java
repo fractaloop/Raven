@@ -10,7 +10,8 @@ public class Goal_AttackTarget extends GoalComposite<RavenBot> {
 		super(m_pOwner, Goal.GoalType.goal_attack_target);
 	}
 
-	public  void activate(){
+	@Override
+	public void activate(){
 		m_iStatus = Goal.CurrentStatus.active;
 
 		//if this goal is reactivated then there may be some existing subgoals that
@@ -49,7 +50,9 @@ public class Goal_AttackTarget extends GoalComposite<RavenBot> {
 			AddSubgoal(new Goal_HuntTarget(m_pOwner));
 		}
 	}
-	public  raven.goals.Goal.CurrentStatus  Process(){
+	
+	@Override
+	public raven.goals.Goal.CurrentStatus process(){
 		//if status is inactive, call Activate()
 		activateIfInactive();
 
@@ -61,8 +64,8 @@ public class Goal_AttackTarget extends GoalComposite<RavenBot> {
 		return m_iStatus;
 	}
 
-
-	public void Terminate(){
+	@Override
+	public void terminate(){
 		m_iStatus = Goal.CurrentStatus.completed;
 	}
 

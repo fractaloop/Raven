@@ -27,6 +27,7 @@ public class Goal_DodgeSideToSide extends GoalComposite<RavenBot> {
 	}
 
 
+	@Override
 	public void activate(){
 		m_iStatus = Goal.CurrentStatus.active;
 		m_pOwner.getSteering().seekOn();
@@ -49,7 +50,8 @@ public class Goal_DodgeSideToSide extends GoalComposite<RavenBot> {
 		}
 	}
 
-	public CurrentStatus Process() {
+	@Override
+	public CurrentStatus process() {
 		//if status is inactive, call Activate()
 		activateIfInactive(); 
 
@@ -73,7 +75,8 @@ public class Goal_DodgeSideToSide extends GoalComposite<RavenBot> {
 		GameCanvas.circle(m_vStrafeTarget, 3);
 	}
 
-	public void Terminate() {
+	@Override
+	public void terminate() {
 		m_pOwner.getSteering().seekOff();
 	}
 }

@@ -19,6 +19,7 @@ public class Goal_Explore extends GoalComposite<RavenBot> {
 		this.m_bDestinationIsSet = false;
 	}
 
+	@Override
 	public void activate(){
 		m_iStatus = Goal.CurrentStatus.active;
 
@@ -41,6 +42,7 @@ public class Goal_Explore extends GoalComposite<RavenBot> {
 		AddSubgoal(new Goal_SeekToPosition(m_pOwner, m_CurrentDestination));
 	}
 
+	@Override
 	public CurrentStatus process(){  //if status is inactive, call Activate()
 		activateIfInactive();
 
@@ -49,6 +51,7 @@ public class Goal_Explore extends GoalComposite<RavenBot> {
 		return m_iStatus;
 	}
 
+	@Override
 	public void terminate(){}
 
 	public boolean HandleMessage(Telegram msg){

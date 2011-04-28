@@ -18,6 +18,7 @@ public class Goal_FollowPath extends GoalComposite<RavenBot> {
 		this.m_Path = list;
 	}
 
+	@Override
 	public void activate() {
 		m_iStatus = Goal.CurrentStatus.active;
 
@@ -56,6 +57,7 @@ public class Goal_FollowPath extends GoalComposite<RavenBot> {
 		}
 	}
 
+	@Override
 	public CurrentStatus process() {
 		//if status is inactive, call Activate()
 		activateIfInactive();
@@ -86,5 +88,11 @@ public class Goal_FollowPath extends GoalComposite<RavenBot> {
 		{
 			m_SubGoals.get(0).render();
 		}		
+	}
+
+	@Override
+	public void terminate() {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -41,6 +41,7 @@ public class Goal_NegotiateDoor extends GoalComposite<RavenBot> {
 	}
 
 
+	@Override
 	public raven.goals.Goal.CurrentStatus process() {
 		//if status is inactive, call Activate()
 		activateIfInactive();
@@ -49,6 +50,12 @@ public class Goal_NegotiateDoor extends GoalComposite<RavenBot> {
 		m_iStatus = ProcessSubgoals();
 
 		return m_iStatus;
+	}
+
+	@Override
+	public void terminate() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

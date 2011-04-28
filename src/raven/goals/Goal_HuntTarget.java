@@ -13,6 +13,7 @@ public class Goal_HuntTarget extends GoalComposite<RavenBot> {
 		this.m_bLVPTried = false;
 	}
 
+	@Override
 	public void activate() {
 		m_iStatus = Goal.CurrentStatus.active;
 
@@ -49,6 +50,7 @@ public class Goal_HuntTarget extends GoalComposite<RavenBot> {
 		}
 	}
 
+	@Override
 	public CurrentStatus  process() {
 		//if status is inactive, call Activate()
 		activateIfInactive();
@@ -62,7 +64,8 @@ public class Goal_HuntTarget extends GoalComposite<RavenBot> {
 		return m_iStatus;
 	}
 
-	void terminate(){ }
+	@Override
+	public void terminate(){ }
 
 	@Override
 	public void render() {
