@@ -17,7 +17,7 @@ abstract public class GoalComposite<T extends BaseGameEntity> extends Goal<T> {
 
 	public ArrayList <Goal<T> > m_SubGoals;
 
-	public CurrentStatus ProcessSubgoals(){ 
+	public CurrentStatus ProcessSubgoals(double delta){ 
 		//remove all completed and failed goals from the front of the subgoal list
 		while (!m_SubGoals.isEmpty() &&
 				(m_SubGoals.get(0).isComplete() || m_SubGoals.get(0).hasFailed()))
@@ -30,7 +30,7 @@ abstract public class GoalComposite<T extends BaseGameEntity> extends Goal<T> {
 		if (!m_SubGoals.isEmpty())
 		{ 
 			//grab the status of the front-most subgoal
-			raven.goals.Goal.CurrentStatus StatusOfSubGoals = m_SubGoals.get(0).process();
+			raven.goals.Goal.CurrentStatus StatusOfSubGoals = m_SubGoals.get(0).process(delta);
 
 			//we have to test for the special case where the front-most subgoal
 			//reports 'completed' *and* the subgoal list contains additional goals.When

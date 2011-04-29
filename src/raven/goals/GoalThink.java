@@ -65,10 +65,10 @@ public class GoalThink extends GoalComposite<RavenBot> {
 	}
 
 	@Override
-	public CurrentStatus process() {
+	public CurrentStatus process(double delta) {
 		activateIfInactive();
 
-		raven.goals.Goal.CurrentStatus SubgoalStatus = ProcessSubgoals();
+		raven.goals.Goal.CurrentStatus SubgoalStatus = ProcessSubgoals(delta);
 
 		if (SubgoalStatus == Goal.CurrentStatus.completed || SubgoalStatus == Goal.CurrentStatus.failed)
 		{

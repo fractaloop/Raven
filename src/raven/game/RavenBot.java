@@ -303,7 +303,7 @@ public class RavenBot extends MovingEntity {
 		// the bot is under user control. This is because a goal is created
 		// whenever a user clicks on an area of the map that necessitates a
 		// path planning request.
-		brain.process();
+		brain.process(delta);
 
 		// Calculate the steering force and update the bot's velocity and
 		// position

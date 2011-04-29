@@ -58,10 +58,10 @@ public class Goal_FollowPath extends GoalComposite<RavenBot> {
 	}
 
 	@Override
-	public CurrentStatus process() {
+	public CurrentStatus process(double delta) {
 		//if status is inactive, call Activate()
 		activateIfInactive();
-		m_iStatus = ProcessSubgoals();
+		m_iStatus = ProcessSubgoals(delta);
 
 		//if there are no subgoals present check to see if the path still has edges.
 		//remaining. If it does then call activate to grab the next edge.

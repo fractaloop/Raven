@@ -15,12 +15,14 @@ public class Goal_Wander extends Goal<RavenBot> {
 
 	}
 
-	public raven.goals.Goal.CurrentStatus process() {
+	@Override
+	public raven.goals.Goal.CurrentStatus process(double delta) {
 		activateIfInactive();
 		return m_iStatus;
 	}
 
 
+	@Override
 	public void terminate() {
 		m_pOwner.getSteering().wanderOff();
 	}

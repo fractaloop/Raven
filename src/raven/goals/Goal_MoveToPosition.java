@@ -14,6 +14,7 @@ public class Goal_MoveToPosition extends GoalComposite<RavenBot>{
 		m_vDestination = pos;
 	}
 
+	@Override
 	public void activate() {
 		m_iStatus = Goal.CurrentStatus.active;
 
@@ -31,12 +32,13 @@ public class Goal_MoveToPosition extends GoalComposite<RavenBot>{
 		}
 	}
 
-	public raven.goals.Goal.CurrentStatus  process() {
+	@Override
+	public raven.goals.Goal.CurrentStatus  process(double delta) {
 		//if status is inactive, call Activate()
 		activateIfInactive();
 
 		//process the subgoals
-		m_iStatus = ProcessSubgoals();
+		m_iStatus = ProcessSubgoals(delta);
 
 		//if any of the subgoals have failed then this goal re-plans
 		reactivateIfFailed();

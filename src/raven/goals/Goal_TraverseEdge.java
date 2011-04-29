@@ -17,12 +17,11 @@ public class Goal_TraverseEdge extends GoalComposite<RavenBot> {
 	double     m_dTimeExpected;
 
 	//this records the time this goal was activated
-	double     m_dStartTime;
+	double     elapsedTime;
 
 	//returns true if the bot gets stuck
 	boolean isStuck(){
-		double TimeTaken = System.nanoTime()*1000 - m_dStartTime;
-		if (TimeTaken > m_dTimeExpected){
+		if (elapsedTime > m_dTimeExpected){
 			System.out.println("BOT "  + m_pOwner.ID() + " IS STUCK!!");
 			return true;
 		}
@@ -61,7 +60,7 @@ public class Goal_TraverseEdge extends GoalComposite<RavenBot> {
 
 
 		//record the time the bot starts this goal
-		m_dStartTime = System.nanoTime()*1000;   
+		elapsedTime = 0;   
 
 		//calculate the expected time required to reach the this waypoint. This value
 		//is used to determine if the bot becomes stuck 
@@ -86,11 +85,13 @@ public class Goal_TraverseEdge extends GoalComposite<RavenBot> {
 
 	}
 
-	public raven.goals.Goal.CurrentStatus process(){
+	@Override
+	public raven.goals.Goal.CurrentStatus process(double delta){
 		//if status is inactive, call Activate()
 		activateIfInactive();
 
 		//if the bot has become stuck return failure
+		elapsedTime += delta;
 		if (isStuck())
 		{
 			m_iStatus = Goal.CurrentStatus.failed;
@@ -105,6 +106,7 @@ public class Goal_TraverseEdge extends GoalComposite<RavenBot> {
 		return m_iStatus;
 	}
 	
+	@Override
 	public void terminate(){
 		//turn off steering behaviors.
 		m_pOwner.getSteering().seekOff();
@@ -116,6 +118,7 @@ public class Goal_TraverseEdge extends GoalComposite<RavenBot> {
 	}
 
 
+	@Override
 	public void render(){
 		if (m_iStatus == Goal.CurrentStatus.active)
 		{

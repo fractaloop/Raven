@@ -51,7 +51,7 @@ public class Goal_DodgeSideToSide extends GoalComposite<RavenBot> {
 	}
 
 	@Override
-	public CurrentStatus process() {
+	public CurrentStatus process(double delta) {
 		//if status is inactive, call Activate()
 		activateIfInactive(); 
 
@@ -68,6 +68,7 @@ public class Goal_DodgeSideToSide extends GoalComposite<RavenBot> {
 		return m_iStatus;
 	}
 
+	@Override
 	public void render() {
 		GameCanvas.orangePen();
 		GameCanvas.hollowBrush();

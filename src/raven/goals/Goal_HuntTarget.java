@@ -51,11 +51,11 @@ public class Goal_HuntTarget extends GoalComposite<RavenBot> {
 	}
 
 	@Override
-	public CurrentStatus  process() {
+	public CurrentStatus  process(double delta) {
 		//if status is inactive, call Activate()
 		activateIfInactive();
 
-		m_iStatus = ProcessSubgoals();
+		m_iStatus = ProcessSubgoals(delta);
 
 		//if target is in view this goal is satisfied
 		if (m_pOwner.getTargetSys().isTargetWithinFOV()) {

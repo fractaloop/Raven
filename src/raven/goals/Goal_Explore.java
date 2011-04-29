@@ -43,11 +43,11 @@ public class Goal_Explore extends GoalComposite<RavenBot> {
 	}
 
 	@Override
-	public CurrentStatus process(){  //if status is inactive, call Activate()
+	public CurrentStatus process(double delta){  //if status is inactive, call Activate()
 		activateIfInactive();
 
 		//process the subgoals
-		m_iStatus = ProcessSubgoals();
+		m_iStatus = ProcessSubgoals(delta);
 		return m_iStatus;
 	}
 

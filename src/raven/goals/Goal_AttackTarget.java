@@ -52,12 +52,12 @@ public class Goal_AttackTarget extends GoalComposite<RavenBot> {
 	}
 	
 	@Override
-	public raven.goals.Goal.CurrentStatus process(){
+	public raven.goals.Goal.CurrentStatus process(double delta){
 		//if status is inactive, call Activate()
 		activateIfInactive();
 
 		//process the subgoals
-		m_iStatus = ProcessSubgoals();
+		m_iStatus = ProcessSubgoals(delta);
 
 		reactivateIfFailed();
 

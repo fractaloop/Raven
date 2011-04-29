@@ -27,7 +27,7 @@ public class Goal_GetItem extends GoalComposite<RavenBot> {
 
 
 	@Override
-	public raven.goals.Goal.CurrentStatus process(){
+	public raven.goals.Goal.CurrentStatus process(double delta){
 
 		activateIfInactive();
 
@@ -39,7 +39,7 @@ public class Goal_GetItem extends GoalComposite<RavenBot> {
 		else
 		{
 			//process the subgoals
-			m_iStatus = ProcessSubgoals();
+			m_iStatus = ProcessSubgoals(delta);
 		}
 
 		return m_iStatus;

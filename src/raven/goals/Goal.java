@@ -45,7 +45,7 @@ public abstract class Goal<T extends BaseGameEntity> {
 	}
 
 	public abstract void activate();
-	public abstract CurrentStatus process();
+	public abstract CurrentStatus process(double delta);
 	public abstract void terminate();
 	
 	public boolean HandleMessage(Telegram msg){return false;}
