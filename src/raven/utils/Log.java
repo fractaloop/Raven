@@ -57,50 +57,55 @@ public class Log {
 	
 	/**
 	 * Write the given string to the log
-	 * @param string
+	 * @param string the string to log
+	 * @return the string written
 	 */
-	private void write(String string) {
+	private String write(String string) {
+		String buffer = time.format(new Date()) + string + "\n";
+	
 		try {
 			FileWriter writer = new FileWriter(logFile, true);
-			writer.write(time.format(new Date()) + string + "\n");
+			writer.write(buffer);
 			writer.close();
 		} catch (IOException ex) {
 			System.err.println("Failed to write to log!");
 		}
+		
+		return buffer;
 	}
 	
 	public static void info(String zone, String message) { info("[" + zone + "] " + message); }
 	public static void info(String toWrite) {
 		if (Level.INFO.compareTo(getInstance().logLevel) <= 0) {
-			getInstance().write(toWrite);
+			System.out.print(getInstance().write(" INFO: " + toWrite));
 		}
 	}
 
 	public static void debug(String zone, String message) { debug("[" + zone + "] " + message); }
 	public static void debug(String toWrite) {
 		if (Level.DEBUG.compareTo(getInstance().logLevel) <= 0) {
-			getInstance().write(toWrite);
+			System.out.print(getInstance().write("DEBUG: " + toWrite));
 		}
 	}
 	
 	public static void warn(String zone, String message) { warn("[" + zone + "] " + message); }
 	public static void warn(String toWrite) {
 		if (Level.WARN.compareTo(getInstance().logLevel) <= 0) {
-			getInstance().write(toWrite);
+			System.err.print(getInstance().write(" WARN: " + toWrite));
 		}
 	}
 	
 	public static void error(String zone, String message) { error("[" + zone + "] " + message); }
 	public static void error(String toWrite) {
 		if (Level.ERROR.compareTo(getInstance().logLevel) <= 0) {
-			getInstance().write(toWrite);
+			System.err.print(getInstance().write("ERROR: " + toWrite));
 		}
 	}
 
 	public static void trace(String zone, String message) { trace("[" + zone + "] " + message); }
 	public static void trace(String toWrite) {
 		if (Level.TRACE.compareTo(getInstance().logLevel) <= 0) {
-			getInstance().write(toWrite);
+			System.out.print(getInstance().write("TRACE: " + toWrite));
 		}
 	}
 
