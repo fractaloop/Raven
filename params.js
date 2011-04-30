@@ -51,8 +51,8 @@ var GraveLifetime = 5;
 // //////////////////////////////////////////////////////////////////////////////-
 // 
 var Bot_MaxHealth       = 100;
-var Bot_MaxSpeed        = 1;
-var Bot_Mass            = 1;
+var Bot_MaxSpeed        = 60;
+var Bot_Mass            = 10;
 var Bot_MaxForce        = 1.0;
 var Bot_MaxHeadTurnRate = 0.2;
 var Bot_Scale           = 0.8;

@@ -138,13 +138,15 @@ public class RavenSteering {
 		//add together. Otherwise add as much of the ForceToAdd vector is
 		//possible without going over the max.
 		if (magnitudeToAdd < magnitudeRemaining) {
-			runningTot.add(forceToAdd);
+			runningTot = runningTot.add(forceToAdd);
 		} else {
 			magnitudeToAdd = magnitudeRemaining;
 
 			//add it to the steering force
 			forceToAdd.normalize();
-			runningTot.add(forceToAdd.mul(magnitudeToAdd)); 
+			// Dirty hack due to the way it was ported.
+			runningTot.x = runningTot.x + forceToAdd.mul(magnitudeToAdd).x; 
+			runningTot.y = runningTot.y + forceToAdd.mul(magnitudeToAdd).y; 
 		}
 
 		return true;
@@ -162,8 +164,9 @@ public class RavenSteering {
 	/** this behavior moves the agent towards a target position */
 	private Vector2D seek(final Vector2D target) {
 
-		Vector2D desiredVelocity = target.sub(ravenBot.pos()).mul(ravenBot.maxSpeed);
+		Vector2D desiredVelocity = target.sub(ravenBot.pos());
 		desiredVelocity.normalize();
+		desiredVelocity = desiredVelocity.mul(ravenBot.maxSpeed());
 
 		return (desiredVelocity.sub(ravenBot.velocity()));
 
