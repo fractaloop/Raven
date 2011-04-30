@@ -517,6 +517,14 @@ public class RavenGame {
 		if (bot == null && selectedBot == null)
 			return;
 		
+		// if the user clicks on a selected bot twice it becomes possessed
+		// (under the player's control)
+		if (bot != null && bot.equals(selectedBot)) {
+			selectedBot.takePossession();
+			// clear any current goals
+			selectedBot.getBrain().removeAllSubgoals();
+		} 
+ 		
 		// if the cursor is over a different bot to the existing selection,
 		// change selection
 		if (bot != null && !bot.equals(selectedBot)) {
@@ -527,13 +535,7 @@ public class RavenGame {
 			selectedBot = bot;
 		}
 		
-		// if the user clicks on a selected bot twice it becomes possessed
-		// (under the player's control)
-		if (bot != null && bot.equals(selectedBot)) {
-			selectedBot.takePossession();
-			// clear any current goals
-			selectedBot.getBrain().removeAllSubgoals();
-		}
+
 		
 		if (selectedBot.isPossessed()) {
 			// if the shift key is pressed down at the same time as clicking

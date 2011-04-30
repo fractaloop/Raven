@@ -29,6 +29,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
+import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileFilter;
 
 import raven.game.RavenGame;
@@ -91,6 +92,7 @@ public class RavenUI extends JFrame implements KeyListener, MouseListener, Compo
     	// Force keyState to listen
     	keys = new KeyState();
     	addKeyListener(keys);
+    	requestFocus();
     	
     	// Set up the menus
     	createMenu();
@@ -100,8 +102,6 @@ public class RavenUI extends JFrame implements KeyListener, MouseListener, Compo
     	this.setResizable(false);
     	this.setTitle("Raven - " + game.getMap().getName());
     	this.setVisible(true);
-    	
-
 	}
 	
 	private void createMenu() {
@@ -300,9 +300,9 @@ public class RavenUI extends JFrame implements KeyListener, MouseListener, Compo
 
 	@Override
 	public void mousePressed(MouseEvent event) {
-		if (event.getButton() == MouseEvent.BUTTON1)
+		if (SwingUtilities.isLeftMouseButton(event))
 			game.clickLeftMouseButton(new Vector2D(event.getPoint().x, event.getPoint().y));
-		else if (event.getButton() == MouseEvent.BUTTON2)
+		else if (SwingUtilities.isRightMouseButton(event))
 			game.clickRightMouseButton(new Vector2D(event.getPoint().x, event.getPoint().y), (event.getModifiersEx() & MouseEvent.SHIFT_DOWN_MASK) != 0 ? true : false);		
 	}
 
