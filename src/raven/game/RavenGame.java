@@ -25,7 +25,7 @@ import raven.math.Vector2D;
 import raven.math.WallIntersectionTest;
 import raven.script.RavenScript;
 import raven.ui.GameCanvas;
-import raven.utils.LogManager;
+import raven.utils.Log;
 import raven.utils.MapSerializer;
 
 public class RavenGame {
@@ -57,7 +57,7 @@ public class RavenGame {
 	GraveMarkers graveMarkers = new GraveMarkers(RavenScript.getDouble("GraveLifetime"));
 
 	private void clear() {
-		LogManager.GetInstance().Info("Clearing Map");
+		Log.debug("game", "Clearing Map");
 		// delete the bots
 		bots.clear();
 		// delete any active projectiles
@@ -65,9 +65,8 @@ public class RavenGame {
 	}
 
 	private boolean attemptToAddBot(RavenBot bot) {
-		LogManager.GetInstance().Info("Spawning bot " + bot.ID());
 		if (map.getSpawnPoints().size() <= 0) {
-			LogManager.GetInstance().Error("Map has no spawn points, cannot add bot");
+			Log.error("game", "Map has no spawn points, cannot add bot");
 			return false;
 		}
 
@@ -88,14 +87,8 @@ public class RavenGame {
 			}
 			
 			if (available) {
-				LogManager.GetInstance().Info("Spawned bot " + bot.ID() + " at spawn point " + pos);
 				bot.spawn(pos);
-
-				// Set marching orders
-				int nodeID = bot.getPathPlanner().getClosestNodeToPosition(bot.pos());
-				Vector2D posNode = bot.getPathPlanner().getNodePosition(nodeID);
-				if( posNode == null) return true;
-				bot.getPathPlanner().RequestPathToPosition(posNode);
+				
 				return true;
 			}
 		}
@@ -141,15 +134,13 @@ public class RavenGame {
 		
 		String path = "<undefined>";
 		try {
-			LogManager.GetInstance().Info("Choosign map file");
 			path = chooseMapFile();
-			LogManager.GetInstance().Info("Chose " + path);
 			if (path == null) {
-				LogManager.GetInstance().Warn("Chosen path was null, getting default from params.js");
+				Log.info("game", "Loading default map");
 				path = RavenScript.getString("StartMap");
-			} else
+			} else {
 				loadMap(path);
-			
+			}
 			
 		} catch (IOException e) {
 			System.err.println("Failed to load map: " + path + ". Reason: \n" + e.getLocalizedMessage());
@@ -159,7 +150,7 @@ public class RavenGame {
 
 	/** The usual suspects */
 	public void render() {
-		LogManager.GetInstance().Info("Rendering game");
+		Log.trace("game", "Rendering game");
 		graveMarkers.render();
 		
 		// render the map
@@ -168,14 +159,14 @@ public class RavenGame {
 		// render all the bots unless the user has selected the option to only
 		// render those bots that are in the fov of the selected bot
 		if (selectedBot != null && RavenUserOptions.onlyShowBotsInTargetsFOV) {
-			LogManager.GetInstance().Info("Rendering FOV bots only");
+			Log.trace("game", "Rendering FOV bots only");
 			List<RavenBot> visibleBots = getAllBotsInFOV(selectedBot);
 
 			for (RavenBot bot : visibleBots) {
 				bot.render();
 			}
 		} else {
-			LogManager.GetInstance().Info("Rendering all bots");
+			Log.trace("game", "Rendering all bots");
 			// render all the bots
 			for (RavenBot bot : bots) {
 				bot.render();
@@ -183,13 +174,13 @@ public class RavenGame {
 		}
 		
 		// render any projectiles
-		LogManager.GetInstance().Info("Rendering projectiles");
+		Log.trace("game", "Rendering projectiles");
 		for (RavenProjectile projectile : projectiles) {
 			projectile.render();
 		}
 		
 		// render a red circle around the selected bot (blue if possessed)
-		LogManager.GetInstance().Info("Rendering selected bot");
+		Log.trace("game", "Rendering selected bot");
 		if (selectedBot != null) {
 			if (selectedBot.isPossessed()) {
 				GameCanvas.bluePen();
@@ -204,7 +195,7 @@ public class RavenGame {
 			}
 			
 			// render a square around the bot's target
-			LogManager.GetInstance().Info("Rendering selected bot target");
+			Log.trace("game", "Rendering selected bot target");
 			if (RavenUserOptions.showTargetOfSelectedBot && selectedBot.getTargetBot() != null) {
 				GameCanvas.thickRedPen();
 				
@@ -219,13 +210,13 @@ public class RavenGame {
 			
 			// render the path of the bot
 			if (RavenUserOptions.showPathOfSelectedBot) {
-				LogManager.GetInstance().Info("Rendering selected bot path");
+				Log.trace("game", "Rendering selected bot path");
 				selectedBot.getBrain().render();
 			}
 			
 			// display the bot's goal stack
 			if (RavenUserOptions.showGoalsOfSelectedBot) {
-				LogManager.GetInstance().Info("Rendering selected bot goals");
+				Log.trace("game", "Rendering selected bot goals");
 				Vector2D p = new Vector2D(selectedBot.pos().x - 50, selectedBot.pos().y);
 				selectedBot.getBrain().renderAtPos(p, selectedBot.getBrain().GetType().toString());
 			}
@@ -239,10 +230,9 @@ public class RavenGame {
 	 *            amount of time to advance in seconds
 	 */
 	public void update(double delta) {
-		LogManager.GetInstance().Info("Updating game state");
+		Log.trace("game", "Beginning update");
 		// don't update if the user has paused the game
 		if (paused) {
-			LogManager.GetInstance().Info("Paused - updates don't matter");
 			return;
 		}
 		
@@ -294,7 +284,7 @@ public class RavenGame {
 		// if the user has requested that the number of bots be decreased,
 		// remove one
 		if (removeBot) {
-			LogManager.GetInstance().Info("Removing bot at user request");
+			Log.info("game", "Removing bot at user request");
 			if (!bots.isEmpty()) {
 				RavenBot bot = bots.get(bots.size() - 1);
 				if (bot.equals(selectedBot)) {
@@ -324,15 +314,16 @@ public class RavenGame {
 				RavenScript.getInt("MaxSearchCyclesPerUpdateStep"));
 		map = MapSerializer.deserializeMapFromPath(fileName);
 		
-		LogManager.GetInstance().Info("Serialized Map from file successfully");
 		EntityManager.reset();
-		LogManager.GetInstance().Info("Adding default bot amount");
 		addBots(RavenScript.getInt("NumBots"));
+		
+		Log.info("game", "Loaded map " + map);
+		
 		return true;
 	}
 
 	public void addBots(int numBotsToAdd) {
-		LogManager.GetInstance().Info("Adding " + numBotsToAdd + " bots to the map");
+		Log.info("game", "Adding " + numBotsToAdd + " bots to the map");
 		while (--numBotsToAdd > 0) {
 			// create a bot. (its position is irrelevant at this point because
 			// it will not be rendered until it is spawned)
@@ -342,7 +333,7 @@ public class RavenGame {
 			bot.getSteering().wallAvoidanceOn();
 			bot.getSteering().separationOn();
 			bots.add(bot);
-			LogManager.GetInstance().Info("Bot " + bot.ID() + " added");
+			Log.info("game", "Bot " + bot.ID() + " added");
 			
 			// register the bot with the entity manager
 			EntityManager.registerEntity(bot);
@@ -355,25 +346,25 @@ public class RavenGame {
 	}
 
 	public void addRocket(RavenBot shooter, Vector2D target) {
-		LogManager.GetInstance().Info("Added rocket");
+		Log.trace("game", "Added rocket");
 		RavenProjectile rocket = new Rocket(shooter, target);	
 		projectiles.add(rocket);
 	}
 
 	public void addRailGunSlug(RavenBot shooter, Vector2D target) {
-		LogManager.GetInstance().Info("Added slug");
+		Log.trace("game", "Added slug");
 		RavenProjectile slug = new Slug(shooter, target);
 		projectiles.add(slug);
 	}
 
 	public void addShotGunPellet(RavenBot shooter, Vector2D target) {
-		LogManager.GetInstance().Info("Added pellet");
+		Log.trace("game", "Added pellet");
 		RavenProjectile pellet = new Pellet(shooter, target);		
 		projectiles.add(pellet);
 	}
 
 	public void addBolt(RavenBot shooter, Vector2D target) {
-		LogManager.GetInstance().Info("Added bolt");
+		Log.trace("game", "Added bolt");
 		RavenProjectile bolt = new Bolt(shooter, target);
 		projectiles.add(bolt);
 	}
@@ -517,6 +508,7 @@ public class RavenGame {
 
 	public void togglePause() {
 		paused = !paused;
+		Log.info("game", paused ? "Paused" : "Unpaused");
 	}
 
 	/**
@@ -543,14 +535,12 @@ public class RavenGame {
 				selectedBot.exorcise();
 			}
 			selectedBot = bot;
-			LogManager.GetInstance().Info("Selected a new bot: " + bot.ID());
 		}
 		
 		// if the user clicks on a selected bot twice it becomes possessed
 		// (under the player's control)
 		if (bot != null && bot.equals(selectedBot)) {
 			selectedBot.takePossession();
-			LogManager.GetInstance().Info("Possessing bot...");
 			// clear any current goals
 			selectedBot.getBrain().removeAllSubgoals();
 		}
@@ -577,7 +567,7 @@ public class RavenGame {
 	public void clickLeftMouseButton(Vector2D p) {
 		if (selectedBot != null && selectedBot.isPossessed()) {
 			selectedBot.fireWeapon(p);
-			LogManager.GetInstance().Info("Fired possessed bot weapon");
+			Log.debug("game", "Fired possessed bot weapon");
 		}
 	}
 
@@ -608,15 +598,19 @@ public class RavenGame {
 		if (selectedBot != null) {
 			switch (weapon) {
 			case BLASTER:
+				Log.info("game", "Switching to blaster");
 				possessedBot().changeWeapon(RavenObject.BLASTER);
 				break;
 			case SHOTGUN:
+				Log.info("game", "Switching to shotgun");
 				possessedBot().changeWeapon(RavenObject.SHOTGUN);
 				break;
 			case ROCKET_LAUNCHER:
+				Log.info("game", "Switching to rocket launcher");
 				possessedBot().changeWeapon(RavenObject.ROCKET_LAUNCHER);
 				break;
 			case RAIL_GUN:
+				Log.info("game", "Switching to rail gun");
 				possessedBot().changeWeapon(RavenObject.ROCKET_LAUNCHER);
 				break;
 			}

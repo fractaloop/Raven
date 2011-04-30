@@ -3,7 +3,7 @@ package raven.game;
 import java.util.HashMap;
 import java.util.Map;
 
-import raven.utils.LogManager;
+import raven.utils.Log;
 
 public class EntityManager {
 	private static class EntityManagerHolder {
@@ -26,7 +26,7 @@ public class EntityManager {
 	private EntityManager() {}
 	
 	public static void registerEntity(BaseGameEntity entity) {
-		LogManager.GetInstance().Info("ENTITY MANAGER - Registered entity of type " + entity.entityType() + " and ID " + entity.ID()); 
+		Log.trace("ENTITY MANAGER", "Registered entity of type " + entity.entityType() + " and ID " + entity.ID()); 
 		getInstance().entityMap.put(entity.ID(), entity);
 	}
 
@@ -36,11 +36,11 @@ public class EntityManager {
 	
 	public static void removeEntity(BaseGameEntity entity) {
 		getInstance().entityMap.remove(entity);
-		LogManager.GetInstance().Info("ENTITY MANAGER - Registered entity of type " + entity.entityType() + " and ID " + entity.ID()); 
+		Log.trace("ENTITY MANAGER", "Removed entity of type " + entity.entityType() + " and ID " + entity.ID()); 
 	}
 
 	public static void reset() {
-		LogManager.GetInstance().Info("ENTITY MANAGER - Cleared entity listing"); 
+		Log.trace("ENTITY MANAGER", "Cleared entity listing"); 
 		getInstance().entityMap.clear();
 	}
 

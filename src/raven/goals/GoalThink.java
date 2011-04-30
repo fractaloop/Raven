@@ -6,7 +6,7 @@ import raven.game.RavenBot;
 import raven.game.RavenObject;
 import raven.game.messaging.Telegram;
 import raven.math.Vector2D;
-import raven.utils.LogManager;
+import raven.utils.Log;
 
 public class GoalThink extends GoalComposite<RavenBot> {
 	private Vector<Goal_Evaluator> m_Evaluators = new Vector<Goal_Evaluator>();
@@ -19,7 +19,7 @@ public class GoalThink extends GoalComposite<RavenBot> {
 
 	public GoalThink(RavenBot ravenBot) {
 		super(ravenBot, Goal.GoalType.goal_think);
-		LogManager.GetInstance().Info("GOALTHINK - created new brain attached to bot " + ravenBot.ID());
+		Log.debug("GOALTHINK", "created new brain attached to bot " + ravenBot.ID());
 
 		Random randomGenerator = new Random();
 		// random values are between 0.0 and 1.0
@@ -118,19 +118,19 @@ public class GoalThink extends GoalComposite<RavenBot> {
 
 	public void queueGoal_moveToPosition(Vector2D pos) {
 		m_SubGoals.add(new Goal_MoveToPosition(m_pOwner, pos));
-		LogManager.GetInstance().Info("GOALTHINK - Queued new Goal_MoveToPosition to bot " + m_pOwner.ID());
+		Log.debug("GOALTHINK", "Queued new Goal_MoveToPosition to bot " + m_pOwner.ID());
 	}
 
 	public void addGoal_moveToPosition(Vector2D p, Vector2D pos) {
 		AddSubgoal( new Goal_MoveToPosition(m_pOwner, pos));
-		LogManager.GetInstance().Info("GOALTHINK - Added new Goal_MoveToPosition to bot " + m_pOwner.ID());
+		Log.debug("GOALTHINK", "Added new Goal_MoveToPosition to bot " + m_pOwner.ID());
 	}
 
 	public void addGoal_explore() {
 		if (notPresent(GoalType.goal_explore)) {
 			removeAllSubgoals();
 			AddSubgoal( new Goal_Explore(m_pOwner));
-			LogManager.GetInstance().Info("GOALTHINK - Added new Goal_Explore to bot " + m_pOwner.ID());
+			Log.debug("GOALTHINK", "Added new Goal_Explore to bot " + m_pOwner.ID());
 		}
 	}
 
@@ -138,7 +138,7 @@ public class GoalThink extends GoalComposite<RavenBot> {
 		if (notPresent(Goal.GoalType.goal_get)) {
 			removeAllSubgoals();
 			AddSubgoal( new Goal_GetItem(m_pOwner, inp));
-			LogManager.GetInstance().Info("GOALTHINK - Added new Goal_GetITem to bot " + m_pOwner.ID());
+			Log.debug("GOALTHINK", "Added new Goal_GetITem to bot " + m_pOwner.ID());
 		}
 	}
 
@@ -146,7 +146,7 @@ public class GoalThink extends GoalComposite<RavenBot> {
 		if (notPresent(Goal.GoalType.goal_attack_target)){
 			removeAllSubgoals();
 			AddSubgoal( new Goal_AttackTarget(m_pOwner));
-			LogManager.GetInstance().Info("GOALTHINK - Added new Goal_AttackTarget to bot " + m_pOwner.ID());
+			Log.debug("GOALTHINK", "Added new Goal_AttackTarget to bot " + m_pOwner.ID());
 		}
 	}
 	
@@ -156,7 +156,7 @@ public class GoalThink extends GoalComposite<RavenBot> {
 
 	public void queueGoal_moveToPosition(Vector2D pos, Vector2D p) {
 		m_SubGoals.add(new Goal_MoveToPosition(m_pOwner, p));
-		LogManager.GetInstance().Info("GOALTHINK - Queued new Goal_MoveToPosition to bot " + m_pOwner.ID());
+		Log.debug("GOALTHINK", "Queued new Goal_MoveToPosition to bot " + m_pOwner.ID());
 	}
 
 	@Override

@@ -5,7 +5,7 @@ import java.io.Writer;
 
 import raven.game.messaging.Telegram;
 import raven.math.Vector2D;
-import raven.utils.LogManager;
+import raven.utils.Log;
 
 public abstract class BaseGameEntity {
 	
@@ -29,7 +29,7 @@ public abstract class BaseGameEntity {
 	protected double boundingRadius;
 	
 	protected BaseGameEntity(int id, RavenObject type) {
-		LogManager.GetInstance().Info("Creating a new " + type + " with ID " + id);
+		Log.debug("entity", "Creating a new " + type + " with ID " + id);
 		setID(id);
 		this.type = type;
 	}

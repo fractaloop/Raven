@@ -14,6 +14,7 @@ import raven.math.Transformations;
 import raven.math.Vector2D;
 import raven.script.RavenScript;
 import raven.ui.GameCanvas;
+import raven.utils.Log;
 import raven.utils.Regulator;
 
 public class RavenBot extends MovingEntity {
@@ -562,12 +563,14 @@ public class RavenBot extends MovingEntity {
 
 	public void takePossession() {
 		if (!(isSpawning() || isDead())) {
+			Log.info("bot", "Possesed bot " + ID());
 			possessed = true;
 		}
 	}
 
 	public void exorcise() {
 		possessed = false;
+		Log.info("bot", "Unpossesed bot " + ID());
 		
 		brain.addGoal_explore();
 	}
