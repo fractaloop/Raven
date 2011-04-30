@@ -53,7 +53,7 @@ public class Goal_GetItem extends GoalComposite<RavenBot> {
 		//  m_pGiverTrigger = 0; NEED TO ASSIGN TRIGGER HERE
 
 		//request a path to the item
-		m_pOwner.getPathPlanner().requestPathToItem(m_iItemToGet.toInteger());
+		m_pOwner.getPathPlanner().requestPathToItem(m_iItemToGet);
 
 		//the bot may have to wait a few update cycles before a path is calculated
 		//so for appearances sake it just wanders

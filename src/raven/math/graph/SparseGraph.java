@@ -79,7 +79,7 @@ public class SparseGraph<NodeType extends GraphNode, EdgeType extends GraphEdge>
 	}
 
 	/** method to get all the neighbors of a node */
-	public List<? extends GraphEdge> getEdges(int index) {
+	public List<EdgeType> getEdges(int index) {
 		return edges.get(index);
 	}
 

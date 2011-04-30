@@ -21,7 +21,7 @@ public class RavenFeature {
 	//is called the value returned is 1
 	public static double DistanceToItem(RavenBot pBot, RavenObject ItemType){
 		//determine the distance to the closest instance of the item type
-		double DistanceToItem = pBot.getPathPlanner().getCostToClosestItem(ItemType.toInteger());
+		double DistanceToItem = pBot.getPathPlanner().getCostToClosestItem(ItemType);
 
 
 		//if the previous method returns a negative value then there is no item of

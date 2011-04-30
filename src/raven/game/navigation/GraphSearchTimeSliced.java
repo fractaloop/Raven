@@ -3,52 +3,34 @@ package raven.game.navigation;
 import java.util.List;
 import java.util.Vector;
 
+import raven.math.graph.GraphEdge;
+import raven.math.graph.GraphSearchStatus;
+import raven.math.graph.GraphSearchType;
 import raven.math.graph.SparseGraph;
 
-public class GraphSearchTimeSliced<NodeType extends NavGraphNode<T>,EdgeType extends NavGraphEdge, T>  {
+public abstract class GraphSearchTimeSliced<NavGraphEdge>  {
 
-	public enum SearchType{AStar, Dijkstra};
+	private GraphSearchType searchType;
+	
+	public GraphSearchTimeSliced(GraphSearchType type) { searchType = type; }
+	
+	/** When called, this method runs the algorithm through one search cycle.
+	 * The method returns an enumerated value (target_found, target_not_found,
+	 * search_incomplete) indicating the status of the search */
+	public abstract GraphSearchStatus cycleOnce();
+	
+	/** returns the vector of edges that the algorithm has examined */
+	public abstract List<NavGraphEdge> getSPT();
+	
+	/** returns the total cost to the target */
+	public abstract double getCostToTarget();
+	
+	/** returns a list of node indexes that comprise the shortest path from
+	 * the source to the target */
+	public abstract List<Integer> getPathToTarget();
 
-	private Vector<Double> costToThisNode; 
+	/** returns the path as a list of PathEdges */
+	public abstract List<PathEdge> getPathAsPathEdges();
 
-	private  Vector<EdgeType>  shortestPathTree;
-	private Vector<EdgeType>  searchFrontier;
-
-	private int source;
-	private int target;
-	private SparseGraph<NodeType, EdgeType> graph=new SparseGraph<NodeType, EdgeType>();
-	public List<PathEdge> path;
-	private SearchType searchType;
-	public GraphSearchTimeSliced(){
-
-	}
-
-	public SearchType GetType(){
-		return searchType;
-	}
-	//-------------------------- GetPathAsPathEdges -------------------------------
-	//
-	//  returns the path as a list of PathEdges
-	//-----------------------------------------------------------------------------
-
-	public List<PathEdge> getPathAsPathEdges(){
-		//List<PathEdge> path= new List<PathEdge>();
-
-		//just return an empty path if no target or no path found
-		if (target < 0)  return path;    
-
-		int nd = target;
-
-		while ((nd != source) && (shortestPathTree.get(nd) != null))
-		{
-			path.add(new PathEdge(graph.getNode(shortestPathTree.get(nd).from()).pos(),
-					graph.getNode(shortestPathTree.get(nd).to()).pos(),
-					shortestPathTree.get(nd).flags(),shortestPathTree.get(nd).IDOfIntersectingEntity()));
-
-			nd = shortestPathTree.get(nd).from();
-		}
-
-		return path;
-	}
-
+	public GraphSearchType getType(){ return searchType; }
 }
