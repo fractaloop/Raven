@@ -11,7 +11,7 @@ import java.util.List;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 
-import raven.Raven;
+import raven.RavenUI;
 import raven.game.armory.Bolt;
 import raven.game.armory.Pellet;
 import raven.game.armory.RavenProjectile;
@@ -55,6 +55,9 @@ public class RavenGame {
 	 * manages the graves.
 	 */
 	GraveMarkers graveMarkers = new GraveMarkers(RavenScript.getDouble("GraveLifetime"));
+
+	/** Holds a request to load a new map. This is set from another thread */
+	private String newMapPath;
 
 	private void clear() {
 		Log.debug("game", "Clearing Map");
@@ -103,47 +106,16 @@ public class RavenGame {
 		}
 	}
 
-	/** Open a Swing file chooser to pick a Raven map */
-	private String chooseMapFile() {
-		JFileChooser chooser = new JFileChooser(new File("./maps"));
-		chooser.setFileFilter(new FileFilter() {
-			@Override
-			public boolean accept(File file) {
-				return file.getName().endsWith(".raven");
-			}
-
-			@Override
-			public String getDescription() {
-				return "Raven levels (*.raven)";
-			}
-		});
-		int chooseResult = chooser.showOpenDialog(null);
-		
-		if (chooseResult == JFileChooser.APPROVE_OPTION) {
-			return chooser.getSelectedFile().getPath();
-		} else {
-			return null;
-		}
-	}
-
 	// /////////////////
 	// Public methods
 
 	public RavenGame() {
 		EntityManager.reset();
 		
-		String path = "<undefined>";
 		try {
-			path = chooseMapFile();
-			if (path == null) {
-				Log.info("game", "Loading default map");
-				path = RavenScript.getString("StartMap");
-			} else {
-				loadMap(path);
-			}
-			
+			loadMap(RavenScript.getString("StartMap"));
 		} catch (IOException e) {
-			System.err.println("Failed to load map: " + path + ". Reason: \n" + e.getLocalizedMessage());
+			System.err.println("Failed to load default map: " + RavenScript.getString("StartMap") + ". Reason: \n" + e.getLocalizedMessage());
 			System.exit(1);
 		}
 	}
@@ -231,6 +203,16 @@ public class RavenGame {
 	 */
 	public void update(double delta) {
 		Log.trace("game", "Beginning update");
+		
+		// Check if we need to switch maps
+		if (newMapPath != null) {
+			try {
+				loadMap(newMapPath);
+			} catch (IOException e) {
+				Log.warn("game", "Failed to laod map " + newMapPath + ".");
+			}
+		}
+		
 		// don't update if the user has paused the game
 		if (paused) {
 			return;
@@ -298,6 +280,11 @@ public class RavenGame {
 		}
 	}
 
+
+	public void switchToMap(String filename) {
+		newMapPath = filename;
+	}
+
 	/** Loads an environment from a file 
 	 * @throws IOException */
 	public boolean loadMap(String fileName) throws IOException {
@@ -306,6 +293,7 @@ public class RavenGame {
 
 		// out with the old
 		map = null;
+		newMapPath = null;
 		graveMarkers = null;
 		pathManager = null;
 
@@ -506,9 +494,11 @@ public class RavenGame {
 		return null;
 	}
 
-	public void togglePause() {
+	public boolean togglePause() {
 		paused = !paused;
 		Log.info("game", paused ? "Paused" : "Unpaused");
+		
+		return paused;
 	}
 
 	/**
@@ -520,7 +510,7 @@ public class RavenGame {
 	 * @param p
 	 *            the location clicked
 	 */
-	public void clickRightMouseButton(Vector2D p) {
+	public void clickRightMouseButton(Vector2D p, boolean shiftKeyPressed) {
 		RavenBot bot = getBotAtPosition(p);
 		
 		// if there is no selected bot just return
@@ -548,7 +538,7 @@ public class RavenGame {
 		if (selectedBot.isPossessed()) {
 			// if the shift key is pressed down at the same time as clicking
 			// then the movement command will be queued
-			if (Raven.isKeyPressed(KeyEvent.VK_SHIFT)) {
+			if (shiftKeyPressed) {
 				selectedBot.getBrain().queueGoal_moveToPosition(selectedBot.pos(), p);
 			} else {
 				selectedBot.getBrain().removeAllSubgoals();
@@ -584,7 +574,7 @@ public class RavenGame {
 	 */
 	public void getPlayerInput() {
 		if (selectedBot != null && selectedBot.isPossessed()) {
-			selectedBot.rotateFacingTowardPosition(Raven.getClientCursorPosition());
+			selectedBot.rotateFacingTowardPosition(RavenUI.getClientCursorPosition());
 		}
 	}
 

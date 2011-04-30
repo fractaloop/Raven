@@ -37,7 +37,7 @@ var NumBots = 3;
 var MaxSearchCyclesPerUpdateStep = 1000;
 // 
 // //the name of the default map
-var StartMap = "maps/Raven_DM1.map";
+var StartMap = "maps/default.raven";
 // 
 // //cell space partitioning defaults
 var NumCellsX = 10;
