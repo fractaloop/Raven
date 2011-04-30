@@ -11,6 +11,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import raven.utils.Log.Level;
+
 /**
  * @author Chet
  * @author Logan Lowell
@@ -60,7 +62,7 @@ public class Log {
 	private void write(String string) {
 		try {
 			FileWriter writer = new FileWriter(logFile, true);
-			writer.write(time.format(new Date()) + string);
+			writer.write(time.format(new Date()) + string + "\n");
 			writer.close();
 		} catch (IOException ex) {
 			System.err.println("Failed to write to log!");
@@ -100,5 +102,10 @@ public class Log {
 		if (Level.TRACE.compareTo(getInstance().logLevel) <= 0) {
 			getInstance().write(toWrite);
 		}
+	}
+
+
+	public static void setLevel(Level level) {
+		getInstance().logLevel = level;
 	}
 }
