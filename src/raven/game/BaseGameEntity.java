@@ -3,6 +3,8 @@ package raven.game;
 import java.io.Reader;
 import java.io.Writer;
 
+import javax.management.RuntimeErrorException;
+
 import raven.game.messaging.Telegram;
 import raven.math.Vector2D;
 import raven.utils.Log;
@@ -20,7 +22,12 @@ public abstract class BaseGameEntity {
 	private static int nextValidID;
 	
 	private void setID(int val) {
+		if (val < nextValidID)
+			throw new RuntimeException("Invalid ID during creation!");
+		
 		ID = val;
+		
+		nextValidID++;
 	}
 	
 	protected Vector2D position;
