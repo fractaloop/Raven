@@ -122,7 +122,7 @@ public class RavenBot extends MovingEntity {
 
 		//if no steering force is produced decelerate the player by applying a
 		//braking force
-		if (steering.force().isZero())
+		if (!steering.force().isZero())
 		{
 			final double BrakingRate = 0.8; 
 
