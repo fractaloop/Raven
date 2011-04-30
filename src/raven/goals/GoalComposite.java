@@ -64,25 +64,32 @@ abstract public class GoalComposite<T extends BaseGameEntity> extends Goal<T> {
 		m_SubGoals.add(0, g);
 	}
 
-
+	@Override
+	public boolean handleMessage(Telegram msg) {
+		return ForwardMessageToFrontMostSubgoal(msg);
+	}
+	
 	public boolean ForwardMessageToFrontMostSubgoal(Telegram msg) {
 		if (!m_SubGoals.isEmpty()) {
-			return m_SubGoals.get(0).HandleMessage(msg);
+			return m_SubGoals.get(0).handleMessage(msg);
 		}
 		//return false if the message has not been handled
 		return false;
 	}
 
+	@Override
 	public void renderAtPos(Vector2D pos, String tts) {
-		renderAtPos(pos, tts);
+		super.renderAtPos(pos, tts);
 		pos.x += 10;
-		GameCanvas.whitePen();
+		
+		GameCanvas.greenPen();
 		for (Goal<?> goal : m_SubGoals) {
 			goal.renderAtPos(pos, tts);
 		}
 		pos.x -= 10;
 	}
 
+	@Override
 	public void render(){
 		if (!m_SubGoals.isEmpty()) {
 			m_SubGoals.get(0).render();

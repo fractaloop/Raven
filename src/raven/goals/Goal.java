@@ -48,7 +48,7 @@ public abstract class Goal<T extends BaseGameEntity> {
 	public abstract CurrentStatus process(double delta);
 	public abstract void terminate();
 	
-	public boolean HandleMessage(Telegram msg){return false;}
+	public boolean handleMessage(Telegram msg){return false;}
 
 	public boolean isComplete() { return m_iStatus == Goal.CurrentStatus.completed; }
 	public boolean isActive(){ return m_iStatus == Goal.CurrentStatus.active; }
