@@ -20,7 +20,6 @@ public abstract class Trigger<T extends BaseGameEntity> extends BaseGameEntity {
 	
 	private int graphNodeIndex;
 	
-	protected void setGraphNodeIndex(int index) { graphNodeIndex = index; }
 	protected void setToBeRemovedFromGame() { removeFromGame = true; }
 	protected void setInactive() { active = false; }
 	protected void setActive() { active = true; }
@@ -69,6 +68,7 @@ public abstract class Trigger<T extends BaseGameEntity> extends BaseGameEntity {
 	
 	// Accessors
 	
+	public void setGraphNodeIndex(int index) { graphNodeIndex = index; }
 	public int graphNodeIndex() { return graphNodeIndex; }
 	public boolean isToBeRemoved() { return removeFromGame; }
 	public boolean isActive() { return active; }

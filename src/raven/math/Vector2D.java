@@ -169,7 +169,7 @@ public class Vector2D {
 	}
 	
 	public Vector2D div(double scalar) {
-		return mul(1 / scalar);
+		return mul(1.0 / scalar);
 	}
 	
 	public String toString() {

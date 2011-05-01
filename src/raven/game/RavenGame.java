@@ -232,6 +232,9 @@ public class RavenGame {
 		
 		graveMarkers.update(delta);
 		
+		// Update a player controlled bot
+		getPlayerInput(delta);
+		
 		// update all the queued searches in the path manager
 		pathManager.updateSearches();
 		
@@ -589,10 +592,11 @@ public class RavenGame {
 	/**
 	 * if a bot is possessed the keyboard is polled for user input and any
 	 * relevant bot methods are called appropriately
+	 * @param delta 
 	 */
-	public void getPlayerInput() {
+	public void getPlayerInput(double delta) {
 		if (selectedBot != null && selectedBot.isPossessed()) {
-			selectedBot.rotateFacingTowardPosition(RavenUI.getClientCursorPosition());
+			selectedBot.rotateFacingTowardPosition(RavenUI.getClientCursorPosition(), delta);
 		}
 	}
 

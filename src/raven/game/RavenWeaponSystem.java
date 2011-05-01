@@ -86,7 +86,7 @@ public class RavenWeaponSystem {
 		weaponMap.put(RavenObject.BLASTER, currentWeapon);
 	}
 
-	public void takeAimAndShoot() {
+	public void takeAimAndShoot(double delta) {
 		// aim the weapon only if the current target is shootable or if it has
 		// only	very recently gone out of view (this latter condition is to
 		// ensure the weapon is aimed at the target even if it temporarily
@@ -98,7 +98,7 @@ public class RavenWeaponSystem {
 			// if the current weapon is not an instant hit type gun the target
 			// position	must be adjusted to take into account the predicted
 			// movement of the target
-			if (owner.rotateFacingTowardPosition(aimingPos)
+			if (owner.rotateFacingTowardPosition(aimingPos, delta)
 					&& owner.getTargetSys().getTimeTargetHasBeenVisible() > reactionTime
 					&& owner.hasLOSto(aimingPos)) {
 				aimingPos = predictFuturePositionOfTarget();
@@ -107,7 +107,7 @@ public class RavenWeaponSystem {
 				// between the bot and the aiming position and it has been in
 				// view for a period longer than the bot's reaction time,
 				// shoot the weapon
-				if (owner.rotateFacingTowardPosition(aimingPos)
+				if (owner.rotateFacingTowardPosition(aimingPos, delta)
 						&& owner.getTargetSys().getTimeTargetHasBeenVisible() > reactionTime
 						&& owner.hasLOSto(aimingPos)) {
 					addNoiseToAim(aimingPos);
@@ -120,7 +120,7 @@ public class RavenWeaponSystem {
 			else {
 				// if the weapon is aimed correctly and it has been in view for a
 				// period longer than the bot's reaction time, shoot the weapon
-				if (owner.rotateFacingTowardPosition(aimingPos)
+				if (owner.rotateFacingTowardPosition(aimingPos, delta)
 						&& owner.getTargetSys().getTimeTargetHasBeenVisible() > reactionTime
 						&& owner.hasLOSto(aimingPos)) {
 					addNoiseToAim(aimingPos);
@@ -132,7 +132,7 @@ public class RavenWeaponSystem {
 		// no target to shoot at so rotate facing to be parallel with the
 		// bot's heading direction
 		else {
-			owner.rotateFacingTowardPosition(owner.pos().add(owner.heading()));
+			owner.rotateFacingTowardPosition(owner.pos().add(owner.heading()), delta);
 		}
 	}
 

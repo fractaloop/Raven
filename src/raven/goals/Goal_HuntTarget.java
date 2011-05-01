@@ -32,7 +32,7 @@ public class Goal_HuntTarget extends GoalComposite<RavenBot> {
 			//if the bot has reached the LRP and it still hasn't found the target
 			//it starts to search by using the explore goal to move to random
 			//map locations
-			if (lrp.isZero() || m_pOwner.isAtPosition(lrp))
+			if (lrp == null || m_pOwner.isAtPosition(lrp))
 			{
 				AddSubgoal(new Goal_Explore(m_pOwner));
 			}

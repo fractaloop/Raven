@@ -305,13 +305,13 @@ public class RavenSteering {
 
 		//feeler to left
 		temp = new Vector2D(ravenBot.heading());
-		Transformations.Vec2DRotateAroundOrigin(temp, Math.PI*.5* 3.5);
-		feelers.add(ravenBot.pos().add(temp.mul(wallDetectionFeelerLength/2.0)));
+		Transformations.Vec2DRotateAroundOrigin(temp, -Math.PI / 3);
+		feelers.add(ravenBot.pos().add(temp.mul(wallDetectionFeelerLength/3.0)));
 
 		//feeler to right
 		temp = new Vector2D(ravenBot.heading());
-		Transformations.Vec2DRotateAroundOrigin(temp, Math.PI*.5 * 0.5);
-		feelers.add(ravenBot.pos().add(temp.mul(wallDetectionFeelerLength/2.0))); 
+		Transformations.Vec2DRotateAroundOrigin(temp, Math.PI / 3);
+		feelers.add(ravenBot.pos().add(temp.mul(wallDetectionFeelerLength/3.0))); 
 	}
 
 

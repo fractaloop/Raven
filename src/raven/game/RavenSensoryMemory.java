@@ -122,7 +122,7 @@ public class RavenSensoryMemory {
 					// test if the bot is within FOV
 					if (Vector2D.isSecondInFOVOfFirst(owner.pos(), owner.facing(), bot.pos(), owner.fieldOfView())) {
 						info.timeSinceLastSensed = 0;
-						info.lastSensedPosition = bot.pos();
+						info.lastSensedPosition = new Vector2D(bot.pos());
 						info.timeSinceLastVisible = 0;
 
 						if (info.withinFOV == false) {

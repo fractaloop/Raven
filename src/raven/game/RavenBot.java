@@ -122,7 +122,7 @@ public class RavenBot extends MovingEntity {
 
 		//if no steering force is produced decelerate the player by applying a
 		//braking force
-		if (!steering.force().isZero())
+		if (steering.force().isZero())
 		{
 			final double BrakingRate = 0.8; 
 
@@ -161,20 +161,23 @@ public class RavenBot extends MovingEntity {
 		vecBotVB.add(new Vector2D(3, -10));
 		vecBotVB.add(new Vector2D(-3, -8));
 
-		boundingRadius = 0.0;
-		double scale = RavenScript.getDouble("Bot_Scale");
+		boundingRadius = RavenScript.getDouble("Bot_Scale");
 
+		// Find the RMS vertex distance
+		double avgDist = 0;
+		for (Vector2D point : vecBotVB)
+			if (point.lengthSq() > avgDist)
+				avgDist += point.lengthSq();
+		avgDist /= vecBotVB.size();
+		avgDist = Math.sqrt(avgDist);
+		
+		// Size all the vertices at RMS distance to bot scale
 		for (Vector2D point : vecBotVB) {
-			//set the bounding radius to the length of the 
-			//greatest extent
-			if (Math.abs(point.x) * scale > boundingRadius) {
-				boundingRadius = Math.abs(point.x * scale);
-			}
-
-			if (Math.abs(point.y) * scale > boundingRadius) {
-				boundingRadius = Math.abs(point.y * scale);
-			}
+			Vector2D temp = point.mul(1/avgDist);
+			point.x = temp.x;
+			point.y = temp.y;
 		}
+		
 	}
 
 	// ////////////////
@@ -262,11 +265,15 @@ public class RavenBot extends MovingEntity {
 		GameCanvas.closedShape(vecBotVBTrans);
 
 		// draw the head
+		GameCanvas.brownPen();
 		GameCanvas.brownBrush();
-		GameCanvas.circle(pos(), 6.0 * scale().x);
+		GameCanvas.circle(pos(), getBRadius() * 0.5);
 
 		// render the bot's weapon
 		weaponSys.renderCurrentWeapon();
+		
+		// render the sensory stuff
+		steering.renderFeelers();
 
 		// render a thick red circle if the bot gets hit by a weapon
 		if (hit) {
@@ -343,7 +350,7 @@ public class RavenBot extends MovingEntity {
 
 			// this method aims the bot's current weapon at the current target
 			// and takes a shot if a shot is possible
-			weaponSys.takeAimAndShoot();
+			weaponSys.takeAimAndShoot(delta);
 		}
 
 	}
@@ -413,11 +420,11 @@ public class RavenBot extends MovingEntity {
 	 * this rotates the bot's heading until it is facing directly at the target
 	 * position. Returns false if not facing at the target.
 	 * 
-	 * @param target
-	 *            the target to face
+	 * @param target the target to face
+	 * @param delta the amount of time this rotation should take
 	 * @return
 	 */
-	public boolean rotateFacingTowardPosition(Vector2D target) {
+	public boolean rotateFacingTowardPosition(Vector2D target, double delta) {
 		Vector2D toTarget = target.sub(position);
 		toTarget.normalize();
 
@@ -439,8 +446,8 @@ public class RavenBot extends MovingEntity {
 		}
 		
 		// clamp the amount to turn to the max turn rate
-		if (angle > maxTurnRate) {
-			angle = maxTurnRate;
+		if (angle > maxTurnRate * delta) {
+			angle = maxTurnRate * delta;
 		}
 		
 		// The next few lines use a rotation matrix to rotate the player's
@@ -548,7 +555,7 @@ public class RavenBot extends MovingEntity {
 	 * @return true if the bot is close
 	 */
 	public boolean isAtPosition(Vector2D pos) {
-		final double tolerance = 10.0;
+		final double tolerance = getBRadius();
 		
 		return position.distanceSq(pos) < tolerance * tolerance;
 	}

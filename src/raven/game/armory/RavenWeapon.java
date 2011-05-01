@@ -66,7 +66,7 @@ public abstract class RavenWeapon {
 	
 	/* ACCESSORS */
 	
-	public final boolean AimAt(Vector2D target) { return owner.rotateFacingTowardPosition(target); }
+//	public final boolean AimAt(Vector2D target) { return owner.rotateFacingTowardPosition(target); }
 	
 	public double getMaxProjectileSpeed() { return maxProjectileSpeed; }
 	

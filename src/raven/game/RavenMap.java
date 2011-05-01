@@ -95,6 +95,8 @@ public class RavenMap {
 		node.setExtraInfo(healthGiver);
 		navGraph.addNode(node);
 		
+		healthGiver.setGraphNodeIndex(node.index());
+		
 		// register the entity
 		EntityManager.registerEntity(healthGiver);
 	}
@@ -110,6 +112,9 @@ public class RavenMap {
 		NavGraphNode<Trigger<RavenBot>> node = new NavGraphNode<Trigger<RavenBot>>(navGraph.getNextFreeNodeIndex(), position);
 		node.setExtraInfo(weaponGiver);
 		navGraph.addNode(node);
+		
+		weaponGiver.setGraphNodeIndex(node.index());
+
 	}
 	
 	public void addDoor(int id, Vector2D pos1, Vector2D pos2, int timeout) {
