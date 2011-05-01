@@ -109,10 +109,15 @@ public class Viewport extends JPanel {
 		g2d.draw(line);
 */		
 		// Render the walls
+		g2d.setStroke(new BasicStroke(2));
+		g2d.setColor(Color.BLACK);
 		for (Wall2D wall : level.getWalls()) {
-			g2d.setColor(Color.BLACK);
 			line = new Line2D.Float(levelToView(wall.from()), levelToView(wall.to()));
 			g2d.draw(line);
+			// Draw a little normal line too
+			Vector2D midpoint = wall.to().sub(wall.from()).mul(0.5).add(wall.from());
+			Vector2D endpoint = new Vector2D(midpoint.add(wall.normal().mul(5)));
+			g2d.draw(new Line2D.Float(levelToView(midpoint), levelToView(endpoint)));
 		}
 		
 		// Render the spawn points

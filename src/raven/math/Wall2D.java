@@ -24,7 +24,7 @@ public class Wall2D {
 		Vector2D temp = vB.sub(vA);
 		temp.normalize();
 		
-		vN = new Vector2D(-temp.x, temp.y);
+		vN = new Vector2D(-temp.y, temp.x);
 	}
 	
 	public Wall2D() {}
