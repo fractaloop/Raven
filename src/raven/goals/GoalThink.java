@@ -108,9 +108,8 @@ public class GoalThink extends GoalComposite<RavenBot> {
 	public boolean notPresent(GoalType goal)
 	{
 		if (!m_SubGoals.isEmpty()) {
-			return m_SubGoals.get(0).GetType().equals(goal);
+			return !m_SubGoals.get(0).GetType().equals(goal);
 		}
-			
 		
 		return true;
 	}
