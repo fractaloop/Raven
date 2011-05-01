@@ -58,6 +58,7 @@ public class RavenGame {
 
 	/** Holds a request to load a new map. This is set from another thread */
 	private String newMapPath;
+	private volatile int botsToAdd;
 
 	private void clear() {
 		Log.debug("game", "Clearing Map");
@@ -213,6 +214,17 @@ public class RavenGame {
 			}
 		}
 		
+		// Check bot adding and removal
+		while (botsToAdd != 0) {
+			if (botsToAdd < 0) {
+				removeBot();
+				botsToAdd++;
+			} else {
+				addBots(botsToAdd);
+				botsToAdd = 0;
+			}
+		}
+		
 		// don't update if the user has paused the game
 		if (paused) {
 			return;
@@ -284,6 +296,10 @@ public class RavenGame {
 	public void switchToMap(String filename) {
 		newMapPath = filename;
 	}
+	
+	public void changeBotCount(int count) {
+		botsToAdd += count;
+	}
 
 	/** Loads an environment from a file 
 	 * @throws IOException */
@@ -310,9 +326,9 @@ public class RavenGame {
 		return true;
 	}
 
-	public void addBots(int numBotsToAdd) {
+	protected void addBots(int numBotsToAdd) {
 		Log.info("game", "Adding " + numBotsToAdd + " bots to the map");
-		while (--numBotsToAdd > 0) {
+		while (numBotsToAdd-- > 0) {
 			// create a bot. (its position is irrelevant at this point because
 			// it will not be rendered until it is spawned)
 			RavenBot bot = new RavenBot(this, new Vector2D());

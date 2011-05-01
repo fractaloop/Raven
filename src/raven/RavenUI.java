@@ -71,7 +71,7 @@ public class RavenUI extends JFrame implements KeyListener, MouseListener, Compo
     	JPanel panel = (JPanel)this.getContentPane();
     	panel.setPreferredSize(new Dimension(width, height));
     	panel.setLayout(null);
-    	
+
     	// Setup our canvas and add it
     	GameCanvas.getInstance().addKeyListener(this);
     	GameCanvas.getInstance().addMouseListener(this);
@@ -98,6 +98,7 @@ public class RavenUI extends JFrame implements KeyListener, MouseListener, Compo
     	createMenu();
 
     	// All done. Show it!
+    	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     	this.pack();
     	this.setResizable(false);
     	this.setTitle("Raven - " + game.getMap().getName());
@@ -133,7 +134,7 @@ public class RavenUI extends JFrame implements KeyListener, MouseListener, Compo
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0));
 		menuItem.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
-				game.addBots(1);
+				game.changeBotCount(1);
 			}
 		});
 		menu.add(menuItem);
@@ -142,7 +143,7 @@ public class RavenUI extends JFrame implements KeyListener, MouseListener, Compo
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0));
 		menuItem.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
-				game.removeBot();
+				game.changeBotCount(-1);
 			}
 		});
 		menu.add(menuItem);
@@ -310,18 +311,15 @@ public class RavenUI extends JFrame implements KeyListener, MouseListener, Compo
 	public void mouseReleased(MouseEvent event) {}
 
 	@Override
-	public void keyPressed(KeyEvent event) {}
-
-	@Override
 	public void keyReleased(KeyEvent event) {}
 
 	@Override
-	public void keyTyped(KeyEvent event) {
+	public void keyPressed(KeyEvent event) {
 		switch (event.getKeyCode()) {
 		case KeyEvent.VK_ESCAPE:
 			Log.info("raven", "Exiting...");
 			this.setVisible(false);
-			this.dispose();
+			System.exit(0);
 			break;
 		case KeyEvent.VK_P:
 			game.togglePause();
@@ -341,12 +339,12 @@ public class RavenUI extends JFrame implements KeyListener, MouseListener, Compo
 		case KeyEvent.VK_X:
 			game.exorciseAnyPossessedBot();
 			break;
-		case KeyEvent.VK_UP:
-			game.addBots(1);
-			break;
-		case KeyEvent.VK_DOWN:
-			game.removeBot();
-			break;
 		}
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }
