@@ -346,7 +346,7 @@ public class SparseGraph<NodeType extends GraphNode, EdgeType extends GraphEdge>
 
 	public void render(boolean showNodeIndices) {
 		if(edges == null) return;
-		GameCanvas.redPen();
+		GameCanvas.lightGreyPen();
 		for(List<EdgeType> edgesByNode : edges) {
 			for(EdgeType edge : edgesByNode) {
 				NodeType from = nodes.get(edge.from);
