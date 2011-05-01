@@ -77,40 +77,6 @@ public abstract class MovingEntity extends BaseGameEntity {
 		heading = newHeading;
 		side = heading.perp();
 	}
-	public boolean rotateHeadingToFacePosition(Vector2D target) {
-		Vector2D toTarget = target.sub(position);
-		toTarget.normalize();
-		
-		double dot = heading.dot(toTarget);
-		
-		// Ensure valid value for acos
-		dot = Math.min(Math.max(-1, dot), 1);
-		
-		// first determine the angle between the heading vector and the target
-		double angle = Math.acos(dot);
-		
-		// return true if the player is facing the target
-		if (angle < 0.00001)
-			return true;
-		
-		// clamp the amount to turn to the max turn rate
-		if (angle > maxTurnRate)
-			angle = maxTurnRate;
-		
-		// The next few lines use a rotation matrix to rotate the player's
-		// heading vector accordingly
-		C2DMatrix rotationMatrix = new C2DMatrix();
-		
-		// notice how the direction of rotation has to be determined when
-		// creating the rotation matrix
-		rotationMatrix.rotate(angle * heading.sign(toTarget));	
-		rotationMatrix.transformVector2Ds(heading);
-		rotationMatrix.transformVector2Ds(velocity);
-		
-		side = heading.perp();
-		
-		return false;		
-	}
 	
 	public double maxTurnRate() { return maxTurnRate; }
 	public void setMaxTurnRate(double val) { maxTurnRate = val; }
