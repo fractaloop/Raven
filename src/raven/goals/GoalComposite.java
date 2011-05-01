@@ -78,13 +78,14 @@ abstract public class GoalComposite<T extends BaseGameEntity> extends Goal<T> {
 	}
 
 	@Override
-	public void renderAtPos(Vector2D pos, String tts) {
-		super.renderAtPos(pos, tts);
+	public void renderAtPos(Vector2D pos) {
+		super.renderAtPos(pos);
+
 		pos.x += 10;
 		
-		GameCanvas.greenPen();
-		for (Goal<?> goal : m_SubGoals) {
-			goal.renderAtPos(pos, tts);
+		ListIterator<Goal<T>> iter = m_SubGoals.listIterator(m_SubGoals.size());
+		while (iter.hasPrevious()) {
+			iter.previous().renderAtPos(pos);
 		}
 		pos.x -= 10;
 	}

@@ -18,7 +18,7 @@ public abstract class Goal<T extends BaseGameEntity> {
 	//completed, failed)
 	CurrentStatus m_iStatus;
 
-	static GoalType m_iType;
+	GoalType m_iType;
 
 	//if m_iStatus is failed this method sets it to inactive so that the goal
 	//will be reactivated (replanned) on the next update-step.
@@ -59,14 +59,15 @@ public abstract class Goal<T extends BaseGameEntity> {
 
 	public void render(){}
 
-	void renderAtPos(Vector2D pos, String tts){
+	void renderAtPos(Vector2D pos){
 		pos.y += 15;
 		GameCanvas.whitePen();
 		if (isComplete()) GameCanvas.greenPen();
+		if (isInactive()) GameCanvas.blackPen();
 		if (hasFailed()) GameCanvas.redPen();
 		if (isActive()) GameCanvas.bluePen();
 
-		GameCanvas.textAtPos(pos.x, pos.y, tts); 
+		GameCanvas.textAtPos(pos.x, pos.y, m_iType.toString()); 
 	}
 
 

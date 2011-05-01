@@ -191,7 +191,7 @@ public class RavenGame {
 			if (RavenUserOptions.showGoalsOfSelectedBot) {
 				Log.trace("game", "Rendering selected bot goals");
 				Vector2D p = new Vector2D(selectedBot.pos().x - 50, selectedBot.pos().y);
-				selectedBot.getBrain().renderAtPos(p, selectedBot.getBrain().GetType().toString());
+				selectedBot.getBrain().renderAtPos(p);
 			}
 		}
 	}

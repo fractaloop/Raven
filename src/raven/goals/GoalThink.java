@@ -21,14 +21,13 @@ public class GoalThink extends GoalComposite<RavenBot> {
 		super(ravenBot, Goal.GoalType.goal_think);
 		Log.debug("GoalThink", "created new brain attached to bot " + ravenBot.ID());
 
-		Random randomGenerator = new Random();
-		// random values are between 0.0 and 1.0
-		HealthBias = randomGenerator.nextDouble();
-		ShotgunBias = randomGenerator.nextDouble();
-		RocketLauncherBias = randomGenerator.nextDouble();
-		RailgunBias = randomGenerator.nextDouble();
-		ExploreBias = randomGenerator.nextDouble();
-		AttackBias  = randomGenerator.nextDouble();
+		// random values are between 0.5 and 1.5
+		HealthBias = Math.random() + 0.5;
+		ShotgunBias = Math.random() + 0.5;
+		RocketLauncherBias = Math.random() + 0.5;
+		RailgunBias = Math.random() + 0.5;
+		ExploreBias = Math.random() + 0.5;
+		AttackBias  = Math.random() + 0.5;
 
 		m_Evaluators.add(new GetHealthGoal_Evaluator(HealthBias));
 		m_Evaluators.add(new ExploreGoal_Evaluator(ExploreBias));
@@ -69,7 +68,7 @@ public class GoalThink extends GoalComposite<RavenBot> {
 		activateIfInactive();
 
 		raven.goals.Goal.CurrentStatus SubgoalStatus = ProcessSubgoals(delta);
-
+		
 		if (SubgoalStatus == Goal.CurrentStatus.completed || SubgoalStatus == Goal.CurrentStatus.failed)
 		{
 			if (!m_pOwner.isPossessed())
@@ -108,8 +107,10 @@ public class GoalThink extends GoalComposite<RavenBot> {
 	//-----------------------------------------------------------------------------
 	public boolean notPresent(GoalType goal)
 	{
-		if (!m_SubGoals.isEmpty())
-			return m_SubGoals.get(0).GetType() != goal;
+		if (!m_SubGoals.isEmpty()) {
+			return m_SubGoals.get(0).GetType().equals(goal);
+		}
+			
 		
 		return true;
 	}
