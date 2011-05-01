@@ -9,6 +9,7 @@ import raven.math.Transformations;
 import raven.math.Vector2D;
 import raven.math.Wall2D;
 import raven.script.RavenScript;
+import raven.ui.GameCanvas;
 
 //------------------------------------------------------------------------
 
@@ -489,4 +490,11 @@ public class RavenSteering {
 	public final double wanderRadius() { return wanderRadius; }
 
 	public final double separationWeight() { return weightSeparation; }
+
+	public void renderFeelers() {
+		for (Vector2D feeler : feelers) {
+			GameCanvas.thickBluePen();
+			GameCanvas.line(ravenBot.pos(), feeler);
+		}
+	}
 }
