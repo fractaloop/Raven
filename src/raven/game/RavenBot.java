@@ -181,14 +181,16 @@ public class RavenBot extends MovingEntity {
 	// Pulic methods
 
 	public RavenBot(RavenGame world, Vector2D position) {
-		super(position, RavenScript.getDouble("Bot_Scale"), new Vector2D(0, 0),
-				RavenScript.getDouble("Bot_MaxSpeed"), new Vector2D(1, 0),
-				RavenScript.getDouble("Bot_Mass"), new Vector2D(
-						RavenScript.getDouble("Bot_Scale"),
-						RavenScript.getDouble("Bot_Scale")), RavenScript
-						.getDouble("Bot_MaxHeadTurnRate"), RavenScript
-						.getDouble("Bot_MaxForce"),
-						RavenObject.BOT);
+		super(position,
+				RavenScript.getDouble("Bot_Scale"),
+				new Vector2D(0, 0),
+				RavenScript.getDouble("Bot_MaxSpeed"),
+				new Vector2D(1, 0),
+				RavenScript.getDouble("Bot_Mass"),
+				new Vector2D(RavenScript.getDouble("Bot_Scale"), RavenScript.getDouble("Bot_Scale")),
+				RavenScript.getDouble("Bot_MaxHeadTurnRate"),
+				RavenScript.getDouble("Bot_MaxForce"),
+				RavenObject.BOT);
 		maxHealth = RavenScript.getInt("Bot_MaxHealth");
 		health = RavenScript.getInt("Bot_MaxHealth");
 		this.world = world;

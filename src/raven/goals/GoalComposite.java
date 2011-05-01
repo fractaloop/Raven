@@ -1,6 +1,7 @@
 package raven.goals;
 
 import java.util.ArrayList;
+import java.util.ListIterator;
 
 import raven.game.BaseGameEntity;
 import raven.game.RavenBot;
