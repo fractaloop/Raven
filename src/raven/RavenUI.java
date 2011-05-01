@@ -321,9 +321,6 @@ public class RavenUI extends JFrame implements KeyListener, MouseListener, Compo
 			this.setVisible(false);
 			System.exit(0);
 			break;
-		case KeyEvent.VK_P:
-			game.togglePause();
-			break;
 		case KeyEvent.VK_1:
 			game.changeWeaponOfPossessedBot(RavenObject.BLASTER);
 			break;
