@@ -15,15 +15,15 @@ public class RavenSensoryMemory {
 		 * not. (if System.nanoTime() - timeLastSensed is greater than the
 		 * bot's memory span, the data in this record is made unavailable
 		 * to clients) */
-		public long timeLastSensed;
+		public double timeSinceLastSensed;
 		/** it can be useful to know how long an opponent has been visible.
 		 * This variable is tagged with the current time whenever an opponent 
 		 * first becomes visible. It's then a simple matter to calculate how
 		 * long the opponent has been in view
 		 * (currentTime - timeBecameVisible) */
-		public long timeBecameVisible;
+		public double timeSinceBecameVisible;
 		/** it can be useful to know the last time an opponent was seen */
-		public long timeLastVisible;
+		public double timeSinceLastVisible;
 		/** a vector marking the position where the opponent was last sensed.
 		 * This can be used to help hunt down an opponent if it goes out of
 		 * view */
@@ -35,8 +35,8 @@ public class RavenSensoryMemory {
 		public boolean shootable;
 
 		public MemoryRecord() {
-			timeLastSensed = timeBecameVisible = -999;
-			timeLastVisible = 0;
+			timeSinceLastSensed = timeSinceBecameVisible = -999;
+			timeSinceLastVisible = 0;
 			withinFOV = shootable = false;			
 		}
 	}
@@ -87,7 +87,7 @@ public class RavenSensoryMemory {
 				info.shootable = false;
 			}
 
-			info.timeLastSensed = System.nanoTime();
+			info.timeSinceLastSensed = 0;
 		}
 	}
 
@@ -101,7 +101,7 @@ public class RavenSensoryMemory {
 
 	/** this method iterates through all the opponents in the game world and
 	 * updates the records of those that are in the owner's FOV */
-	public void updateVision() {
+	public void updateVision(double delta) {
 		// for each bot in the world test to see if it is visible to the owner of
 		// this class
 		List<RavenBot> bots = owner.getWorld().getBots();
@@ -121,16 +121,19 @@ public class RavenSensoryMemory {
 
 					// test if the bot is within FOV
 					if (Vector2D.isSecondInFOVOfFirst(owner.pos(), owner.facing(), bot.pos(), owner.fieldOfView())) {
-						info.timeLastSensed = System.nanoTime();
+						info.timeSinceLastSensed = 0;
 						info.lastSensedPosition = bot.pos();
-						info.timeLastVisible = System.nanoTime();
+						info.timeSinceLastVisible = 0;
 
 						if (info.withinFOV == false) {
 							info.withinFOV = true;
-							info.timeBecameVisible = System.nanoTime();
+							info.timeSinceBecameVisible = 0;
 						}
 					} else {
 						info.withinFOV = false;
+						info.timeSinceLastVisible += delta;
+						info.timeSinceBecameVisible += delta;
+						info.timeSinceLastSensed += delta;
 					}
 				} else {
 					info.shootable = false;
@@ -163,26 +166,25 @@ public class RavenSensoryMemory {
 
 	public double getTimeOpponentHasBeenVisible(RavenBot opponent) {
 		MemoryRecord info = memoryMap.get(opponent);
-		return (info == null) ? 0 : info.timeBecameVisible;		
+		return (info == null) ? 0 : info.timeSinceBecameVisible;		
 	}
 
 	public double getTimeSinceLastSensed(RavenBot opponent) {
 		MemoryRecord info = memoryMap.get(opponent);
-		return (info == null) ? 0 : info.timeLastSensed;		
+		return (info == null) ? 0 : info.timeSinceLastSensed;		
 	}
 
 	public double getTimeOpponentHasBeenOutOfView(RavenBot opponent) {
 		MemoryRecord info = memoryMap.get(opponent);
-		return (info == null) ? Double.MAX_VALUE : info.timeLastVisible;
+		return (info == null) ? Double.MAX_VALUE : info.timeSinceLastVisible;
 
 	}
 
 	public List<RavenBot> getListOfRecentlySensedOpponents() {
 		List<RavenBot> opponents = new ArrayList<RavenBot>();
 
-		long currentTime = System.nanoTime();
 		for (RavenBot bot : memoryMap.keySet()) {
-			if (currentTime - memoryMap.get(bot).timeLastSensed < memorySpan) {
+			if (memoryMap.get(bot).timeSinceLastSensed < memorySpan) {
 				opponents.add(bot);
 			}
 		}

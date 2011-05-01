@@ -332,7 +332,7 @@ public class RavenBot extends MovingEntity {
 
 			// update the sensory memory with any visual stimulus
 			if (visionUpdateRegulator.isReady()) {
-				sensoryMem.updateVision();
+				sensoryMem.updateVision(delta);
 			}
 
 			// select the appropriate weapon to use from the weapons currently
