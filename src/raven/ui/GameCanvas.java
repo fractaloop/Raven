@@ -150,10 +150,12 @@ public class GameCanvas extends Canvas {
 	// Text manipulation
 	
 	public static void textAtPos(int x, int y, String text) {
+		getInstance().g2d.setPaint(getInstance().pen);
 		getInstance().g2d.drawString(text, x, y);
 	}
 	
 	public static void textAtPos(double x, double y, String text) {
+		getInstance().g2d.setPaint(getInstance().pen);
 		getInstance().g2d.drawString(text, (float)x, (float)y);
 	}
 	
