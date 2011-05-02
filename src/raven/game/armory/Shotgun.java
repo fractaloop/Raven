@@ -23,18 +23,17 @@ import raven.ui.GameCanvas;
  */
 public class Shotgun extends RavenWeapon {
 
-	private static int shotgunDefaultRounds = RavenScript.getInt("ShotGun_DefaultRounds");
-	public static final int shotgunMaxRounds = RavenScript.getInt("ShotGun_MaxRoundsCarried");
-	private static double shotgunFiringFreq = RavenScript.getDouble("ShotGun_FiringFreq");
-	private static double shotgunIdealRange = RavenScript.getDouble("ShotGun_IdealRange");
-	private static double shotgunMaxSpeed = RavenScript.getDouble("Pellet_MaxSpeed");
-	private static int shotgunPellets = RavenScript.getInt("ShotGun_NumBallsInShell");
-	private static double shotgunSpread = RavenScript.getDouble("ShotGun_Spread");
+	private int numBallsInShell;
+	private double spread;
 
 
 	public Shotgun(RavenBot owner){
-		super(RavenObject.SHOTGUN, shotgunDefaultRounds, shotgunMaxRounds, shotgunFiringFreq,
-				shotgunIdealRange, shotgunMaxSpeed, owner);
+		super(RavenObject.SHOTGUN, RavenScript.getInt("ShotGun_DefaultRounds"), RavenScript.getInt("ShotGun_MaxRoundsCarried"), RavenScript.getDouble("ShotGun_FiringFreq"),
+				RavenScript.getDouble("ShotGun_IdealRange"), RavenScript.getDouble("Pellet_MaxSpeed"), owner);
+		
+		numBallsInShell = RavenScript.getInt("ShotGun_NumBallsInShell");
+		spread = RavenScript.getDouble("ShotGun_Spread");
+		
 		Vector2D[] weapon = {
 				new Vector2D(0, 0),
 				new Vector2D(0, -2),
@@ -92,10 +91,10 @@ public class Shotgun extends RavenWeapon {
 			//a shotgun cartridge contains lots of tiny metal balls called pellets. 
 			//Therefore, every time the shotgun is discharged we have to calculate
 			//the spread of the pellets and add one for each trajectory
-			for (int b = 0; b < shotgunPellets; ++b)
+			for (int b = 0; b < numBallsInShell; ++b)
 			{
 				//determine deviation from target using a bell curve type distribution
-				double deviation = RandUtils.RandInRange(0, shotgunSpread) + RandUtils.RandInRange(0, shotgunSpread) - shotgunSpread;
+				double deviation = RandUtils.RandInRange(0, spread) + RandUtils.RandInRange(0, spread) - spread;
 
 				Vector2D AdjustedTarget = position.sub(getOwner().pos());
 

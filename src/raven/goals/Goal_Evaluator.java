@@ -4,11 +4,11 @@ import raven.game.RavenBot;
 
 public abstract class Goal_Evaluator {
 
-	private Double m_iBias;
+	private Double bias;
 
 
 	public Goal_Evaluator(Double bias) {
-		this.m_iBias = bias;
+		this.bias = bias;
 	}
 
 
@@ -18,8 +18,8 @@ public abstract class Goal_Evaluator {
 	public abstract void setGoal(RavenBot m_pOwner);
 
 
-	public Double getM_iBias() {
-		return m_iBias;
+	public Double getBias() {
+		return bias;
 	}
 
 
