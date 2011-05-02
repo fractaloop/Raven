@@ -1,9 +1,10 @@
 package raven.utils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class IndexedPriorityQueue<K extends Comparable<K>> {
-	private List<K>	keys;
+	private List<K>	keys = new ArrayList<K>();
 	
 	private List<Integer> heap;
 	
@@ -14,6 +15,8 @@ public class IndexedPriorityQueue<K extends Comparable<K>> {
 	public IndexedPriorityQueue(List<K> keys, int maxSize) {
 		this.keys = keys;
 		this.maxSize = maxSize;
+		invHeap = new ArrayList<Integer>(maxSize);
+		heap = new ArrayList<Integer>(maxSize);
 		size = 0;
 	}
 	
