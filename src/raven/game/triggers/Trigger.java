@@ -51,7 +51,7 @@ public abstract class Trigger<T extends BaseGameEntity> extends BaseGameEntity {
 	 * @param radius The radius of the trigger circle.
 	 */
 	public Trigger(Vector2D centerPoint, int radius) {
-		super(EntityManager.getAvailableID(), RavenObject.TRIGGER);
+		super(getNextValidID(), RavenObject.TRIGGER);
 
 		if(centerPoint != null) {
 			regionOfInfluence = new TriggerRegionCircle(centerPoint, radius);
