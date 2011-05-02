@@ -2,6 +2,7 @@ package raven.goals;
 
 import raven.game.RavenBot;
 import raven.math.Vector2D;
+import raven.utils.Log;
 
 public class Goal_AttackTarget extends GoalComposite<RavenBot> {
 
@@ -23,6 +24,7 @@ public class Goal_AttackTarget extends GoalComposite<RavenBot> {
 		if (!m_pOwner.getTargetSys().isTargetPresent())
 		{
 			m_iStatus = Goal.CurrentStatus.completed;
+			Log.debug("attack", "target no longer present");
 			return;
 		}
 
@@ -31,8 +33,7 @@ public class Goal_AttackTarget extends GoalComposite<RavenBot> {
 		if (m_pOwner.getTargetSys().isTargetShootable())
 		{
 			//if the bot has space to strafe then do so
-			Vector2D dummy = new Vector2D();
-			if (m_pOwner.canStepLeft(dummy) || m_pOwner.canStepRight(dummy))
+			if (m_pOwner.canStepLeft() != null || m_pOwner.canStepRight() != null)
 			{
 				AddSubgoal(new Goal_DodgeSideToSide(m_pOwner));
 			}

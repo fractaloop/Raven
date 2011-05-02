@@ -5,25 +5,17 @@ import java.util.Random;
 import raven.game.RavenBot;
 import raven.math.Vector2D;
 import raven.ui.GameCanvas;
+import raven.utils.Log;
 
 public class Goal_DodgeSideToSide extends GoalComposite<RavenBot> {
 
 	private Vector2D m_vStrafeTarget;
 	private boolean m_bClockwise;
 
-	private Vector2D getStrafeTarget(RavenBot m_pOwner){
-		return m_vStrafeTarget;
-
-		//TODO THIS NEEDS TO BE DONE
-
-		//m_pOwner
-	}
-
 	public Goal_DodgeSideToSide(RavenBot m_pOwner) {
 		super(m_pOwner, Goal.GoalType.goal_strafe);
-		Random Randomgen = new Random();
-		m_bClockwise = Randomgen.nextBoolean();
-		this.m_vStrafeTarget = m_pOwner.pos();
+		m_bClockwise = Math.random() > 0.5;
+		Log.debug("dodge", "dodge!");
 	}
 
 
@@ -32,7 +24,9 @@ public class Goal_DodgeSideToSide extends GoalComposite<RavenBot> {
 		m_iStatus = Goal.CurrentStatus.active;
 		m_pOwner.getSteering().seekOn();
 		if (m_bClockwise) {
-			if (m_pOwner.canStepRight(m_vStrafeTarget)) {
+			Vector2D result = m_pOwner.canStepRight(); 
+			if (result != null) {
+				m_vStrafeTarget = result;
 				m_pOwner.getSteering().setTarget(m_vStrafeTarget);
 			} else {
 				//debug_con << "changing" << "";
@@ -40,7 +34,9 @@ public class Goal_DodgeSideToSide extends GoalComposite<RavenBot> {
 				m_iStatus = Goal.CurrentStatus.inactive;
 			}
 		} else {
-			if (m_pOwner.canStepLeft(m_vStrafeTarget)) {
+			Vector2D result = m_pOwner.canStepLeft(); 
+			if (result != null) {
+				m_vStrafeTarget = result;
 				m_pOwner.getSteering().setTarget(m_vStrafeTarget);
 			} else {
 				// debug_con << "changing" << "";
@@ -62,7 +58,7 @@ public class Goal_DodgeSideToSide extends GoalComposite<RavenBot> {
 
 		//else if bot reaches the target position set status to inactive so the goal 
 		//is reactivated on the next update-step
-		else if (m_pOwner.isAtPosition(m_vStrafeTarget)) {
+		else if (m_iStatus == CurrentStatus.active && m_pOwner.isAtPosition(m_vStrafeTarget)) {
 			m_iStatus = Goal.CurrentStatus.inactive;
 		}
 		return m_iStatus;
