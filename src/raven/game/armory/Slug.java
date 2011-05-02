@@ -65,7 +65,7 @@ public class Slug extends RavenProjectile {
 	{
 		if(slugTimePersist > 0)
 		{
-			slugTimePersist -= System.nanoTime(); 
+			slugTimePersist -= delta; 
 		}
 		
 		return slugTimePersist > 0;

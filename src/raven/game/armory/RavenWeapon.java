@@ -33,7 +33,7 @@ public abstract class RavenWeapon {
 		roundsLeft = defaultRoundsCount;
 		maxRoundCapacity = maxCapacity;
 		rateOfFire = RoF;
-		timeNextAvailable = System.nanoTime();
+		timeUntilAvailable = 0;
 		idealRange = iRange;
 		maxProjectileSpeed = projectileSpd;
 		lastDesireabilityScore = 0;
