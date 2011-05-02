@@ -2,6 +2,7 @@ package raven;
 
 import raven.game.RavenGame;
 import raven.ui.GameCanvas;
+import raven.ui.RavenUI;
 import raven.utils.Log;
 import raven.utils.Log.Level;
 

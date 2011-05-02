@@ -11,7 +11,6 @@ import java.util.List;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 
-import raven.RavenUI;
 import raven.game.armory.Bolt;
 import raven.game.armory.Pellet;
 import raven.game.armory.RavenProjectile;
@@ -25,6 +24,7 @@ import raven.math.Vector2D;
 import raven.math.WallIntersectionTest;
 import raven.script.RavenScript;
 import raven.ui.GameCanvas;
+import raven.ui.RavenUI;
 import raven.utils.Log;
 import raven.utils.MapSerializer;
 

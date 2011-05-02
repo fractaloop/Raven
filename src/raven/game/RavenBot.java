@@ -272,9 +272,6 @@ public class RavenBot extends MovingEntity {
 		// render the bot's weapon
 		weaponSys.renderCurrentWeapon();
 		
-		// render the sensory stuff
-		steering.renderFeelers();
-
 		// render a thick red circle if the bot gets hit by a weapon
 		if (hit) {
 			GameCanvas.thickRedPen();
@@ -301,6 +298,9 @@ public class RavenBot extends MovingEntity {
 		if (RavenUserOptions.showScore) {
 			GameCanvas.textAtPos(pos().x - 40, pos().y + 10,
 					"Scr:" + Integer.toString(score()));
+		}
+		if (RavenUserOptions.showFeelersOfSelectedBot) {
+			steering.renderFeelers();
 		}
 	}
 

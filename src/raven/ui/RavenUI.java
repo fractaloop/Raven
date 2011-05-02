@@ -1,4 +1,4 @@
-package raven;
+package raven.ui;
 
 import java.awt.CheckboxMenuItem;
 import java.awt.Dimension;
@@ -36,8 +36,6 @@ import raven.game.RavenGame;
 import raven.game.RavenObject;
 import raven.game.RavenUserOptions;
 import raven.math.Vector2D;
-import raven.ui.GameCanvas;
-import raven.ui.KeyState;
 import raven.utils.Log;
 import raven.utils.Log.Level;
 
@@ -218,6 +216,10 @@ public class RavenUI extends JFrame implements KeyListener, MouseListener, Compo
 		// Show path
 		checkedMenuItem = new JCheckBoxMenuItem("Show path");
 		checkedMenuItem.addActionListener(BuildToggleUserAction("showPathOfSelectedBot"));
+		menu.add(checkedMenuItem);
+		// Show path
+		checkedMenuItem = new JCheckBoxMenuItem("Show feelers");
+		checkedMenuItem.addActionListener(BuildToggleUserAction("showFeelersOfSelectedBot"));
 		menu.add(checkedMenuItem);
 		
 		this.setJMenuBar(menuBar);

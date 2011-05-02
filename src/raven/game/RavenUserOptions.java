@@ -10,6 +10,8 @@ public class RavenUserOptions {
 	  public static boolean showTargetOfSelectedBot;
 
 	  public static boolean showOpponentsSensedBySelectedBot;
+	  
+	  public static boolean showFeelersOfSelectedBot;
 
 	  public static boolean onlyShowBotsInTargetsFOV;
 
