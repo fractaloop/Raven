@@ -42,7 +42,8 @@ public class RocketLauncher extends RavenWeapon {
                   };
 		for (Vector2D v : weaponVectors)
 		{
-			getWeaponVectorBuffer().add(v);
+			// Dirty scaling hack
+			getWeaponVectorBuffer().add(v.mul(1.0/10));
 		}
 		
 		//setup the fuzzy module

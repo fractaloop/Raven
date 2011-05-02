@@ -38,7 +38,8 @@ public class Blaster extends RavenWeapon {
 										new Vector2D(0, 1)};
 		
 		for(Vector2D v : weapon){
-			getWeaponVectorBuffer().add(v);
+			// Dirty scaling hack
+			getWeaponVectorBuffer().add(v.mul(1.0/10));
 		}
 		
 		InitializeFuzzyModule();

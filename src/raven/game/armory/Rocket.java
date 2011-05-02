@@ -1,142 +1,144 @@
 package raven.game.armory;
 
-import java.util.ArrayList;
-
 import raven.game.RavenBot;
-import raven.game.RavenObject;
 import raven.game.messaging.Dispatcher;
 import raven.game.messaging.RavenMessage;
+import raven.math.Geometry;
 import raven.math.Vector2D;
 import raven.script.RavenScript;
 import raven.ui.GameCanvas;
 
 public class Rocket extends RavenProjectile {
 
-	private static double rocketMaxSpeed = RavenScript.getDouble("Rocket_MaxSpeed");
-	private static int rocketMass = RavenScript.getInt("Rocket_Mass");
-	private static double rocketMaxForce = RavenScript.getDouble("Rocket_MaxForce");
-	private static Vector2D rocketScale = new Vector2D(RavenScript.getDouble("Rocket_Scale"), RavenScript.getDouble("Rocket_Scale"));
-	private static int rocketDamage = RavenScript.getInt("Rocket_Damage");
-	private static double rocketBlastRadius = 1; 
-	private static double currentBlastRadius;
-	
+	private double blastRadius; 
+	private double currentBlastRadius;
+
 	public Rocket(RavenBot shooter, Vector2D target) {
-		super(target, 0.0, shooter.velocity(), rocketMaxSpeed, shooter.heading(), rocketMass, rocketScale, shooter.maxTurnRate(), rocketMaxForce, rocketBlastRadius, shooter.getWorld(), RavenObject.PROJECTILE);
+		super(target,
+				shooter.getWorld(),
+				shooter.ID(),
+				shooter.pos(),
+				shooter.facing(),
+				RavenScript.getInt("Rocket_Damage"),
+				RavenScript.getDouble("Rocket_Scale"),
+				RavenScript.getDouble("Rocket_MaxSpeed"),
+				RavenScript.getInt("Rocket_Mass"),
+				RavenScript.getDouble("Rocket_MaxForce")
+		);	
 		currentBlastRadius = 0.0;
+		blastRadius = RavenScript.getDouble("Rocket_BlastRadius");
 	}
-	
+
 	private void InflictDamageOnBotsWithinBlastRadius(){
-		  ArrayList<RavenBot> allBots = GetWorld().getBots();
+		for (RavenBot curBot : world.getBots())
+		{
+			if (position.distanceSq(curBot.pos()) < (blastRadius + curBot.getBRadius()))
+			{
+				//send a message to the bot to let it know it's been hit, and who the
+				//shot came from
+				Dispatcher.dispatchMsg(Dispatcher.SEND_MSG_IMMEDIATELY,
+						shooterID,
+						curBot.ID(),
+						RavenMessage.MSG_TAKE_THAT_MF,
+						damageInflicted);
 
-		  for (RavenBot curBot : allBots)
-		  {
-		    if (pos().distanceSq(curBot.pos()) < (getBlastRadius() + curBot.getBRadius()))
-		    {
-		      //send a message to the bot to let it know it's been hit, and who the
-		      //shot came from
-		      Dispatcher.dispatchMsg(Dispatcher.SEND_MSG_IMMEDIATELY,
-		                              getShooterID(),
-		                              curBot.ID(),
-		                              RavenMessage.MSG_TAKE_THAT_MF,
-		                              rocketDamage);
-		      
-		    }
-		  }  
+			}
+		}  
 	}
-	
+
 	private void TestForImpact(){
-		  
-	    //if the projectile has reached the target position or it hits an entity
-	    //or wall it should explode/inflict damage/whatever and then mark itself
-	    //as dead
+
+		//if the projectile has reached the target position or it hits an entity
+		//or wall it should explode/inflict damage/whatever and then mark itself
+		//as dead
 
 
-	    //test to see if the line segment connecting the rocket's current position
-	    //and previous position intersects with any bots.
-	    RavenBot hit = GetClosestIntersectingBot(pos().sub(velocity), pos());
-	    
-	    //if hit
-	    if (hit != null)
-	    {
-	      setImpacted(true);
+		//test to see if the line segment connecting the rocket's current position
+		//and previous position intersects with any bots.
+		RavenBot hit = GetClosestIntersectingBot(pos().sub(velocity), pos());
 
-	      //send a message to the bot to let it know it's been hit, and who the
-	      //shot came from
-	      Dispatcher.dispatchMsg(Dispatcher.SEND_MSG_IMMEDIATELY,
-	                              getShooterID(),
-	                              hit.ID(),
-	                              RavenMessage.MSG_TAKE_THAT_MF,
-	                              rocketDamage);
+		//if hit
+		if (hit != null)
+		{
+			isImpacted = true;
 
-	      //test for bots within the blast radius and inflict damage
-	      InflictDamageOnBotsWithinBlastRadius();
-	    }
+			//send a message to the bot to let it know it's been hit, and who the
+			//shot came from
+			Dispatcher.dispatchMsg(Dispatcher.SEND_MSG_IMMEDIATELY,
+					shooterID,
+					hit.ID(),
+					RavenMessage.MSG_TAKE_THAT_MF,
+					damageInflicted);
 
-	    //test for impact with a wall
-	    
-	    double dist = GetWorld().getDistanceToClosestWall(getOrigin(), pos());
-	    if( dist == 0)
-	     {
-	        setImpacted(true);
-	      
-	        //test for bots within the blast radius and inflict damage
-	        InflictDamageOnBotsWithinBlastRadius();
+			//test for bots within the blast radius and inflict damage
+			InflictDamageOnBotsWithinBlastRadius();
+		}
 
-	        setPos(getImpactPoint());
+		//test for impact with a wall
 
-	        return;
-	    }
-	    
-	    //test to see if rocket has reached target position. If so, test for
-	     //all bots in vicinity
-	    final double tolerance = 5.0;   
-	    if (pos().distanceSq(getTarget()) < tolerance*tolerance)
-	    {
-	      setImpacted(true);
+		Double dist = Geometry.FindClosestPointOfIntersectionWithWalls(position.sub(velocity), position, impactPoint, world.getMap().getWalls());
+		if (dist != null)
+		{
+			isImpacted = true;
 
-	      InflictDamageOnBotsWithinBlastRadius();
-	    }
+			//test for bots within the blast radius and inflict damage
+			InflictDamageOnBotsWithinBlastRadius();
+
+			position = impactPoint;
+
+			return;
+		}
+
+		//test to see if rocket has reached target position. If so, test for
+		//all bots in vicinity
+		final double tolerance = 5.0;   
+		if (pos().distanceSq(vTarget) < tolerance*tolerance)
+		{
+			isImpacted = true;
+
+			InflictDamageOnBotsWithinBlastRadius();
+		}
 
 	}
-	
+
 	public void render(){
-		  GameCanvas.redPen();
-		  GameCanvas.orangeBrush();
-		  GameCanvas.circle(pos(), 2);
+		GameCanvas.redPen();
+		GameCanvas.orangeBrush();
+		GameCanvas.circle(pos(), 2);
 
-		  if (HasImpacted())
-		  {
-		    GameCanvas.hollowBrush();
-		    GameCanvas.circle(pos(), currentBlastRadius);
-		  }
+		if (isImpacted)
+		{
+			GameCanvas.hollowBrush();
+			GameCanvas.circle(pos(), currentBlastRadius);
+		}
 	}
-	
+
 	public void update(){
-		  if (!HasImpacted())
-		  {
-		    setVelocity(heading().mul(maxSpeed()));
+		if (!isImpacted)
+		{
+			velocity = heading().mul(maxSpeed());
 
-		    //make sure vehicle does not exceed maximum velocity
-		    velocity().truncate(maxSpeed());
+			//make sure vehicle does not exceed maximum velocity
+			velocity.truncate(maxSpeed());
 
-		    //update the position
-		    setPos(pos().add(velocity));
+			//update the position
+			position = position.add(velocity);
 
-		    TestForImpact();  
-		  }
+			TestForImpact();  
+		}
 
-		  else
-		  {
-			  currentBlastRadius += RavenScript.getDouble("Rocket_ExplosionDecayRate");
-		    
+		else
+		{
+			currentBlastRadius += RavenScript.getDouble("Rocket_ExplosionDecayRate");
+
 			//when the rendered blast circle becomes equal in size to the blast radius
-		    //the rocket can be removed from the game
-		    if (currentBlastRadius > getBlastRadius())
-		    {
-		      setDead(true);
-		    }
-		  }
+			//the rocket can be removed from the game
+			if (currentBlastRadius > blastRadius)
+			{
+				isDead = true;
+			}
+		}
 	}
-	
+
 
 }

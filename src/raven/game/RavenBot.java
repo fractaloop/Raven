@@ -192,8 +192,7 @@ public class RavenBot extends MovingEntity {
 				RavenScript.getDouble("Bot_Mass"),
 				new Vector2D(RavenScript.getDouble("Bot_Scale"), RavenScript.getDouble("Bot_Scale")),
 				RavenScript.getDouble("Bot_MaxHeadTurnRate"),
-				RavenScript.getDouble("Bot_MaxForce"),
-				RavenObject.BOT);
+				RavenScript.getDouble("Bot_MaxForce"));
 		maxHealth = RavenScript.getInt("Bot_MaxHealth");
 		health = RavenScript.getInt("Bot_MaxHealth");
 		this.world = world;
@@ -438,7 +437,7 @@ public class RavenBot extends MovingEntity {
 		
 		// return true if the bot's facing is within WeaponAimTolerance degs
 		// of facing the target
-		final double weaponAimTolerance = 0.01; // approx 2 degrees
+		final double weaponAimTolerance = 1.5;//0.034906585; // 2 degrees in radians
 		
 		if (angle < weaponAimTolerance) {
 			facing = toTarget;
@@ -622,36 +621,36 @@ public class RavenBot extends MovingEntity {
 
 	// returns true if there is space enough to step in the indicated direction
 	// If true PositionOfStep will be assigned the offset position
-	public boolean canStepLeft(Vector2D positionOfStep) {
+	public Vector2D canStepLeft() {
 		final double stepDistance = getBRadius() * 2;
 		
-		positionOfStep = pos().sub(facing().perp().mul(stepDistance)).sub(facing().perp().mul(getBRadius()));
+		Vector2D positionOfStep = pos().sub(facing().perp().mul(stepDistance)).sub(facing().perp().mul(getBRadius()));
 		
-		return canWalkTo(positionOfStep);
+		return canWalkTo(positionOfStep) ? positionOfStep : null;
 	}
 
-	public boolean canStepRight(Vector2D positionOfStep) {
+	public Vector2D canStepRight() {
 		final double stepDistance = getBRadius() * 2;
 		
-		positionOfStep = pos().add(facing().perp().mul(stepDistance)).add(facing().perp().mul(getBRadius()));
+		Vector2D positionOfStep = pos().add(facing().perp().mul(stepDistance)).add(facing().perp().mul(getBRadius()));
 		
-		return canWalkTo(positionOfStep);
+		return canWalkTo(positionOfStep) ? positionOfStep : null;
 	}
 
-	public boolean canStepForward(Vector2D positionOfStep) {
+	public Vector2D canStepForward() {
 		final double stepDistance = getBRadius() * 2;
 		
-		positionOfStep = pos().add(facing().mul(stepDistance)).add(facing().mul(getBRadius()));
+		Vector2D positionOfStep = pos().add(facing().mul(stepDistance)).add(facing().mul(getBRadius()));
 		
-		return canWalkTo(positionOfStep);
+		return canWalkTo(positionOfStep) ? positionOfStep : null;
 	}
 
-	public boolean canStepBackward(Vector2D positionOfStep) {
+	public Vector2D canStepBackward() {
 		final double stepDistance = getBRadius() * 2;
 		
-		positionOfStep = pos().sub(facing().mul(stepDistance)).sub(facing().mul(getBRadius()));
+		Vector2D positionOfStep = pos().sub(facing().mul(stepDistance)).sub(facing().mul(getBRadius()));
 		
-		return canWalkTo(positionOfStep);
+		return canWalkTo(positionOfStep) ? positionOfStep : null;
 	}
 
 	// Generic accessors

@@ -1,5 +1,7 @@
 package raven.math;
 
+import java.util.List;
+
 public class Geometry {
 
 	public static double distToLineSegment(Vector2D from, Vector2D to, Vector2D pos) {
@@ -144,5 +146,69 @@ public class Geometry {
 
 			return false;
 		}
+	}
+
+	public static Double FindClosestPointOfIntersectionWithWalls(Vector2D A, Vector2D B, Vector2D impactPoint, List<Wall2D> walls) {
+		double distance = Double.MAX_VALUE;
+
+		for (Wall2D wall : walls)
+		{
+			double dist = 0.0;
+			Vector2D point = new Vector2D();
+
+			if (lineIntersection2D(A, B, wall.from(), wall.to(), dist, point))
+			{
+				if (dist < distance)
+				{
+					distance = dist;
+					impactPoint.setValue(point);
+				}
+			}
+		}
+
+		if (distance < Double.MAX_VALUE)
+			return distance;
+
+		return null;
+	}
+
+	public static Vector2D GetLineSegmentCircleClosestIntersectionPoint(Vector2D A, Vector2D B, Vector2D pos, double radius) {
+		  Vector2D toBNorm = new Vector2D(B.sub(A));
+		  toBNorm.normalize();
+
+		  //move the circle into the local space defined by the vector B-A with origin
+		  //at A
+		  Vector2D LocalPos = Transformations.pointToLocalSpace(pos, toBNorm, toBNorm.perp(), A);
+
+		  //if the local position + the radius is negative then the circle lays behind
+		  //point A so there is no intersection possible. If the local x pos minus the 
+		  //radius is greater than length A-B then the circle cannot intersect the 
+		  //line segment
+		  if ( (LocalPos.x+radius >= 0) &&
+		     ( (LocalPos.x-radius)*(LocalPos.x-radius) <= B.distanceSq(A)) )
+		  {
+		     //if the distance from the x axis to the object's position is less
+		     //than its radius then there is a potential intersection.
+		     if (Math.abs(LocalPos.y) < radius)
+		     {
+		        //now to do a line/circle intersection test. The center of the 
+		        //circle is represented by A, B. The intersection points are 
+		        //given by the formulae x = A +/-sqrt(r^2-B^2), y=0. We only 
+		        //need to look at the smallest positive value of x.
+		        double a = LocalPos.x;
+		        double b = LocalPos.y;       
+
+		        double ip = a - Math.sqrt(radius*radius - b*b);
+
+		        if (ip <= 0)
+		        {
+		          ip = a + Math.sqrt(radius*radius - b*b);
+		        }
+
+		        return A.add(toBNorm.mul(ip));
+		     }
+		   }
+		  
+		  return null;
 	}
 }

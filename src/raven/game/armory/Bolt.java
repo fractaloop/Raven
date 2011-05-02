@@ -7,6 +7,7 @@ import raven.game.RavenBot;
 import raven.game.RavenObject;
 import raven.game.messaging.Dispatcher;
 import raven.game.messaging.RavenMessage;
+import raven.math.Geometry;
 import raven.math.Vector2D;
 import raven.script.RavenScript;
 import raven.ui.GameCanvas;
@@ -17,60 +18,60 @@ import raven.ui.GameCanvas;
  */
 public class Bolt extends RavenProjectile {
 	
-	private static double boltMaxSpeed = RavenScript.getDouble("Bolt_MaxSpeed");
-	private static int boltMass = RavenScript.getInt("Bolt_Mass");
-	private static double boltMaxForce = RavenScript.getDouble("Bolt_MaxForce");
-	private static Vector2D boltScale = new Vector2D(RavenScript.getDouble("Bolt_Scale"), RavenScript.getDouble("Bolt_Scale"));
-	private static int boltDamage = RavenScript.getInt("Bolt_Damage");
-	private static double boltBlastRadius = 1;
-	
-	
 	public Bolt(RavenBot shooter, Vector2D target)
 	{
-		super(target, //Where we are pointing
-				0.0, // bounding radius
-				shooter.velocity(), //inherited velocity
-				boltMaxSpeed, //max speed
-				shooter.heading(),
-				boltMass,  //bolt mass
-				boltScale, // bolt scale
-				shooter.maxTurnRate(),
-				boltMaxForce, //bolt max force
-				boltBlastRadius,
+		super(target,
 				shooter.getWorld(),
-				RavenObject.PROJECTILE
+				shooter.ID(),
+				shooter.pos(),
+				shooter.facing(),
+				RavenScript.getInt("Bolt_Damage"),
+				RavenScript.getDouble("Bolt_Scale"),
+				RavenScript.getDouble("Bolt_MaxSpeed"),
+				RavenScript.getInt("Bolt_Mass"),
+				RavenScript.getDouble("Bolt_MaxForce")
 			);	
 	}
 
-	/* (non-Javadoc)
-	 * @see raven.game.BaseGameEntity#render()
-	 */
 	@Override
 	public void render() {
 		GameCanvas.thickGreenPen();
-		GameCanvas.line(this.pos(), this.pos().sub(this.velocity()));
+		GameCanvas.line(position, position.sub(velocity));
 	}
 	
 	public void update(double delta)
 	{
 		if(!HasImpacted())
 		{
-			this.setVelocity(this.heading().mul(this.maxSpeed()));
-			this.velocity().truncate(this.maxSpeed());
+			velocity = heading().mul(maxSpeed());
 			
-			RavenBot hit = GetClosestIntersectingBot(pos().sub(velocity), pos());
-			if(hit != null)
-			{
-				this.setDead(true);
-				this.setImpacted(true);
-				Dispatcher.dispatchMsg(Dispatcher.SEND_MSG_IMMEDIATELY, this.getShooterID(), hit.ID(), RavenMessage.MSG_TAKE_THAT_MF, boltDamage);
+			//make sure vehicle does not exceed maximum velocity
+			velocity.truncate(maxSpeed());
+			
+			//update the position
+			position = position.add(velocity);
+			
+			//if the projectile has reached the target position or it hits an entity
+			//or wall it should explode/inflict damage/whatever and then mark itself
+			//as dead
+
+			//test to see if the line segment connecting the bolt's current position
+			//and previous position intersects with any bots.
+	
+			RavenBot hit = GetClosestIntersectingBot(position.sub(velocity), position);
+			if (hit != null) {
+				isDead = true;
+				isImpacted = true;
+				// send a message to the bot to let it know it's been hit, and who the
+				// shot came from
+
+				Dispatcher.dispatchMsg(Dispatcher.SEND_MSG_IMMEDIATELY, shooterID, hit.ID(), RavenMessage.MSG_TAKE_THAT_MF, damageInflicted);
 			}
 			
-			double dist = ((RavenProjectile)this).GetWorld().getDistanceToClosestWall(pos().sub(velocity), pos());
-			if(dist == 0)
-			{
-				setDead(true);
-				setImpacted(true);
+			//test for impact with a wall
+			if (Geometry.FindClosestPointOfIntersectionWithWalls(position.sub(velocity), position, impactPoint, world.getMap().getWalls()) != null) {
+				isDead = true;
+				isImpacted = true;
 				
 				return;
 			}
