@@ -351,8 +351,7 @@ public class RavenGame {
 			
 			// Give this bot a default goal
 			bot.getBrain().addGoal_explore();
-			bot.getBrain().activate();
-			
+//			bot.getBrain().activate();
 		}
 	}
 
