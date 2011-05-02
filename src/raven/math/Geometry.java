@@ -166,7 +166,6 @@ public class Geometry {
 				if (dist < distance)
 				{
 					distance = dist;
-					if(impactPoint == null) impactPoint = new Vector2D();
 					impactPoint.setValue(point);
 				}
 			}
