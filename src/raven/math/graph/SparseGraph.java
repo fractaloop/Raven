@@ -320,9 +320,7 @@ public class SparseGraph<NodeType extends GraphNode, EdgeType extends GraphEdge>
 			// iterate through every node in the graph and grab the cost to
 			// travel to that node
 			for (int target = 0; target < numNodes(); target++) {
-				if (source != target) {
-					pathCosts.put(new Pair<Integer, Integer>(source, target), search.getCostToNode(target));
-				}
+				pathCosts.put(new Pair<Integer, Integer>(source, target), search.getCostToNode(target));
 			}
 		}
 		
