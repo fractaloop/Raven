@@ -306,7 +306,7 @@ public class SparseGraph<NodeType extends GraphNode, EdgeType extends GraphEdge>
 				// increment edge counter
 				++numEdgesCounted;
 				// add length of edge to total length
-				totalLength += nodes.get(edge.from()).pos().distance(nodes.get(edge.from()).pos());
+				totalLength += nodes.get(edge.from()).pos().distance(nodes.get(edge.to()).pos());
 			}
 		}
 		
