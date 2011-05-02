@@ -101,7 +101,7 @@ public class RocketLauncher extends RavenWeapon {
 
 		    decrementRoundsLeft();
 
-		    UpdateTimeWeaponIsNextAvailable(rlFiringFreq);
+		    UpdateTimeWeaponIsNextAvailable(1.0/rlFiringFreq);
 
 		    //add a trigger to the game so that the other bots can hear this shot
 		    //(provided they are within range)
