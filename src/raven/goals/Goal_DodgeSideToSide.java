@@ -15,7 +15,6 @@ public class Goal_DodgeSideToSide extends GoalComposite<RavenBot> {
 	public Goal_DodgeSideToSide(RavenBot m_pOwner) {
 		super(m_pOwner, Goal.GoalType.goal_strafe);
 		m_bClockwise = Math.random() > 0.5;
-		Log.debug("dodge", "dodge!");
 	}
 
 

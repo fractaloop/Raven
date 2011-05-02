@@ -437,7 +437,7 @@ public class RavenBot extends MovingEntity {
 		
 		// return true if the bot's facing is within WeaponAimTolerance degs
 		// of facing the target
-		final double weaponAimTolerance = 1.5;//0.034906585; // 2 degrees in radians
+		final double weaponAimTolerance = 0.034906585; // 2 degrees in radians
 		
 		if (angle < weaponAimTolerance) {
 			facing = toTarget;

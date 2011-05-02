@@ -12,7 +12,7 @@ import raven.math.Vector2D;
 
 @XStreamAlias("Trigger")
 public abstract class Trigger<T extends BaseGameEntity> extends BaseGameEntity {
-	private TriggerRegion regionOfInfluence;
+	transient private TriggerRegion regionOfInfluence;
 	
 	private boolean removeFromGame;
 	
@@ -51,7 +51,7 @@ public abstract class Trigger<T extends BaseGameEntity> extends BaseGameEntity {
 	 * @param radius The radius of the trigger circle.
 	 */
 	public Trigger(Vector2D centerPoint, int radius) {
-		super(getNextValidID(), RavenObject.TRIGGER);
+		super(getNextValidID());
 
 		if(centerPoint != null) {
 			regionOfInfluence = new TriggerRegionCircle(centerPoint, radius);

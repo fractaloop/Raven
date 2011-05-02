@@ -12,17 +12,17 @@ public abstract class MovingEntity extends BaseGameEntity {
 	/** a vector perpendicular to the heading vector */
 	protected Vector2D side;
 	
-	double mass;
+	protected double mass;
 	
 	/** the maximum speed this entity may travel at */
-	double maxSpeed;
+	protected double maxSpeed;
 	
 	/** the maximum force this entity can produce to power itself (think
 	 * rockets and thrust) */
-	double maxForce;
+	protected double maxForce;
 	
 	/** the maximum rate (radians per second)this vehicle can rotate */
-	double maxTurnRate;
+	protected double maxTurnRate;
 		
 	public MovingEntity(Vector2D position,
 						double radius,

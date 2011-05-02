@@ -3,7 +3,9 @@ package raven.game.triggers;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 import raven.game.RavenBot;
+import raven.game.RavenObject;
 import raven.math.Vector2D;
+import raven.script.RavenScript;
 import raven.ui.GameCanvas;
 
 @XStreamAlias("TriggerHealthGiver")
@@ -16,6 +18,10 @@ public class TriggerHealthGiver extends TriggerRespawning<RavenBot> {
 		setRespawnDelay(respawnDelay);
 		
 		this.healthGiven = healthGiven;
+		
+		setEntityType(RavenObject.HEALTH);
+		
+		addCircularTriggerRegion(position, RavenScript.getDouble("DefaultGiverTriggerRange"));
 	}
 
 	@Override

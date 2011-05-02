@@ -36,7 +36,6 @@ public abstract class BaseGameEntity {
 	protected double boundingRadius;
 	
 	protected BaseGameEntity(int id) {
-		Log.debug("entity", "Creating a new " + type + " with ID " + id);
 		setID(id);
 	}
 
