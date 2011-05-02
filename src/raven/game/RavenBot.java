@@ -116,7 +116,7 @@ public class RavenBot extends MovingEntity {
 	 * this method is called from the update method. It calculates and applies
 	 * the steering force for this time-step.
 	 */
-	private void updateMovement() {
+	private void updateMovement(double delta) {
 		//calculate the combined steering force
 		Vector2D force = steering.calculate();
 
@@ -135,8 +135,8 @@ public class RavenBot extends MovingEntity {
 		//update the velocity
 		velocity = velocity.add(accel);
 
-		//make sure vehicle does not exceed maximum velocity
-		velocity.truncate(maxSpeed);
+		//make sure vehicle does not exceed maximum velocity per second
+		velocity.truncate(maxSpeed * delta);
 
 		//update the position
 		position = position.add(velocity);
@@ -317,7 +317,7 @@ public class RavenBot extends MovingEntity {
 
 		// Calculate the steering force and update the bot's velocity and
 		// position
-		updateMovement();
+		updateMovement(delta);
 
 		// if the bot is under AI control but not scripted
 		if (!isPossessed()) {

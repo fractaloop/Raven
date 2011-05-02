@@ -192,4 +192,9 @@ public class Vector2D {
 		
 		return false;		
 	}
+
+	public void setValue(Vector2D value) {
+		this.x = value.x;
+		this.y = value.y;		
+	}
 }
