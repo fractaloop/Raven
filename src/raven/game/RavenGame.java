@@ -124,10 +124,11 @@ public class RavenGame {
 	/** The usual suspects */
 	public void render() {
 		Log.trace("game", "Rendering game");
-		graveMarkers.render();
-		
 		// render the map
 		map.render();
+
+		graveMarkers.render();
+		
 		
 		// render all the bots unless the user has selected the option to only
 		// render those bots that are in the fov of the selected bot
