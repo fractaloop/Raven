@@ -73,8 +73,8 @@ public class RavenMap {
 				navGraph.numNodes());
 		
 		// add the graph nodes to the space partition
-		for (NavGraphNode<Trigger<RavenBot>> node : navGraph) {
-			spacePartition.addEntity(node);
+		for (int i = 0; i < navGraph.numNodes(); i++) {
+			spacePartition.addEntity(navGraph.getNode(i));
 		}
 	}
 	

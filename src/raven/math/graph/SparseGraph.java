@@ -13,7 +13,7 @@ import raven.ui.GameCanvas;
 import raven.utils.Log;
 import raven.utils.Pair;
 
-public class SparseGraph<NodeType extends GraphNode, EdgeType extends GraphEdge> implements Iterable<NodeType> {
+public class SparseGraph<NodeType extends GraphNode, EdgeType extends GraphEdge> {
 	/** the nodes that comprise this graph */
 	private List<NodeType> nodes;
 	
@@ -290,11 +290,6 @@ public class SparseGraph<NodeType extends GraphNode, EdgeType extends GraphEdge>
 		}
 	}
 
-	@Override
-	public Iterator<NodeType> iterator() {
-		return nodes.iterator();
-	}
-	
 	// Utility functions. These used to be global, but they are generic
 	// and need an instance anyway
 	public double calculateAverageGraphEdgeLength() {
