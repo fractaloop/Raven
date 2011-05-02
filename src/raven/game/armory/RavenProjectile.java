@@ -37,6 +37,7 @@ public abstract class RavenProjectile extends MovingEntity {
 		this.vTarget = target;
 		this.isDead = false;
 		this.isImpacted = false;
+		this.impactPoint = new Vector2D();
 		this.world = world;
 		this.damageInflicted = damage;
 		this.origin = origin;

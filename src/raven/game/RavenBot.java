@@ -62,7 +62,6 @@ public class RavenBot extends MovingEntity {
 	private Regulator goalArbitrationRegulator;
 	private Regulator targetSelectionRegulator;
 	private Regulator triggerTestRegulator;
-	private Regulator visionUpdateRegulator;
 
 	/**
 	 * the bot's health. Every time the bot is shot this value is decreased. If
@@ -225,8 +224,6 @@ public class RavenBot extends MovingEntity {
 				RavenScript.getDouble("Bot_TargetingUpdateFreq"));
 		triggerTestRegulator = new Regulator(
 				RavenScript.getDouble("Bot_TriggerUpdateFreq"));
-		visionUpdateRegulator = new Regulator(
-				RavenScript.getDouble("Bot_VisionUpdateFreq"));
 
 		// create the goal queue
 		brain = new GoalThink(this);
@@ -324,7 +321,7 @@ public class RavenBot extends MovingEntity {
 			goalArbitrationRegulator.update(delta);
 			targetSelectionRegulator.update(delta);
 			triggerTestRegulator.update(delta);
-			visionUpdateRegulator.update(delta);
+
 			// examine all the opponents in the bots sensory memory and select
 			// one to be the current target
 			if (targetSelectionRegulator.isReady()) {
@@ -337,9 +334,7 @@ public class RavenBot extends MovingEntity {
 			}
 
 			// update the sensory memory with any visual stimulus
-			if (visionUpdateRegulator.isReady()) {
-				sensoryMem.updateVision(delta);
-			}
+			sensoryMem.updateVision(delta);
 
 			// select the appropriate weapon to use from the weapons currently
 			// in the inventory
