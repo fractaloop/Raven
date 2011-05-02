@@ -9,16 +9,18 @@ import raven.game.armory.Shotgun;
 
 public class RavenFeature {
 
-	//returns a value between 0 and 1 based on the bot's health. The better
-	//the health, the higher the rating
+	/**returns a value between 0 and 1 based on the bot's health. The better
+	*the health, the higher the rating
+	*/
 	public static double Health(RavenBot pBot){
 		return (double)pBot.health() / (double)pBot.maxHealth();
 	}
 
-	//returns a value between 0 and 1 based on the bot's closeness to the 
-	//given item. the further the item, the higher the rating. If there is no
-	//item of the given type present in the game world at the time this method
-	//is called the value returned is 1
+	/**returns a value between 0 and 1 based on the bot's closeness to the 
+	*given item. the further the item, the higher the rating. If there is no
+	*item of the given type present in the game world at the time this method
+	*is called the value returned is 1
+	*/
 	public static double DistanceToItem(RavenBot pBot, RavenObject ItemType){
 		//determine the distance to the closest instance of the item type
 		double DistanceToItem = pBot.getPathPlanner().getCostToClosestItem(ItemType);
@@ -55,18 +57,22 @@ public class RavenFeature {
 		else return distanceToItem;
 	}
 
+	/**
+	 * Returns a value from 0 to 1 representing a percent of ammo left for this weapon.
+	 * @param pBot
+	 * @param WeaponType
+	 * @return
+	 * @throws Exception
+	 */
 	public static double IndividualWeaponStrength(RavenBot pBot, RavenObject WeaponType) throws Exception{
 
 		//grab a pointer to the gun (if the bot owns an instance)
 		RavenWeapon wp = pBot.getWeaponSys().getWeaponFromInventory(WeaponType);
 
-		if (wp != null)
+		if (wp != null && wp.getWeaponType() != RavenObject.BLASTER)
 		{
 			return wp.getRoundsRemaining() / wp.getMaxRounds();
-		}
-
-		else
-		{
+		} else {
 			return 0.0;
 		}
 	}

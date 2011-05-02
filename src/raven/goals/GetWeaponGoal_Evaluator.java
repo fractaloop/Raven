@@ -57,7 +57,8 @@ public class GetWeaponGoal_Evaluator extends Goal_Evaluator {
 		else
 		{
 			//value used to tweak the desirability
-			double Tweaker = 0.15;
+			// all the tweakers are 1.0 in the params.js file
+			double Tweaker = 1.0;
 
 			double Health, WeaponStrength;
 
@@ -71,7 +72,8 @@ public class GetWeaponGoal_Evaluator extends Goal_Evaluator {
 				e.printStackTrace();
 			}
 
-			double Desirability = (Tweaker * Health * (1-WeaponStrength)) / Distance;
+			// we want this to be high for weapons that are not the blaster.
+			double Desirability = ((Tweaker * Health * WeaponStrength) * 2) / Distance;
 
 			//ensure the value is in the range 0 to 1
 			RavenFeature.Clamp(Desirability, 0, 1);
