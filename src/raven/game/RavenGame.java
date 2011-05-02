@@ -246,7 +246,7 @@ public class RavenGame {
 		// update any current projectiles
 		HashSet<RavenProjectile> toRemove = new HashSet<RavenProjectile>();
 		for (RavenProjectile projectile : projectiles) {
-			if (!projectile.IsDead()) {
+			if (projectile.IsDead()) {
 				toRemove.add(projectile);
 			} else {
 				projectile.update(delta);
