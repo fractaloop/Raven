@@ -24,7 +24,6 @@ public class Goal_AttackTarget extends GoalComposite<RavenBot> {
 		if (!m_pOwner.getTargetSys().isTargetPresent())
 		{
 			m_iStatus = Goal.CurrentStatus.completed;
-			Log.debug("attack", "target no longer present");
 			return;
 		}
 

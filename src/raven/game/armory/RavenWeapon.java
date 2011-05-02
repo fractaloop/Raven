@@ -46,16 +46,13 @@ public abstract class RavenWeapon {
 	
 	/* OVERRIDES */
 	
-	/**
-	 * Causes the weapon to shoot at the chosen position. Each weapons overrides this method.
-	 * @param position
-	 */
-	public void ShootAt(Vector2D position) {}
+	/** Causes the weapon to shoot at the chosen position. Each weapons overrides this method.
+	 * @param position */
+	public abstract void ShootAt(Vector2D position);
 	
-	/**
-	 * Draws the weapon on the display via GameCanvas static calls.  Overridden by each weapon.
-	 */
-	public void render() {}
+	/** Draws the weapon on the display via GameCanvas static calls.
+	 * Overridden by each weapon. */
+	public abstract void render();
 	
 	/**
 	 * This overridden method uses fuzzy logic to assign a desireability value to this weapon, based on the distance and the logic
@@ -63,7 +60,7 @@ public abstract class RavenWeapon {
 	 * @param distanceToTarget
 	 * @return
 	 */
-	public double GetDesireability(double distanceToTarget) { return 0; }
+	public abstract double GetDesireability(double distanceToTarget);
 	
 	/* ACCESSORS */
 	
@@ -107,10 +104,9 @@ public abstract class RavenWeapon {
 		return timeUntilAvailable > 0; 
 	}
 	
-	public void UpdateTimeWeaponIsNextAvailable(double delta) { timeUntilAvailable += (delta + 1.0/rateOfFire); }
+	protected void UpdateTimeWeaponIsNextAvailable(double delta) { timeUntilAvailable += (delta + 1.0/rateOfFire); }
 	
-	@SuppressWarnings("unused")
-	private void InitializeFuzzyModule() {}
+	protected abstract void InitializeFuzzyModule();
 
 
 	public double getLastDesirabilityScore() {
