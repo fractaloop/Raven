@@ -19,12 +19,10 @@ public class AttackTargetGoal_Evaluator extends Goal_Evaluator {
 		{
 			double Tweaker = 1.0;
 
-			try {
-				Desirability = Tweaker * RavenFeature.Health(pBot)* RavenFeature.TotalWeaponStrength(pBot);
-			} catch (Exception e) {System.out.println(e.getMessage())	;}
+			Desirability = Tweaker * RavenFeature.Health(pBot) * RavenFeature.TotalWeaponStrength(pBot);
 
 			//bias the value according to the personality of the bot
-			Desirability *= getM_iBias();
+			Desirability *= getBias();
 		}
 
 		return Desirability;
@@ -38,13 +36,8 @@ public class AttackTargetGoal_Evaluator extends Goal_Evaluator {
 	public void renderInfo(Vector2D Position, RavenBot pBot){
 		GameCanvas.textAtPos(Position, "AT: " + String.valueOf(calculateDesirability(pBot)));
 
-		String s = "";
-		try {
-			s = String.valueOf(RavenFeature.Health(pBot)) + ", " + String.valueOf(RavenFeature.TotalWeaponStrength(pBot));
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		String s = String.valueOf(RavenFeature.Health(pBot)) + ", " + String.valueOf(RavenFeature.TotalWeaponStrength(pBot));
+
 		GameCanvas.textAtPos(Position, s);
 	}
 }

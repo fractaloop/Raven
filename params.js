@@ -30,7 +30,7 @@ var Weapon_RespawnDelay         = 15;
 
 //the number of bots the game instantiates
 
-var NumBots = 1;
+var NumBots = 3;
 
 //this is the maximum number of search cycles allocated to *all* current path
 // planning searches per update
@@ -141,9 +141,9 @@ var Bolt_MaxSpeed               = 5;
 var Bolt_Mass                   = 1;
 var Bolt_MaxForce               = 100.0;
 var Bolt_Scale                  = Bot_Scale;
-var Bolt_Damage                 = 1;
+var Bolt_Damage                 = 15;
 
-var RocketLauncher_FiringFreq   = 1.5;
+var RocketLauncher_FiringFreq   = 1.2;
 var RocketLauncher_DefaultRounds    = 15;
 var RocketLauncher_MaxRoundsCarried = 50;
 var RocketLauncher_IdealRange   = 150;
@@ -154,7 +154,7 @@ var Rocket_MaxSpeed             = 3;
 var Rocket_Mass                 = 1;
 var Rocket_MaxForce             = 10.0;
 var Rocket_Scale                = Bot_Scale;
-var Rocket_Damage               = 10;
+var Rocket_Damage               = 100;
 var Rocket_ExplosionDecayRate   = 2.0; // how fast the explosion occurs (in secs)
 
 var RailGun_FiringFreq          = 1;
@@ -167,13 +167,13 @@ var Slug_MaxSpeed               = 5000;
 var Slug_Mass                   = 0.1;
 var Slug_MaxForce               = 10000.0;
 var Slug_Scale                  = Bot_Scale;
-var Slug_Persistance            = 0.2;
-var Slug_Damage                 = 10;
+var Slug_Persistance            = 1.0;
+var Slug_Damage                 = 100;
 
 var ShotGun_FiringFreq          = 1;
 var ShotGun_DefaultRounds       = 15;
 var ShotGun_MaxRoundsCarried    = 50;
-var ShotGun_NumBallsInShell     = 10;
+var ShotGun_NumBallsInShell     = 20;
 var ShotGun_Spread              = 0.05;
 var ShotGun_IdealRange          = 100;
 var ShotGun_SoundRange          = 400;
@@ -182,5 +182,5 @@ var Pellet_MaxSpeed             = 5000;
 var Pellet_Mass                 = 0.1;
 var Pellet_MaxForce             = 1000.0;
 var Pellet_Scale                = Bot_Scale;
-var Pellet_Persistance          = 0.1;
-var Pellet_Damage               = 1;
+var Pellet_Persistance          = 1.0;
+var Pellet_Damage               = 6;

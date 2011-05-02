@@ -14,9 +14,9 @@ import raven.math.Vector2D;
 public abstract class Trigger<T extends BaseGameEntity> extends BaseGameEntity {
 	transient private TriggerRegion regionOfInfluence;
 	
-	private boolean removeFromGame;
+	transient private boolean removeFromGame;
 	
-	private boolean active;
+	transient private boolean active;
 	
 	private int graphNodeIndex;
 	

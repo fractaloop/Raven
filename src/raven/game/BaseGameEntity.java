@@ -11,15 +11,15 @@ import raven.utils.Log;
 
 public abstract class BaseGameEntity {
 	
-	public static int DEFAULT_ENTITY_TYPE = -1;
+	public static final int DEFAULT_ENTITY_TYPE = -1;
 	
 	private int ID;
 	
 	private RavenObject type;
 	
-	private boolean tag;
+	transient private boolean tag;
 	
-	private static int nextValidID;
+	transient private static int nextValidID;
 	
 	private void setID(int val) {
 		if (val < nextValidID)

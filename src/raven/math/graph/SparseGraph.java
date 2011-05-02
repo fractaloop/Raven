@@ -13,7 +13,7 @@ import raven.ui.GameCanvas;
 import raven.utils.Log;
 import raven.utils.Pair;
 
-public class SparseGraph<NodeType extends GraphNode, EdgeType extends GraphEdge> implements Iterable<NodeType> {
+public class SparseGraph<NodeType extends GraphNode, EdgeType extends GraphEdge> {
 	/** the nodes that comprise this graph */
 	private List<NodeType> nodes;
 	
@@ -290,11 +290,6 @@ public class SparseGraph<NodeType extends GraphNode, EdgeType extends GraphEdge>
 		}
 	}
 
-	@Override
-	public Iterator<NodeType> iterator() {
-		return nodes.iterator();
-	}
-	
 	// Utility functions. These used to be global, but they are generic
 	// and need an instance anyway
 	public double calculateAverageGraphEdgeLength() {
@@ -306,7 +301,7 @@ public class SparseGraph<NodeType extends GraphNode, EdgeType extends GraphEdge>
 				// increment edge counter
 				++numEdgesCounted;
 				// add length of edge to total length
-				totalLength += nodes.get(edge.from()).pos().distance(nodes.get(edge.from()).pos());
+				totalLength += nodes.get(edge.from()).pos().distance(nodes.get(edge.to()).pos());
 			}
 		}
 		
@@ -325,9 +320,7 @@ public class SparseGraph<NodeType extends GraphNode, EdgeType extends GraphEdge>
 			// iterate through every node in the graph and grab the cost to
 			// travel to that node
 			for (int target = 0; target < numNodes(); target++) {
-				if (source != target) {
-					pathCosts.put(new Pair<Integer, Integer>(source, target), search.getCostToNode(target));
-				}
+				pathCosts.put(new Pair<Integer, Integer>(source, target), search.getCostToNode(target));
 			}
 		}
 		

@@ -123,8 +123,11 @@ public class GraphBuilder {
 		}
 		
 		// Oh, and finally we need a node under every trigger
-		for (Trigger<?> trigger : level.getTriggers()) {
-			graph.addNode(new NavGraphNode<Trigger<RavenBot>>(graph.getNextFreeNodeIndex(), trigger.pos()));
+		for (Trigger<RavenBot> trigger : level.getTriggers()) {
+			NavGraphNode<Trigger<RavenBot>> node = new NavGraphNode<Trigger<RavenBot>>(graph.getNextFreeNodeIndex(), trigger.pos());
+			trigger.setGraphNodeIndex(node.index());
+			node.setExtraInfo(trigger);
+			graph.addNode(node);
 		}
 		
 		rebuild();

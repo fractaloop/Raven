@@ -43,7 +43,7 @@ public class GetHealthGoal_Evaluator extends Goal_Evaluator {
 			RavenFeature.Clamp(Desirability, 0, 1);
 
 			//bias the value according to the personality of the bot
-			Desirability *= getM_iBias();
+			Desirability *= getBias();
 
 			return Desirability;
 		}

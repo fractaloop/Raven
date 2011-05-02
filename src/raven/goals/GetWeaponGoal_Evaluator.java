@@ -6,56 +6,25 @@ import raven.math.Vector2D;
 import raven.ui.GameCanvas;
 
 public class GetWeaponGoal_Evaluator extends Goal_Evaluator {
-	private RavenObject weptype;
+	private RavenObject weaponType;
 
+	public GetWeaponGoal_Evaluator(Double bias, RavenObject weaponType) {
+		super(bias);
 
-
-	public GetWeaponGoal_Evaluator(Double inp, RavenObject weptype) throws Exception {
-		super(inp);
-		switch(weptype){
-		case BLASTER:
-			this.weptype = RavenObject.BLASTER;
-			break;
-
-		case SHOTGUN:
-			this.weptype = RavenObject.SHOTGUN;
-			break;
-
-		case ROCKET_LAUNCHER:
-			this.weptype = RavenObject.ROCKET_LAUNCHER;
-			break;
-
-		case RAIL_GUN:
-			this.weptype = RavenObject.RAIL_GUN;
-			break;
-		default:
-			throw new Exception();
-		}
-
-
-
-
+		this.weaponType = weaponType;
 	}
 
-
-
-
-	//------------------- CalculateDesirability ---------------------------------
-	//-----------------------------------------------------------------------------
 	public double calculateDesirability(RavenBot pBot)
 	{
 		//grab the distance to the closest instance of the weapon type
-		double Distance = RavenFeature.DistanceToItem(pBot, weptype);
+		double Distance = RavenFeature.DistanceToItem(pBot, weaponType);
 
 		//if the distance feature is rated with a value of 1 it means that the
 		//item is either not present on the map or too far away to be worth 
 		//considering, therefore the desirability is zero
-		if (Distance == 1)
-		{
+		if (Distance < 0) {
 			return 0;
-		}
-		else
-		{
+		} else {
 			//value used to tweak the desirability
 			// all the tweakers are 1.0 in the params.js file
 			double Tweaker = 1.0;
@@ -63,14 +32,7 @@ public class GetWeaponGoal_Evaluator extends Goal_Evaluator {
 			double Health, WeaponStrength;
 
 			Health = RavenFeature.Health(pBot);
-			WeaponStrength = new Double(0);
-			try {
-				WeaponStrength = RavenFeature.IndividualWeaponStrength(pBot,
-						weptype);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			WeaponStrength = RavenFeature.IndividualWeaponStrength(pBot, weaponType);
 
 			// we want this to be high for weapons that are not the blaster.
 			double Desirability = ((Tweaker * Health * WeaponStrength) * 2) / Distance;
@@ -78,7 +40,7 @@ public class GetWeaponGoal_Evaluator extends Goal_Evaluator {
 			//ensure the value is in the range 0 to 1
 			RavenFeature.Clamp(Desirability, 0, 1);
 
-			Desirability *= getM_iBias();
+			Desirability *= getBias();
 
 			return Desirability;
 		}
@@ -90,7 +52,7 @@ public class GetWeaponGoal_Evaluator extends Goal_Evaluator {
 	public void setGoal(RavenBot pBot)
 	{
 		try {
-			pBot.getBrain().addGoal_getItem(weptype);
+			pBot.getBrain().addGoal_getItem(weaponType);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -102,7 +64,7 @@ public class GetWeaponGoal_Evaluator extends Goal_Evaluator {
 	public void RenderInfo(Vector2D Position, RavenBot pBot)
 	{
 		String s = new String();
-		switch(weptype)
+		switch(weaponType)
 		{
 		case RAIL_GUN:
 			s="RG: ";break;
