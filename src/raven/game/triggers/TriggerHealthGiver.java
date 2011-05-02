@@ -19,9 +19,15 @@ public class TriggerHealthGiver extends TriggerRespawning<RavenBot> {
 		
 		this.healthGiven = healthGiven;
 		
+		readResolve();
+	}
+	
+	private Object readResolve() {
 		setEntityType(RavenObject.HEALTH);
 		
 		addCircularTriggerRegion(position, RavenScript.getDouble("DefaultGiverTriggerRange"));
+		
+		return this;
 	}
 
 	@Override
