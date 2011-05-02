@@ -20,6 +20,11 @@ public class Pair<T1, T2> {
 		return false;
 	}
 	
+	@Override
+	public int hashCode() {
+		return first.hashCode() + second.hashCode();
+	}
+	
 	public String toString() {
 		return "<" + first.toString() + ", " + second.toString() + ">";
 	}
