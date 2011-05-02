@@ -66,7 +66,7 @@ public class Dispatcher {
 		}
 		// else add the telegram to be dispatched
 		else {
-			telegram.dispatchTime = System.nanoTime() + (long)(delay * 1e9);
+			telegram.dispatchDelay = delay;
 			
 			getInstance().priorityQueue.add(telegram);
 		}
@@ -76,10 +76,11 @@ public class Dispatcher {
 	 * send out any delayed messages. This method is called each time through
 	 * the main game loop.
 	 */
-	public static void dispatchDelayedMessages() {
+	public static void dispatchDelayedMessages(double delta) {
 		HashSet<Telegram> toRemove = new HashSet<Telegram>();
 		for (Telegram telegram : getInstance().priorityQueue) {
-			if (telegram.dispatchTime < System.nanoTime()) {
+			telegram.dispatchDelay -= delta;
+			if (telegram.dispatchDelay <= 0.0) {
 				toRemove.add(telegram);
 				BaseGameEntity receiver = EntityManager.getEntityFromID(telegram.receiverID);
 				discharge(receiver, telegram);
