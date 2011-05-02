@@ -93,7 +93,7 @@ public class RocketLauncher extends RavenWeapon {
 	}
 	
 	public void ShootAt(Vector2D position){
-		  if (getRoundsRemaining() > 0 && timeNextAvailable <= 0)
+		  if (getRoundsRemaining() > 0 && timeUntilAvailable <= 0)
 		  {
 		    //fire off a rocket!
 		    getOwner().getWorld().addRocket(getOwner(), position);

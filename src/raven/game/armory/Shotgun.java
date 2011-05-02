@@ -84,7 +84,7 @@ public class Shotgun extends RavenWeapon {
 	}
 	
 	public void ShootAt(Vector2D position){
-		if (getRoundsRemaining() > 0 && timeNextAvailable <= 0)
+		if (getRoundsRemaining() > 0 && timeUntilAvailable <= 0)
 		  {
 		    //a shotgun cartridge contains lots of tiny metal balls called pellets. 
 		    //Therefore, every time the shotgun is discharged we have to calculate
