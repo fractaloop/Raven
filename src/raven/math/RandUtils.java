@@ -19,7 +19,6 @@ public class RandUtils {
 	 */
 	public static double RandInRange(double start, double end)
 	{
-		Random rand = new Random(System.nanoTime());
-		return rand.nextDouble() * end;
+		return Math.random() * (end - start) + start;
 	}
 }
