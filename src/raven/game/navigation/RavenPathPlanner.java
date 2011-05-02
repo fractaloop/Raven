@@ -352,7 +352,7 @@ public class RavenPathPlanner {
 		if (currentSearch == null)
 			throw new RuntimeException("<Raven_PathPlanner::CycleOnce>: No search object instantiated");
 
-		GraphSearchStatus result = this.cycleOnce();
+		GraphSearchStatus result = currentSearch.cycleOnce();
 
 		//let the bot know of the failure to find a path
 		if (result == GraphSearchStatus.TARGET_NOT_FOUND) {
