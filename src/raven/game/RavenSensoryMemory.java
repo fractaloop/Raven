@@ -124,15 +124,15 @@ public class RavenSensoryMemory {
 						info.timeSinceLastSensed = 0;
 						info.lastSensedPosition = new Vector2D(bot.pos());
 						info.timeSinceLastVisible = 0;
+						info.timeSinceBecameVisible += delta;
 
 						if (info.withinFOV == false) {
 							info.withinFOV = true;
-							info.timeSinceBecameVisible = 0;
+							info.timeSinceBecameVisible = delta;
 						}
 					} else {
 						info.withinFOV = false;
 						info.timeSinceLastVisible += delta;
-						info.timeSinceBecameVisible += delta;
 						info.timeSinceLastSensed += delta;
 					}
 				} else {
