@@ -97,7 +97,7 @@ public class RavenFeature {
 		//(it basically adds in an amount for a bot's persistent weapon -- the blaster)
 		double Tweaker = 0.1;
 
-		return Tweaker + (1-Tweaker)*(NumSlugs + NumCartridges + NumRockets)/(MaxRoundsForShotgun + MaxRoundsForRailgun + MaxRoundsForRocketLauncher);
+		return Tweaker + .5*(NumSlugs + NumCartridges + NumRockets)/(MaxRoundsForShotgun + MaxRoundsForRailgun + MaxRoundsForRocketLauncher);
 	}
 
 	private static double getMaxRoundsBotCanCarryForWeapon(RavenObject weapon) {

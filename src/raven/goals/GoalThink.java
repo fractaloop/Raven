@@ -87,7 +87,7 @@ public class GoalThink extends GoalComposite<RavenBot> {
 		//  the highest desirability.
 		//-----------------------------------------------------------------------------
 		double best = 0;
-		Goal_Evaluator MostDesirable = new ExploreGoal_Evaluator(1.0);
+		Goal_Evaluator MostDesirable = new ExploreGoal_Evaluator(0.1);
 		
 		//iterate through all the evaluators to see which produces the highest score
 		for( Goal_Evaluator eval : m_Evaluators) {
