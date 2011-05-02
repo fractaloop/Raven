@@ -2,6 +2,8 @@ package raven.math;
 
 import java.util.List;
 
+import raven.utils.Log;
+
 public class Geometry {
 
 	public static double distToLineSegment(Vector2D from, Vector2D to, Vector2D pos) {
@@ -149,8 +151,11 @@ public class Geometry {
 	}
 
 	public static Double FindClosestPointOfIntersectionWithWalls(Vector2D A, Vector2D B, Vector2D impactPoint, List<Wall2D> walls) {
+		if(A == null || B == null || impactPoint == null || walls == null) {
+			Log.error("Geometry", "FindClosestPointToWalls - Null value passed.");
+		}
 		double distance = Double.MAX_VALUE;
-
+		
 		for (Wall2D wall : walls)
 		{
 			double dist = 0.0;
@@ -161,6 +166,7 @@ public class Geometry {
 				if (dist < distance)
 				{
 					distance = dist;
+					if(impactPoint == null) impactPoint = new Vector2D();
 					impactPoint.setValue(point);
 				}
 			}

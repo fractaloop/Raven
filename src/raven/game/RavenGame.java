@@ -135,9 +135,12 @@ public class RavenGame {
 			Log.trace("game", "Rendering FOV bots only");
 			List<RavenBot> visibleBots = getAllBotsInFOV(selectedBot);
 
+			//bugfix - render only visible bots, but render selected too!
 			for (RavenBot bot : visibleBots) {
-				bot.render();
+				bot.render();	
 			}
+			selectedBot.render();
+			
 		} else {
 			Log.trace("game", "Rendering all bots");
 			// render all the bots

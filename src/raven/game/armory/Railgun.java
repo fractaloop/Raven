@@ -95,7 +95,7 @@ public class Railgun extends RavenWeapon {
 			//fire a round
 		    getOwner().getWorld().addRailGunSlug(getOwner(), position);
 
-		    UpdateTimeWeaponIsNextAvailable(railgunFiringFreq);
+		    UpdateTimeWeaponIsNextAvailable(1.0/railgunFiringFreq);
 
 		    decrementRoundsLeft();
 

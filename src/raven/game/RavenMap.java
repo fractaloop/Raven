@@ -22,6 +22,7 @@ import raven.math.graph.GraphNode;
 import raven.math.graph.SparseGraph;
 import raven.script.RavenScript;
 import raven.ui.GameCanvas;
+import raven.utils.Log;
 import raven.utils.Pair;
 
 @XStreamAlias("RavenMap")
@@ -197,7 +198,13 @@ public class RavenMap {
 		if (node1 < 0 || node2 < 0 || node1 >= navGraph.numNodes() || node2 >= navGraph.numNodes())
 			throw new IndexOutOfBoundsException("Invalid node index: " + node1 + " to " + node2);
 		
-		return pathCosts.get(new Pair<Integer,Integer>(node1, node2));
+		double cost = 100.0;
+		try{
+			cost =  pathCosts.get(new Pair<Integer,Integer>(node1, node2));
+		} catch (NullPointerException e) {
+			Log.error("RavenMap", "pathCosts threw a NPE getting cost from " + node1 + " to " + node2);
+		}
+		return cost;
 	}
 	
 	/** returns the position of a graph node selected at random */
