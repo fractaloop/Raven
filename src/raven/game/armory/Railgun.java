@@ -89,12 +89,12 @@ public class Railgun extends RavenWeapon {
 	}
 	
 	public void ShootAt(Vector2D position){
-		  if ((getRoundsRemaining() > 0) && isReadyForNextShot()){
+		  if ((getRoundsRemaining() > 0) && timeNextAvailable <= 0){
 		    
 			//fire a round
 		    getOwner().getWorld().addRailGunSlug(getOwner(), position);
 
-		    UpdateTimeWeaponIsNextAvailable();
+		    UpdateTimeWeaponIsNextAvailable(railgunFiringFreq);
 
 		    decrementRoundsLeft();
 

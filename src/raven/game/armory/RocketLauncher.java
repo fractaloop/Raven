@@ -93,14 +93,14 @@ public class RocketLauncher extends RavenWeapon {
 	}
 	
 	public void ShootAt(Vector2D position){
-		  if (getRoundsRemaining() > 0 && isReadyForNextShot())
+		  if (getRoundsRemaining() > 0 && timeNextAvailable <= 0)
 		  {
 		    //fire off a rocket!
 		    getOwner().getWorld().addRocket(getOwner(), position);
 
 		    decrementRoundsLeft();
 
-		    UpdateTimeWeaponIsNextAvailable();
+		    UpdateTimeWeaponIsNextAvailable(rlFiringFreq);
 
 		    //add a trigger to the game so that the other bots can hear this shot
 		    //(provided they are within range)

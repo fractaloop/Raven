@@ -21,7 +21,8 @@ public abstract class RavenWeapon {
 	private RavenObject itemType;
 	private FuzzyModule fuzzyModule;
 	private int roundsLeft, maxRoundCapacity; 
-	private double rateOfFire, timeNextAvailable, lastDesireabilityScore, idealRange, maxProjectileSpeed;
+	private double rateOfFire, lastDesireabilityScore, idealRange, maxProjectileSpeed;
+	public double timeNextAvailable;
 	private List<Vector2D> WeaponVB, WeaponVBTrans;
 	
 	public RavenWeapon(RavenObject weaponType, int defaultRoundsCount, int maxCapacity, 
@@ -101,9 +102,12 @@ public abstract class RavenWeapon {
 	
 	
 	
-	public boolean isReadyForNextShot() { return System.nanoTime() > timeNextAvailable; }
+	public boolean isReadyForNextShot(double delta) { 
+		timeNextAvailable -= delta; 
+		return timeNextAvailable > 0; 
+	}
 	
-	public void UpdateTimeWeaponIsNextAvailable() { timeNextAvailable = System.nanoTime() + 1.0/rateOfFire; }
+	public void UpdateTimeWeaponIsNextAvailable(double delta) { timeNextAvailable += (delta + 1.0/rateOfFire); }
 	
 	@SuppressWarnings("unused")
 	private void InitializeFuzzyModule() {}

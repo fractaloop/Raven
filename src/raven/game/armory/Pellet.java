@@ -30,11 +30,11 @@ public class Pellet extends RavenProjectile {
 	}
 
 	
-	private boolean isVisibleToPlayer()
+	private boolean isVisibleToPlayer(double delta)
 	{
 		if(pelletTimePersist > 0)
 		{
-			pelletTimePersist -= System.nanoTime(); 
+			pelletTimePersist -= delta; 
 		}
 		
 		return pelletTimePersist > 0;
@@ -42,7 +42,7 @@ public class Pellet extends RavenProjectile {
 	
 	public void render()
 	{
-		  if (isVisibleToPlayer() && HasImpacted()) {
+		  if ((pelletTimePersist > 0) && HasImpacted()) {
 		    GameCanvas.yellowPen();
 		    GameCanvas.line(getOrigin(), getImpactPoint());
 
@@ -51,7 +51,7 @@ public class Pellet extends RavenProjectile {
 		  }
 	}
 	
-	public void update()
+	public void update(double delta)
 	{
 		  if (!HasImpacted())
 		  {
@@ -73,7 +73,7 @@ public class Pellet extends RavenProjectile {
 
 		    TestForImpact();
 		  }
-		  else if (!isVisibleToPlayer())
+		  else if (!isVisibleToPlayer(delta))
 		  {
 		   this.setDead(true);
 		  }

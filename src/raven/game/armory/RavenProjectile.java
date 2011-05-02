@@ -51,7 +51,7 @@ public class RavenProjectile extends MovingEntity {
 	public void render() {//TODO: autogen
 	}
 	
-	public void update() { 
+	public void update(double delta) { 
 		//TODO: autogen
 	}
 	

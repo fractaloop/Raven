@@ -84,7 +84,7 @@ public class Shotgun extends RavenWeapon {
 	}
 	
 	public void ShootAt(Vector2D position){
-		if (getRoundsRemaining() > 0 && isReadyForNextShot())
+		if (getRoundsRemaining() > 0 && timeNextAvailable <= 0)
 		  {
 		    //a shotgun cartridge contains lots of tiny metal balls called pellets. 
 		    //Therefore, every time the shotgun is discharged we have to calculate
@@ -105,7 +105,7 @@ public class Shotgun extends RavenWeapon {
 
 		    decrementRoundsLeft();
 
-		    UpdateTimeWeaponIsNextAvailable();
+		    UpdateTimeWeaponIsNextAvailable(shotgunFiringFreq);
 
 		    //add a trigger to the game so that the other bots can hear this shot
 		    //(provided they are within range)

@@ -61,7 +61,7 @@ public class Slug extends RavenProjectile {
 	}
 	
 	//These projectiles are visible if the current time is less than OriginTime + timePersist
-	private boolean IsVisibleToPlayer()
+	private boolean IsVisibleToPlayer(double delta)
 	{
 		if(slugTimePersist > 0)
 		{
@@ -76,14 +76,14 @@ public class Slug extends RavenProjectile {
 	
 	public void render()
 	{
-		if(IsVisibleToPlayer() && HasImpacted())
+		if(slugTimePersist > 0 && HasImpacted())
 		{
 			GameCanvas.greenPen();
 			GameCanvas.line(getOrigin(), getImpactPoint());
 		}
 	}
 	
-	public void update()
+	public void update(double delta)
 	{
 		  if (!HasImpacted())
 		  {
@@ -106,7 +106,7 @@ public class Slug extends RavenProjectile {
 
 		    TestForImpact();
 		  }
-		  else if (!IsVisibleToPlayer())
+		  else if (!IsVisibleToPlayer(delta))
 		  {
 		    setDead(true);
 		  }

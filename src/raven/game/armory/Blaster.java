@@ -60,11 +60,11 @@ public class Blaster extends RavenWeapon {
 	
 	@Override
 	public void ShootAt(Vector2D position){
-		if(isReadyForNextShot()){
+		if(timeNextAvailable <= 0){
 			getOwner().getWorld().addBolt(getOwner(), position);
 		}
 		
-		UpdateTimeWeaponIsNextAvailable();
+		UpdateTimeWeaponIsNextAvailable(blasterFiringFreq);
 		
 		getOwner().getWorld().getMap().addSoundTrigger(getOwner(), RavenScript.getDouble("Blaster_SoundRange"));
 	}

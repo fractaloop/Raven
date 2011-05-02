@@ -51,7 +51,7 @@ public class Bolt extends RavenProjectile {
 		GameCanvas.line(this.pos(), this.pos().sub(this.velocity()));
 	}
 	
-	public void update()
+	public void update(double delta)
 	{
 		if(!HasImpacted())
 		{
