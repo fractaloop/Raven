@@ -18,6 +18,12 @@ public class IndexedPriorityQueue<K extends Comparable<K>> {
 		invHeap = new ArrayList<Integer>(maxSize);
 		heap = new ArrayList<Integer>(maxSize);
 		size = 0;
+		
+		// Allocate blanks
+		for (int i = 0; i < maxSize+1; i++) {
+			heap.add(0);
+			invHeap.add(0);			
+		}
 	}
 	
 	private void swap(int a, int b) {
