@@ -108,7 +108,7 @@ public class Shotgun extends RavenWeapon {
 
 			decrementRoundsLeft();
 
-			UpdateTimeWeaponIsNextAvailable(1.0/shotgunFiringFreq);
+			UpdateTimeWeaponIsNextAvailable();
 
 			//add a trigger to the game so that the other bots can hear this shot
 			//(provided they are within range)

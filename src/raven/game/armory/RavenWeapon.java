@@ -97,14 +97,15 @@ public abstract class RavenWeapon {
 	public double getIdealRange() { return idealRange; }
 	
 	
-	
+	public void update(double delta) {
+		timeUntilAvailable -= delta;
+	}
 	
 	public boolean isReadyForNextShot(double delta) { 
-		timeUntilAvailable -= delta; 
 		return timeUntilAvailable > 0; 
 	}
 	
-	protected void UpdateTimeWeaponIsNextAvailable(double delta) { timeUntilAvailable += (delta + 1.0/rateOfFire); }
+	protected void UpdateTimeWeaponIsNextAvailable() { timeUntilAvailable = 1.0/rateOfFire; }
 	
 	protected abstract void InitializeFuzzyModule();
 

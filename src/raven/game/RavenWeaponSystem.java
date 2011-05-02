@@ -87,6 +87,12 @@ public class RavenWeaponSystem {
 	}
 
 	public void takeAimAndShoot(double delta) {
+		// Update all the weapon reload times first
+		
+		for (RavenWeapon weapon : weaponMap.values()) {
+			weapon.update(delta);
+		}
+		
 		// aim the weapon only if the current target is shootable or if it has
 		// only	very recently gone out of view (this latter condition is to
 		// ensure the weapon is aimed at the target even if it temporarily
