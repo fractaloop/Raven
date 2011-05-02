@@ -20,7 +20,7 @@ public class Bolt extends RavenProjectile {
 	private static double boltMaxSpeed = RavenScript.getDouble("Bolt_MaxSpeed");
 	private static int boltMass = RavenScript.getInt("Bolt_Mass");
 	private static double boltMaxForce = RavenScript.getDouble("Bolt_MaxForce");
-	private static Vector2D boltScale = new Vector2D(RavenScript.getDouble("bolt_scale"), RavenScript.getDouble("Bolt_Scale"));
+	private static Vector2D boltScale = new Vector2D(RavenScript.getDouble("Bolt_Scale"), RavenScript.getDouble("Bolt_Scale"));
 	private static int boltDamage = RavenScript.getInt("Bolt_Damage");
 	private static double boltBlastRadius = 1;
 	
