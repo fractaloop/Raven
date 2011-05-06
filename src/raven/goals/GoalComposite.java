@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.ListIterator;
 
 import raven.game.BaseGameEntity;
-import raven.game.RavenBot;
 import raven.game.messaging.Telegram;
 import raven.math.Vector2D;
-import raven.ui.GameCanvas;
 
 abstract public class GoalComposite<T extends BaseGameEntity> extends Goal<T> {
 

@@ -7,11 +7,9 @@ import java.util.List;
 import raven.game.RavenBot;
 import raven.game.RavenObject;
 import raven.game.triggers.Trigger;
-import raven.math.graph.EuclideanHeuristic;
 import raven.math.graph.GraphNode;
 import raven.math.graph.GraphSearchStatus;
 import raven.math.graph.GraphSearchType;
-import raven.math.graph.Heuristic;
 import raven.math.graph.SparseGraph;
 import raven.utils.IndexedPriorityQueue;
 
@@ -31,8 +29,6 @@ public class GraphSearchDijkstraTS<T extends SparseGraph<NavGraphNode<Trigger<Ra
 	private RavenObject target;
 
 	private IndexedPriorityQueue<Double> queue;
-
-	private GraphSearchTermination<SparseGraph<NavGraphNode<Trigger<?>>, NavGraphEdge>> termination;
 
 	public GraphSearchDijkstraTS(T graph, int source, RavenObject target) {
 		super(GraphSearchType.Dijkstra);

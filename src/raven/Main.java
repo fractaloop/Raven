@@ -7,14 +7,13 @@ import raven.utils.Log;
 import raven.utils.Log.Level;
 
 public class Main {
-	private static RavenUI ui;
 	private static RavenGame game;
 	
     public static void main(String args[]) {
     	Log.setLevel(Level.DEBUG);
     	
     	game = new RavenGame();
-    	ui = new RavenUI(game);
+    	new RavenUI(game);
     	
     	gameLoop();
 	}

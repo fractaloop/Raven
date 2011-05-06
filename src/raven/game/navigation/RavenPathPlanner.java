@@ -1,36 +1,20 @@
 package raven.game.navigation;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
-import java.util.Iterator;
 
 import raven.game.RavenBot;
-import raven.game.RavenGame;
-import raven.game.RavenMap;
 import raven.game.RavenObject;
+import raven.game.RavenUserOptions;
+import raven.game.messaging.Dispatcher;
+import raven.game.messaging.RavenMessage;
+import raven.game.triggers.Trigger;
 import raven.math.CellSpacePartition;
 import raven.math.Vector2D;
-import raven.math.graph.GraphEdge;
 import raven.math.graph.GraphNode;
-import raven.math.graph.GraphSearchDijkstra;
 import raven.math.graph.GraphSearchStatus;
 import raven.math.graph.GraphSearchType;
 import raven.math.graph.SparseGraph;
-import raven.game.*;
-import raven.game.triggers.*;
-import raven.game.navigation.PathEdge;
-import raven.game.messaging.Dispatcher;
-import raven.game.messaging.RavenMessage;
-import raven.game.messaging.Telegram;
-import raven.game.navigation.RavenPathPlanner;
-import raven.goals.GoalThink;
-import raven.math.C2DMatrix;
-import raven.math.Transformations;
-import raven.script.RavenScript;
-import raven.ui.GameCanvas;
 import raven.utils.Log;
-import raven.utils.Regulator;
 
 public class RavenPathPlanner {
 

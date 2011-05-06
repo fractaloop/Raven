@@ -1,10 +1,9 @@
 package raven.goals;
 
-import java.util.Random;
 import java.util.Vector;
+
 import raven.game.RavenBot;
 import raven.game.RavenObject;
-import raven.game.messaging.Telegram;
 import raven.math.Vector2D;
 import raven.utils.Log;
 

@@ -3,11 +3,8 @@ package raven.game;
 import java.io.Reader;
 import java.io.Writer;
 
-import javax.management.RuntimeErrorException;
-
 import raven.game.messaging.Telegram;
 import raven.math.Vector2D;
-import raven.utils.Log;
 
 public abstract class BaseGameEntity {
 	

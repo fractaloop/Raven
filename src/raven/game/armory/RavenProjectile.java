@@ -6,7 +6,6 @@ import java.util.List;
 import raven.game.MovingEntity;
 import raven.game.RavenBot;
 import raven.game.RavenGame;
-import raven.game.RavenObject;
 import raven.math.Geometry;
 import raven.math.Vector2D;
 

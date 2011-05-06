@@ -1,6 +1,5 @@
 package raven.ui;
 
-import java.awt.CheckboxMenuItem;
 import java.awt.Dimension;
 import java.awt.MouseInfo;
 import java.awt.Point;
@@ -15,12 +14,9 @@ import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.Field;
 
 import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.Icon;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -37,7 +33,6 @@ import raven.game.RavenObject;
 import raven.game.RavenUserOptions;
 import raven.math.Vector2D;
 import raven.utils.Log;
-import raven.utils.Log.Level;
 
 public class RavenUI extends JFrame implements KeyListener, MouseListener, ComponentListener {
 	/**
@@ -47,12 +42,8 @@ public class RavenUI extends JFrame implements KeyListener, MouseListener, Compo
 
 	private int width = 700;
 	private int height = 700;
-	private int framerate = 60;
-
 	private RavenGame game;
 	private KeyState keys;
-	
-	private Action loadLevelAction;
 	
 	public RavenUI(RavenGame game) {
 		super("Raven");
@@ -104,7 +95,7 @@ public class RavenUI extends JFrame implements KeyListener, MouseListener, Compo
 	}
 	
 	private void createMenu() {
-		JMenu menu, subMenu;
+		JMenu menu;
 		JMenuItem menuItem;
 		JCheckBoxMenuItem checkedMenuItem;
 		
@@ -227,6 +218,9 @@ public class RavenUI extends JFrame implements KeyListener, MouseListener, Compo
 
 	private AbstractAction BuildToggleUserAction(final String option) {
 		return new AbstractAction() {
+
+			private static final long serialVersionUID = 2945038071237663045L;
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {

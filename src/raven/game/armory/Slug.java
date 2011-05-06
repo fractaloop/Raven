@@ -3,7 +3,6 @@ package raven.game.armory;
 import java.util.List;
 
 import raven.game.RavenBot;
-import raven.game.RavenObject;
 import raven.game.messaging.Dispatcher;
 import raven.game.messaging.RavenMessage;
 import raven.math.Geometry;
@@ -34,9 +33,7 @@ public class Slug extends RavenProjectile {
 		// a rail gun slug travels VERY fast. It only gets the chance to update once 
 		isImpacted = true;
 
-		//first find the closest wall that this ray intersects with. Then we
-		//can test against all entities within this range.
-		Double distToClosestImpact = Geometry.FindClosestPointOfIntersectionWithWalls(origin,
+		Geometry.FindClosestPointOfIntersectionWithWalls(origin,
 				position,
 				impactPoint,
 				world.getMap().getWalls());

@@ -1,14 +1,9 @@
 package raven.game.triggers;
 
-import java.awt.Image;
-
-import com.sun.xml.internal.stream.Entity;
-import com.thoughtworks.xstream.annotations.XStreamAlias;
-
 import raven.game.BaseGameEntity;
-import raven.game.EntityManager;
-import raven.game.RavenObject;
 import raven.math.Vector2D;
+
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 @XStreamAlias("Trigger")
 public abstract class Trigger<T extends BaseGameEntity> extends BaseGameEntity {

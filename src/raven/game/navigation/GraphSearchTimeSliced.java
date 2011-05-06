@@ -1,14 +1,11 @@
 package raven.game.navigation;
 
 import java.util.List;
-import java.util.Vector;
 
-import raven.math.graph.GraphEdge;
 import raven.math.graph.GraphSearchStatus;
 import raven.math.graph.GraphSearchType;
-import raven.math.graph.SparseGraph;
 
-public abstract class GraphSearchTimeSliced<NavGraphEdge>  {
+public abstract class GraphSearchTimeSliced<T>  {
 
 	private GraphSearchType searchType;
 	
@@ -20,7 +17,7 @@ public abstract class GraphSearchTimeSliced<NavGraphEdge>  {
 	public abstract GraphSearchStatus cycleOnce();
 	
 	/** returns the vector of edges that the algorithm has examined */
-	public abstract List<NavGraphEdge> getSPT();
+	public abstract List<T> getSPT();
 	
 	/** returns the total cost to the target */
 	public abstract double getCostToTarget();

@@ -122,7 +122,7 @@ public class RavenMap {
 		RavenDoor door = new RavenDoor(id, pos1, pos2, timeout);
 		
 		doors.add(door);
-		Trigger t = addDoorTrigger(pos1, pos2, RavenMessage.MSG_OPEN_SESAME, id);
+		Trigger<RavenBot> t = addDoorTrigger(pos1, pos2, RavenMessage.MSG_OPEN_SESAME, id);
 		door.addSwitch(t.ID());
 		// register the entity
 		EntityManager.registerEntity(door);

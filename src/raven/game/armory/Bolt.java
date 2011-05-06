@@ -4,7 +4,6 @@
 package raven.game.armory;
 
 import raven.game.RavenBot;
-import raven.game.RavenObject;
 import raven.game.messaging.Dispatcher;
 import raven.game.messaging.RavenMessage;
 import raven.math.Geometry;

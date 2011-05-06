@@ -106,15 +106,6 @@ public class RavenSteering {
 	/** default */
 	private Deceleration deceleration;
 
-	/** is cell space partitioning to be used or not? */
-	private boolean cellSpaceOn;
-
-	private BehaviorType behaviorType;
-	
-	/** what type of method is used to sum any active behavior */
-	private SummingMethod  summingMethod;
-
-
 	/** this function tests if a specific bit of flags is set */
 	private boolean On(BehaviorType bt) {
 		return (flags & bt.getValue()) == bt.getValue();
@@ -413,19 +404,11 @@ public class RavenSteering {
 		wanderRadius				= wanderRad;
 		weightSeek					= RavenScript.getDouble("SeekWeight");
 		weightArrive				= RavenScript.getDouble("ArriveWeight");
-		cellSpaceOn					= false;
-		summingMethod				= SummingMethod.PRIORITIZED;
-
 		//stuff for the wander behavior
 		double theta = Math.random() * (2* Math.PI);
 
 		//create a vector to a target position on the wander circle
 		wanderTarget = new Vector2D(wanderRadius * Math.cos(theta), wanderRadius * Math.sin(theta));
-		
-		// These defaults were put int as assumptions.  TODO: Validate my assumptions.
-		cellSpaceOn = false;
-		behaviorType = BehaviorType.NONE;
-		summingMethod = SummingMethod.PRIORITIZED; // TODO: Implement others
 	}
 
 	/** calculates and sums the steering forces from any active behaviors */
@@ -463,7 +446,7 @@ public class RavenSteering {
 
 	public final Vector2D force() { return steeringForce; }
 
-	public void setSummingMethod(SummingMethod sm) { summingMethod = sm; }
+	public void setSummingMethod(SummingMethod sm) { }
 
 	public void seekOn() { flags |= BehaviorType.SEEK.getValue(); }
 	public void arriveOn() { flags |= BehaviorType.ARRIVE.getValue(); }

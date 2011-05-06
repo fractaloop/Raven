@@ -3,13 +3,12 @@ package raven.game.triggers;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.thoughtworks.xstream.annotations.XStreamAlias;
-
 import raven.game.RavenBot;
 import raven.math.Transformations;
 import raven.math.Vector2D;
-import raven.script.RavenScript;
 import raven.ui.GameCanvas;
+
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 @XStreamAlias("TriggerWeaponGiver")
 public class TriggerWeaponGiver extends TriggerRespawning<RavenBot> {

@@ -3,7 +3,6 @@
  */
 package raven.math;
 
-import java.util.Random;
 
 /**
  * @author chester

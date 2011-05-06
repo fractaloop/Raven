@@ -1,7 +1,6 @@
 package raven.goals;
 
 import raven.game.BaseGameEntity;
-import raven.game.RavenBot;
 import raven.game.messaging.Telegram;
 import raven.math.Vector2D;
 import raven.ui.GameCanvas;
