@@ -1,11 +1,14 @@
+Raven
+======
+
 Raven is a shooter simulation written entirely in stock Java 1.6.  
 It is meant to serve as a sandbox for the bots to play in, responding to changes in the environment, such as other bots, obstacles, and powerups.
 
 ARCHITECTURE
--------------
+------------
 
-	MAIN CLASSES
-
+MAIN CLASSES
+------------
 Raven is written as a main-loop style game, with some notification for important 
 events.  The game is broken into to large pieces: The RavenGame class and the 
 RavenUI class.
@@ -25,7 +28,8 @@ handled.  It also handles any user input on the window, such as clicks and
 keypresses.
 
 
-	MODEL 
+MODEL
+----- 
 
 The data model for Raven is quite large.  All displayed objects in the game 
 implement either BaseGameEntity, or its child, MovingEntity.  These classes 
