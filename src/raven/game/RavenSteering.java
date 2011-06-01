@@ -120,6 +120,12 @@ public class RavenSteering {
 		return (flags & bt.getValue()) == bt.getValue();
 	}
 
+	/**
+	 * Handles the max speed of the bot.
+	 * @param runningTot how fast the bot is going so far.
+	 * @param forceToAdd how much velocity to add.
+	 * @return A true if force was added successfully to the bot, false if bot is going max speed.
+	 */
 	public boolean accumulateForce(Vector2D runningTot, Vector2D forceToAdd) {
 		//calculate how much steering force the vehicle has used so far
 		double magnitudeSoFar = runningTot.length();

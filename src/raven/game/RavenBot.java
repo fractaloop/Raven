@@ -404,12 +404,6 @@ public class RavenBot extends MovingEntity {
 		}
 	}
 
-	@Override
-	public void write(Writer writer) {/* Not implemented */}
-
-	@Override
-	public void read(Reader reader) {/* Not implemented */}
-
 	/**
 	 * this rotates the bot's heading until it is facing directly at the target
 	 * position. Returns false if not facing at the target.
