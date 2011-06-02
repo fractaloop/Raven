@@ -74,7 +74,7 @@ public class RailgunTool extends EditorTool {
 			popup.add(item);
 			popup.show(e.getComponent(), e.getX(), e.getY());
 		} else if (e.getButton() == MouseEvent.BUTTON1) {
-			level.addWeaponGiver(RavenObject.RAIL_GUN, levelCursor, RavenScript.getInt("DefaultGiverTriggerRange"), RavenScript.getInt("Weapon_RespawnDelay"));
+			level.addWeaponGiver(RavenObject.RAIL_GUN, levelCursor, RavenScript.getInt("DefaultGiverTriggerRange"));
 		}
 
 		e.consume();

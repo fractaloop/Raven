@@ -15,28 +15,23 @@ public class TriggerHealthGiver extends TriggerRespawning<RavenBot> {
 	public TriggerHealthGiver( Vector2D position, int radius, int healthGiven, int respawnDelay) {
 		super(position, radius);
 		
-		setRespawnDelay(respawnDelay);
-		
+		// have to multiply by 1000 because we measure game events in milliseconds.
+		setRespawnDelay(RavenScript.getInt("Health_RespawnDelay")*1000);
+
 		this.healthGiven = healthGiven;
-		
-		readResolve();
-	}
-	
-	private Object readResolve() {
 		setEntityType(RavenObject.HEALTH);
-		
 		addCircularTriggerRegion(position, RavenScript.getDouble("DefaultGiverTriggerRange"));
-		
-		return this;
 	}
 
 	@Override
+	/**
+	 * Health triggers give the defined amount of health to the bot that is touching it, if the trigger is active, and the bot is ready and alive.
+	 */
 	public void tryTrigger(RavenBot bot) {
-		if (isActive() && isTouchingTrigger(bot.pos(), bot.getBRadius())
-				&& bot.isReadyForTriggerUpdate() && bot.isAlive()) {
+		if (isActive() && isTouchingTrigger(bot.pos(), bot.getBRadius()) && bot.isReadyForTriggerUpdate() && bot.isAlive()) {
 			bot.increaseHealth(healthGiven);
+			this.deactivate();
 		}
-		
 	}
 
 	@Override

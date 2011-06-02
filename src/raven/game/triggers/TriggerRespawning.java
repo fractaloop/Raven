@@ -9,20 +9,16 @@ public abstract class TriggerRespawning<T extends BaseGameEntity> extends Trigge
 	
 	private Object readResolve() {
 		numSecondsRemainingUntilRespawn = 0;
-		
 		return this;
 	}
 	
 	protected void deactivate() {
 		this.setInactive();
-		
 		numSecondsRemainingUntilRespawn = numSecondsBetweenRespawns;
 	}
 	
 	public TriggerRespawning(Vector2D position, int radius) {
 		super(position, radius);
-		
-		numSecondsBetweenRespawns = 0;
 		numSecondsRemainingUntilRespawn = 0;
 	}
 	
@@ -31,6 +27,7 @@ public abstract class TriggerRespawning<T extends BaseGameEntity> extends Trigge
 		numSecondsRemainingUntilRespawn -= delta;
 		if((numSecondsRemainingUntilRespawn <= 0) && !isActive()) {
 			this.setActive();
+			numSecondsRemainingUntilRespawn = 0;
 		}
 	}
 	
