@@ -7,6 +7,7 @@ import raven.game.RavenObject;
 import raven.math.Vector2D;
 import raven.script.RavenScript;
 import raven.ui.GameCanvas;
+import raven.utils.Log;
 
 @XStreamAlias("TriggerHealthGiver")
 public class TriggerHealthGiver extends TriggerRespawning<RavenBot> {
@@ -30,6 +31,7 @@ public class TriggerHealthGiver extends TriggerRespawning<RavenBot> {
 	public void tryTrigger(RavenBot bot) {
 		if (isActive() && isTouchingTrigger(bot.pos(), bot.getBRadius()) && bot.isReadyForTriggerUpdate() && bot.isAlive()) {
 			bot.increaseHealth(healthGiven);
+			Log.info("HealthGiver", "Added health to a bot. I should disappear now.");
 			this.deactivate();
 		}
 	}
