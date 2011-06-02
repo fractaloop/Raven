@@ -1,7 +1,5 @@
 package raven.game;
 
-import java.io.Reader;
-import java.io.Writer;
 import java.util.ArrayList;
 
 import raven.game.messaging.Dispatcher;
@@ -610,6 +608,7 @@ public class RavenBot extends MovingEntity {
 
 	// returns true if there is space enough to step in the indicated direction
 	// If true PositionOfStep will be assigned the offset position
+	// TODO: check to see if result vector would cross a wall, this needs to be done for all steps.
 	public Vector2D canStepLeft() {
 		final double stepDistance = getBRadius() * 2;
 		
