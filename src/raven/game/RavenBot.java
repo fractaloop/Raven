@@ -1,7 +1,5 @@
 package raven.game;
 
-import java.io.Reader;
-import java.io.Writer;
 import java.util.ArrayList;
 
 import raven.game.messaging.Dispatcher;
