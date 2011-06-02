@@ -22,12 +22,18 @@ public abstract class TriggerRespawning<T extends BaseGameEntity> extends Trigge
 		numSecondsRemainingUntilRespawn = 0;
 	}
 	
+	/**
+	 * If this trigger is inactive, we will decrement the amount of time left it has.  Once we decrement, we can see if 
+	 * it should be activated!
+	 */
 	@Override
 	public void update(double delta) {
-		numSecondsRemainingUntilRespawn -= delta;
-		if((numSecondsRemainingUntilRespawn <= 0) && !isActive()) {
-			this.setActive();
-			numSecondsRemainingUntilRespawn = 0;
+		if(!isActive()){
+			numSecondsRemainingUntilRespawn -= delta;
+			if((numSecondsRemainingUntilRespawn <= 0) && !isActive()) {
+				this.setActive();
+				numSecondsRemainingUntilRespawn = 0;
+			}
 		}
 	}
 	
