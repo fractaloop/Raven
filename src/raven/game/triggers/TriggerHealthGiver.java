@@ -31,7 +31,7 @@ public class TriggerHealthGiver extends TriggerRespawning<RavenBot> {
 	public void tryTrigger(RavenBot bot) {
 		if (isActive() && isTouchingTrigger(bot.pos(), bot.getBRadius()) && bot.isReadyForTriggerUpdate() && bot.isAlive()) {
 			bot.increaseHealth(healthGiven);
-			Log.info("HealthGiver", "Added health to a bot. I should disappear now.");
+			Log.debug("HealthGiver", "Added health to a bot. I should disappear now.");
 			this.deactivate();
 		}
 	}
