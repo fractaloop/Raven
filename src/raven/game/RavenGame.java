@@ -218,6 +218,11 @@ public class RavenGame {
 			}
 		}
 		
+		// don't update if the user has paused the game
+		if (paused) {
+			return;
+		}
+		
 		// Check bot adding and removal
 		while (botsToAdd != 0) {
 			if (botsToAdd < 0) {
@@ -229,11 +234,7 @@ public class RavenGame {
 			}
 		}
 		
-		// don't update if the user has paused the game
-		if (paused) {
-			return;
-		}
-		
+
 		graveMarkers.update(delta);
 		
 		// Update a player controlled bot
