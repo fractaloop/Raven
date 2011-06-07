@@ -114,6 +114,9 @@ public class Goal_TraverseEdge extends GoalComposite<RavenBot> {
 
 		//return max speed back to normal
 		m_pOwner.setMaxSpeed(RavenScript.getDouble("Bot_MaxSpeed"));
+		
+		// set goal status to completed.
+		m_iStatus = Goal.CurrentStatus.completed;
 
 	}
 

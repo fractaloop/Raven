@@ -296,6 +296,10 @@ public class RavenBot extends MovingEntity {
 		if (RavenUserOptions.showFeelersOfSelectedBot) {
 			steering.renderFeelers();
 		}
+		
+		if(RavenUserOptions.showPathOfSelectedBot) {
+			brain.render();
+		}
 	}
 
 	@Override

@@ -363,13 +363,13 @@ public class RavenSteering {
 			if (!accumulateForce(steeringForce, force)) return steeringForce;
 		}
 
-
 		//these next three can be combined for flocking behavior (wander is
 		//also a good behavior to add into this mix)
 		if (On(BehaviorType.SEPARATION))
 		{
+			// HAve to tag bots that are in danger of being hit
+			world.tagRavenBotsWithinViewRange(ravenBot, viewDistance);
 			force = separation(world.getBots()).mul(weightSeparation);
-
 			if (!accumulateForce(steeringForce, force)) return steeringForce;
 		}
 
@@ -438,12 +438,6 @@ public class RavenSteering {
 	public Vector2D calculate(){
 		//reset the steering force
 		steeringForce.Zero();
-
-		//tag neighbors if any of the following 3 group behaviors are switched on
-		if (On(BehaviorType.SEPARATION)) {
-			world.tagRavenBotsWithinViewRange(ravenBot, viewDistance);
-		}
-
 		steeringForce = calculatePrioritized();
 
 		return steeringForce;
