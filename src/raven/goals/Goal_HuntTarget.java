@@ -65,7 +65,7 @@ public class Goal_HuntTarget extends GoalComposite<RavenBot> {
 	}
 
 	@Override
-	public void terminate(){ }
+	public void terminate(){ m_iStatus = Goal.CurrentStatus.completed; }
 
 	@Override
 	public void render() {

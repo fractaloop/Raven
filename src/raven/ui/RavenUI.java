@@ -141,7 +141,8 @@ public class RavenUI extends JFrame implements KeyListener, MouseListener, Compo
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0));
 		menuItem.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
-				game.changeBotCount(-1);
+				game.removeBot();
+				
 			}
 		});
 		menu.add(menuItem);

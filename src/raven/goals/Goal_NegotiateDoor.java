@@ -54,8 +54,7 @@ public class Goal_NegotiateDoor extends GoalComposite<RavenBot> {
 
 	@Override
 	public void terminate() {
-		// TODO Auto-generated method stub
-		
+		m_iStatus = Goal.CurrentStatus.completed;
 	}
 
 }

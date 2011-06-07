@@ -9,28 +9,31 @@ public abstract class TriggerRespawning<T extends BaseGameEntity> extends Trigge
 	
 	private Object readResolve() {
 		numSecondsRemainingUntilRespawn = 0;
-		
 		return this;
 	}
 	
 	protected void deactivate() {
 		this.setInactive();
-		
 		numSecondsRemainingUntilRespawn = numSecondsBetweenRespawns;
 	}
 	
 	public TriggerRespawning(Vector2D position, int radius) {
 		super(position, radius);
-		
-		numSecondsBetweenRespawns = 0;
 		numSecondsRemainingUntilRespawn = 0;
 	}
 	
+	/**
+	 * If this trigger is inactive, we will decrement the amount of time left it has.  Once we decrement, we can see if 
+	 * it should be activated!
+	 */
 	@Override
 	public void update(double delta) {
-		numSecondsRemainingUntilRespawn -= delta;
-		if((numSecondsRemainingUntilRespawn <= 0) && !isActive()) {
-			this.setActive();
+		if(!isActive()){
+			numSecondsRemainingUntilRespawn -= delta;
+			if((numSecondsRemainingUntilRespawn <= 0) && !isActive()) {
+				this.setActive();
+				numSecondsRemainingUntilRespawn = 0;
+			}
 		}
 	}
 	

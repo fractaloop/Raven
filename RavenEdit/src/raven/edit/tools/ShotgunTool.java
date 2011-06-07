@@ -78,7 +78,7 @@ public class ShotgunTool extends EditorTool {
 			popup.add(item);
 			popup.show(e.getComponent(), e.getX(), e.getY());
 		} else if (e.getButton() == MouseEvent.BUTTON1) {
-			level.addWeaponGiver(RavenObject.SHOTGUN, levelCursor, RavenScript.getInt("DefaultGiverTriggerRange"), RavenScript.getInt("Weapon_RespawnDelay"));
+			level.addWeaponGiver(RavenObject.SHOTGUN, levelCursor, RavenScript.getInt("DefaultGiverTriggerRange"));
 		}
 
 		e.consume();

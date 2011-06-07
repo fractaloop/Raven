@@ -65,6 +65,9 @@ public class Goal_DodgeSideToSide extends GoalComposite<RavenBot> {
 
 	@Override
 	public void render() {
+		if(m_pOwner.pos() == null || m_vStrafeTarget == null) {
+			return;
+		}
 		GameCanvas.orangePen();
 		GameCanvas.hollowBrush();
 		GameCanvas.line(m_pOwner.pos(), m_vStrafeTarget);
@@ -74,5 +77,6 @@ public class Goal_DodgeSideToSide extends GoalComposite<RavenBot> {
 	@Override
 	public void terminate() {
 		m_pOwner.getSteering().seekOff();
+		m_iStatus = Goal.CurrentStatus.completed;
 	}
 }

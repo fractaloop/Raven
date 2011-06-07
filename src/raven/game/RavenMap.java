@@ -102,8 +102,8 @@ public class RavenMap {
 		EntityManager.registerEntity(healthGiver);
 	}
 	
-	public void addWeaponGiver(RavenObject typeOfWeapon, Vector2D position, int radius, int respawnDelay) {
-		TriggerWeaponGiver weaponGiver = new TriggerWeaponGiver(position, radius, respawnDelay);
+	public void addWeaponGiver(RavenObject typeOfWeapon, Vector2D position, int radius) {
+		TriggerWeaponGiver weaponGiver = new TriggerWeaponGiver(position, radius);
 		weaponGiver.setEntityType(typeOfWeapon);
 		
 		// add it to the appropriate vectors

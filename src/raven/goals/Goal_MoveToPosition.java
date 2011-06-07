@@ -46,7 +46,7 @@ public class Goal_MoveToPosition extends GoalComposite<RavenBot>{
 		return m_iStatus;
 	}
 
-	public void terminate(){}
+	public void terminate(){m_iStatus = Goal.CurrentStatus.completed;}
 
 	//this goal is able to accept messages
 	public boolean HandleMessage(Telegram msg) {
