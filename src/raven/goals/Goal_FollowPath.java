@@ -72,7 +72,11 @@ public class Goal_FollowPath extends GoalComposite<RavenBot> {
 	}
 
 	public void render() {
-		//        render all the path waypoints remaining on the path list
+		// because we kick the first spot off of the path when activated, we need to paint it first.
+		if(!m_SubGoals.isEmpty()) {
+			m_SubGoals.get(0).render();
+		}
+		
 		for(PathEdge path : m_Path) {
 			GameCanvas.blackPen();
 			GameCanvas.lineWithArrow(path.Source(), path.Destination(), 5);
@@ -84,10 +88,10 @@ public class Goal_FollowPath extends GoalComposite<RavenBot> {
 
 		//forward the request to the subgoals
 		// in this case we imitate goalComposite . render()
-		if (!m_SubGoals.isEmpty())
-		{
-			m_SubGoals.get(0).render();
-		}		
+//		if (!m_SubGoals.isEmpty())
+//		{
+//			m_SubGoals.get(0).render();
+//		}		
 	}
 
 	@Override
