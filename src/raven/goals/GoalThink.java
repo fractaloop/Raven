@@ -96,6 +96,7 @@ public class GoalThink extends GoalComposite<RavenBot> {
 				MostDesirable = eval;
 			}
 		}
+		Log.debug("GoalThink", "Evaluator " + MostDesirable.getGoalType() + " was found for bot " + m_pOwner.ID());
 		MostDesirable.setGoal(m_pOwner);
 	}
 
@@ -131,7 +132,7 @@ public class GoalThink extends GoalComposite<RavenBot> {
 		}
 	}
 
-	public void addGoal_getItem(RavenObject inp) throws Exception{
+	public void addGoal_getItem(RavenObject inp) {
 		if (notPresent(Goal.GoalType.goal_get)) {
 			removeAllSubgoals();
 			AddSubgoal( new Goal_GetItem(m_pOwner, inp));

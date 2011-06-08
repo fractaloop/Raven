@@ -2,6 +2,7 @@ package raven.goals;
 
 import raven.game.RavenBot;
 import raven.game.RavenObject;
+import raven.goals.Goal.GoalType;
 import raven.math.Vector2D;
 import raven.ui.GameCanvas;
 
@@ -9,8 +10,18 @@ public class GetWeaponGoal_Evaluator extends Goal_Evaluator {
 	private RavenObject weaponType;
 
 	public GetWeaponGoal_Evaluator(Double bias, RavenObject weaponType) {
-		super(bias);
-
+		super(bias, GoalType.unknown_type);
+		switch(weaponType) {
+			case ROCKET_LAUNCHER:
+				setGoalType(GoalType.goal_get_rocket_launcher);
+				break;
+			case RAIL_GUN:
+				setGoalType(GoalType.goal_get_railgun);
+				break;
+			case SHOTGUN:
+				setGoalType(GoalType.goal_get_shotgun);
+				break;
+		}
 		this.weaponType = weaponType;
 	}
 
