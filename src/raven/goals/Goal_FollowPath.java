@@ -91,7 +91,7 @@ public class Goal_FollowPath extends GoalComposite<RavenBot> {
 
 	@Override
 	public void terminate() {
-		// TODO Auto-generated method stub
+		m_iStatus = Goal.CurrentStatus.completed;
 		
 	}
 }

@@ -25,6 +25,7 @@ public class Goal_Wander extends Goal<RavenBot> {
 	@Override
 	public void terminate() {
 		m_pOwner.getSteering().wanderOff();
+		m_iStatus = Goal.CurrentStatus.completed;
 	}
 
 	@Override

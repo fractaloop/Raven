@@ -1,8 +1,5 @@
 package raven.game;
 
-import java.io.Reader;
-import java.io.Writer;
-
 import raven.game.messaging.Telegram;
 import raven.math.Vector2D;
 
@@ -40,10 +37,6 @@ public abstract class BaseGameEntity {
 	public abstract void render();
 	
 	public boolean handleMessage(final Telegram msg) { return false; }
-	
-	// Entities should be able to read and write their data to a stream
-	public void write(Writer writer) {}
-	public void read(Reader reader) {}
 	
 	public static int getNextValidID() { return nextValidID; }
 	

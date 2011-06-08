@@ -52,7 +52,9 @@ public class Goal_Explore extends GoalComposite<RavenBot> {
 	}
 
 	@Override
-	public void terminate(){}
+	public void terminate(){
+		m_iStatus = Goal.CurrentStatus.completed; 
+	}
 
 	public boolean HandleMessage(Telegram msg){
 		//first, pass the message down the goal hierarchy

@@ -148,8 +148,9 @@ public class GoalThink extends GoalComposite<RavenBot> {
 	}
 	
 	public void render(){
-		for (Goal<?> goal : m_SubGoals) {
-			goal.render();
+		// only render the current goal.
+		if(!m_SubGoals.isEmpty()) {
+			m_SubGoals.get(0).render();
 		}
 	}
 

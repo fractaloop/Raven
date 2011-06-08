@@ -17,6 +17,7 @@ import java.io.File;
 import java.lang.reflect.Field;
 
 import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -42,8 +43,12 @@ public class RavenUI extends JFrame implements KeyListener, MouseListener, Compo
 
 	private int width = 700;
 	private int height = 700;
+	private int framerate = 60;
+
 	private RavenGame game;
 	private KeyState keys;
+	
+	private Action loadLevelAction;
 	
 	public RavenUI(RavenGame game) {
 		super("Raven");
@@ -95,7 +100,7 @@ public class RavenUI extends JFrame implements KeyListener, MouseListener, Compo
 	}
 	
 	private void createMenu() {
-		JMenu menu;
+		JMenu menu, subMenu;
 		JMenuItem menuItem;
 		JCheckBoxMenuItem checkedMenuItem;
 		
@@ -132,7 +137,8 @@ public class RavenUI extends JFrame implements KeyListener, MouseListener, Compo
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0));
 		menuItem.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
-				game.changeBotCount(-1);
+				game.removeBot();
+				
 			}
 		});
 		menu.add(menuItem);
@@ -218,9 +224,6 @@ public class RavenUI extends JFrame implements KeyListener, MouseListener, Compo
 
 	private AbstractAction BuildToggleUserAction(final String option) {
 		return new AbstractAction() {
-
-			private static final long serialVersionUID = 2945038071237663045L;
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
