@@ -8,6 +8,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamImplicit;
 
 import raven.game.BaseGameEntity;
+import raven.game.interfaces.IRavenBot;
 
 @XStreamAlias("TriggerSystem")
 public class TriggerSystem<T extends Trigger> {
@@ -47,9 +48,9 @@ public class TriggerSystem<T extends Trigger> {
 	 * @param entities
 	 */
 
-	private void tryTriggers(List<? extends BaseGameEntity> entities) {
+	private void tryTriggers(List<IRavenBot> entities) {
 		// test each entity against the triggers
-		for (BaseGameEntity ent : entities) {
+		for (IRavenBot ent : entities) {
 			// an entity must be ready for its next trigger update and it must
 			// be alive before it is tested against each trigger.
 			for (T trigger : triggers) {
@@ -62,7 +63,7 @@ public class TriggerSystem<T extends Trigger> {
 		triggers.clear();
 	}
 	
-	public void update(double delta, List<? extends BaseGameEntity> bots) {
+	public void update(double delta, List<IRavenBot> bots) {
 		updateTriggers(delta);
 		tryTriggers(bots);
 	}

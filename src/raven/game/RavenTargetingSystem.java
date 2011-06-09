@@ -2,13 +2,14 @@ package raven.game;
 
 import java.util.List;
 
+import raven.game.interfaces.IRavenBot;
 import raven.math.Vector2D;
 
 public class RavenTargetingSystem {
 	
-	private RavenBot owner;
+	private IRavenBot owner;
 	
-	private RavenBot currentTarget;
+	private IRavenBot currentTarget;
 
 	public RavenTargetingSystem(RavenBot owner) {
 		this.owner = owner;
@@ -19,9 +20,9 @@ public class RavenTargetingSystem {
 		currentTarget = null;
 		
 		// grab a list of all the opponents the owner can sense
-		List<RavenBot> sensedBots = owner.getSensoryMem().getListOfRecentlySensedOpponents();
+		List<IRavenBot> sensedBots = owner.getSensoryMem().getListOfRecentlySensedOpponents();
 		
-		for (RavenBot opponent : sensedBots) {
+		for (IRavenBot opponent : sensedBots) {
 			if (opponent.isAlive() && !opponent.equals(owner)) {
 				double dist = opponent.pos().distanceSq(owner.pos());
 				
@@ -57,7 +58,7 @@ public class RavenTargetingSystem {
 		return owner.getSensoryMem().getTimeOpponentHasBeenOutOfView(currentTarget);
 	}
 
-	public RavenBot getTarget() {
+	public IRavenBot getTarget() {
 		return currentTarget;
 	}
 	

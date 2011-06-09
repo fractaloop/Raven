@@ -16,6 +16,7 @@ import raven.game.armory.Pellet;
 import raven.game.armory.RavenProjectile;
 import raven.game.armory.Rocket;
 import raven.game.armory.Slug;
+import raven.game.interfaces.IRavenBot;
 import raven.game.messaging.Dispatcher;
 import raven.game.messaging.RavenMessage;
 import raven.game.navigation.PathManager;
@@ -33,10 +34,10 @@ public class RavenGame {
 	private RavenMap map;
 
 	/** bots that inhabit the current map */
-	private ArrayList<RavenBot> bots = new ArrayList<RavenBot>();
+	private ArrayList<IRavenBot> bots = new ArrayList<IRavenBot>();
 
 	/** A user may control a bot manually. This is that bot */
-	private RavenBot selectedBot;
+	private IRavenBot selectedBot;
 
 	/** contains any active projectiles (slugs, rockets, shotgun pellets, etc) */
 	private ArrayList<RavenProjectile> projectiles = new ArrayList<RavenProjectile>();
@@ -68,7 +69,7 @@ public class RavenGame {
 		projectiles.clear();
 	}
 
-	private boolean attemptToAddBot(RavenBot bot) {
+	private boolean attemptToAddBot(IRavenBot bot) {
 		if (map.getSpawnPoints().size() <= 0) {
 			Log.error("game", "Map has no spawn points, cannot add bot");
 			return false;
@@ -84,7 +85,7 @@ public class RavenGame {
 
 			// check to see if it's occupied
 			boolean available = true;
-			for (RavenBot other : bots) {
+			for (IRavenBot other : bots) {
 				if (pos.distance(other.pos()) < other.getBRadius()) {
 					available = false;
 				}
@@ -99,8 +100,8 @@ public class RavenGame {
 		return false;
 	}
 
-	private void notifyAllBotsOfRemoval(RavenBot bot) {
-		for (RavenBot other : bots) {
+	private void notifyAllBotsOfRemoval(IRavenBot bot) {
+		for (IRavenBot other : bots) {
 			Dispatcher.dispatchMsg(Dispatcher.SEND_MSG_IMMEDIATELY,
 					Dispatcher.SENDER_ID_IRRELEVANT, other.ID(),
 					RavenMessage.MSG_USER_HAS_REMOVED_BOT, bot);
@@ -134,10 +135,10 @@ public class RavenGame {
 		// render those bots that are in the fov of the selected bot
 		if (selectedBot != null && RavenUserOptions.onlyShowBotsInTargetsFOV) {
 			Log.trace("game", "Rendering FOV bots only");
-			List<RavenBot> visibleBots = getAllBotsInFOV(selectedBot);
+			List<IRavenBot> visibleBots = getAllBotsInFOV(selectedBot);
 
 			//bugfix - render only visible bots, but render selected too!
-			for (RavenBot bot : visibleBots) {
+			for (IRavenBot bot : visibleBots) {
 				bot.render();	
 			}
 			selectedBot.render();
@@ -145,7 +146,7 @@ public class RavenGame {
 		} else {
 			Log.trace("game", "Rendering all bots");
 			// render all the bots
-			for (RavenBot bot : bots) {
+			for (IRavenBot bot : bots) {
 				bot.render();
 			}			
 		}
@@ -261,7 +262,7 @@ public class RavenGame {
 		// update the bots
 		boolean spawnPossible = true;
 		
-		for (RavenBot bot : bots) {
+		for (IRavenBot bot : bots) {
 			// if this bot's status is 'respawning' attempt to resurrect it
 			// from an unoccupied spawn point
 			if (bot.isSpawning() && spawnPossible) {
@@ -287,7 +288,7 @@ public class RavenGame {
 		if (removeBot) {
 			Log.info("game", "Removing bot at user request");
 			if (!bots.isEmpty()) {
-				RavenBot bot = bots.get(bots.size() - 1);
+				IRavenBot bot = bots.get(bots.size() - 1);
 				if (bot.equals(selectedBot)) {
 					selectedBot = null;
 				}
@@ -338,7 +339,7 @@ public class RavenGame {
 		while (numBotsToAdd-- > 0) {
 			// create a bot. (its position is irrelevant at this point because
 			// it will not be rendered until it is spawned)
-			RavenBot bot = new RavenBot(this, new Vector2D());
+			IRavenBot bot = new RavenBot(this, new Vector2D());
 			
 			// switch the default steering behaviors on
 			bot.getSteering().wallAvoidanceOn();
@@ -355,25 +356,25 @@ public class RavenGame {
 		}
 	}
 
-	public void addRocket(RavenBot shooter, Vector2D target) {
+	public void addRocket(IRavenBot shooter, Vector2D target) {
 		Log.trace("game", "Added rocket");
 		RavenProjectile rocket = new Rocket(shooter, target);	
 		projectiles.add(rocket);
 	}
 
-	public void addRailGunSlug(RavenBot shooter, Vector2D target) {
+	public void addRailGunSlug(IRavenBot shooter, Vector2D target) {
 		Log.trace("game", "Added slug");
 		RavenProjectile slug = new Slug(shooter, target);
 		projectiles.add(slug);
 	}
 
-	public void addShotGunPellet(RavenBot shooter, Vector2D target) {
+	public void addShotGunPellet(IRavenBot shooter, Vector2D target) {
 		Log.trace("game", "Added pellet");
 		RavenProjectile pellet = new Pellet(shooter, target);		
 		projectiles.add(pellet);
 	}
 
-	public void addBolt(RavenBot shooter, Vector2D target) {
+	public void addBolt(IRavenBot shooter, Vector2D target) {
 		Log.trace("game", "Added bolt");
 		RavenProjectile bolt = new Bolt(shooter, target);
 		projectiles.add(bolt);
@@ -409,10 +410,10 @@ public class RavenGame {
 	}
 
 	/** returns of bots in the FOV of the given bot */
-	public List<RavenBot> getAllBotsInFOV(final RavenBot bot) {
-		ArrayList<RavenBot> visibleBots = new ArrayList<RavenBot>();
+	public List<IRavenBot> getAllBotsInFOV(final IRavenBot bot) {
+		ArrayList<IRavenBot> visibleBots = new ArrayList<IRavenBot>();
 		
-		for (RavenBot other : bots) {
+		for (IRavenBot other : bots) {
 			// make sure time is not wasted checking against the same bot or
 			// against a bot that is dead or re-spawning
 			if (bot.equals(other) || !other.isAlive())
@@ -434,7 +435,7 @@ public class RavenGame {
 	 * returns true if the second bot is unobstructed by walls and in the field
 	 * of view of the first.
 	 */
-	public boolean isSecondVisibleToFirst(final RavenBot first, final RavenBot second) {
+	public boolean isSecondVisibleToFirst(final IRavenBot first, final IRavenBot second) {
 		// if the two bots are equal or if one of them is not alive return
 		// false
 		if (!first.equals(second) && second.isAlive()) {
@@ -504,8 +505,8 @@ public class RavenGame {
 	 * @param cursorPos
 	 * @return
 	 */
-	public RavenBot getBotAtPosition(Vector2D cursorPos) {
-		for (RavenBot bot : bots) {
+	public IRavenBot getBotAtPosition(Vector2D cursorPos) {
+		for (IRavenBot bot : bots) {
 			if (bot.pos().distance(cursorPos) < bot.getBRadius()) {
 				if (bot.isAlive()) {
 					return bot;
@@ -533,7 +534,7 @@ public class RavenGame {
 	 *            the location clicked
 	 */
 	public void clickRightMouseButton(Vector2D p, boolean shiftKeyPressed) {
-		RavenBot bot = getBotAtPosition(p);
+		IRavenBot bot = getBotAtPosition(p);
 		
 		// if there is no selected bot just return
 		if (bot == null && selectedBot == null)
@@ -604,7 +605,7 @@ public class RavenGame {
 	}
 
 	/** Get the value of a selected bot. null if none is selected */
-	public RavenBot possessedBot() {
+	public IRavenBot possessedBot() {
 		return selectedBot;
 	}
 
@@ -639,7 +640,7 @@ public class RavenGame {
 		return map;
 	}
 
-	public ArrayList<RavenBot> getBots() {
+	public ArrayList<IRavenBot> getBots() {
 		return bots;
 	}
 
@@ -652,10 +653,10 @@ public class RavenGame {
 	}
 	
 	/** Some weird helper method */
-	public void tagRavenBotsWithinViewRange(RavenBot ravenBot,
+	public void tagRavenBotsWithinViewRange(IRavenBot ravenBot,
 			double viewDistance) {
 		//iterate through all entities checking for range
-		for (RavenBot bot : bots) {
+		for (IRavenBot bot : bots) {
 			bot.unTag();
 
 			//work in distance squared to avoid sqrts

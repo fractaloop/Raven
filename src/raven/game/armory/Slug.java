@@ -4,6 +4,7 @@ import java.util.List;
 
 import raven.game.RavenBot;
 import raven.game.RavenObject;
+import raven.game.interfaces.IRavenBot;
 import raven.game.messaging.Dispatcher;
 import raven.game.messaging.RavenMessage;
 import raven.math.Geometry;
@@ -15,7 +16,7 @@ public class Slug extends RavenProjectile {
 
 	private double slugTimePersist;
 
-	public Slug(RavenBot shooter, Vector2D target) {
+	public Slug(IRavenBot shooter, Vector2D target) {
 		super(target,
 				shooter.getWorld(),
 				shooter.ID(),
@@ -44,13 +45,13 @@ public class Slug extends RavenProjectile {
 
 		//test to see if the ray between the current position of the slug and 
 		//the start position intersects with any bots.
-		List<RavenBot> hits = GetListOfIntersectingBots(origin, position);
+		List<IRavenBot> hits = GetListOfIntersectingBots(origin, position);
 
 		//if no bots hit just return;
 		if (hits.isEmpty()) return;
 
 		//give some damage to the hit bots
-		for (RavenBot bot : hits)
+		for (IRavenBot bot : hits)
 		{
 			//send a message to the bot to let it know it's been hit, and who the
 			//shot came from

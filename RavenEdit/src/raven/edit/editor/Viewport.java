@@ -16,6 +16,7 @@ import raven.edit.tools.EditorTool;
 import raven.game.RavenBot;
 import raven.game.RavenMap;
 import raven.game.RavenObject;
+import raven.game.interfaces.IRavenBot;
 import raven.game.navigation.NavGraphEdge;
 import raven.game.navigation.NavGraphNode;
 import raven.game.triggers.Trigger;
@@ -128,7 +129,7 @@ public class Viewport extends JPanel {
 		
 		// Draw the graph edges and nodes
 		for (int i = 0; i < delegate.getLevel().getNavGraph().numNodes(); i++) {
-			SparseGraph<NavGraphNode<Trigger<RavenBot>>, NavGraphEdge> graph = delegate.getLevel().getNavGraph();
+			SparseGraph<NavGraphNode<Trigger<IRavenBot>>, NavGraphEdge> graph = delegate.getLevel().getNavGraph();
 			final double radius = 5.0;
 			Path2D diamond = new Path2D.Double();
 			Point2D point;

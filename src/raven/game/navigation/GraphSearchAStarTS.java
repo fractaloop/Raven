@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import raven.game.RavenBot;
+import raven.game.interfaces.IRavenBot;
 import raven.game.triggers.Trigger;
 import raven.math.graph.EuclideanHeuristic;
 import raven.math.graph.GraphSearchStatus;
@@ -13,7 +14,7 @@ import raven.math.graph.Heuristic;
 import raven.math.graph.SparseGraph;
 import raven.utils.IndexedPriorityQueue;
 
-public class GraphSearchAStarTS<T extends SparseGraph<NavGraphNode<Trigger<RavenBot>>, NavGraphEdge>> extends GraphSearchTimeSliced<NavGraphEdge> {
+public class GraphSearchAStarTS<T extends SparseGraph<NavGraphNode<Trigger<IRavenBot>>, NavGraphEdge>> extends GraphSearchTimeSliced<NavGraphEdge> {
 
 	private T graph;
 
