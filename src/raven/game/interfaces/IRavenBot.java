@@ -1,10 +1,10 @@
 package raven.game.interfaces;
 
-import raven.game.BaseGameEntity;
 import raven.game.RavenGame;
 import raven.game.RavenObject;
 import raven.game.RavenSensoryMemory;
 import raven.game.RavenSteering;
+import raven.game.RavenTargetingSystem;
 import raven.game.RavenWeaponSystem;
 import raven.goals.GoalThink;
 import raven.math.Vector2D;
@@ -47,5 +47,8 @@ public interface IRavenBot {
 	public double getMaxSpeed();
 	public Vector2D velocity();
 	public RavenObject entityType();
+	public RavenTargetingSystem getTargetSys();
+	public boolean hasLOSto(Vector2D aimingPos);
+	public Vector2D heading();
 	
 }

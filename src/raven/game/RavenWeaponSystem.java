@@ -9,12 +9,14 @@ import raven.game.armory.Railgun;
 import raven.game.armory.RavenWeapon;
 import raven.game.armory.RocketLauncher;
 import raven.game.armory.Shotgun;
+import raven.game.interfaces.IRavenBot;
 import raven.math.Transformations;
 import raven.math.Vector2D;
 import raven.ui.GameCanvas;
 
 public class RavenWeaponSystem {
-	private RavenBot owner;
+	
+	private IRavenBot owner;
 	
 	/** map of weapons the bot is carrying (a bot may only carry one instance
 	 * of each weapon) */
@@ -68,7 +70,7 @@ public class RavenWeaponSystem {
 		aimingPos = toPos.add(owner.pos());
 	}
 
-	public RavenWeaponSystem(RavenBot owner, double reactionTime, double aimAccuracy, double aimPersistence) {
+	public RavenWeaponSystem(IRavenBot owner, double reactionTime, double aimAccuracy, double aimPersistence) {
 		this.owner = owner;
 		this.reactionTime = reactionTime;
 		this.aimAccuracy = aimAccuracy;
@@ -168,30 +170,33 @@ public class RavenWeaponSystem {
 		}
 	}
 
+	/**
+	 * Adds the given weapon type to the bot's arsenal if it doesn't exist, and then increments the ammo count.
+	 * @param weaponType
+	 */
 	public void addWeapon(RavenObject weaponType) {
 		RavenWeapon newWeap = null;
 		
 		switch (weaponType) {
-		case RAIL_GUN:
-			newWeap = new Railgun(owner);
-			break;
-		case SHOTGUN:
-			newWeap = new Shotgun(owner);
-			break;
-		case ROCKET_LAUNCHER:
-			newWeap = new RocketLauncher(owner);
-			break;
-		default:
-			newWeap = new Blaster(owner);
+			case RAIL_GUN:
+				newWeap = new Railgun(owner);
+				break;
+			case SHOTGUN:
+				newWeap = new Shotgun(owner);
+				break;
+			case ROCKET_LAUNCHER:
+				newWeap = new RocketLauncher(owner);
+				break;
+			default:
+				newWeap = new Blaster(owner);
 		}
 		
 		RavenWeapon present = getWeaponFromInventory(weaponType);
-		if (present != null) {
-			present.incrementRounds(newWeap.getRoundsRemaining());
-		} else {
+		if (present == null) {
 			weaponMap.put(weaponType, newWeap);
 		}
-		
+		present.incrementRounds(newWeap.getRoundsRemaining());
+
 	}
 
 	public void changeWeapon(RavenObject type) {
@@ -236,5 +241,9 @@ public class RavenWeaponSystem {
 			final DecimalFormat formatter = new DecimalFormat("0.00");
 			GameCanvas.textAtPos(p.x + 10, p.y - offset, formatter.format(score) + " " + weaponKey.getDescription());
 		}
+	}
+	
+	public boolean hasWeapon(RavenObject weaponType) {
+		return weaponMap.containsKey(weaponType);
 	}
 }
