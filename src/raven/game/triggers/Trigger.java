@@ -1,12 +1,14 @@
 package raven.game.triggers;
 
-import raven.game.BaseGameEntity;
-import raven.math.Vector2D;
-
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
+import raven.game.BaseGameEntity;
+import raven.game.RavenBot;
+import raven.game.interfaces.IRavenBot;
+import raven.math.Vector2D;
+
 @XStreamAlias("Trigger")
-public abstract class Trigger<T extends BaseGameEntity> extends BaseGameEntity {
+public abstract class Trigger<T extends IRavenBot> extends BaseGameEntity {
 	transient private TriggerRegion regionOfInfluence;
 	
 	transient private boolean removeFromGame;
@@ -25,6 +27,11 @@ public abstract class Trigger<T extends BaseGameEntity> extends BaseGameEntity {
 		}
 		
 		return false;
+	}
+	
+	public boolean isTouchingTrigger(RavenBot bot) {
+		if(regionOfInfluence != null) return regionOfInfluence.isTouching(bot.pos(), bot.getBRadius());
+		else return false;
 	}
 	
 	// Child classes use one of these methods to initialize the trigger region

@@ -8,6 +8,7 @@ import java.util.List;
 
 import raven.game.RavenBot;
 import raven.game.RavenObject;
+import raven.game.interfaces.IRavenBot;
 import raven.goals.fuzzy.FuzzyModule;
 import raven.math.Vector2D;
 
@@ -17,7 +18,7 @@ import raven.math.Vector2D;
  */
 public abstract class RavenWeapon {
 
-	private RavenBot owner;
+	private IRavenBot owner;
 	private RavenObject itemType;
 	private FuzzyModule fuzzyModule;
 	private int roundsLeft, maxRoundCapacity; 
@@ -26,7 +27,7 @@ public abstract class RavenWeapon {
 	private List<Vector2D> WeaponVB, WeaponVBTrans;
 	
 	public RavenWeapon(RavenObject weaponType, int defaultRoundsCount, int maxCapacity, 
-					   double RoF, double iRange, double projectileSpd, RavenBot holder)
+					   double RoF, double iRange, double projectileSpd, IRavenBot holder)
 	{
 		itemType = weaponType;
 		owner = holder;
@@ -78,7 +79,7 @@ public abstract class RavenWeapon {
 	
 	public void setWeaponVectorTransBuffer(List<Vector2D> tempBuffer) { WeaponVBTrans = tempBuffer; }
 	
-	public RavenBot getOwner() { return owner; }
+	public IRavenBot getOwner() { return owner; }
 	
 	public FuzzyModule getFuzzyModule() { return fuzzyModule; }
 	

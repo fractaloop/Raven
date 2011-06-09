@@ -5,6 +5,7 @@ import java.util.TreeSet;
 
 import raven.game.BaseGameEntity;
 import raven.game.EntityManager;
+import raven.utils.Log;
 
 public class Dispatcher {
 	// Singleton Dispatcher, just like the original.
@@ -24,7 +25,7 @@ public class Dispatcher {
 	
 	private static void discharge(BaseGameEntity receiver, Telegram msg) {
 		if (!receiver.handleMessage(msg)) {
-			// Receiver couldn't handle message
+			Log.error("Dispatcher", "The receiving object could not handle the message.");
 		}
 	}
 	

@@ -1,12 +1,13 @@
 package raven.goals;
 
 import raven.game.RavenBot;
+import raven.goals.Goal.GoalType;
 import raven.math.Vector2D;
 import raven.ui.GameCanvas;
 
 public class ExploreGoal_Evaluator extends Goal_Evaluator {
 	public ExploreGoal_Evaluator(Double inp) {
-		super(inp);
+		super(inp, GoalType.goal_explore);
 	}
 
 

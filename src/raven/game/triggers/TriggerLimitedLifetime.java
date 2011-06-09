@@ -3,9 +3,10 @@ package raven.game.triggers;
 import java.awt.Image;
 
 import raven.game.BaseGameEntity;
+import raven.game.interfaces.IRavenBot;
 import raven.math.Vector2D;
 
-public abstract class TriggerLimitedLifetime<T extends BaseGameEntity> extends Trigger<T>{
+public abstract class TriggerLimitedLifetime<T extends IRavenBot> extends Trigger<T>{
 	protected double lifetime;
 	
 	public TriggerLimitedLifetime(Vector2D position, int radius, double lifetime, Image img) {

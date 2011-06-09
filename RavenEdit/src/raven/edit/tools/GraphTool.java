@@ -19,6 +19,7 @@ import javax.swing.JPopupMenu;
 import raven.edit.editor.ViewportDelegate;
 import raven.game.RavenBot;
 import raven.game.RavenObject;
+import raven.game.interfaces.IRavenBot;
 import raven.game.navigation.NavGraphEdge;
 import raven.game.navigation.NavGraphNode;
 import raven.game.triggers.Trigger;
@@ -74,11 +75,11 @@ public class GraphTool extends EditorTool {
 			popup.show(e.getComponent(), e.getX(), e.getY());
 		} else if (e.getButton() == MouseEvent.BUTTON1) {
 			// Ugliest return type ever!
-			SparseGraph<NavGraphNode<Trigger<RavenBot>>, NavGraphEdge> navGraph;
+			SparseGraph<NavGraphNode<Trigger<IRavenBot>>, NavGraphEdge> navGraph;
 			navGraph = level.getNavGraph();
 			
 			level.getNavGraph().addNode(
-					new NavGraphNode<Trigger<RavenBot>>(
+					new NavGraphNode<Trigger<IRavenBot>>(
 							level.getNavGraph().getNextFreeNodeIndex(),
 							viewToLevel(e.getPoint())));
 			

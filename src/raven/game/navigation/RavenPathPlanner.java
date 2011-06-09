@@ -1,28 +1,45 @@
 package raven.game.navigation;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
+import java.util.Iterator;
 
 import raven.game.RavenBot;
+import raven.game.interfaces.IRavenBot;
+import raven.game.RavenGame;
+import raven.game.RavenMap;
 import raven.game.RavenObject;
-import raven.game.RavenUserOptions;
-import raven.game.messaging.Dispatcher;
-import raven.game.messaging.RavenMessage;
-import raven.game.triggers.Trigger;
 import raven.math.CellSpacePartition;
 import raven.math.Vector2D;
+import raven.math.graph.GraphEdge;
 import raven.math.graph.GraphNode;
+import raven.math.graph.GraphSearchDijkstra;
 import raven.math.graph.GraphSearchStatus;
 import raven.math.graph.GraphSearchType;
 import raven.math.graph.SparseGraph;
+import raven.game.*;
+import raven.game.triggers.*;
+import raven.game.navigation.PathEdge;
+import raven.game.messaging.Dispatcher;
+import raven.game.messaging.RavenMessage;
+import raven.game.messaging.Telegram;
+import raven.game.navigation.RavenPathPlanner;
+import raven.goals.GoalThink;
+import raven.math.C2DMatrix;
+import raven.math.Transformations;
+import raven.script.RavenScript;
+import raven.ui.GameCanvas;
 import raven.utils.Log;
+import raven.utils.Regulator;
 
 public class RavenPathPlanner {
 
 	// Onwer of this instance
-	private RavenBot owner;
+	private IRavenBot owner;
 
 	// The navgraph
-	private SparseGraph<NavGraphNode<Trigger<RavenBot>>, NavGraphEdge> navGraph;
+	private SparseGraph<NavGraphNode<Trigger<IRavenBot>>, NavGraphEdge> navGraph;
 
 	private GraphSearchTimeSliced<NavGraphEdge> currentSearch;
 	private GraphSearchType searchType;
@@ -55,8 +72,8 @@ public class RavenPathPlanner {
 		owner.getWorld().getMap().getCellSpace().calculateNeighbors(pos, range);
 
 		//iterate through the neighbors and sum up all the position vectors
-		CellSpacePartition<NavGraphNode<Trigger<RavenBot>>> nodes= owner.getWorld().getMap().getCellSpace();
-		for (NavGraphNode<Trigger<RavenBot>> node : nodes)
+		CellSpacePartition<NavGraphNode<Trigger<IRavenBot>>> nodes= owner.getWorld().getMap().getCellSpace();
+		for (NavGraphNode<Trigger<IRavenBot>> node : nodes)
 		{
 			//if the path between this node and pos is unobstructed calculate the
 			//distance
@@ -171,7 +188,7 @@ public class RavenPathPlanner {
 			return false; 
 		}
 
-		currentSearch = new GraphSearchDijkstraTS<SparseGraph<NavGraphNode<Trigger<RavenBot>>,NavGraphEdge>>(navGraph, ClosestNodeToBot, type);
+		currentSearch = new GraphSearchDijkstraTS<SparseGraph<NavGraphNode<Trigger<IRavenBot>>,NavGraphEdge>>(navGraph, ClosestNodeToBot, type);
 		searchType = GraphSearchType.Dijkstra;
 		
 		//register the search with the path manager
@@ -232,7 +249,7 @@ public class RavenPathPlanner {
 		}
 		
 		//create an instance of a the distributed A* search class
-		currentSearch = new GraphSearchAStarTS<SparseGraph<NavGraphNode<Trigger<RavenBot>>,NavGraphEdge>>(navGraph, ClosestNodeToBot, ClosestNodeToTarget);
+		currentSearch = new GraphSearchAStarTS<SparseGraph<NavGraphNode<Trigger<IRavenBot>>,NavGraphEdge>>(navGraph, ClosestNodeToBot, ClosestNodeToTarget);
 		searchType = GraphSearchType.AStar;
 		
 		//and register the search with the path manager
@@ -307,9 +324,9 @@ public class RavenPathPlanner {
 
 		//iterate through all the triggers to find the closest *active* trigger of 
 		//type GiverType
-		List<Trigger<RavenBot>> triggers = owner.getWorld().getMap().getTriggers();
+		List<Trigger<IRavenBot>> triggers = owner.getWorld().getMap().getTriggers();
 
-		for (Trigger<RavenBot> trigger : triggers) {
+		for (Trigger<IRavenBot> trigger : triggers) {
 			if(trigger.entityType() == giverType && trigger.isActive()) {
 				double cost = owner.getWorld().getMap().calculateCostToTravelBetweenNodes(node, trigger.graphNodeIndex());
 
@@ -357,7 +374,7 @@ public class RavenPathPlanner {
 			//will just be NULL if no trigger)
 
 
-			Trigger<RavenBot> trigger = navGraph.getNode(currentSearch.getPathToTarget().get(currentSearch.getPathToTarget().size() - 1)).extraInfo();
+			Trigger<IRavenBot> trigger = navGraph.getNode(currentSearch.getPathToTarget().get(currentSearch.getPathToTarget().size() - 1)).extraInfo();
 
 			Dispatcher.dispatchMsg(Dispatcher.SEND_MSG_IMMEDIATELY,
 					Dispatcher.SENDER_ID_IRRELEVANT,
@@ -377,4 +394,3 @@ public class RavenPathPlanner {
 		return navGraph.getNode(idx).pos();
 	}
 }
-

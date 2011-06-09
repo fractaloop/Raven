@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import raven.game.RavenBot;
+import raven.game.interfaces.IRavenBot;
 import raven.math.Transformations;
 import raven.math.Vector2D;
 import raven.script.RavenScript;
@@ -12,7 +13,7 @@ import raven.ui.GameCanvas;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 @XStreamAlias("TriggerWeaponGiver")
-public class TriggerWeaponGiver extends TriggerRespawning<RavenBot> {
+public class TriggerWeaponGiver extends TriggerRespawning<IRavenBot> {
 	transient private List<Vector2D> vecRLVB = new ArrayList<Vector2D>(8);
 	transient private List<Vector2D> vecRLVBTrans;
 	
@@ -33,7 +34,7 @@ public class TriggerWeaponGiver extends TriggerRespawning<RavenBot> {
 	}
 
 	@Override
-	public void tryTrigger(RavenBot entity) {
+	public void tryTrigger(IRavenBot entity) {
 		if (this.isActive() && this.isTouchingTrigger(entity.pos(), entity.getBRadius())
 				&& entity.isReadyForTriggerUpdate() && entity.isAlive()) {
 			entity.getWeaponSys().addWeapon(this.entityType());

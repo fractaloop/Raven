@@ -1,9 +1,8 @@
-/**
- * 
- */
 package raven.game.armory;
 
 import raven.game.RavenBot;
+import raven.game.RavenObject;
+import raven.game.interfaces.IRavenBot;
 import raven.game.messaging.Dispatcher;
 import raven.game.messaging.RavenMessage;
 import raven.math.Geometry;
@@ -17,7 +16,7 @@ import raven.ui.GameCanvas;
  */
 public class Bolt extends RavenProjectile {
 
-	public Bolt(RavenBot shooter, Vector2D target)
+	public Bolt(IRavenBot shooter, Vector2D target)
 	{
 		super(target,
 				shooter.getWorld(),
@@ -57,7 +56,7 @@ public class Bolt extends RavenProjectile {
 			//test to see if the line segment connecting the bolt's current position
 			//and previous position intersects with any bots.
 
-			RavenBot hit = GetClosestIntersectingBot(position.sub(velocity), position);
+			IRavenBot hit = GetClosestIntersectingBot(position.sub(velocity), position);
 			if (hit != null) {
 				isDead = true;
 				isImpacted = true;

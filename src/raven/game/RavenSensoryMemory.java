@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import raven.game.interfaces.IRavenBot;
 import raven.math.Vector2D;
 import raven.ui.GameCanvas;
 
@@ -48,14 +49,14 @@ public class RavenSensoryMemory {
 	 * MemoryRecord is created for each opponent in the environment. Each
 	 * record is updated whenever the opponent is encountered. (when it is
 	 * seen or heard) */
-	private Map<RavenBot, MemoryRecord> memoryMap;
+	private Map<IRavenBot, MemoryRecord> memoryMap;
 
 	/** a bot has a memory span equivalent to this value. When a bot requests
 	 * a list of all recently sensed opponents this value is used to determine
 	 * if the bot is able to remember an opponent or not. */
 	private double memorySpan;
 
-	private void makeNewRecordIfNotAlreadyPresent(RavenBot bot) {
+	private void makeNewRecordIfNotAlreadyPresent(IRavenBot bot) {
 		if (!memoryMap.containsKey(bot)) {
 			memoryMap.put(bot, new MemoryRecord());
 		}
@@ -65,7 +66,7 @@ public class RavenSensoryMemory {
 		this.owner = owner;
 		// Store memory length in seconds
 		this.memorySpan = memorySpan;
-		this.memoryMap = new HashMap<RavenBot, MemoryRecord>();
+		this.memoryMap = new HashMap<IRavenBot, MemoryRecord>();
 	}
 
 	/**
@@ -73,7 +74,7 @@ public class RavenSensoryMemory {
 	 * a noise
 	 * @param noiseMaker the bot that made the noise
 	 */
-	public void updateWithSoundSource(RavenBot noiseMaker) {
+	public void updateWithSoundSource(IRavenBot noiseMaker) {
 		if (!owner.equals(noiseMaker)) {
 			makeNewRecordIfNotAlreadyPresent(noiseMaker);
 
@@ -95,7 +96,7 @@ public class RavenSensoryMemory {
 	 * this removes a bot's record from memory
 	 * @param removedBot the bot to forget about
 	 */
-	public void removeBotFromMemory(RavenBot removedBot) {
+	public void removeBotFromMemory(IRavenBot removedBot) {
 		memoryMap.remove(removedBot);
 	}
 
@@ -104,9 +105,9 @@ public class RavenSensoryMemory {
 	public void updateVision(double delta) {
 		// for each bot in the world test to see if it is visible to the owner of
 		// this class
-		List<RavenBot> bots = owner.getWorld().getBots();
+		List<IRavenBot> bots = owner.getWorld().getBots();
 
-		for (RavenBot bot : bots) {
+		for (IRavenBot bot : bots) {
 			// make sure the bot being examined is not this bot
 			if (!bot.equals(owner)) {
 				// make sure it is part of the memory map
@@ -145,17 +146,17 @@ public class RavenSensoryMemory {
 
 	// Queries
 
-	public boolean isOpponentShootable(RavenBot opponent) {
+	public boolean isOpponentShootable(IRavenBot opponent) {
 		MemoryRecord info = memoryMap.get(opponent);
 		return (info == null) ? false : info.shootable;
 	}
 
-	public boolean isOpponentWithinFOV(RavenBot opponent) {
-		MemoryRecord info = memoryMap.get(opponent);
+	public boolean isOpponentWithinFOV(IRavenBot currentTarget) {
+		MemoryRecord info = memoryMap.get(currentTarget);
 		return (info == null) ? false : info.withinFOV;
 	}
 
-	public Vector2D getLastRecordedPositionOfOpponent(RavenBot opponent) {
+	public Vector2D getLastRecordedPositionOfOpponent(IRavenBot opponent) {
 		MemoryRecord info = memoryMap.get(opponent);
 		if (info == null) {
 			throw new RuntimeException("RavenSensoryMemory#getLastRecordedPositionOfOpponent: Attempting to get position of unrecorded bot");
@@ -164,26 +165,26 @@ public class RavenSensoryMemory {
 		}
 	}
 
-	public double getTimeOpponentHasBeenVisible(RavenBot opponent) {
+	public double getTimeOpponentHasBeenVisible(IRavenBot opponent) {
 		MemoryRecord info = memoryMap.get(opponent);
 		return (info == null) ? 0 : info.timeSinceBecameVisible;		
 	}
 
-	public double getTimeSinceLastSensed(RavenBot opponent) {
+	public double getTimeSinceLastSensed(IRavenBot opponent) {
 		MemoryRecord info = memoryMap.get(opponent);
 		return (info == null) ? 0 : info.timeSinceLastSensed;		
 	}
 
-	public double getTimeOpponentHasBeenOutOfView(RavenBot opponent) {
+	public double getTimeOpponentHasBeenOutOfView(IRavenBot opponent) {
 		MemoryRecord info = memoryMap.get(opponent);
 		return (info == null) ? Double.MAX_VALUE : info.timeSinceLastVisible;
 
 	}
 
-	public List<RavenBot> getListOfRecentlySensedOpponents() {
-		List<RavenBot> opponents = new ArrayList<RavenBot>();
+	public List<IRavenBot> getListOfRecentlySensedOpponents() {
+		List<IRavenBot> opponents = new ArrayList<IRavenBot>();
 
-		for (RavenBot bot : memoryMap.keySet()) {
+		for (IRavenBot bot : memoryMap.keySet()) {
 			if (memoryMap.get(bot).timeSinceLastSensed < memorySpan) {
 				opponents.add(bot);
 			}
@@ -193,9 +194,9 @@ public class RavenSensoryMemory {
 	}
 
 	public void renderBoxesAroundRecentlySensed() {
-		List<RavenBot> opponents = getListOfRecentlySensedOpponents();
+		List<IRavenBot> opponents = getListOfRecentlySensedOpponents();
 
-		for (RavenBot bot : opponents) {
+		for (IRavenBot bot : opponents) {
 			Vector2D p = bot.pos();
 			double b = bot.getBRadius();
 

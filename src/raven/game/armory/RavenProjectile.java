@@ -6,6 +6,8 @@ import java.util.List;
 import raven.game.MovingEntity;
 import raven.game.RavenBot;
 import raven.game.RavenGame;
+import raven.game.RavenObject;
+import raven.game.interfaces.IRavenBot;
 import raven.math.Geometry;
 import raven.math.Vector2D;
 
@@ -44,11 +46,11 @@ public abstract class RavenProjectile extends MovingEntity {
 		this.timeSinceCreation = 0.0;
 	}
 
-	protected RavenBot GetClosestIntersectingBot(Vector2D from, Vector2D to)
+	protected IRavenBot GetClosestIntersectingBot(Vector2D from, Vector2D to)
 	{
-		RavenBot closest = null;
+		IRavenBot closest = null;
 		double closestDistance = Double.MAX_VALUE;
-		for(RavenBot bot : world.getBots())
+		for(IRavenBot bot : world.getBots())
 		{
 			// Make sure to not process this projectile's owner.
 			if(bot.ID() != this.shooterID)
@@ -69,10 +71,10 @@ public abstract class RavenProjectile extends MovingEntity {
 		return closest;
 	}
 	
-	protected List<RavenBot> GetListOfIntersectingBots(Vector2D from, Vector2D to)
+	protected List<IRavenBot> GetListOfIntersectingBots(Vector2D from, Vector2D to)
 	{
-		ArrayList<RavenBot> bots = new ArrayList<RavenBot>();
-		for(RavenBot bot : world.getBots())
+		ArrayList<IRavenBot> bots = new ArrayList<IRavenBot>();
+		for(IRavenBot bot : world.getBots())
 		{
 			if(bot.ID() != shooterID)
 			{

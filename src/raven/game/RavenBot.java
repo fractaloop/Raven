@@ -2,6 +2,7 @@ package raven.game;
 
 import java.util.ArrayList;
 
+import raven.game.interfaces.IRavenBot;
 import raven.game.messaging.Dispatcher;
 import raven.game.messaging.RavenMessage;
 import raven.game.messaging.Telegram;
@@ -15,7 +16,7 @@ import raven.ui.GameCanvas;
 import raven.utils.Log;
 import raven.utils.Regulator;
 
-public class RavenBot extends MovingEntity {
+public class RavenBot extends MovingEntity implements IRavenBot {
 	private enum Status {
 		ALIVE, DEAD, SPAWNING
 	}
@@ -238,6 +239,45 @@ public class RavenBot extends MovingEntity {
 				RavenScript.getDouble("Bot_MemorySpan"));
 	}
 
+	/**
+	 * Testing constructor that only establishes a position.  This is a dummy, and has no logic.  To be precise, it lacks:
+	 * 		Facing - Vector2D
+	 * 		pathPlanner - RavenPathPlanner
+	 * 		steering - RavenSteering
+	 * 		regulators - Regulator (one for weapon selector, goal arbitration, target selection, and trigger testing
+	 * 		brain - GoalThink
+	 * 		targSys - RavenTargetingSystem
+	 * 		weaponSys - RavenWeaponSystem
+	 * 		sensoryMem - RavenSensoryMemory
+	 * @param position The center point of the RavenBot
+	 * @param health The health to start the RavenBot off with. This is a range from 0 to 100.
+	 */
+	public RavenBot(Vector2D position, int health){
+		super(position,
+				RavenScript.getDouble("Bot_Scale"),
+				new Vector2D(0, 0),
+				RavenScript.getDouble("Bot_MaxSpeed"),
+				new Vector2D(1, 0),
+				RavenScript.getDouble("Bot_Mass"),
+				new Vector2D(RavenScript.getDouble("Bot_Scale"), RavenScript.getDouble("Bot_Scale")),
+				RavenScript.getDouble("Bot_MaxHeadTurnRate"),
+				RavenScript.getDouble("Bot_MaxForce"));
+		
+		maxHealth = RavenScript.getInt("Bot_MaxHealth");
+		this.health = health;
+		this.world = world;
+		numSecondsHitPersistant = RavenScript.getDouble("HitFlashTime");
+		hit = false;
+		score = 0;
+		status = Status.SPAWNING;
+		possessed = false;
+		fieldOfView = Math.toRadians(RavenScript.getDouble("Bot_FOV"));
+
+		setEntityType(RavenObject.BOT);
+
+		setUpVertexBuffer();
+	}
+	
 	// The usual suspects
 
 	@Override
@@ -667,7 +707,7 @@ public class RavenBot extends MovingEntity {
 		return targSys;
 	}
 
-	public RavenBot getTargetBot() {
+	public IRavenBot getTargetBot() {
 		return targSys.getTarget();
 	}
 

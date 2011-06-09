@@ -1,12 +1,13 @@
 package raven.game.triggers;
 
 import raven.game.BaseGameEntity;
+import raven.game.interfaces.IRavenBot;
 import raven.game.messaging.Dispatcher;
 import raven.game.messaging.RavenMessage;
 import raven.math.Vector2D;
 import raven.ui.GameCanvas;
 
-public class TriggerOnButtonSendMsg<T extends BaseGameEntity> extends Trigger<T> {
+public class TriggerOnButtonSendMsg<T extends IRavenBot> extends Trigger<T> {
 	/** when triggered a message is sent to the entity with the given ID */
 	private int receiver;
 	
