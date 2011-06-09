@@ -7,6 +7,7 @@ import java.util.List;
 
 import raven.game.RavenBot;
 import raven.game.RavenObject;
+import raven.game.interfaces.IRavenBot;
 import raven.goals.fuzzy.FuzzyModule;
 import raven.goals.fuzzy.FuzzyVariable;
 import raven.goals.fuzzy.FzAnd;
@@ -27,7 +28,7 @@ public class RocketLauncher extends RavenWeapon {
 	private static double rlIdealRange = RavenScript.getDouble("RocketLauncher_IdealRange");
 	private static double rlMaxSpeed = RavenScript.getDouble("Rocket_MaxSpeed");
 
-	public RocketLauncher(RavenBot owner){
+	public RocketLauncher(IRavenBot owner){
 		super(RavenObject.ROCKET_LAUNCHER, rlDefaultRounds, rlMaxRounds, rlFiringFreq, rlIdealRange, rlMaxSpeed, owner);
 
 		final Vector2D[] weaponVectors = {

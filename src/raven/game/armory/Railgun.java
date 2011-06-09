@@ -7,6 +7,7 @@ import java.util.List;
 
 import raven.game.RavenBot;
 import raven.game.RavenObject;
+import raven.game.interfaces.IRavenBot;
 import raven.goals.fuzzy.FuzzyModule;
 import raven.goals.fuzzy.FuzzyVariable;
 import raven.goals.fuzzy.FzAnd;
@@ -30,7 +31,7 @@ public class Railgun extends RavenWeapon {
 	private static double railgunIdealRange = RavenScript.getDouble("RailGun_IdealRange");
 	private static double railgunMaxSpeed = RavenScript.getDouble("Slug_MaxSpeed");
 
-	public Railgun(RavenBot owner){
+	public Railgun(IRavenBot owner){
 		super(RavenObject.RAIL_GUN, railgunDefaultRounds, railgunMaxRounds, railgunFiringFreq, railgunIdealRange, railgunMaxSpeed, owner);
 
 		final Vector2D[] weapon = {new Vector2D(0, -1),

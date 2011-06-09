@@ -14,6 +14,7 @@ import raven.utils.Log;
 public class TriggerHealthGiver extends TriggerRespawning<IRavenBot> {
 	private int healthGiven;
 	private static int respawnDelay = RavenScript.getInt("Health_RespawnDelay")*1000;
+	
 	/**
 	 * Creates a new health giver trigger with a certain position, with a certain radius of activation, 
 	 * and a certain amount of health given.

@@ -17,6 +17,11 @@ public class TriggerWeaponGiver extends TriggerRespawning<IRavenBot> {
 	transient private List<Vector2D> vecRLVB = new ArrayList<Vector2D>(8);
 	transient private List<Vector2D> vecRLVBTrans;
 	
+	/**
+	 * Creates a new weapon giver trigger with a certain position and with a certain radius of activation
+	 * @param position The position of the center point of the trigger
+	 * @param radius The radius of the activation zone for this  trigger
+	 */
 	public TriggerWeaponGiver(Vector2D position, int radius) {
 		super(position, radius);
 	

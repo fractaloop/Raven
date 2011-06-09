@@ -7,6 +7,7 @@ import java.util.List;
 
 import raven.game.RavenBot;
 import raven.game.RavenObject;
+import raven.game.interfaces.IRavenBot;
 import raven.goals.fuzzy.FuzzyModule;
 import raven.goals.fuzzy.FuzzyVariable;
 import raven.goals.fuzzy.FzAnd;
@@ -27,7 +28,7 @@ public class Shotgun extends RavenWeapon {
 	private double spread;
 
 
-	public Shotgun(RavenBot owner){
+	public Shotgun(IRavenBot owner){
 		super(RavenObject.SHOTGUN, RavenScript.getInt("ShotGun_DefaultRounds"), RavenScript.getInt("ShotGun_MaxRoundsCarried"), RavenScript.getDouble("ShotGun_FiringFreq"),
 				RavenScript.getDouble("ShotGun_IdealRange"), RavenScript.getDouble("Pellet_MaxSpeed"), owner);
 		
