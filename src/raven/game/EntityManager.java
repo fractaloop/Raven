@@ -41,6 +41,10 @@ public class EntityManager {
 		return getInstance().entityMap.get(receiverID);
 	}
 	
+	public static IRavenBot getBotFromID(int receiverID){
+		return getInstance().botMap.get(receiverID);
+	}
+	
 	public static void removeEntity(BaseGameEntity entity) {
 		getInstance().entityMap.remove(entity);
 		Log.trace("ENTITY MANAGER", "Removed entity of type " + entity.entityType() + " and ID " + entity.ID()); 
