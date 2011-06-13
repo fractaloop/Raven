@@ -1,6 +1,3 @@
-/**
- * 
- */
 package raven.game.armory;
 
 import raven.game.RavenBot;

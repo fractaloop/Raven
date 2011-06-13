@@ -1,6 +1,5 @@
 package raven.game;
 
-import raven.math.C2DMatrix;
 import raven.math.Vector2D;
 
 public abstract class MovingEntity extends BaseGameEntity {

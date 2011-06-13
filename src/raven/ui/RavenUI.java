@@ -1,6 +1,5 @@
 package raven.ui;
 
-import java.awt.CheckboxMenuItem;
 import java.awt.Dimension;
 import java.awt.MouseInfo;
 import java.awt.Point;
@@ -15,12 +14,10 @@ import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.Field;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.Icon;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -37,7 +34,6 @@ import raven.game.RavenObject;
 import raven.game.RavenUserOptions;
 import raven.math.Vector2D;
 import raven.utils.Log;
-import raven.utils.Log.Level;
 
 public class RavenUI extends JFrame implements KeyListener, MouseListener, ComponentListener {
 	/**

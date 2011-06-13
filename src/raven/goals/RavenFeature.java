@@ -2,10 +2,7 @@ package raven.goals;
 
 import raven.game.RavenBot;
 import raven.game.RavenObject;
-import raven.game.armory.Railgun;
 import raven.game.armory.RavenWeapon;
-import raven.game.armory.RocketLauncher;
-import raven.game.armory.Shotgun;
 import raven.script.RavenScript;
 
 public class RavenFeature {
