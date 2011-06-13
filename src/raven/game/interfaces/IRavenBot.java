@@ -48,7 +48,7 @@ public interface IRavenBot {
 	public double getMaxSpeed();
 	public Vector2D velocity();
 	public RavenObject entityType();
-	public RavenTargetingSystem getTargetSys();
+	public IRavenTargetingSystem getTargetSys();
 	public boolean hasLOSto(Vector2D aimingPos);
 	public Vector2D heading();
 	public boolean handleMessage(Telegram msg);

@@ -194,6 +194,7 @@ public class RavenWeaponSystem {
 		RavenWeapon present = getWeaponFromInventory(weaponType);
 		if (present == null) {
 			weaponMap.put(weaponType, newWeap);
+			present = getWeaponFromInventory(weaponType);
 		}
 		present.incrementRounds(newWeap.getRoundsRemaining());
 

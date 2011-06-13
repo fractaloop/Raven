@@ -120,5 +120,9 @@ public abstract class RavenWeapon {
 		return maxRoundCapacity;
 	}
 	
+	public void setCurrentRounds(int rounds){
+		this.roundsLeft = rounds;
+	}
+	
 	
 }

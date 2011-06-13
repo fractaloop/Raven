@@ -3,9 +3,10 @@ package raven.game;
 import java.util.List;
 
 import raven.game.interfaces.IRavenBot;
+import raven.game.interfaces.IRavenTargetingSystem;
 import raven.math.Vector2D;
 
-public class RavenTargetingSystem {
+public class RavenTargetingSystem implements IRavenTargetingSystem{
 	
 	private IRavenBot owner;
 	
