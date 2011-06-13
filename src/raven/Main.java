@@ -7,7 +7,7 @@ import raven.ui.GameCanvas;
 import raven.ui.RavenUI;
 import raven.utils.Log;
 import raven.utils.Log.Level;
-import raven.utils.mapLoadedException;
+import raven.utils.MapLoadedException;
 
 public class Main {
 	private static RavenUI ui;
@@ -40,7 +40,7 @@ public class Main {
     		try{
     		game.update((currentTime - lastTime) * 1.0e-9);
     		}
-    		catch (mapLoadedException e){
+    		catch (MapLoadedException e){
     			loadedMap = true;
     			ui.dispose();
     	    	ui = new RavenUI(game);
