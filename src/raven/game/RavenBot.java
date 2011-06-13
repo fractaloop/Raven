@@ -3,6 +3,7 @@ package raven.game;
 import java.util.ArrayList;
 
 import raven.game.interfaces.IRavenBot;
+import raven.game.interfaces.IRavenTargetingSystem;
 import raven.game.messaging.Dispatcher;
 import raven.game.messaging.RavenMessage;
 import raven.game.messaging.Telegram;
@@ -46,7 +47,7 @@ public class RavenBot extends MovingEntity implements IRavenBot {
 	private RavenPathPlanner pathPlanner;
 
 	/** this is responsible for choosing the bot's current target */
-	private RavenTargetingSystem targSys;
+	private IRavenTargetingSystem targSys;
 
 	/**
 	 * this handles all the weapons. and has methods for aiming, selecting and
@@ -703,7 +704,7 @@ public class RavenBot extends MovingEntity implements IRavenBot {
 		return brain;
 	}
 
-	public RavenTargetingSystem getTargetSys() {
+	public IRavenTargetingSystem getTargetSys() {
 		return targSys;
 	}
 
