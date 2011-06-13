@@ -6,6 +6,7 @@ import raven.game.RavenSensoryMemory;
 import raven.game.RavenSteering;
 import raven.game.RavenTargetingSystem;
 import raven.game.RavenWeaponSystem;
+import raven.game.messaging.Telegram;
 import raven.goals.GoalThink;
 import raven.math.Vector2D;
 
@@ -50,5 +51,6 @@ public interface IRavenBot {
 	public RavenTargetingSystem getTargetSys();
 	public boolean hasLOSto(Vector2D aimingPos);
 	public Vector2D heading();
+	public boolean handleMessage(Telegram msg);
 	
 }
