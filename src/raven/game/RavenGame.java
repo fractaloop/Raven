@@ -28,6 +28,7 @@ import raven.ui.GameCanvas;
 import raven.ui.RavenUI;
 import raven.utils.Log;
 import raven.utils.MapSerializer;
+import raven.utils.mapLoadedException;
 
 public class RavenGame {
 	/** the current game map */
@@ -206,14 +207,16 @@ public class RavenGame {
 	 * 
 	 * @param delta
 	 *            amount of time to advance in seconds
+	 * @throws mapLoadedException 
 	 */
-	public void update(double delta) {
+	public void update(double delta) throws mapLoadedException {
 		Log.trace("game", "Beginning update");
 		
 		// Check if we need to switch maps
 		if (newMapPath != null) {
 			try {
 				loadMap(newMapPath);
+				throw new mapLoadedException();
 			} catch (IOException e) {
 				Log.warn("game", "Failed to laod map " + newMapPath + ".");
 			}
