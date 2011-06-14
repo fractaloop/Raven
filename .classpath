@@ -9,5 +9,6 @@
 	<classpathentry kind="lib" path="lib/jmock-2.5.1/hamcrest-library-1.1.jar"/>
 	<classpathentry kind="lib" path="lib/jmock-2.5.1/jmock-2.5.1.jar"/>
 	<classpathentry kind="lib" path="lib/jmock-2.5.1/jmock-junit4-2.5.1.jar"/>
+	<classpathentry kind="lib" path="lib/Java3d/java3d_1.5.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
