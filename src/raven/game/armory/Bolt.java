@@ -41,7 +41,7 @@ public class Bolt extends RavenProjectile {
 	{
 		if(!HasImpacted())
 		{
-			velocity = heading().mul(maxSpeed());
+			velocity = heading().mul(maxSpeed() * delta);
 
 			//make sure vehicle does not exceed maximum velocity
 			velocity.truncate(maxSpeed());

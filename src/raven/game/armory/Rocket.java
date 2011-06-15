@@ -80,12 +80,13 @@ public class Rocket extends RavenProjectile {
 		Double dist = Geometry.FindClosestPointOfIntersectionWithWalls(position.sub(velocity), position, impactPoint, world.getMap().getWalls());
 		if (dist != null)
 		{
+			System.out.println("position + " + position);
+			System.out.println("impact point + " + impactPoint);
 			isImpacted = true;
-
 			//test for bots within the blast radius and inflict damage
 			InflictDamageOnBotsWithinBlastRadius();
 
-			position = impactPoint;
+			//position = impactPoint;
 
 			return;
 		}
@@ -114,10 +115,10 @@ public class Rocket extends RavenProjectile {
 		}
 	}
 
-	public void update(){
+	public void update(double delta){
 		if (!isImpacted)
 		{
-			velocity = heading().mul(maxSpeed());
+			velocity = heading().mul(maxSpeed() * delta);
 
 			//make sure vehicle does not exceed maximum velocity
 			velocity.truncate(maxSpeed());

@@ -131,13 +131,13 @@ var WaypointSeekDist            = 5;
 //////////////////////////////////////////////////////////////////////////////
 
 var Blaster_FiringFreq          = 3;
-var Blaster_MaxSpeed            = 5;
+var Blaster_MaxSpeed            = 400;
 var Blaster_DefaultRounds       = 0; //not used, a blaster always has ammo
 var Blaster_MaxRoundsCarried    = 0; //as above
 var Blaster_IdealRange          = 50;
 var Blaster_SoundRange          = 100;
 
-var Bolt_MaxSpeed               = 5;
+var Bolt_MaxSpeed               = 400;
 var Bolt_Mass                   = 1;
 var Bolt_MaxForce               = 100.0;
 var Bolt_Scale                  = Bot_Scale;
@@ -150,7 +150,7 @@ var RocketLauncher_IdealRange   = 150;
 var RocketLauncher_SoundRange   = 400;
 
 var Rocket_BlastRadius          = 20;
-var Rocket_MaxSpeed             = 3;
+var Rocket_MaxSpeed             = 250;
 var Rocket_Mass                 = 1;
 var Rocket_MaxForce             = 10.0;
 var Rocket_Scale                = Bot_Scale;

@@ -84,8 +84,8 @@ public class RavenWeaponSystem {
 		weaponMap = new HashMap<RavenObject, RavenWeapon>();
 		
 		// set up the container
-		currentWeapon = new Blaster(owner);
-		weaponMap.put(RavenObject.BLASTER, currentWeapon);
+		currentWeapon = new RocketLauncher(owner);
+		weaponMap.put(RavenObject.ROCKET_LAUNCHER, currentWeapon);
 	}
 
 	public void takeAimAndShoot(double delta) {
@@ -166,7 +166,7 @@ public class RavenWeaponSystem {
 				}
 			}
 		} else {
-			currentWeapon = weaponMap.get(RavenObject.BLASTER);
+			currentWeapon = weaponMap.get(RavenObject.ROCKET_LAUNCHER);
 		}
 	}
 
