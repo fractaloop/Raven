@@ -196,7 +196,7 @@ public class RavenSteering {
 			//calculate the speed required to reach the target given the desired
 			//deceleration
 			//   double speed =  dist / (deceleration* decelerationTweaker);     
-			double speed= target.distance(ravenBot.pos())/ (Double.valueOf(deceleration.toString())*DecelerationTweaker);
+			double speed = target.distance(ravenBot.pos())/ (Double.valueOf(deceleration.toString())*DecelerationTweaker);
 			//make sure the velocity does not exceed the max
 			speed = Math.min(speed, ravenBot.maxSpeed());
 
