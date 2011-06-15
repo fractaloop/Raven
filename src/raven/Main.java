@@ -1,10 +1,13 @@
 package raven;
 
+import java.awt.Dimension;
+
 import raven.game.RavenGame;
 import raven.ui.GameCanvas;
 import raven.ui.RavenUI;
 import raven.utils.Log;
 import raven.utils.Log.Level;
+import raven.utils.MapLoadedException;
 
 public class Main {
 	private static RavenUI ui;
@@ -30,13 +33,23 @@ public class Main {
     	
     	while (true) {
     		// TODO Resize UI if the map changes!
+    		boolean loadedMap = false;
+
     		long currentTime = System.nanoTime();
 
+    		try{
     		game.update((currentTime - lastTime) * 1.0e-9);
-    		
+    		}
+    		catch (MapLoadedException e){
+    			loadedMap = true;
+    			ui.dispose();
+    	    	ui = new RavenUI(game);
+
+    		}
     		// Always dispose the canvas
     		try {
-    			GameCanvas.startDrawing(game.getMap().getSizeX(), game.getMap().getSizeY());
+    			GameCanvas.startDrawing(game.getMap().getSizeX(), game.getMap().getSizeY(), loadedMap);
+    			loadedMap = false;
     			game.render();
     		} finally {
     			GameCanvas.stopDrawing();
@@ -51,6 +64,4 @@ public class Main {
 			}
     	}
     }
-
-
 }

@@ -2,13 +2,14 @@ package raven.goals;
 
 import raven.game.RavenBot;
 import raven.game.RavenObject;
+import raven.goals.Goal.GoalType;
 import raven.goals.RavenFeature;
 import raven.math.Vector2D;
 import raven.ui.GameCanvas;
 
 public class GetHealthGoal_Evaluator extends Goal_Evaluator {
 	GetHealthGoal_Evaluator(Double inp){
-		super(inp);
+		super(inp, GoalType.goal_get_health);
 	}
 
 

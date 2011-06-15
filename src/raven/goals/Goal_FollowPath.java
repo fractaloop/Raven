@@ -1,7 +1,6 @@
 package raven.goals;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import raven.game.RavenBot;
@@ -16,45 +15,38 @@ public class Goal_FollowPath extends GoalComposite<RavenBot> {
 	public Goal_FollowPath(RavenBot m_pOwner, List<PathEdge> list) {
 		super(m_pOwner, Goal.GoalType.goal_follow_path);
 		this.m_Path = list;
+		
+		for(PathEdge edge : m_Path) {
+			// Is this edge the last?
+			boolean isLastEdgeInPath = m_Path.indexOf(edge) == m_Path.size()-1;
+			
+			switch(edge.Behavior()){
+				case NavGraphEdge.NORMAL:
+					AddSubgoal(new Goal_TraverseEdge(m_pOwner, edge, isLastEdgeInPath));
+					break;
+				case NavGraphEdge.GOES_THROUGH_DOOR:
+					AddSubgoal(new Goal_NegotiateDoor(m_pOwner, edge, isLastEdgeInPath));
+					break;
+				case NavGraphEdge.JUMP:
+					break;
+				case NavGraphEdge.GRAPPLE:
+					break;
+				default:
+					break;
+			}
+		}
 	}
 
 	@Override
-	public void activate() {
-		m_iStatus = Goal.CurrentStatus.active;
-
-		//get a reference to the next edge
-		PathEdge edge = m_Path.get(0);
-
-		//remove the edge from the path
-		m_Path.remove(0); 
-
-		//some edges specify that the bot should use a specific behavior when
-		//following them. This switch statement queries the edge behavior flag and
-		//adds the appropriate goals/s to the subgoal list.
-		switch(edge.Behavior()){
-			case NavGraphEdge.NORMAL:
-				AddSubgoal(new Goal_TraverseEdge(m_pOwner, edge, m_Path.isEmpty()));
-				break;
-			case NavGraphEdge.GOES_THROUGH_DOOR:
-				//also add a goal that is able to handle opening the door
-				AddSubgoal(new Goal_NegotiateDoor(m_pOwner, edge, m_Path.isEmpty()));
-				break;
-			case NavGraphEdge.JUMP:
-				//add subgoal to jump along the edge
-				// not defined in c++ code...
-				break;
-			case NavGraphEdge.GRAPPLE:
-				//add subgoal to grapple along the edge
-				// not defined in c++ code
-				break;
-			default:
-				try {
-					throw new Exception("<Goal_FollowPath::Activate>: Unrecognized edge type");
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+	public void activate() { 
+		// Clean subgoals of finished goals.
+		List<Goal> toRemove = new ArrayList<Goal>();
+		for(Goal goal : m_SubGoals) {
+			if(goal.m_iStatus == CurrentStatus.completed){
+				toRemove.add(goal);
+			}
 		}
+		m_SubGoals.removeAll(toRemove);
 	}
 
 	@Override
@@ -72,22 +64,12 @@ public class Goal_FollowPath extends GoalComposite<RavenBot> {
 	}
 
 	public void render() {
-		//        render all the path waypoints remaining on the path list
-		for(PathEdge path : m_Path) {
-			GameCanvas.blackPen();
-			GameCanvas.lineWithArrow(path.Source(), path.Destination(), 5);
 
-			GameCanvas.redBrush();
-			GameCanvas.blackPen();
-			GameCanvas.circle(path.Destination(), 3);
-		}
-
-		//forward the request to the subgoals
+		// forward the request to the subgoals
 		// in this case we imitate goalComposite . render()
-		if (!m_SubGoals.isEmpty())
-		{
-			m_SubGoals.get(0).render();
-		}		
+		for(Goal goal : m_SubGoals) {
+			goal.render();
+		}
 	}
 
 	@Override

@@ -26,6 +26,7 @@ import raven.edit.editor.actions.menu.*;
 import raven.edit.tools.EditorTool;
 import raven.game.RavenBot;
 import raven.game.RavenMap;
+import raven.game.interfaces.IRavenBot;
 import raven.game.triggers.Trigger;
 import raven.math.Vector2D;
 
@@ -427,7 +428,7 @@ public class EditorView extends JFrame implements ViewportDelegate {
 	}
 
 	@Override
-	public void addTrigger(Trigger<RavenBot> trigger) {
+	public void addTrigger(Trigger<IRavenBot> trigger) {
 		level.getTriggers().add(trigger);
 		
 	}

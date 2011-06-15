@@ -48,18 +48,18 @@ public class GameCanvas extends Canvas {
 	
 	///////////////////////
 	// Drawing start/stop
-	public static void startDrawing(int width, int height) {
-		getInstance().create(width, height);
+	public static void startDrawing(int width, int height, boolean loadedMap) {
+		getInstance().create(width, height, loadedMap);
 	}
 	
-	protected void create(int width, int height) {
+	protected void create(int width, int height, boolean loadedMap) {
     	// Don't redraw on requests
     	setIgnoreRepaint(true);
     	
 		// Ask for input
 		setFocusable(true);
 		requestFocus();
-		if (getBufferStrategy() == null) {
+		if (getBufferStrategy() == null || loadedMap == true) {
 			// Double buffered for pretty rendering
 	    	createBufferStrategy(2);
 	    	setBounds(0, 0, width, height);
@@ -68,7 +68,6 @@ public class GameCanvas extends Canvas {
 			g2d.dispose();
 			System.err.println("Warning: GameCanvas received request to start drawing while already drawing.");
 		}
-		
 		g2d = (Graphics2D)getBufferStrategy().getDrawGraphics();
 		// Shiny gfx
 		RenderingHints renderHints = new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);

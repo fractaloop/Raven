@@ -1,15 +1,15 @@
 package raven.game.triggers;
 
-import raven.game.RavenBot;
+import raven.game.interfaces.IRavenBot;
 import raven.game.messaging.Dispatcher;
 import raven.game.messaging.RavenMessage;
 import raven.script.RavenScript;
 
-public class TriggerSoundNotify extends TriggerLimitedLifetime<RavenBot> {
+public class TriggerSoundNotify extends TriggerLimitedLifetime<IRavenBot> {
 	
-	private RavenBot soundSource;
+	private IRavenBot soundSource;
 	
-	public TriggerSoundNotify(RavenBot source, double range) {
+	public TriggerSoundNotify(IRavenBot source, double range) {
 		super(source.pos(), (int)range, RavenScript.getDouble("Bot_TriggerUpdateFreq"), null);
 		
 		soundSource = source;
@@ -23,7 +23,7 @@ public class TriggerSoundNotify extends TriggerLimitedLifetime<RavenBot> {
 	}
 	
 	@Override
-	public void tryTrigger(RavenBot entity) {
+	public void tryTrigger(IRavenBot entity) {
 		if (isTouchingTrigger(entity.pos(), entity.getBRadius())
 				&& entity.isReadyForTriggerUpdate() && entity.isAlive()) {
 			Dispatcher.dispatchMsg(Dispatcher.SEND_MSG_IMMEDIATELY,

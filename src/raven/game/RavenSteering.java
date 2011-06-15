@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Vector;
 
+import raven.game.interfaces.IRavenBot;
 import raven.math.Geometry;
 import raven.math.Transformations;
 import raven.math.Vector2D;
@@ -320,11 +321,11 @@ public class RavenSteering {
 	}
 
 
-	private Vector2D separation(final List<RavenBot> agents){
+	private Vector2D separation(final List<IRavenBot> agents){
 
 		//iterate through all the neighbors and calculate the vector from them
 		Vector2D steeringForce = new Vector2D();
-		for( RavenBot agent : agents) {
+		for( IRavenBot agent : agents) {
 
 			//make sure this agent isn't included in the calculations and that
 			//the agent being examined is close enough. ***also make sure it doesn't

@@ -1,8 +1,6 @@
 package raven.goals;
 
 import raven.game.RavenBot;
-import raven.math.Vector2D;
-import raven.utils.Log;
 
 public class Goal_AttackTarget extends GoalComposite<RavenBot> {
 

@@ -1,11 +1,8 @@
 package raven.goals;
 
-import java.util.Random;
-
 import raven.game.RavenBot;
 import raven.math.Vector2D;
 import raven.ui.GameCanvas;
-import raven.utils.Log;
 
 public class Goal_DodgeSideToSide extends GoalComposite<RavenBot> {
 

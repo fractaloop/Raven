@@ -69,12 +69,14 @@ public class Goal_HuntTarget extends GoalComposite<RavenBot> {
 
 	@Override
 	public void render() {
-		//#define SHOW_LAST_RECORDED_POSITION
-		//render last recorded position as a green circle
 		if (m_pOwner.getTargetSys().isTargetPresent()) {
+			
+			Vector2D lastPos = m_pOwner.getTargetSys().getLastRecordedPosition();
+			if(lastPos == null) return;
+			
 			GameCanvas.greenBrush();
 			GameCanvas.redBrush();
-			GameCanvas.circle(m_pOwner.getTargetSys().getLastRecordedPosition(), 3);
+			GameCanvas.circle(lastPos, 3);
 		}
 
 		if (!m_SubGoals.isEmpty()) {

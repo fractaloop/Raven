@@ -5,6 +5,8 @@ import java.util.TreeSet;
 
 import raven.game.BaseGameEntity;
 import raven.game.EntityManager;
+import raven.game.interfaces.IRavenBot;
+import raven.utils.Log;
 
 public class Dispatcher {
 	// Singleton Dispatcher, just like the original.
@@ -24,7 +26,13 @@ public class Dispatcher {
 	
 	private static void discharge(BaseGameEntity receiver, Telegram msg) {
 		if (!receiver.handleMessage(msg)) {
-			// Receiver couldn't handle message
+			Log.error("Dispatcher", "The receiving object could not handle the message.");
+		}
+	}
+	
+	private static void discharge(IRavenBot receiver, Telegram msg) {
+		if (!receiver.handleMessage(msg)) {
+			Log.error("Dispatcher", "The receiving object could not handle the message.");
 		}
 	}
 	
@@ -50,19 +58,23 @@ public class Dispatcher {
 		
 		// get the receiver
 		BaseGameEntity receiver = EntityManager.getEntityFromID(receiverID);
-		
+		IRavenBot bot = null;
 		// make sure the receiver is valid
 		if (receiver == null) {
-			System.err.println("Warning! No receiver with ID of " + receiverID + " found.");
-			return;
+			//try to get the bot now
+			bot = EntityManager.getBotFromID(receiverID);
 		}
+		
+		if(bot == null) System.err.println("Warning! No receiver with ID of " + receiverID + " found.");
+		
 		
 		// create the telegram
 		Telegram telegram = new Telegram(0, senderID, receiverID, msg, extraInfo);
 		
 		// if there is no delay, route telegram immediately
 		if (delay <= 0.0) {
-			discharge(receiver, telegram);
+			if(receiver != null) discharge(receiver, telegram);
+			else discharge(bot, telegram);
 		}
 		// else add the telegram to be dispatched
 		else {

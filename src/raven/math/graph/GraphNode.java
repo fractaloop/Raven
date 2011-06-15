@@ -1,9 +1,6 @@
 package raven.math.graph;
 
-import java.io.Reader;
-
 import raven.math.Vector2D;
-import raven.utils.StreamUtils;
 
 public abstract class GraphNode {
 	public static final int INVALID_NODE_INDEX = -1;

@@ -7,6 +7,7 @@ import java.util.List;
 
 import raven.game.RavenBot;
 import raven.game.RavenObject;
+import raven.game.interfaces.IRavenBot;
 import raven.goals.fuzzy.FuzzyModule;
 import raven.goals.fuzzy.FuzzyVariable;
 import raven.goals.fuzzy.FzSet;
@@ -28,7 +29,7 @@ public class Blaster extends RavenWeapon {
 	private static double blasterIdealRange = RavenScript.getDouble("Blaster_IdealRange");
 	private static double blasterMaxSpeed = RavenScript.getDouble("Blaster_MaxSpeed");
 
-	public Blaster(RavenBot owner)
+	public Blaster(IRavenBot owner)
 	{
 		super(RavenObject.BLASTER, blasterDefaultRounds, blasterMaxRounds, blasterFiringFreq, blasterIdealRange, blasterMaxSpeed, owner);
 

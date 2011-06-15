@@ -1,9 +1,5 @@
 package raven.math.graph;
 
-import java.io.Reader;
-
-import raven.math.Vector2D;
-import raven.utils.StreamUtils;
 
 public abstract class GraphEdge {
 	// An edge connects two nodes. Valid node indices are always positive.

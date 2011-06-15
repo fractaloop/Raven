@@ -6,6 +6,7 @@ import java.util.List;
 
 import raven.game.RavenBot;
 import raven.game.RavenObject;
+import raven.game.interfaces.IRavenBot;
 import raven.game.triggers.Trigger;
 import raven.math.graph.EuclideanHeuristic;
 import raven.math.graph.GraphNode;
@@ -15,7 +16,7 @@ import raven.math.graph.Heuristic;
 import raven.math.graph.SparseGraph;
 import raven.utils.IndexedPriorityQueue;
 
-public class GraphSearchDijkstraTS<T extends SparseGraph<NavGraphNode<Trigger<RavenBot>>, NavGraphEdge>> extends GraphSearchTimeSliced<NavGraphEdge> {
+public class GraphSearchDijkstraTS<T extends SparseGraph<NavGraphNode<Trigger<IRavenBot>>, NavGraphEdge>> extends GraphSearchTimeSliced<NavGraphEdge> {
 
 	private T graph;
 
@@ -78,7 +79,7 @@ public class GraphSearchDijkstraTS<T extends SparseGraph<NavGraphNode<Trigger<Ra
 		shortestPathTree.set(nextClosestNode, searchFrontier.get(nextClosestNode));
 
 		//if the target has been found exit
-		NavGraphNode<Trigger<RavenBot>> node = graph.getNode(nextClosestNode);
+		NavGraphNode<Trigger<IRavenBot>> node = graph.getNode(nextClosestNode);
 		if (node.extraInfo() != null && node.extraInfo().isActive() && node.extraInfo().entityType() == target) {
 			targetNode = nextClosestNode;
 			

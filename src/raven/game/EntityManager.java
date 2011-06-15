@@ -3,6 +3,7 @@ package raven.game;
 import java.util.HashMap;
 import java.util.Map;
 
+import raven.game.interfaces.IRavenBot;
 import raven.utils.Log;
 
 public class EntityManager {
@@ -22,6 +23,7 @@ public class EntityManager {
 	}
 	
 	private Map<Integer, BaseGameEntity> entityMap = new HashMap<Integer, BaseGameEntity>();
+	private Map<Integer, IRavenBot> botMap = new HashMap<Integer, IRavenBot>();
 	
 	private EntityManager() {}
 	
@@ -29,9 +31,18 @@ public class EntityManager {
 		Log.trace("ENTITY MANAGER", "Registered entity of type " + entity.entityType() + " and ID " + entity.ID()); 
 		getInstance().entityMap.put(entity.ID(), entity);
 	}
+	
+	public static void registerEntity(IRavenBot entity) {
+		Log.trace("ENTITY MANAGER", "Registered entity of type " + entity.entityType() + " and ID " + entity.ID()); 
+		getInstance().botMap.put(entity.ID(), entity);
+	}
 
 	public static BaseGameEntity getEntityFromID(int receiverID) {
 		return getInstance().entityMap.get(receiverID);
+	}
+	
+	public static IRavenBot getBotFromID(int receiverID){
+		return getInstance().botMap.get(receiverID);
 	}
 	
 	public static void removeEntity(BaseGameEntity entity) {

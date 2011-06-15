@@ -6,6 +6,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import raven.game.RavenBot;
 import raven.game.RavenMap;
+import raven.game.interfaces.IRavenBot;
 import raven.game.navigation.NavGraphEdge;
 import raven.game.navigation.NavGraphNode;
 import raven.game.triggers.Trigger;
@@ -29,7 +30,7 @@ public class GraphBuilder {
 	}
 	
 	public void rebuild() {
-		SparseGraph<NavGraphNode<Trigger<RavenBot>>, NavGraphEdge> graph = level.getNavGraph();
+		SparseGraph<NavGraphNode<Trigger<IRavenBot>>, NavGraphEdge> graph = level.getNavGraph();
 		
 		graph.removeEdges();
 		
@@ -56,14 +57,14 @@ public class GraphBuilder {
 	}
 	
 	public void growFromSeed() {
-		SparseGraph<NavGraphNode<Trigger<RavenBot>>, NavGraphEdge> graph = level.getNavGraph();
+		SparseGraph<NavGraphNode<Trigger<IRavenBot>>, NavGraphEdge> graph = level.getNavGraph();
 		
 		// Only 1 seed allowed!
 		if (graph.numNodes() != 1)
 			return;
 		
 		// Seed node
-		NavGraphNode<Trigger<RavenBot>> seed_node = graph.getNode(0);
+		NavGraphNode<Trigger<IRavenBot>> seed_node = graph.getNode(0);
 		
 		// Start the graph over!
 		graph.clear();
@@ -97,7 +98,7 @@ public class GraphBuilder {
 				Vector2D left = cursor.add(new Vector2D(-nodeSpacing, 0));
 				Vector2D right = cursor.add(new Vector2D(nodeSpacing, 0));
 
-				graph.addNode(new NavGraphNode<Trigger<RavenBot>>(graph.getNextFreeNodeIndex(), cursor));
+				graph.addNode(new NavGraphNode<Trigger<IRavenBot>>(graph.getNextFreeNodeIndex(), cursor));
 				processed.add(cursor);
 				
 				if (!spanLeft && isValidNodeLocation(left, level.getWalls()) && !WallIntersectionTest.doWallsObstructLineSegment(location, left, level.getWalls()) && !processed.contains(left)) {
@@ -123,8 +124,8 @@ public class GraphBuilder {
 		}
 		
 		// Oh, and finally we need a node under every trigger
-		for (Trigger<RavenBot> trigger : level.getTriggers()) {
-			NavGraphNode<Trigger<RavenBot>> node = new NavGraphNode<Trigger<RavenBot>>(graph.getNextFreeNodeIndex(), trigger.pos());
+		for (Trigger<IRavenBot> trigger : level.getTriggers()) {
+			NavGraphNode<Trigger<IRavenBot>> node = new NavGraphNode<Trigger<IRavenBot>>(graph.getNextFreeNodeIndex(), trigger.pos());
 			trigger.setGraphNodeIndex(node.index());
 			node.setExtraInfo(trigger);
 			graph.addNode(node);

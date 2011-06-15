@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
+import raven.game.interfaces.IRavenBot;
 import raven.game.messaging.RavenMessage;
 import raven.game.navigation.NavGraphEdge;
 import raven.game.navigation.NavGraphNode;
@@ -35,7 +36,7 @@ public class RavenMap {
 	 * enters that area, it 'triggers' an event. That event may be anything
 	 * from increasing a bot's health to opening a door or requesting a lift.
 	 */
-	private TriggerSystem<Trigger<RavenBot>> triggerSystem;
+	private TriggerSystem<Trigger<IRavenBot>> triggerSystem;
 	
 	/** this holds a number of spawn positions. When a bot is instantiated it
 	 * will appear at a randomly selected point chosen from this vector */
@@ -45,10 +46,10 @@ public class RavenMap {
 	private ArrayList<RavenDoor> doors;
 	
 	/** this map's accompanying navigation graph */
-	private SparseGraph<NavGraphNode<Trigger<RavenBot>>, NavGraphEdge> navGraph;
+	private SparseGraph<NavGraphNode<Trigger<IRavenBot>>, NavGraphEdge> navGraph;
 	
 	/** the graph nodes will be partitioned enabling fast lookup */
-	transient private CellSpacePartition<NavGraphNode<Trigger<RavenBot>>> spacePartition;
+	transient private CellSpacePartition<NavGraphNode<Trigger<IRavenBot>>> spacePartition;
 	
 	/** the size of the search radius the cellspace partition uses when
 	 * looking for neighbors */
@@ -68,7 +69,7 @@ public class RavenMap {
 	private String name;
 		
 	private void partitionNavGraph() {
-		spacePartition = new CellSpacePartition<NavGraphNode<Trigger<RavenBot>>>(sizeX, sizeY,
+		spacePartition = new CellSpacePartition<NavGraphNode<Trigger<IRavenBot>>>(sizeX, sizeY,
 				RavenScript.getInt("NumCellsX"), RavenScript.getInt("NumCellsY"),
 				navGraph.numNodes());
 		
@@ -87,12 +88,12 @@ public class RavenMap {
 	}
 	
 	public void addHealthGiver(Vector2D position, int radius, int healthPlus, int respawnDelay) {
-		TriggerHealthGiver healthGiver = new TriggerHealthGiver(position, radius, healthPlus, respawnDelay);
+		TriggerHealthGiver healthGiver = new TriggerHealthGiver(position, radius, healthPlus);
 		
 		triggerSystem.register(healthGiver);
 		
 		// Let the corresponding NavGraphNode point to this object
-		NavGraphNode<Trigger<RavenBot>> node = new NavGraphNode<Trigger<RavenBot>>(navGraph.getNextFreeNodeIndex(), position);
+		NavGraphNode<Trigger<IRavenBot>> node = new NavGraphNode<Trigger<IRavenBot>>(navGraph.getNextFreeNodeIndex(), position);
 		node.setExtraInfo(healthGiver);
 		navGraph.addNode(node);
 		
@@ -110,7 +111,7 @@ public class RavenMap {
 		triggerSystem.register(weaponGiver);
 		
 		// Create a corresponding navGraph node
-		NavGraphNode<Trigger<RavenBot>> node = new NavGraphNode<Trigger<RavenBot>>(navGraph.getNextFreeNodeIndex(), position);
+		NavGraphNode<Trigger<IRavenBot>> node = new NavGraphNode<Trigger<IRavenBot>>(navGraph.getNextFreeNodeIndex(), position);
 		node.setExtraInfo(weaponGiver);
 		navGraph.addNode(node);
 		
@@ -128,8 +129,8 @@ public class RavenMap {
 		EntityManager.registerEntity(door);
 	}
 	
-	public Trigger<RavenBot> addDoorTrigger(Vector2D topLeft, Vector2D bottomRight, RavenMessage msg, int receiver) {
-		TriggerOnButtonSendMsg<RavenBot> trigger = new TriggerOnButtonSendMsg<RavenBot>(topLeft, bottomRight, msg, receiver);
+	public Trigger<IRavenBot> addDoorTrigger(Vector2D topLeft, Vector2D bottomRight, RavenMessage msg, int receiver) {
+		TriggerOnButtonSendMsg<IRavenBot> trigger = new TriggerOnButtonSendMsg<IRavenBot>(topLeft, bottomRight, msg, receiver);
 		triggerSystem.register(trigger);
 		// register the entity
 		EntityManager.registerEntity(trigger);
@@ -155,13 +156,13 @@ public class RavenMap {
 	}
 	
 	public RavenMap() {
-		triggerSystem = new TriggerSystem<Trigger<RavenBot>>();
+		triggerSystem = new TriggerSystem<Trigger<IRavenBot>>();
 		doors = new ArrayList<RavenDoor>();
 		walls = new ArrayList<Wall2D>();
 		spawnPoints = new ArrayList<Vector2D>();
 		sizeX = sizeY = 500;
-		navGraph = new SparseGraph<NavGraphNode<Trigger<RavenBot>>, NavGraphEdge>();
-		spacePartition = new CellSpacePartition<NavGraphNode<Trigger<RavenBot>>>(0.0, 0.0, 0, 0, 0);
+		navGraph = new SparseGraph<NavGraphNode<Trigger<IRavenBot>>, NavGraphEdge>();
+		spacePartition = new CellSpacePartition<NavGraphNode<Trigger<IRavenBot>>>(0.0, 0.0, 0, 0, 0);
 		cellSpaceNeighborhoodRange = 0.0;
 	}
 	
@@ -190,7 +191,7 @@ public class RavenMap {
 		return wall;
 	}
 	
-	public void addSoundTrigger(RavenBot soundSource, double range) {
+	public void addSoundTrigger(IRavenBot soundSource, double range) {
 		triggerSystem.register(new TriggerSoundNotify(soundSource, range));
 	}
 	
@@ -226,13 +227,13 @@ public class RavenMap {
 		
 	}
 	
-	public void updateTriggerSystem(double delta, List<RavenBot> bots) {
+	public void updateTriggerSystem(double delta, List<IRavenBot> bots) {
 		triggerSystem.update(delta, bots);
 	}
 	
 	// Accessors
 	
-	public List<Trigger<RavenBot>> getTriggers() {
+	public List<Trigger<IRavenBot>> getTriggers() {
 		return triggerSystem.getTriggers();
 	}
 	
@@ -240,7 +241,7 @@ public class RavenMap {
 		return walls;
 	}
 	
-	public SparseGraph<NavGraphNode<Trigger<RavenBot>>, NavGraphEdge> getNavGraph() {
+	public SparseGraph<NavGraphNode<Trigger<IRavenBot>>, NavGraphEdge> getNavGraph() {
 		return navGraph;
 	}
 	
@@ -252,7 +253,7 @@ public class RavenMap {
 		return spawnPoints;
 	}
 	
-	public CellSpacePartition<NavGraphNode<Trigger<RavenBot>>> getCellSpace() {
+	public CellSpacePartition<NavGraphNode<Trigger<IRavenBot>>> getCellSpace() {
 		return spacePartition;
 	}
 	

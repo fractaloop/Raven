@@ -19,7 +19,6 @@ import raven.game.triggers.TriggerRegionCircle;
 import raven.game.triggers.TriggerRegionRectangle;
 import raven.game.triggers.TriggerSystem;
 import raven.game.triggers.TriggerWeaponGiver;
-import raven.math.CellSpacePartition;
 import raven.math.Vector2D;
 import raven.math.Wall2D;
 import raven.math.graph.SparseGraph;

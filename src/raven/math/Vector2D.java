@@ -14,15 +14,27 @@ public class Vector2D {
 	public double x;
 	public double y;
 	
+	/**
+	 * Initializes a Vector2D with x- and y-coordinates set to 0.
+	 */
 	public Vector2D() {
 		x = y = 0;
 	}
 	
+	/**
+	 * 
+	 * @param x X-coordinate
+	 * @param y Y-coordinate
+	 */
 	public Vector2D(double x, double y) {
 		this.x = x;
 		this.y = y;
 	}
 	
+	/**
+	 * Clones the x and y positions of the passed Vector2D.  Used as a deep copy.
+	 * @param pos
+	 */
 	public Vector2D(Vector2D pos) {
 		this.x = pos.x;
 		this.y = pos.y;

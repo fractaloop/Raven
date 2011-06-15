@@ -2,6 +2,7 @@ package raven.game.armory;
 
 import raven.game.RavenBot;
 import raven.game.RavenObject;
+import raven.game.interfaces.IRavenBot;
 import raven.game.messaging.Dispatcher;
 import raven.game.messaging.RavenMessage;
 import raven.math.Geometry;
@@ -14,7 +15,7 @@ public class Pellet extends RavenProjectile {
 	private double pelletTimePersist;
 
 
-	public Pellet(RavenBot shooter, Vector2D target) {
+	public Pellet(IRavenBot shooter, Vector2D target) {
 		super(target,
 				shooter.getWorld(),
 				shooter.ID(),
@@ -93,7 +94,7 @@ public class Pellet extends RavenProjectile {
 
 		//test to see if the ray between the current position of the shell and 
 		//the start position intersects with any bots.
-		RavenBot hit = GetClosestIntersectingBot(pos().sub(velocity), pos());
+		IRavenBot hit = GetClosestIntersectingBot(pos().sub(velocity), pos());
 
 		//if no bots hit just return;
 		if (hit == null)

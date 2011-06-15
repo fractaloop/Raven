@@ -1,6 +1,7 @@
 package raven.game.armory;
 
 import raven.game.RavenBot;
+import raven.game.interfaces.IRavenBot;
 import raven.game.messaging.Dispatcher;
 import raven.game.messaging.RavenMessage;
 import raven.math.Geometry;
@@ -13,7 +14,7 @@ public class Rocket extends RavenProjectile {
 	private double blastRadius; 
 	private double currentBlastRadius;
 
-	public Rocket(RavenBot shooter, Vector2D target) {
+	public Rocket(IRavenBot shooter, Vector2D target) {
 		super(target,
 				shooter.getWorld(),
 				shooter.ID(),
@@ -30,7 +31,7 @@ public class Rocket extends RavenProjectile {
 	}
 
 	private void InflictDamageOnBotsWithinBlastRadius(){
-		for (RavenBot curBot : world.getBots())
+		for (IRavenBot curBot : world.getBots())
 		{
 			if (position.distanceSq(curBot.pos()) < (blastRadius + curBot.getBRadius()))
 			{
@@ -55,7 +56,7 @@ public class Rocket extends RavenProjectile {
 
 		//test to see if the line segment connecting the rocket's current position
 		//and previous position intersects with any bots.
-		RavenBot hit = GetClosestIntersectingBot(pos().sub(velocity), pos());
+		IRavenBot hit = GetClosestIntersectingBot(pos().sub(velocity), pos());
 
 		//if hit
 		if (hit != null)

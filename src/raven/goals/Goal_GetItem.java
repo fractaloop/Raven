@@ -17,7 +17,7 @@ public class Goal_GetItem extends GoalComposite<RavenBot> {
 	//returns true if the bot sees that the item it is heading for has been
 	//picked up by an opponent
 
-	public Goal_GetItem(RavenBot m_pOwner, RavenObject item) throws Exception{
+	public Goal_GetItem(RavenBot m_pOwner, RavenObject item) {
 		super(m_pOwner, ItemTypeToGoalType(item));
 		m_iItemToGet = item;
 		m_bFollowingPath = false;
@@ -97,7 +97,7 @@ public class Goal_GetItem extends GoalComposite<RavenBot> {
 		} else return false;
 	}
 
-	static Goal.GoalType ItemTypeToGoalType(RavenObject gt) throws Exception {
+	static Goal.GoalType ItemTypeToGoalType(RavenObject gt){
 		switch(gt) {
 			case HEALTH:
 				return Goal.GoalType.goal_get_health;
@@ -107,8 +107,8 @@ public class Goal_GetItem extends GoalComposite<RavenBot> {
 				return Goal.GoalType.goal_get_railgun;
 			case ROCKET_LAUNCHER:
 				return Goal.GoalType.goal_get_rocket_launcher;
-			default: 
-				throw new Exception("Goal_GetItem cannot determine item type");
+			default:
+				return GoalType.unknown_type;
 		}//end switch
 	}
 }
