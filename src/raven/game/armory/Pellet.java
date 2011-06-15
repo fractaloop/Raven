@@ -24,9 +24,11 @@ public class Pellet extends RavenProjectile {
 				RavenScript.getInt("Pellet_Damage"),
 				RavenScript.getDouble("Pellet_Scale"),
 				RavenScript.getDouble("Pellet_MaxSpeed"),
-				RavenScript.getInt("Pellet_Mass"),
+				RavenScript.getDouble("Pellet_Mass"),
 				RavenScript.getDouble("Pellet_MaxForce"));
 		pelletTimePersist = RavenScript.getDouble("Pellet_Persistance");
+		setPos(shooter.pos());
+		
 	}
 
 
@@ -55,21 +57,28 @@ public class Pellet extends RavenProjectile {
 	{
 		if (!HasImpacted())
 		{
+//			System.out.println("velocity + " + velocity());
+			velocity = heading().mul(maxSpeed() * delta);
+//			System.out.println("velocity + " + velocity());
+
 			//calculate the steering force
 			Vector2D DesiredVelocity = this.velocity().mul(this.maxSpeed());
-
 			Vector2D sf = DesiredVelocity.sub(this.velocity());
-
 			//update the position
 			Vector2D accel = sf.div(this.mass());
+			System.out.println("velocity + " + velocity());
 
 			this.setVelocity(this.velocity().add(accel));
+			System.out.println("velocity + " + velocity());
 
 			//make sure vehicle does not exceed maximum velocity
 			this.velocity().truncate(this.maxSpeed());
+			System.out.println("velocity + " + velocity());
 
+//System.out.println("Position2 " + position);
 			//update the position
 			this.setPos(this.pos().add(this.velocity()));
+//System.out.println("Position3 " + position);
 
 			TestForImpact();
 		}
@@ -84,7 +93,9 @@ public class Pellet extends RavenProjectile {
 		//a shot gun shell is an instantaneous projectile so it only gets the chance
 		//to update once 
 		isImpacted = true;
-
+//System.out.println("origin + " + origin);
+//System.out.println("positon + " + position);
+//System.out.println("impactPoint + " + impactPoint);
 		//first find the closest wall that this ray intersects with. Then we
 		//can test against all entities within this range.
 		Double distToClosestImpact = Geometry.FindClosestPointOfIntersectionWithWalls(origin,

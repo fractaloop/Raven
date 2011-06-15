@@ -26,7 +26,7 @@ public class Bolt extends RavenProjectile {
 				RavenScript.getInt("Bolt_Damage"),
 				RavenScript.getDouble("Bolt_Scale"),
 				RavenScript.getDouble("Bolt_MaxSpeed"),
-				RavenScript.getInt("Bolt_Mass"),
+				RavenScript.getDouble("Bolt_Mass"),
 				RavenScript.getDouble("Bolt_MaxForce")
 		);	
 	}

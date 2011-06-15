@@ -23,7 +23,7 @@ public class Rocket extends RavenProjectile {
 				RavenScript.getInt("Rocket_Damage"),
 				RavenScript.getDouble("Rocket_Scale"),
 				RavenScript.getDouble("Rocket_MaxSpeed"),
-				RavenScript.getInt("Rocket_Mass"),
+				RavenScript.getDouble("Rocket_Mass"),
 				RavenScript.getDouble("Rocket_MaxForce")
 		);	
 		currentBlastRadius = 0.0;
