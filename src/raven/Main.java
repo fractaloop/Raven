@@ -5,7 +5,7 @@ import raven.ui.GameCanvas;
 import raven.ui.RavenUI;
 import raven.utils.Log;
 import raven.utils.Log.Level;
-
+//this is the human control version
 public class Main {
 	private static RavenUI ui;
 	private static RavenGame game;
