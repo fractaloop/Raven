@@ -86,6 +86,15 @@ public class RavenWeaponSystem {
 		weaponMap.put(RavenObject.BLASTER, currentWeapon);
 	}
 
+	//selected bot update crap
+	public void angryFire(double delta)
+	{
+		for (RavenWeapon weapon : weaponMap.values()) {
+			weapon.update(delta);
+			System.out.println("UPDATE from ANGRYFIRE");
+		}
+	}
+	
 	public void takeAimAndShoot(double delta) {
 		// Update all the weapon reload times first
 		

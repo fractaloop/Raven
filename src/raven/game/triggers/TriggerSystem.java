@@ -71,8 +71,12 @@ public class TriggerSystem<T extends Trigger> {
 		triggers.add(trigger);
 	}
 	
+	
+	//changed so only copies are rendered to avoid concurrent modification
 	public void render() {
-		for (T trigger : triggers) {
+		LinkedList<T> loctriggers = (LinkedList<T>)triggers.clone();
+		for (T trigger : loctriggers) {
+			if(trigger.isActive())
 			trigger.render();
 		}
 	}

@@ -102,10 +102,15 @@ public abstract class RavenWeapon {
 	}
 	
 	public boolean isReadyForNextShot(double delta) { 
-		return timeUntilAvailable > 0; 
+		return timeUntilAvailable < 0; 
 	}
 	
-	protected void UpdateTimeWeaponIsNextAvailable() { timeUntilAvailable = 1.0/rateOfFire; }
+	protected void UpdateTimeWeaponIsNextAvailable() { 
+		
+		timeUntilAvailable = 1.0/rateOfFire; 
+
+			
+	}
 	
 	protected abstract void InitializeFuzzyModule();
 
