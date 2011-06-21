@@ -69,6 +69,9 @@ public class Team extends BaseGameEntity implements ITeam
 	}
 	
 	///We may want to add a clear/remove team association. 
+	public void removeBot(IRavenBot draftee){
+		
+	}
 
 	
 	
