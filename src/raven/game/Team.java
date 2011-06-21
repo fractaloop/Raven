@@ -19,7 +19,18 @@ import java.util.ArrayList;
  * Other stuff- kill entity manager
  * make "loose bots"? Ask
  * add to iraven interface (?) In Progress
+ *
  * 
+ * Teams are based on a leader
+ * protect leader
+ * Find leader
+ * Scatter(Leader is dead)
+ * Kill enemy leader
+ * Murder defenders
+ * 
+ * Just different flavors of pursuit, or evade.
+ * Also there needs to be a way to tell the leader to move more slowly
+ * have more hit points, etc.  
  */
 
 
@@ -56,6 +67,8 @@ public class Team extends BaseGameEntity implements ITeam
 	public void DraftBot(IRavenBot draftee) {
 	//Ask if this works as a reference
 	}
+	
+	///We may want to add a clear/remove team association. 
 
 	
 	
