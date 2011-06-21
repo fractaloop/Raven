@@ -13,6 +13,8 @@ public class EntityManager {
 	
 	private static int availableID = 0;
 
+	///This system is not used, and should be removed. 
+	
 	public static synchronized int getAvailableID() {
 		int toReturn = availableID;
 		availableID++;
