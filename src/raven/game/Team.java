@@ -2,9 +2,9 @@ package raven.game;
 
 import raven.game.interfaces.ITeam;
 import raven.game.messaging.Telegram;
-import raven.game.RavenBot;
+//import raven.game.RavenBot;
 import raven.game.interfaces.IRavenBot;
-import raven.goals.GoalThink;
+//import raven.goals.GoalThink;
 
 import java.util.List;
 import raven.math.*;
@@ -65,10 +65,10 @@ public class Team extends BaseGameEntity implements ITeam
 	
 	@Override
 	public boolean handleMessage(Telegram msg) {
-		// first see if the current goal accepts the message
-		// We also need to implement the ability to handle a 
+		// We need to implement the ability to handle a 
 		// broad or multicast.
-
+		// we could treat every message to the team as multicast
+		
 	return false;
 	}
 	//		TEAM_RED,TEAM_GREEN

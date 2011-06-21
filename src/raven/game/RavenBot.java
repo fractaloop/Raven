@@ -21,6 +21,15 @@ public class RavenBot extends MovingEntity implements IRavenBot {
 	private enum Status {
 		ALIVE, DEAD, SPAWNING
 	}
+	
+	////Since we're eliminating the entity manager
+	////we need to know which team a newly created bot
+	////Should join -Brendan
+	private enum teamToJoin{
+		RED,BLUE
+	}
+	//We need to modify the constructor
+	static private teamToJoin lastJoined;
 
 	/** alive, dead or spawning? */
 	private Status status;
