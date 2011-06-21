@@ -389,7 +389,13 @@ public class RavenBot extends MovingEntity implements IRavenBot {
 			// and takes a shot if a shot is possible
 			weaponSys.takeAimAndShoot(delta);
 		}
+		//selected bot crap
+		if(isPossessed())
+		{
+			weaponSys.angryFire(delta);
+		}
 
+		
 	}
 
 	@Override
