@@ -160,12 +160,6 @@ public class Geometry {
 			Vector2D point = new Vector2D();
 			if (lineIntersection2D(A, B, wall.from(), wall.to(), dist, point))
 			{
-				System.out.println("A - " + A);
-				System.out.println("B - " + B);
-				System.out.println("wallfrom - " + wall.from());
-				System.out.println("wallto - " + wall.to());
-				System.out.println("dist - " + dist);
-
 				if (dist < distance)
 				{
 					distance = dist;
