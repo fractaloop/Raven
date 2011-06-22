@@ -63,19 +63,24 @@ public class Blaster extends RavenWeapon {
 	@Override
 	public void ShootAt(Vector2D position){
 		if(timeUntilAvailable <= 0){
+			//causing users to be unable to shoot, changing causes instability, originally 0
+			//because this class overwrites shootat(), all weapons need to be edited.
 			getOwner().getWorld().addBolt(getOwner(), position);
-
+			
 			//time next available is 1second/times per second!
 			UpdateTimeWeaponIsNextAvailable();
-
+			
 			getOwner().getWorld().getMap().addSoundTrigger(getOwner(), RavenScript.getDouble("Blaster_SoundRange"));
+			
+			
 		}
+		System.out.println("time left: " + timeUntilAvailable);
 	}
 
 	@Override
 	public double GetDesireability(double distanceToTarget){
 		getFuzzyModule().Fuzzify("DistToTarget", distanceToTarget);
-		double desire = getFuzzyModule().Defuzzify("Desireability", FuzzyModule.DefuzzifyMethod.max_av);
+		double desire = getFuzzyModule().Defuzzify("Desirability", FuzzyModule.DefuzzifyMethod.max_av);
 		setLastDesireability(desire);
 
 		return desire;

@@ -314,6 +314,11 @@ public class RavenUI extends JFrame implements KeyListener, MouseListener, Compo
 
 	@Override
 	public void keyPressed(KeyEvent event) {
+		boolean spaceK=false;
+		boolean wkey=false;
+		boolean akey=false;
+		boolean skey=false;
+		boolean dkey=false;
 		switch (event.getKeyCode()) {
 		case KeyEvent.VK_ESCAPE:
 			Log.info("raven", "Exiting...");
@@ -334,6 +339,33 @@ public class RavenUI extends JFrame implements KeyListener, MouseListener, Compo
 			break;
 		case KeyEvent.VK_X:
 			game.exorciseAnyPossessedBot();
+			break;
+			
+		case KeyEvent.VK_W:
+			 wkey=true;
+		     game.pressWkey(wkey);
+			break;
+		case KeyEvent.VK_A:
+			 akey=true;
+		     game.pressAkey(akey);
+			break;
+		case KeyEvent.VK_S:
+			 skey=true;
+		     game.pressSkey(skey);
+			break;
+		case KeyEvent.VK_D:
+			 dkey=true;
+		     game.pressDkey(dkey);
+			break;
+			
+		case KeyEvent.VK_SPACE:
+			spaceK=true;
+			//MouseEvent events;
+			//Vector2D spot = new Vector2D(events.getPoint().x, events.getPoint().y);
+			Point location = MouseInfo.getPointerInfo().getLocation();
+			Point canvas = GameCanvas.getInstance().getLocationOnScreen();
+			Vector2D spot = new Vector2D(location.x - canvas.x, location.y - canvas.y);
+			game.pressSpace(spot, spaceK);
 			break;
 		}
 	}
