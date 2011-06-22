@@ -86,9 +86,6 @@ public class Pellet extends RavenProjectile {
 		//a shot gun shell is an instantaneous projectile so it only gets the chance
 		//to update once 
 		isImpacted = true;
-System.out.println("origin + " + origin);
-System.out.println("positon + " + position);
-System.out.println("impactPoint + " + impactPoint);
 		//first find the closest wall that this ray intersects with. Then we
 		//can test against all entities within this range.
 		Double distToClosestImpact = Geometry.FindClosestPointOfIntersectionWithWalls(origin,
