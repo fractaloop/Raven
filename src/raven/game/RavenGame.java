@@ -537,6 +537,57 @@ public class RavenGame {
 	 * @param p
 	 *            the location clicked
 	 */
+	
+	public void pressWkey( boolean wkey)
+	{
+		if(wkey)
+		{
+			selectedBot.getBrain().removeAllSubgoals();
+			System.out.println("	PRESSED W KEY");
+		Vector2D bob = new Vector2D(selectedBot.pos().x, selectedBot.pos().y - 15);
+		selectedBot.getBrain().queueGoal_moveToPosition(selectedBot.pos(), bob);
+		}
+	}
+	public void pressAkey( boolean akey)
+	{
+		
+		if(akey)
+		{
+			selectedBot.getBrain().removeAllSubgoals();
+		Vector2D bob = new Vector2D(selectedBot.pos().x - 15, selectedBot.pos().y);
+		selectedBot.getBrain().queueGoal_moveToPosition(selectedBot.pos(), bob);
+		}
+	}
+	public void pressSkey( boolean skey)
+	{
+		if(skey)
+		{
+			selectedBot.getBrain().removeAllSubgoals();
+		Vector2D bob = new Vector2D(selectedBot.pos().x, selectedBot.pos().y + 15);
+		selectedBot.getBrain().queueGoal_moveToPosition(selectedBot.pos(), bob);
+		}
+	}
+	public void pressDkey( boolean dkey)
+	{
+		if(dkey)
+		{
+			selectedBot.getBrain().removeAllSubgoals();
+		Vector2D bob = new Vector2D(selectedBot.pos().x + 15 , selectedBot.pos().y);
+		selectedBot.getBrain().queueGoal_moveToPosition(selectedBot.pos(), bob);
+		}
+	}
+	public void pressSpace(Vector2D mouseP, boolean spaceK)
+	{
+	   if(spaceK)
+	   {   
+		   
+		selectedBot.fireWeapon(mouseP);
+	    System.out.println("SHOOT!!!!!!");
+		Log.debug("game", "Fired possessed bot weapon");
+        spaceK=false;
+        //selectedBot.update(delta);
+	   }
+	}
 	public void clickRightMouseButton(Vector2D p, boolean shiftKeyPressed) {
 		IRavenBot bot = getBotAtPosition(p);
 		

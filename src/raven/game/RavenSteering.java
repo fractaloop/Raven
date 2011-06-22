@@ -42,7 +42,8 @@ public class RavenSteering {
 		ARRIVE(4),
 		WANDER(8),
 		SEPARATION(16),
-		WALL_AVOIDANCE(32);
+		WALL_AVOIDANCE(32),
+		PURSUIT(64);
 
 		private int value;
 		private BehaviorType(int i) {value = i;}
@@ -85,6 +86,7 @@ public class RavenSteering {
 	 * appropriate behavior. */
 	private double        weightSeparation;
 	private double        weightWander;
+	private double        weightPursuit;
 	private double        weightWallAvoidance;
 	private double        weightSeek;
 	private double        weightArrive;
@@ -236,6 +238,23 @@ public class RavenSteering {
 		//and steer towards it
 		return Target.sub(ravenBot.pos()); 
 
+	}
+	
+	
+	private Vector2D pursuit(RavenBot target) {
+
+		Vector2D toTarget = target.pos().sub(ravenBot.pos());
+		
+		double RelativeHeading = ravenBot.heading().dot(target.heading());
+		
+		if ((toTarget.dot(ravenBot.heading()) > 0) && (RelativeHeading < -0.95))
+		{
+			return seek(target.pos());
+		}
+		
+		double LookAheadTime = toTarget.length() / (ravenBot.maxSpeed() + target.speed());
+		
+		return seek(target.pos().add(target.velocity().mul(LookAheadTime)));
 	}
 
 	/** this returns a steering force which will keep the agent away from any
@@ -394,7 +413,12 @@ public class RavenSteering {
 
 			if (!accumulateForce(steeringForce, force)) return steeringForce;
 		}
+		if (On(BehaviorType.PURSUIT))
+		{
+			force = pursuit(ravenBot).mul(weightPursuit);
 
+			if (!accumulateForce(steeringForce, force)) return steeringForce;
+		}
 
 		return steeringForce;
 	}
@@ -469,12 +493,14 @@ public class RavenSteering {
 	public void seekOn() { flags |= BehaviorType.SEEK.getValue(); }
 	public void arriveOn() { flags |= BehaviorType.ARRIVE.getValue(); }
 	public void wanderOn() { flags |= BehaviorType.WANDER.getValue(); }
+	public void pursuitOn() { flags |= BehaviorType.PURSUIT.getValue(); }
 	public void separationOn() { flags |= BehaviorType.SEPARATION.getValue(); }
 	public void wallAvoidanceOn() { flags |= BehaviorType.WALL_AVOIDANCE.getValue(); }
 
 	public void seekOff() { if(On(BehaviorType.SEEK)) flags ^= BehaviorType.SEEK.getValue(); }
 	public void arriveOff() { if(On(BehaviorType.ARRIVE)) flags ^= BehaviorType.ARRIVE.getValue(); }
 	public void wanderOff() { if(On(BehaviorType.WANDER)) flags ^= BehaviorType.WANDER.getValue(); }
+	public void pursuitOff() { if(On(BehaviorType.PURSUIT)) flags ^= BehaviorType.PURSUIT.getValue(); }
 	public void separationOff() { if(On(BehaviorType.SEPARATION)) flags ^= BehaviorType.SEPARATION.getValue(); }
 	public void wallAvoidanceOff() { if(On(BehaviorType.WALL_AVOIDANCE)) flags ^= BehaviorType.WALL_AVOIDANCE.getValue(); }
 	public boolean seekIsOn() { return On(BehaviorType.SEEK); }

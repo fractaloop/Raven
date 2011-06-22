@@ -123,6 +123,9 @@ public class RocketLauncher extends RavenWeapon {
 			desire = getFuzzyModule().Defuzzify("Desirability", FuzzyModule.DefuzzifyMethod.max_av);
 			setLastDesireability(desire);
 		}
+		
+		// if out of ammo, do not choose weapon
+		if (getRoundsRemaining() == 0) { desire = 0; }
 
 		return desire;
 	}
