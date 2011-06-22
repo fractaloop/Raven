@@ -28,6 +28,7 @@ public class Pellet extends RavenProjectile {
 				RavenScript.getDouble("Pellet_MaxForce"));
 		pelletTimePersist = RavenScript.getDouble("Pellet_Persistance");
 		setPos(shooter.pos());
+		setHeading(target);
 		
 	}
 

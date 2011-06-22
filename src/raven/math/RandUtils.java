@@ -18,6 +18,6 @@ public class RandUtils {
 	 */
 	public static double RandInRange(double start, double end)
 	{
-		return Math.random() * (end - start) + start;
+		return Math.random() * ((end - start) + start);
 	}
 }

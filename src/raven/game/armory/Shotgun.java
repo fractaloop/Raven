@@ -97,7 +97,6 @@ public class Shotgun extends RavenWeapon {
 				//determine deviation from target using a bell curve type distribution
 
 				double deviation = RandUtils.RandInRange(0, spread) + RandUtils.RandInRange(0, spread) - spread;
-
 				Vector2D AdjustedTarget = position.sub(getOwner().pos());
 
 				//rotate the target vector by the deviation

@@ -7,9 +7,7 @@ public class Transformations {
 
 	public static void Vec2DRotateAroundOrigin(Vector2D v, double angle) {
 		C2DMatrix mat = new C2DMatrix();
-		
 		mat.rotate(angle);
-		
 		mat.transformVector2Ds(v);
 	}
 	

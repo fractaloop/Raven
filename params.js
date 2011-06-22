@@ -174,7 +174,7 @@ var ShotGun_FiringFreq          = 1;
 var ShotGun_DefaultRounds       = 15;
 var ShotGun_MaxRoundsCarried    = 50;
 var ShotGun_NumBallsInShell     = 20;
-var ShotGun_Spread              = 0.05;
+var ShotGun_Spread              = .5;
 var ShotGun_IdealRange          = 100;
 var ShotGun_SoundRange          = 400;
 
