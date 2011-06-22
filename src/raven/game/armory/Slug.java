@@ -109,6 +109,7 @@ public class Slug extends RavenProjectile {
 		{
 			isDead = true;
 		}
+		slugTimePersist -= delta;
 	}
 
 
