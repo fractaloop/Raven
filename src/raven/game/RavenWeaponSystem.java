@@ -84,8 +84,14 @@ public class RavenWeaponSystem {
 		weaponMap = new HashMap<RavenObject, RavenWeapon>();
 		
 		// set up the container
+		currentWeapon = new Shotgun(owner);
+		weaponMap.put(RavenObject.SHOTGUN, currentWeapon);
 		currentWeapon = new Blaster(owner);
 		weaponMap.put(RavenObject.BLASTER, currentWeapon);
+		currentWeapon = new Railgun(owner);
+		weaponMap.put(RavenObject.RAIL_GUN, currentWeapon);
+		currentWeapon = new RocketLauncher(owner);
+		weaponMap.put(RavenObject.ROCKET_LAUNCHER, currentWeapon);
 	}
 
 	//selected bot update crap
@@ -175,7 +181,7 @@ public class RavenWeaponSystem {
 				}
 			}
 		} else {
-			currentWeapon = weaponMap.get(RavenObject.BLASTER);
+			changeWeapon(RavenObject.BLASTER);
 		}
 	}
 
