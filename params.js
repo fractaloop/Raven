@@ -141,7 +141,7 @@ var Bolt_MaxSpeed               = 400;
 var Bolt_Mass                   = 1;
 var Bolt_MaxForce               = 100.0;
 var Bolt_Scale                  = Bot_Scale;
-var Bolt_Damage                 = 15;
+var Bolt_Damage                 = 5;
 
 var RocketLauncher_FiringFreq   = 1.2;
 var RocketLauncher_DefaultRounds    = 15;
@@ -154,7 +154,7 @@ var Rocket_MaxSpeed             = 250;
 var Rocket_Mass                 = 1;
 var Rocket_MaxForce             = 10.0;
 var Rocket_Scale                = Bot_Scale;
-var Rocket_Damage               = 100;
+var Rocket_Damage               = 80;
 var Rocket_ExplosionDecayRate   = 2.0; // how fast the explosion occurs (in secs)
 
 var RailGun_FiringFreq          = 1;
@@ -168,13 +168,13 @@ var Slug_Mass                   = 0.1;
 var Slug_MaxForce               = 10000.0;
 var Slug_Scale                  = Bot_Scale;
 var Slug_Persistance            = 1.0;
-var Slug_Damage                 = 100;
+var Slug_Damage                 = 49;
 
 var ShotGun_FiringFreq          = 1;
 var ShotGun_DefaultRounds       = 15;
 var ShotGun_MaxRoundsCarried    = 50;
 var ShotGun_NumBallsInShell     = 20;
-var ShotGun_Spread              = 0.05;
+var ShotGun_Spread              = 0.5;
 var ShotGun_IdealRange          = 100;
 var ShotGun_SoundRange          = 400;
 
@@ -183,4 +183,4 @@ var Pellet_Mass                 = 0.1;
 var Pellet_MaxForce             = 1000.0;
 var Pellet_Scale                = Bot_Scale;
 var Pellet_Persistance          = 1.0;
-var Pellet_Damage               = 6;
+var Pellet_Damage               = 4;
