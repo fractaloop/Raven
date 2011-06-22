@@ -6,6 +6,7 @@ import raven.game.BaseGameEntity;
 import raven.game.RavenBot;
 import raven.game.interfaces.IRavenBot;
 import raven.math.Vector2D;
+import raven.script.RavenScript;
 
 @XStreamAlias("Trigger")
 public abstract class Trigger<T extends IRavenBot> extends BaseGameEntity {
@@ -22,6 +23,10 @@ public abstract class Trigger<T extends IRavenBot> extends BaseGameEntity {
 	protected void setActive() { active = true; }
 	
 	protected boolean isTouchingTrigger(Vector2D entityPos, double entityRadius) {
+		if (regionOfInfluence == null) {
+			regionOfInfluence = new TriggerRegionCircle(position, RavenScript.getInt("DefaultGiverTriggerRange"));
+			return regionOfInfluence.isTouching(entityPos, entityRadius);
+		}
 		if (regionOfInfluence != null) {
 			return regionOfInfluence.isTouching(entityPos, entityRadius);
 		}
