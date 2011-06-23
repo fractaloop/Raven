@@ -104,7 +104,6 @@ public class RavenWeaponSystem {
 	{
 		for (RavenWeapon weapon : weaponMap.values()) {
 			weapon.update(delta);
-			System.out.println("UPDATE from ANGRYFIRE");
 		}
 	}
 	
@@ -188,7 +187,7 @@ public class RavenWeaponSystem {
 				double score = weapon.getValue().GetDesireability(distToTarget);
 				
 				if (curTime - lastTime >= 500) {
-					Log.info("debug", weapon.getValue().getWeaponType().toString() + " - " + Double.toString(score));
+//					Log.info("debug", weapon.getValue().getWeaponType().toString() + " - " + Double.toString(score));
 				}
 				
 				if (score > bestSoFar) {

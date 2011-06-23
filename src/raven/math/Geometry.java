@@ -136,9 +136,8 @@ public class Geometry {
 		if( (r > 0) && (r < 1) && (s > 0) && (s < 1) )
 		{
 			distToThisIP = A.distance(B) * r;
-
 			point.setValue(A.add(B.sub(A).mul(r)));
-						return true;
+			return true;
 		}
 
 		else

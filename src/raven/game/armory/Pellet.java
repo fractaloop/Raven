@@ -28,7 +28,6 @@ public class Pellet extends RavenProjectile {
 				RavenScript.getDouble("Pellet_MaxForce"));
 		pelletTimePersist = RavenScript.getDouble("Pellet_Persistance");
 		setPos(shooter.pos());
-		setHeading(target);
 		
 	}
 
@@ -58,10 +57,12 @@ public class Pellet extends RavenProjectile {
 	{
 		if (!HasImpacted())
 		{
-			velocity = heading().mul(maxSpeed() * delta);
+			Vector2D velocity2 = vTarget.sub(pos());
+			velocity2 = velocity2.mul(maxSpeed() * delta);
 
 			//calculate the steering force
-			Vector2D DesiredVelocity = this.velocity().mul(this.maxSpeed());
+			Vector2D DesiredVelocity = velocity2;
+			DesiredVelocity.normalize();
 			Vector2D sf = DesiredVelocity.sub(this.velocity());
 			//update the position
 			Vector2D accel = sf.div(this.mass());
@@ -101,7 +102,6 @@ public class Pellet extends RavenProjectile {
 		//if no bots hit just return;
 		if (hit == null)
 			return;
-
 		//determine the impact point with the bot's bounding circle so that the
 		//shell can be rendered properly
 		// note: this will not be null since we already know it hit it!

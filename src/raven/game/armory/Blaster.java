@@ -74,7 +74,7 @@ public class Blaster extends RavenWeapon {
 			
 			
 		}
-		System.out.println("time left: " + timeUntilAvailable);
+//		System.out.println("time left: " + timeUntilAvailable);
 	}
 
 	@Override

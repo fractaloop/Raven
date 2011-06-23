@@ -174,7 +174,7 @@ var ShotGun_FiringFreq          = 1;
 var ShotGun_DefaultRounds       = 15;
 var ShotGun_MaxRoundsCarried    = 50;
 var ShotGun_NumBallsInShell     = 20;
-var ShotGun_Spread              = .5;
+var ShotGun_Spread              = 0.05;
 var ShotGun_IdealRange          = 100;
 var ShotGun_SoundRange          = 400;
 
@@ -182,5 +182,5 @@ var Pellet_MaxSpeed             = 5000;
 var Pellet_Mass                 = 0.1;
 var Pellet_MaxForce             = 1000.0;
 var Pellet_Scale                = Bot_Scale;
-var Pellet_Persistance          = 1.0;
+var Pellet_Persistance          = .5;
 var Pellet_Damage               = 4;
