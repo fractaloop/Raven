@@ -52,5 +52,6 @@ public interface IRavenBot {
 	public boolean hasLOSto(Vector2D aimingPos);
 	public Vector2D heading();
 	public boolean handleMessage(Telegram msg);
+	public void setBrain(GoalThink think);
 	
 }

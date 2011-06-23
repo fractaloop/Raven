@@ -571,7 +571,10 @@ public class RavenBot extends MovingEntity implements IRavenBot {
 	public void setAlive() {
 		status = Status.ALIVE;
 	}
-
+	public void setBrain(GoalThink think) {
+		brain.removeAllSubgoals();
+		brain = think;
+	}
 	/**
 	 * returns a value indicating the time in seconds it will take the bot to
 	 * reach the given position at its current speed.
