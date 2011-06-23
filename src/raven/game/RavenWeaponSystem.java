@@ -93,10 +93,6 @@ public class RavenWeaponSystem {
 		weaponMap.put(RavenObject.SHOTGUN, currentWeapon);
 		currentWeapon = new Blaster(owner);
 		weaponMap.put(RavenObject.BLASTER, currentWeapon);
-		currentWeapon = new Railgun(owner);
-		weaponMap.put(RavenObject.RAIL_GUN, currentWeapon);
-		currentWeapon = new RocketLauncher(owner);
-		weaponMap.put(RavenObject.ROCKET_LAUNCHER, currentWeapon);
 	}
 
 	//selected bot update crap
@@ -128,7 +124,7 @@ public class RavenWeaponSystem {
 			if (owner.rotateFacingTowardPosition(aimingPos, delta)
 					&& owner.getTargetSys().getTimeTargetHasBeenVisible() > reactionTime
 					&& owner.hasLOSto(aimingPos)) {
-				aimingPos = predictFuturePositionOfTarget();
+				//aimingPos = predictFuturePositionOfTarget();
 				
 				// if the weapon is aimed correctly, there is line of sight
 				// between the bot and the aiming position and it has been in
@@ -137,7 +133,7 @@ public class RavenWeaponSystem {
 				if (owner.rotateFacingTowardPosition(aimingPos, delta)
 						&& owner.getTargetSys().getTimeTargetHasBeenVisible() > reactionTime
 						&& owner.hasLOSto(aimingPos)) {
-					addNoiseToAim(aimingPos);
+					//addNoiseToAim(aimingPos);
 					
 					getCurrentWeapon().ShootAt(aimingPos);
 
@@ -150,7 +146,7 @@ public class RavenWeaponSystem {
 				if (owner.rotateFacingTowardPosition(aimingPos, delta)
 						&& owner.getTargetSys().getTimeTargetHasBeenVisible() > reactionTime
 						&& owner.hasLOSto(aimingPos)) {
-					addNoiseToAim(aimingPos);
+					//addNoiseToAim(aimingPos);
 					
 					getCurrentWeapon().ShootAt(aimingPos);
 				}

@@ -46,6 +46,8 @@ public class Pellet extends RavenProjectile {
 	{
 		if ((pelletTimePersist > 0) && HasImpacted()) {
 			GameCanvas.yellowPen();
+System.out.println(origin + " - origin");
+System.out.println(impactPoint + " - impactPoint");
 			GameCanvas.line(origin, impactPoint);
 
 			GameCanvas.brownBrush();
@@ -57,12 +59,23 @@ public class Pellet extends RavenProjectile {
 	{
 		if (!HasImpacted())
 		{
-			Vector2D velocity2 = vTarget.sub(pos());
-			velocity2 = velocity2.mul(maxSpeed() * delta);
+
+//			Vector2D velocity2 = vTarget.sub(pos());
+//			velocity2 = velocity2.mul(maxSpeed() * delta);
 
 			//calculate the steering force
-			Vector2D DesiredVelocity = velocity2;
-			DesiredVelocity.normalize();
+//			Vector2D DesiredVelocity = velocity2;
+//			DesiredVelocity.normalize();
+	
+//			velocity = heading().mul(maxSpeed() * delta);
+//			vTarget.normalize();
+			velocity = vTarget.mul(maxSpeed() * delta);
+//System.out.println(heading());
+//System.out.println(vTarget);
+			//calculate the steering force
+			Vector2D DesiredVelocity = this.velocity().mul(this.maxSpeed());
+			DesiredVelocity = DesiredVelocity.mul(maxSpeed());
+
 			Vector2D sf = DesiredVelocity.sub(this.velocity());
 			//update the position
 			Vector2D accel = sf.div(this.mass());
@@ -90,6 +103,7 @@ public class Pellet extends RavenProjectile {
 		isImpacted = true;
 		//first find the closest wall that this ray intersects with. Then we
 		//can test against all entities within this range.
+System.out.println("setting impactPoint from findclosest point of intersection with walls");
 		Double distToClosestImpact = Geometry.FindClosestPointOfIntersectionWithWalls(origin,
 				position,
 				impactPoint,
@@ -105,6 +119,7 @@ public class Pellet extends RavenProjectile {
 		//determine the impact point with the bot's bounding circle so that the
 		//shell can be rendered properly
 		// note: this will not be null since we already know it hit it!
+System.out.println("Setting impactPoint from getLineSegment...");
 		impactPoint = Geometry.GetLineSegmentCircleClosestIntersectionPoint(origin,
 				impactPoint,
 				hit.pos(),

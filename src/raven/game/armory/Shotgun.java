@@ -101,8 +101,9 @@ public class Shotgun extends RavenWeapon {
 
 				//rotate the target vector by the deviation
 				Transformations.Vec2DRotateAroundOrigin(AdjustedTarget, deviation);
+				AdjustedTarget.normalize();
 				//add a pellet to the game world
-				getOwner().getWorld().addShotGunPellet(getOwner(), AdjustedTarget.add(getOwner().pos()));
+				getOwner().getWorld().addShotGunPellet(getOwner(), AdjustedTarget);
 			}
 
 			decrementRoundsLeft();
