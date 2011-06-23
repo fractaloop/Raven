@@ -137,15 +137,13 @@ public class Geometry {
 		{
 			distToThisIP = A.distance(B) * r;
 
-			point = A.add(B.sub(A).mul(r));
-
-			return true;
+			point.setValue(A.add(B.sub(A).mul(r)));
+						return true;
 		}
 
 		else
 		{
 			distToThisIP = 0.0;
-
 			return false;
 		}
 	}
@@ -160,7 +158,6 @@ public class Geometry {
 		{
 			double dist = 0.0;
 			Vector2D point = new Vector2D();
-
 			if (lineIntersection2D(A, B, wall.from(), wall.to(), dist, point))
 			{
 				if (dist < distance)

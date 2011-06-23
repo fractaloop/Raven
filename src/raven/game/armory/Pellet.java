@@ -24,9 +24,11 @@ public class Pellet extends RavenProjectile {
 				RavenScript.getInt("Pellet_Damage"),
 				RavenScript.getDouble("Pellet_Scale"),
 				RavenScript.getDouble("Pellet_MaxSpeed"),
-				RavenScript.getInt("Pellet_Mass"),
+				RavenScript.getDouble("Pellet_Mass"),
 				RavenScript.getDouble("Pellet_MaxForce"));
 		pelletTimePersist = RavenScript.getDouble("Pellet_Persistance");
+		setPos(shooter.pos());
+		
 	}
 
 
@@ -55,11 +57,11 @@ public class Pellet extends RavenProjectile {
 	{
 		if (!HasImpacted())
 		{
+			velocity = heading().mul(maxSpeed() * delta);
+
 			//calculate the steering force
 			Vector2D DesiredVelocity = this.velocity().mul(this.maxSpeed());
-
 			Vector2D sf = DesiredVelocity.sub(this.velocity());
-
 			//update the position
 			Vector2D accel = sf.div(this.mass());
 
@@ -84,7 +86,6 @@ public class Pellet extends RavenProjectile {
 		//a shot gun shell is an instantaneous projectile so it only gets the chance
 		//to update once 
 		isImpacted = true;
-
 		//first find the closest wall that this ray intersects with. Then we
 		//can test against all entities within this range.
 		Double distToClosestImpact = Geometry.FindClosestPointOfIntersectionWithWalls(origin,
