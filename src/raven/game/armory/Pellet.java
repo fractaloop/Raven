@@ -46,8 +46,8 @@ public class Pellet extends RavenProjectile {
 	{
 		if ((pelletTimePersist > 0) && HasImpacted()) {
 			GameCanvas.yellowPen();
-System.out.println(origin + " - origin");
-System.out.println(impactPoint + " - impactPoint");
+//System.out.println(origin + " - origin");
+//System.out.println(impactPoint + " - impactPoint");
 			GameCanvas.line(origin, impactPoint);
 
 			GameCanvas.brownBrush();
@@ -103,7 +103,9 @@ System.out.println(impactPoint + " - impactPoint");
 		isImpacted = true;
 		//first find the closest wall that this ray intersects with. Then we
 		//can test against all entities within this range.
-System.out.println("setting impactPoint from findclosest point of intersection with walls");
+//System.out.println("setting impactPoint from findclosest point of intersection with walls");
+//System.out.println(origin);
+//System.out.println(impactPoint);
 		Double distToClosestImpact = Geometry.FindClosestPointOfIntersectionWithWalls(origin,
 				position,
 				impactPoint,
@@ -119,12 +121,14 @@ System.out.println("setting impactPoint from findclosest point of intersection w
 		//determine the impact point with the bot's bounding circle so that the
 		//shell can be rendered properly
 		// note: this will not be null since we already know it hit it!
-System.out.println("Setting impactPoint from getLineSegment...");
+//System.out.println("Setting impactPoint from getLineSegment...");
+//System.out.println(origin);
+//System.out.println(impactPoint);
+
 		impactPoint = Geometry.GetLineSegmentCircleClosestIntersectionPoint(origin,
 				impactPoint,
 				hit.pos(),
 				hit.getBRadius());
-
 		//send a message to the bot to let it know it's been hit, and who the
 		//shot came from
 		Dispatcher.dispatchMsg(Dispatcher.SEND_MSG_IMMEDIATELY,

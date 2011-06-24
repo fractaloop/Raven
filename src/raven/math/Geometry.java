@@ -137,6 +137,7 @@ public class Geometry {
 		{
 			distToThisIP = A.distance(B) * r;
 			point.setValue(A.add(B.sub(A).mul(r)));
+
 			return true;
 		}
 
@@ -186,8 +187,11 @@ public class Geometry {
 		  //point A so there is no intersection possible. If the local x pos minus the 
 		  //radius is greater than length A-B then the circle cannot intersect the 
 		  //line segment
-		  if ( (LocalPos.x+radius >= 0) &&
-		     ( (LocalPos.x-radius)*(LocalPos.x-radius) <= B.distanceSq(A)) )
+//System.out.println("LocalPos.x+radius " + LocalPos.x+radius);
+//System.out.println("LocalPos.x-radius squared " + ((LocalPos.x-radius)*(LocalPos.x-radius)));
+//System.out.println("B.distanceSq(A) " + B.distanceSq(A));
+		  if ( (LocalPos.x+radius >= 0) )//&&
+		     //( (LocalPos.x-radius)*(LocalPos.x-radius) <= B.distanceSq(A)) )
 		  {
 		     //if the distance from the x axis to the object's position is less
 		     //than its radius then there is a potential intersection.
