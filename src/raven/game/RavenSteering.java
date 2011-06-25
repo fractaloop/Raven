@@ -11,6 +11,7 @@ import raven.math.Vector2D;
 import raven.math.Wall2D;
 import raven.script.RavenScript;
 import raven.ui.GameCanvas;
+import raven.utils.DistanceHolder;
 
 //------------------------------------------------------------------------
 
@@ -263,7 +264,8 @@ public class RavenSteering {
 		//the feelers are contained in a std::vector, m_Feelers
 		createFeelers();
 
-		Double DistToThisIP    = 0.0;
+		DistanceHolder DistToThisIP    = new DistanceHolder();
+		DistToThisIP.dist = 0.0;
 		double DistToClosestIP = Double.MAX_VALUE;
 
 		//this will hold an index into the vector of walls
@@ -287,9 +289,9 @@ public class RavenSteering {
 						point))
 				{
 					//is this the closest found so far? If so keep a record
-							if (DistToThisIP < DistToClosestIP)
+							if (DistToThisIP.dist < DistToClosestIP)
 							{
-								DistToClosestIP = DistToThisIP;
+								DistToClosestIP = DistToThisIP.dist;
 
 								ClosestWall = w;
 

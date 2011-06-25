@@ -2,6 +2,7 @@ package raven.math;
 
 import java.util.List;
 
+import raven.utils.DistanceHolder;
 import raven.utils.Log;
 
 public class Geometry {
@@ -117,7 +118,7 @@ public class Geometry {
 		return null;
 	}
 
-	public static boolean lineIntersection2D(Vector2D A, Vector2D B, Vector2D C, Vector2D D, Double distToThisIP, Vector2D point) {
+	public static boolean lineIntersection2D(Vector2D A, Vector2D B, Vector2D C, Vector2D D, DistanceHolder distToThisIP, Vector2D point) {
 		double rTop = (A.y-C.y)*(D.x-C.x)-(A.x-C.x)*(D.y-C.y);
 		double rBot = (B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x);
 
@@ -135,7 +136,7 @@ public class Geometry {
 
 		if( (r > 0) && (r < 1) && (s > 0) && (s < 1) )
 		{
-			distToThisIP = A.distance(B) * r;
+			distToThisIP.dist = A.distance(B) * r;
 			point.setValue(A.add(B.sub(A).mul(r)));
 
 			return true;
@@ -143,7 +144,7 @@ public class Geometry {
 
 		else
 		{
-			distToThisIP = 0.0;
+			distToThisIP.dist = 0.0;
 			return false;
 		}
 	}
@@ -156,13 +157,14 @@ public class Geometry {
 		
 		for (Wall2D wall : walls)
 		{
-			double dist = 0.0;
+			DistanceHolder dist = new DistanceHolder();
+			dist.dist = 0.0;
 			Vector2D point = new Vector2D();
 			if (lineIntersection2D(A, B, wall.from(), wall.to(), dist, point))
 			{
-				if (dist < distance)
+				if (dist.dist < distance)
 				{
-					distance = dist;
+					distance = dist.dist;
 					if(impactPoint == null) impactPoint = new Vector2D();
 					impactPoint.setValue(point);
 				}
