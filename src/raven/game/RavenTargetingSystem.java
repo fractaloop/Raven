@@ -1,5 +1,6 @@
 package raven.game;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import raven.game.interfaces.IRavenBot;
@@ -22,9 +23,11 @@ public class RavenTargetingSystem implements IRavenTargetingSystem{
 		
 		// grab a list of all the opponents the owner can sense
 		List<IRavenBot> sensedBots = owner.getSensoryMem().getListOfRecentlySensedOpponents();
+		List<IRavenBot> validTargets = removeTeammatesFromSensed(sensedBots, owner.getTeam().ID());
 		
-		for (IRavenBot opponent : sensedBots) {
+		for (IRavenBot opponent : validTargets) {
 			if (opponent.isAlive() && !opponent.equals(owner)) {
+		//	if ((opponent.isAlive() && !opponent.equals(owner)) && opponent.getTeam().ID() != owner.getTeam().ID()) {
 				double dist = opponent.pos().distanceSq(owner.pos());
 				
 				if (dist < closestDistSoFar) {
@@ -35,6 +38,19 @@ public class RavenTargetingSystem implements IRavenTargetingSystem{
 		}
 	}
 	
+	private List<IRavenBot> removeTeammatesFromSensed(List<IRavenBot> sensedBots, int selfTeam) {
+		// TODO Auto-generated method stub
+		List<IRavenBot> returnList = new ArrayList<IRavenBot>();
+		for(IRavenBot botToCheck : sensedBots)
+		{
+		if(botToCheck.getTeam().ID() != selfTeam){
+			returnList.add(botToCheck);
+		}
+		}
+		
+		return returnList;
+	}
+
 	public boolean isTargetPresent() {
 		return currentTarget != null;
 	}
@@ -44,6 +60,10 @@ public class RavenTargetingSystem implements IRavenTargetingSystem{
 	}
 	
 	public boolean isTargetShootable() {
+		///Now doesn't detects team
+		//boolean isShootable = owner.getSensoryMem().isOpponentShootable(currentTarget);
+		//boolean notSameTeam = (owner.getTeam() != currentTarget.getTeam());
+		//return (notSameTeam && owner.getSensoryMem().isOpponentShootable(currentTarget));
 		return owner.getSensoryMem().isOpponentShootable(currentTarget);
 	}
 	

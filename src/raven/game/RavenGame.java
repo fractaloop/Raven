@@ -332,11 +332,12 @@ public class RavenGame {
 		map = MapSerializer.deserializeMapFromPath(fileName);
 		
 		EntityManager.reset();
-		addBots(RavenScript.getInt("NumBots"));
 		
 		//Testing the creation of teams at startup
-		
 		addTeams(RavenScript.getInt("NumTeams"));
+		addBots(RavenScript.getInt("NumBots"));
+		
+		
 		
 		
 		Log.info("game", "Loaded map " + map);

@@ -14,6 +14,7 @@ public class EntityManager {
 	}
 	
 	private static int availableID = 100;
+	static int lastTeamAssigned = 1;
 
 	///No one is using available ID, so I'm going to use it to 
 	///track team ID's. -Brendan
@@ -32,10 +33,19 @@ public class EntityManager {
 	private static Map<Integer, Team> teamList = new HashMap<Integer, Team>();
 	//private ArrayList<Team> teamList;
 	
+	//////////////////ONLY ALLOWS FOR TWO TEAMS
 	public static Team getAvailableTeam() {
+		
 		//everyone joins the same team now.
-		return teamList.get(0);
-	
+		int teamToAssign;
+		if (lastTeamAssigned == 101){
+			teamToAssign = 100;
+		}
+		else
+			teamToAssign = 101;
+		lastTeamAssigned = teamToAssign;
+		
+		return teamList.get(teamToAssign);	
 	}
 	
 	
@@ -57,6 +67,7 @@ public class EntityManager {
 		//Log.trace("ENTITY MANAGER", "Registered entity of type " + newteam.entityType() + " and ID " newteam.ID());
 		Log.trace("ENTITY MANAGER", "Registered entity of type " + newteam.entityType() + " and ID " );
 		getInstance().teamList.put(newteam.ID(), newteam);
+		
 	}
 
 	public static BaseGameEntity getEntityFromID(int receiverID) {

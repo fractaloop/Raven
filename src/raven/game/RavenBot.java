@@ -249,8 +249,10 @@ public class RavenBot extends MovingEntity implements IRavenBot {
 		//attempt to join a team
 		//First get an available team and join it
 		team = EntityManager.getAvailableTeam();
+		//Log.info("BotConstructor", "Bot team is" + this.getTeam());
+		Log.info("BotConstructor", "Bot team is" + this.team.ID());
 		//We want entity manager to handle this later but for now just let team know you're joining
-		team.draftBot(this);
+		//team.draftBot(this);
 
 	}
 

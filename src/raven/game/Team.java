@@ -65,7 +65,11 @@ public class Team extends BaseGameEntity implements ITeam
 			//team ID = currValidTeamID;
 			//currValidTeamID++;
 			setEntityType(RavenObject.TEAM);
-	}
+			
+			/////we want this to register a team by ID but let's
+			/////just get the teams working
+			EntityManager.registerEntity(this);
+		}
 
 	
 	
