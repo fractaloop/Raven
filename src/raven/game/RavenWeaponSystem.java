@@ -89,8 +89,6 @@ public class RavenWeaponSystem {
 		weaponMap = new HashMap<RavenObject, RavenWeapon>();
 		
 		// set up the container
-		currentWeapon = new Shotgun(owner);
-		weaponMap.put(RavenObject.SHOTGUN, currentWeapon);
 		currentWeapon = new Blaster(owner);
 		weaponMap.put(RavenObject.BLASTER, currentWeapon);
 	}

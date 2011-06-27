@@ -27,15 +27,6 @@ public class TriggerWeaponGiver extends TriggerRespawning<IRavenBot> {
 	
 		// have to multiply by 1000 because we measure game events in milliseconds.
 		setRespawnDelay(RavenScript.getInt("Weapon_RespawnDelay")*1000);
-
-		vecRLVB.add(new Vector2D(0, 3));
-		vecRLVB.add(new Vector2D(1, 2));
-		vecRLVB.add(new Vector2D(1, 0));
-		vecRLVB.add(new Vector2D(2, -2));
-		vecRLVB.add(new Vector2D(-2, -2));
-		vecRLVB.add(new Vector2D(-1, 0));
-		vecRLVB.add(new Vector2D(-1, 2));
-		vecRLVB.add(new Vector2D(0, 3));
 	}
 
 	@Override
@@ -66,7 +57,17 @@ public class TriggerWeaponGiver extends TriggerRespawning<IRavenBot> {
 				GameCanvas.filledCircle(pos().x + size, pos().y, size);
 				break;
 			case ROCKET_LAUNCHER:
-				if(vecRLVB == null) return;
+				if(vecRLVB == null) {
+					vecRLVB = new ArrayList<Vector2D>(8);
+					vecRLVB.add(new Vector2D(0, 3));
+					vecRLVB.add(new Vector2D(1, 2));
+					vecRLVB.add(new Vector2D(1, 0));
+					vecRLVB.add(new Vector2D(2, -2));
+					vecRLVB.add(new Vector2D(-2, -2));
+					vecRLVB.add(new Vector2D(-1, 0));
+					vecRLVB.add(new Vector2D(-1, 2));
+					vecRLVB.add(new Vector2D(0, 3));
+				}
 				Vector2D facing = new Vector2D(-1, 0);
 				vecRLVBTrans = Transformations.WorldTransform(vecRLVB, pos(), facing, facing.perp(), new Vector2D(2.5, 2.5));
 				GameCanvas.redPen();

@@ -11,6 +11,7 @@ public class TriggerRegionCircle implements TriggerRegion {
 	private Vector2D pos;
 
 	public TriggerRegionCircle(Vector2D pos, double radius) {
+		if (radius == 0) { radius = 10; }
 		this.radius = radius;
 		this.pos = pos;
 	}
