@@ -6,12 +6,14 @@ import raven.game.RavenSensoryMemory;
 import raven.game.RavenSteering;
 import raven.game.RavenTargetingSystem;
 import raven.game.RavenWeaponSystem;
+import raven.game.Team;
 import raven.game.messaging.Telegram;
 import raven.goals.GoalThink;
 import raven.math.Vector2D;
 
 public interface IRavenBot {
-
+	
+	public Team getTeam();
 	public boolean isAlive();
 	public boolean isReadyForTriggerUpdate();
 	public Vector2D pos();

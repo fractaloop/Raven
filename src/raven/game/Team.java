@@ -37,11 +37,13 @@ import java.util.ArrayList;
 public class Team extends BaseGameEntity implements ITeam
 {
 	//Private vars
+	private static int currValidTeamID = 0;
+	private static int teamID;
 	
 	////A list of bots on the team, should be references, I'll ask
 	private	List<IRavenBot> teamBots; 
 
-	///We need a valid location 
+	///We need a valid location for spawning
 	private ArrayList<Vector2D> teamSpawnPoints;
 
 	//Goal queue? 
@@ -54,23 +56,32 @@ public class Team extends BaseGameEntity implements ITeam
 			
 			//Just so we don't get some null point exception
 			//Just for testing.
-			teamSpawnPoints.add( new Vector2D(0,0));
-			
+			//teamSpawnPoints.add( new Vector2D(0,0));
+			setEntityType(RavenObject.TEAM);
 			//teamBrain = new GoalThink(this);
-	
+			
+			/////Setting team ID before we register with entity manager.
+			teamID = id; 
+			//team ID = currValidTeamID;
+			//currValidTeamID++;
+			setEntityType(RavenObject.TEAM);
 	}
 
+	
 	
 	//We want a way to add a bot to the list of bots on this team
 	//But, we're in the middle of gutting out the entity manager
 	//so we should probably just accept a reference to a bot.
-	public void DraftBot(IRavenBot draftee) {
+	//Also using "draft" and drop instead of "add/remove"
+	//to avoid confusion
+	public void draftBot(IRavenBot draftee) {
 	//Ask if this works as a reference
+		teamBots.add(draftee);
 	}
 	
 	///We may want to add a clear/remove team association. 
-	public void removeBot(IRavenBot draftee){
-		
+	public void dropBot(IRavenBot draftee){
+		teamBots.remove(draftee);
 	}
 
 	
@@ -87,7 +98,7 @@ public class Team extends BaseGameEntity implements ITeam
 		
 	return false;
 	}
-	//		TEAM_RED,TEAM_GREEN
+
 
 	public Vector2D getTeamSpawnPoint(){
 		return teamSpawnPoints.get(0);

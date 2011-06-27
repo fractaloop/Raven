@@ -22,15 +22,13 @@ public class RavenBot extends MovingEntity implements IRavenBot {
 		ALIVE, DEAD, SPAWNING
 	}
 	
-	////Since we're eliminating the entity manager
-	////we need to know which team a newly created bot
-	////Should join -Brendan
-	private enum teamToJoin{
-		RED,BLUE
-	}
+	/*
+	 //entity manager will deal with this
 	//We need to modify the constructor
 	static private teamToJoin lastJoined;
-
+*/
+	private Team team;
+	
 	/** alive, dead or spawning? */
 	private Status status;
 
@@ -247,6 +245,13 @@ public class RavenBot extends MovingEntity implements IRavenBot {
 
 		sensoryMem = new RavenSensoryMemory(this,
 				RavenScript.getDouble("Bot_MemorySpan"));
+		
+		//attempt to join a team
+		//First get an available team and join it
+		team = EntityManager.getAvailableTeam();
+		//We want entity manager to handle this later but for now just let team know you're joining
+		team.draftBot(this);
+
 	}
 
 	/**
@@ -509,6 +514,12 @@ public class RavenBot extends MovingEntity implements IRavenBot {
 	}
 
 	// Attribute access
+	
+	//
+	public Team getTeam()
+	{
+	return team;
+	}
 
 	public int health() {
 		return health;
