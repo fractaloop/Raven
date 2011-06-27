@@ -728,4 +728,8 @@ public class RavenBot extends MovingEntity implements IRavenBot {
 	public RavenSensoryMemory getSensoryMem() {
 		return sensoryMem;
 	}
+	
+	public void setSteering(RavenSteering steering){
+		this.steering = steering; 
+	}
 }

@@ -114,7 +114,8 @@ var SeparationWeight            = 10.0;
 var WallAvoidanceWeight         = 10.0;
 var WanderWeight                = 1.0;
 var SeekWeight                  = 0.5;
-var ArriveWeight                =  1.0;
+var ArriveWeight                = 1.0;
+var PursuitWeight				= 5.0;
 
 //how close a neighbour must be before an agent considers it
 //to be within its neighborhood (for separation)

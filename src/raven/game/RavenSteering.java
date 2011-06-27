@@ -385,6 +385,14 @@ public class RavenSteering {
 
 		//these next three can be combined for flocking behavior (wander is
 		//also a good behavior to add into this mix)
+		if (On(BehaviorType.PURSUIT))
+		{
+			// need to sub the ravenBot below with the pursuit target
+			force = pursuit(targetAgent1).mul(weightPursuit);
+
+			if (!accumulateForce(steeringForce, force)) return steeringForce;
+		}
+		
 		if (On(BehaviorType.SEPARATION))
 		{
 			// HAve to tag bots that are in danger of being hit
@@ -413,12 +421,6 @@ public class RavenSteering {
 
 			if (!accumulateForce(steeringForce, force)) return steeringForce;
 		}
-		if (On(BehaviorType.PURSUIT))
-		{
-			force = pursuit(ravenBot).mul(weightPursuit);
-
-			if (!accumulateForce(steeringForce, force)) return steeringForce;
-		}
 
 		return steeringForce;
 	}
@@ -435,6 +437,7 @@ public class RavenSteering {
 		weightWallAvoidance			= RavenScript.getDouble("WallAvoidanceWeight");
 		viewDistance				= RavenScript.getDouble("ViewDistance");
 		wallDetectionFeelerLength	= RavenScript.getDouble("WallDetectionFeelerLength");
+		weightPursuit				= RavenScript.getDouble("PursuitWeight");
 		steeringForce				= new Vector2D();
 		feelers						= new Vector<Vector2D>(3);
 		deceleration				= Deceleration.NORMAL;

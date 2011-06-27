@@ -4,16 +4,18 @@ import raven.game.RavenBot;
 
 public class Goal_Pursuit extends GoalComposite<RavenBot> {
 
+	private RavenBot target;
+	
 	public Goal_Pursuit(RavenBot m_pOwner, RavenBot target) {
 		super(m_pOwner, Goal.GoalType.goal_pursuit);
-		
+		this.target = target;
 	}
 
 	@Override
 	public void activate() {
 		m_iStatus = Goal.CurrentStatus.active;
 		m_pOwner.getSteering().pursuitOn();
-
+		m_pOwner.getSteering().setTargetAgent1(target);
 	}
 
 	@Override
