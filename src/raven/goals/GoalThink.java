@@ -131,10 +131,10 @@ public class GoalThink extends GoalComposite<RavenBot> {
 			Log.debug("GoalThink", "Added new Goal_Explore to bot " + m_pOwner.ID());
 		}
 	}
-	public void addGoal_pursuit() {
+	public void addGoal_pursuit(RavenBot target) {
 		if (notPresent(GoalType.goal_pursuit)) {
 			removeAllSubgoals();
-			AddSubgoal( new Goal_Pursuit(m_pOwner));
+			AddSubgoal( new Goal_Pursuit(m_pOwner, target));
 			Log.debug("GoalThink", "Added new Goal_Pursuit to bot " + m_pOwner.ID());
 		}
 	}
