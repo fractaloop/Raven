@@ -17,6 +17,7 @@ import raven.game.armory.RavenProjectile;
 import raven.game.armory.Rocket;
 import raven.game.armory.Slug;
 import raven.game.interfaces.IRavenBot;
+import raven.game.interfaces.ITeam;
 import raven.game.messaging.Dispatcher;
 import raven.game.messaging.RavenMessage;
 import raven.game.navigation.PathManager;
@@ -331,13 +332,32 @@ public class RavenGame {
 		map = MapSerializer.deserializeMapFromPath(fileName);
 		
 		EntityManager.reset();
+		
+		//Testing the creation of teams at startup
+		addTeams(RavenScript.getInt("NumTeams"));
 		addBots(RavenScript.getInt("NumBots"));
+		
+		
+		
 		
 		Log.info("game", "Loaded map " + map);
 		
 		return true;
 	}
 
+	
+	protected void addTeams(int numTeamsToAdd){
+		///stealing code from above
+		Log.info("game", "Adding " + numTeamsToAdd + " Teams to the map");
+		while (numTeamsToAdd-- > 0){
+			//ITeam newteam = new Team(EntityManager.getAvailableID()); 
+			Team newteam = new Team(EntityManager.getAvailableID());
+			EntityManager.registerEntity(newteam);
+			Log.info("game", "Team " + newteam.ID() + "added");
+		}
+	}
+	
+	
 	protected void addBots(int numBotsToAdd) {
 		Log.info("game", "Adding " + numBotsToAdd + " bots to the map");
 		while (numBotsToAdd-- > 0) {
@@ -359,6 +379,8 @@ public class RavenGame {
 //			bot.getBrain().activate();
 		}
 	}
+	
+
 
 	public void addRocket(IRavenBot shooter, Vector2D target) {
 		Log.trace("game", "Added rocket");
