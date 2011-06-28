@@ -142,7 +142,7 @@ public class GoalThink extends GoalComposite<RavenBot> {
 		if (notPresent(Goal.GoalType.goal_get)) {
 			removeAllSubgoals();
 			AddSubgoal( new Goal_GetItem(m_pOwner, inp));
-			Log.debug("GoalThink", "Added new Goal_GetITem to bot " + m_pOwner.ID());
+			Log.debug("GoalThink", "Added new Goal_GetItem to bot " + m_pOwner.ID());
 		}
 	}
 

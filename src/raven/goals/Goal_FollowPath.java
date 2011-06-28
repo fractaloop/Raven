@@ -1,6 +1,7 @@
 package raven.goals;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import raven.game.RavenBot;
@@ -15,17 +16,19 @@ public class Goal_FollowPath extends GoalComposite<RavenBot> {
 	public Goal_FollowPath(RavenBot m_pOwner, List<PathEdge> list) {
 		super(m_pOwner, Goal.GoalType.goal_follow_path);
 		this.m_Path = list;
+
 		
-		for(PathEdge edge : m_Path) {
+		
+		for (int x = m_Path.size()-1; x >= 0; x--) {
 			// Is this edge the last?
-			boolean isLastEdgeInPath = m_Path.indexOf(edge) == m_Path.size()-1;
+			boolean isLastEdgeInPath = x == 0;
 			
-			switch(edge.Behavior()){
+			switch(m_Path.get(x).Behavior()){
 				case NavGraphEdge.NORMAL:
-					AddSubgoal(new Goal_TraverseEdge(m_pOwner, edge, isLastEdgeInPath));
+					AddSubgoal(new Goal_TraverseEdge(m_pOwner, m_Path.get(x), isLastEdgeInPath));
 					break;
 				case NavGraphEdge.GOES_THROUGH_DOOR:
-					AddSubgoal(new Goal_NegotiateDoor(m_pOwner, edge, isLastEdgeInPath));
+					AddSubgoal(new Goal_NegotiateDoor(m_pOwner, m_Path.get(x), isLastEdgeInPath));
 					break;
 				case NavGraphEdge.JUMP:
 					break;

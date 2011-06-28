@@ -70,6 +70,7 @@ public class Goal_TraverseEdge extends GoalComposite<RavenBot> {
 		double MarginOfError = 2.0;
 
 		m_dTimeExpected += MarginOfError;
+		m_dTimeExpected *= 1000;
 
 
 		//set the steering target

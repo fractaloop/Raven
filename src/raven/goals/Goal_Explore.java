@@ -56,7 +56,7 @@ public class Goal_Explore extends GoalComposite<RavenBot> {
 		m_iStatus = Goal.CurrentStatus.completed; 
 	}
 
-	public boolean HandleMessage(Telegram msg){
+	public boolean handleMessage(Telegram msg){
 		//first, pass the message down the goal hierarchy
 		boolean bHandled = ForwardMessageToFrontMostSubgoal(msg);
 

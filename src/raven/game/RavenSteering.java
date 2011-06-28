@@ -103,9 +103,13 @@ public class RavenSteering {
 	/** Arrive makes use of these to determine how quickly a Raven_Bot should
 	 * decelerate to its target */
 	private enum Deceleration {
-		FAST,
-		NORMAL,
-		SLOW
+		FAST(0),
+		NORMAL(1),
+		SLOW(2);
+		
+		private int value;
+		private Deceleration(int i) {value = i;}
+		public int getValue() {return value;}
 	};
 	/** default */
 	private Deceleration deceleration;
@@ -199,7 +203,7 @@ public class RavenSteering {
 			//calculate the speed required to reach the target given the desired
 			//deceleration
 			//   double speed =  dist / (deceleration* decelerationTweaker);     
-			double speed = target.distance(ravenBot.pos())/ (Double.valueOf(deceleration.toString())*DecelerationTweaker);
+			double speed = target.distance(ravenBot.pos())/ (Double.valueOf(deceleration.getValue())*DecelerationTweaker);
 			//make sure the velocity does not exceed the max
 			speed = Math.min(speed, ravenBot.maxSpeed());
 
