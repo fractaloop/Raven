@@ -14,6 +14,7 @@ import raven.math.Vector2D;
 public interface IRavenBot {
 	
 	public Team getTeam();
+	public void setAsCaptain();
 	public boolean isAlive();
 	public boolean isReadyForTriggerUpdate();
 	public Vector2D pos();

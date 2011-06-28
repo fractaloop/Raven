@@ -28,6 +28,7 @@ public class RavenBot extends MovingEntity implements IRavenBot {
 	static private teamToJoin lastJoined;
 */
 	private Team team;
+	private boolean isCaptain;
 	
 	/** alive, dead or spawning? */
 	private Status status;
@@ -208,6 +209,9 @@ public class RavenBot extends MovingEntity implements IRavenBot {
 		status = Status.SPAWNING;
 		possessed = false;
 		fieldOfView = Math.toRadians(RavenScript.getDouble("Bot_FOV"));
+		
+		////For teams, is this the team leader
+		isCaptain = false;
 
 		setEntityType(RavenObject.BOT);
 
@@ -252,7 +256,7 @@ public class RavenBot extends MovingEntity implements IRavenBot {
 		//Log.info("BotConstructor", "Bot team is" + this.getTeam());
 		Log.info("BotConstructor", "Bot team is" + this.team.ID());
 		//We want entity manager to handle this later but for now just let team know you're joining
-		//team.draftBot(this);
+		team.draftBot(this);
 
 	}
 
@@ -308,11 +312,15 @@ public class RavenBot extends MovingEntity implements IRavenBot {
 			return;
 		}
 
-		GameCanvas.bluePen();
+		if(getTeam() != null){
+			GameCanvas.setColor(getTeam().getTeamColor());
+		} else {
+			GameCanvas.bluePen();
+		}
 
 		vecBotVBTrans = new ArrayList<Vector2D>(Transformations.WorldTransform(
 				vecBotVB, pos(), facing(), facing().perp(), scale()));
-
+		
 		GameCanvas.closedShape(vecBotVBTrans);
 
 		// draw the head
@@ -592,6 +600,11 @@ public class RavenBot extends MovingEntity implements IRavenBot {
 
 	public void setAlive() {
 		status = Status.ALIVE;
+	}
+	
+	public void setAsCaptain()
+	{
+	isCaptain = true;
 	}
 
 	/**

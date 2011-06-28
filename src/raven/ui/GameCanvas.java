@@ -31,6 +31,11 @@ public class GameCanvas extends Canvas {
 	
 	private Color pen, brush;
 	
+	public static void setColor(Color newColor)
+	{
+		lineColor(newColor);
+	}
+	
 	private float stroke;
 	
 	private GameCanvas() {

@@ -1,13 +1,18 @@
 package raven.game;
 
 import raven.game.interfaces.ITeam;
+import java.awt.Color;
 import raven.game.messaging.Telegram;
 //import raven.game.RavenBot;
 import raven.game.interfaces.IRavenBot;
 //import raven.goals.GoalThink;
 
+import java.awt.Color;
 import java.util.List;
 import raven.math.*;
+import raven.ui.GameCanvas;
+import raven.utils.Log;
+
 import java.util.ArrayList;
 
 
@@ -39,13 +44,17 @@ public class Team extends BaseGameEntity implements ITeam
 	//Private vars
 	private static int currValidTeamID = 0;
 	private static int teamID;
+	private Color teamColor;
+	 
 	
 	////A list of bots on the team, should be references, I'll ask
-	private	List<IRavenBot> teamBots; 
-
+	private	List<IRavenBot> teamBots = new ArrayList<IRavenBot>();
+	
 	///We need a valid location for spawning
 	private ArrayList<Vector2D> teamSpawnPoints;
 
+	//public static Color teamColor;
+	
 	//Goal queue? 
 	//private GoalThink teamBrain;
 	
@@ -66,6 +75,8 @@ public class Team extends BaseGameEntity implements ITeam
 			//currValidTeamID++;
 			setEntityType(RavenObject.TEAM);
 			
+			
+			
 			/////we want this to register a team by ID but let's
 			/////just get the teams working
 			EntityManager.registerEntity(this);
@@ -80,6 +91,10 @@ public class Team extends BaseGameEntity implements ITeam
 	//to avoid confusion
 	public void draftBot(IRavenBot draftee) {
 	//Ask if this works as a reference
+		if (teamBots.size()==0){
+			draftee.setAsCaptain();
+			Log.info("TEAM", "Registered Captain of team " + draftee.getTeam().ID());
+		}
 		teamBots.add(draftee);
 	}
 	
@@ -89,6 +104,8 @@ public class Team extends BaseGameEntity implements ITeam
 	}
 
 	
+
+
 	
 	@Override
 	public void render()
@@ -114,4 +131,7 @@ public class Team extends BaseGameEntity implements ITeam
 		return teamBrain;
 	}
 	*/
+	public Color getTeamColor(){
+		return teamColor;
+	}
 }
