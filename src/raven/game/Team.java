@@ -26,9 +26,9 @@ import java.util.ArrayList;
  * add to iraven interface (?) In Progress
  *
  * 
- * Teams are based on a leader
- * protect leader
- * Find leader
+ * Teams are based on a captain
+ * protect captain
+ * Find Captain
  * Scatter(Leader is dead)
  * Kill enemy leader
  * Murder defenders
@@ -132,6 +132,9 @@ public class Team extends BaseGameEntity implements ITeam
 	}
 	*/
 	public Color getTeamColor(){
+		//if (this.ID() == 101){
+		//teamColor = 
+		//}
 		return teamColor;
 	}
 }

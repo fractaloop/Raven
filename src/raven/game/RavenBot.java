@@ -22,11 +22,6 @@ public class RavenBot extends MovingEntity implements IRavenBot {
 		ALIVE, DEAD, SPAWNING
 	}
 	
-	/*
-	 //entity manager will deal with this
-	//We need to modify the constructor
-	static private teamToJoin lastJoined;
-*/
 	private Team team;
 	private boolean isCaptain;
 	
@@ -317,7 +312,8 @@ public class RavenBot extends MovingEntity implements IRavenBot {
 		} else {
 			GameCanvas.bluePen();
 		}
-
+		
+		GameCanvas.bluePen();
 		vecBotVBTrans = new ArrayList<Vector2D>(Transformations.WorldTransform(
 				vecBotVB, pos(), facing(), facing().perp(), scale()));
 		
