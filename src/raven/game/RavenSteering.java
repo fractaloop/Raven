@@ -509,6 +509,7 @@ public class RavenSteering {
 	public boolean seekIsOn() { return On(BehaviorType.SEEK); }
 	public boolean arriveIsOn() { return On(BehaviorType.ARRIVE); }
 	public boolean wanderIsOn() { return On(BehaviorType.WANDER); }
+	public boolean pursuitIsOn() { return On(BehaviorType.PURSUIT); }
 	public boolean separationIsOn() { return On(BehaviorType.SEPARATION); }
 	public boolean wallAvoidanceIsOn() { return On(BehaviorType.WALL_AVOIDANCE); }
 
