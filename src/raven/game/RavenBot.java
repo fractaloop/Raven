@@ -21,7 +21,10 @@ public class RavenBot extends MovingEntity implements IRavenBot {
 	private enum Status {
 		ALIVE, DEAD, SPAWNING
 	}
-
+	
+	private Team team;
+	private boolean isCaptain;
+	
 	/** alive, dead or spawning? */
 	private Status status;
 
@@ -201,6 +204,9 @@ public class RavenBot extends MovingEntity implements IRavenBot {
 		status = Status.SPAWNING;
 		possessed = false;
 		fieldOfView = Math.toRadians(RavenScript.getDouble("Bot_FOV"));
+		
+		////For teams, is this the team leader
+		isCaptain = false;
 
 		setEntityType(RavenObject.BOT);
 
@@ -238,6 +244,15 @@ public class RavenBot extends MovingEntity implements IRavenBot {
 
 		sensoryMem = new RavenSensoryMemory(this,
 				RavenScript.getDouble("Bot_MemorySpan"));
+		
+		//attempt to join a team
+		//First get an available team and join it
+		team = EntityManager.getAvailableTeam();
+		//Log.info("BotConstructor", "Bot team is" + this.getTeam());
+		Log.info("BotConstructor", "Bot team is" + this.team.ID());
+		//We want entity manager to handle this later but for now just let team know you're joining
+		team.draftBot(this);
+
 	}
 
 	/**
@@ -292,11 +307,16 @@ public class RavenBot extends MovingEntity implements IRavenBot {
 			return;
 		}
 
+		if(getTeam() != null){
+			GameCanvas.setColor(getTeam().getTeamColor());
+		} else {
+			GameCanvas.bluePen();
+		}
+		
 		GameCanvas.bluePen();
-
 		vecBotVBTrans = new ArrayList<Vector2D>(Transformations.WorldTransform(
 				vecBotVB, pos(), facing(), facing().perp(), scale()));
-
+		
 		GameCanvas.closedShape(vecBotVBTrans);
 
 		// draw the head
@@ -500,6 +520,12 @@ public class RavenBot extends MovingEntity implements IRavenBot {
 	}
 
 	// Attribute access
+	
+	//
+	public Team getTeam()
+	{
+	return team;
+	}
 
 	public int health() {
 		return health;
@@ -571,10 +597,17 @@ public class RavenBot extends MovingEntity implements IRavenBot {
 	public void setAlive() {
 		status = Status.ALIVE;
 	}
+	
 	public void setBrain(GoalThink think) {
 		brain.removeAllSubgoals();
 		brain = think;
 	}
+	
+	public void setAsCaptain()
+	{
+		isCaptain = true;
+	}
+
 	/**
 	 * returns a value indicating the time in seconds it will take the bot to
 	 * reach the given position at its current speed.
