@@ -268,7 +268,7 @@ public class RavenSteering {
 		//the feelers are contained in a std::vector, m_Feelers
 		createFeelers();
 
-		DistanceHolder DistToThisIP    = new DistanceHolder();
+		DistanceHolder DistToThisIP = new DistanceHolder();
 		DistToThisIP.dist = 0.0;
 		double DistToClosestIP = Double.MAX_VALUE;
 
@@ -391,6 +391,14 @@ public class RavenSteering {
 
 		//these next three can be combined for flocking behavior (wander is
 		//also a good behavior to add into this mix)
+		if (On(BehaviorType.PURSUIT))
+		{
+			// need to sub the ravenBot below with the pursuit target
+			force = pursuit(targetAgent1).mul(weightPursuit);
+
+			if (!accumulateForce(steeringForce, force)) return steeringForce;
+		}
+		
 		if (On(BehaviorType.SEPARATION))
 		{
 			// HAve to tag bots that are in danger of being hit
@@ -419,12 +427,6 @@ public class RavenSteering {
 
 			if (!accumulateForce(steeringForce, force)) return steeringForce;
 		}
-		if (On(BehaviorType.PURSUIT))
-		{
-			force = pursuit(ravenBot).mul(weightPursuit);
-
-			if (!accumulateForce(steeringForce, force)) return steeringForce;
-		}
 
 		return steeringForce;
 	}
@@ -441,6 +443,7 @@ public class RavenSteering {
 		weightWallAvoidance			= RavenScript.getDouble("WallAvoidanceWeight");
 		viewDistance				= RavenScript.getDouble("ViewDistance");
 		wallDetectionFeelerLength	= RavenScript.getDouble("WallDetectionFeelerLength");
+		weightPursuit				= RavenScript.getDouble("PursuitWeight");
 		steeringForce				= new Vector2D();
 		feelers						= new Vector<Vector2D>(3);
 		deceleration				= Deceleration.NORMAL;
@@ -512,6 +515,7 @@ public class RavenSteering {
 	public boolean seekIsOn() { return On(BehaviorType.SEEK); }
 	public boolean arriveIsOn() { return On(BehaviorType.ARRIVE); }
 	public boolean wanderIsOn() { return On(BehaviorType.WANDER); }
+	public boolean pursuitIsOn() { return On(BehaviorType.PURSUIT); }
 	public boolean separationIsOn() { return On(BehaviorType.SEPARATION); }
 	public boolean wallAvoidanceIsOn() { return On(BehaviorType.WALL_AVOIDANCE); }
 

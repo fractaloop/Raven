@@ -13,8 +13,6 @@ import raven.game.interfaces.IRavenBot;
 import raven.math.Transformations;
 import raven.math.Vector2D;
 import raven.ui.GameCanvas;
-import raven.utils.Log;
-import raven.utils.Log.Level;
 
 public class RavenWeaponSystem {
 	
@@ -43,9 +41,6 @@ public class RavenWeaponSystem {
 	/** the amount of time a bot will continue aiming at the position of the
 	 * target even if the target disappears from view. */
 	private double aimPersistance;
-	
-	private double curTime = 0;
-	private double lastTime = 0;
 	
 	
 	/** predicts where the target will be by the time it takes the current
@@ -98,6 +93,7 @@ public class RavenWeaponSystem {
 	{
 		for (RavenWeapon weapon : weaponMap.values()) {
 			weapon.update(delta);
+			System.out.println("UPDATE from ANGRYFIRE");
 		}
 	}
 	
@@ -122,7 +118,7 @@ public class RavenWeaponSystem {
 			if (owner.rotateFacingTowardPosition(aimingPos, delta)
 					&& owner.getTargetSys().getTimeTargetHasBeenVisible() > reactionTime
 					&& owner.hasLOSto(aimingPos)) {
-				//aimingPos = predictFuturePositionOfTarget();
+				aimingPos = predictFuturePositionOfTarget();
 				
 				// if the weapon is aimed correctly, there is line of sight
 				// between the bot and the aiming position and it has been in
@@ -131,7 +127,7 @@ public class RavenWeaponSystem {
 				if (owner.rotateFacingTowardPosition(aimingPos, delta)
 						&& owner.getTargetSys().getTimeTargetHasBeenVisible() > reactionTime
 						&& owner.hasLOSto(aimingPos)) {
-					//addNoiseToAim(aimingPos);
+					addNoiseToAim(aimingPos);
 					
 					getCurrentWeapon().ShootAt(aimingPos);
 
@@ -144,7 +140,7 @@ public class RavenWeaponSystem {
 				if (owner.rotateFacingTowardPosition(aimingPos, delta)
 						&& owner.getTargetSys().getTimeTargetHasBeenVisible() > reactionTime
 						&& owner.hasLOSto(aimingPos)) {
-					//addNoiseToAim(aimingPos);
+					addNoiseToAim(aimingPos);
 					
 					getCurrentWeapon().ShootAt(aimingPos);
 				}
@@ -161,8 +157,6 @@ public class RavenWeaponSystem {
 		// if a target is present use fuzzy logic to determine the most
 		// desirable weapon
 		if (owner.getTargetSys().isTargetPresent()) {
-			
-			curTime = System.currentTimeMillis();
 			// calculate the distance to the target
 			double distToTarget = owner.pos().distance(owner.getTargetSys().getTarget().pos());
 			
@@ -170,31 +164,18 @@ public class RavenWeaponSystem {
 			// given the current situation. The most desirable weapon is
 			// selected
 			double bestSoFar = Double.MIN_VALUE;
-
-		/*	for (Map.Entry<RavenObject, RavenWeapon> weapon : weaponMap.entrySet()) {
-				Log.info("debug", weapon.getValue().getWeaponType().toString());
-			}
-		*/	
-			for (Map.Entry<RavenObject, RavenWeapon> weapon : weaponMap.entrySet()) {
+			for (RavenWeapon weapon : weaponMap.values()) {
 				// grab the desirability of this weapon (desirability is based
 				// upon distance to target and ammo remaining)
-				double score = weapon.getValue().GetDesireability(distToTarget);
-				
-				if (curTime - lastTime >= 500) {
-//					Log.info("debug", weapon.getValue().getWeaponType().toString() + " - " + Double.toString(score));
-				}
+				double score = weapon.GetDesireability(distToTarget);
 				
 				if (score > bestSoFar) {
 					bestSoFar = score;
-					changeWeapon(weapon.getValue().getWeaponType());
+					currentWeapon = weapon;
 				}
 			}
-			
-			if (curTime - lastTime >= 5000) {
-				lastTime = curTime;
-			}
 		} else {
-			changeWeapon(RavenObject.BLASTER);
+			currentWeapon = weaponMap.get(RavenObject.BLASTER);
 		}
 	}
 

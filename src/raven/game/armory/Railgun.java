@@ -82,14 +82,14 @@ public class Railgun extends RavenWeapon {
 
 	@Override
 	public void render(){
-		List<Vector2D> tempBuffer = Transformations.WorldTransform(getWeaponVectorBuffer(),
+		List<Vector2D> thisWeaponShape = Transformations.WorldTransform(getWeaponVectorBuffer(),
 				getOwner().pos(),
 				getOwner().facing(),
 				getOwner().facing().perp(),
 				getOwner().scale());
-		setWeaponVectorTransBuffer(tempBuffer);
+		setWeaponVectorTransBuffer(thisWeaponShape);
 		GameCanvas.bluePen();
-		GameCanvas.closedShape(tempBuffer);
+		GameCanvas.closedShape(thisWeaponShape);
 	}
 
 	@Override
@@ -119,9 +119,6 @@ public class Railgun extends RavenWeapon {
 			desire = getFuzzyModule().Defuzzify("Desirability", FuzzyModule.DefuzzifyMethod.max_av);
 			setLastDesireability(desire);
 		}
-		
-		// if out of ammo, do not choose weapon
-		if (getRoundsRemaining() == 0) { desire = 0; }
 
 		return desire;
 	}

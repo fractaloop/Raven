@@ -14,7 +14,7 @@ public class EntityManager {
 	}
 	
 	private static int availableID = 100;
-	static int lastTeamAssigned = 1;
+	static int lastTeamAssigned = 100;
 
 	///No one is using available ID, so I'm going to use it to 
 	///track team ID's. -Brendan

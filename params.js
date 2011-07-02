@@ -115,7 +115,8 @@ var SeparationWeight            = 10.0;
 var WallAvoidanceWeight         = 10.0;
 var WanderWeight                = 1.0;
 var SeekWeight                  = 0.5;
-var ArriveWeight                =  1.0;
+var ArriveWeight                = 1.0;
+var PursuitWeight				= 5.0;
 
 //how close a neighbour must be before an agent considers it
 //to be within its neighborhood (for separation)
@@ -132,17 +133,17 @@ var WaypointSeekDist            = 5;
 //////////////////////////////////////////////////////////////////////////////
 
 var Blaster_FiringFreq          = 3;
-var Blaster_MaxSpeed            = 400;
+var Blaster_MaxSpeed            = 5;
 var Blaster_DefaultRounds       = 0; //not used, a blaster always has ammo
 var Blaster_MaxRoundsCarried    = 0; //as above
 var Blaster_IdealRange          = 50;
 var Blaster_SoundRange          = 100;
 
-var Bolt_MaxSpeed               = 400;
+var Bolt_MaxSpeed               = 5;
 var Bolt_Mass                   = 1;
 var Bolt_MaxForce               = 100.0;
 var Bolt_Scale                  = Bot_Scale;
-var Bolt_Damage                 = 5;
+var Bolt_Damage                 = 15;
 
 var RocketLauncher_FiringFreq   = 1.2;
 var RocketLauncher_DefaultRounds    = 15;
@@ -151,11 +152,11 @@ var RocketLauncher_IdealRange   = 150;
 var RocketLauncher_SoundRange   = 400;
 
 var Rocket_BlastRadius          = 20;
-var Rocket_MaxSpeed             = 250;
+var Rocket_MaxSpeed             = 3;
 var Rocket_Mass                 = 1;
 var Rocket_MaxForce             = 10.0;
 var Rocket_Scale                = Bot_Scale;
-var Rocket_Damage               = 80;
+var Rocket_Damage               = 100;
 var Rocket_ExplosionDecayRate   = 2.0; // how fast the explosion occurs (in secs)
 
 var RailGun_FiringFreq          = 1;
@@ -169,13 +170,13 @@ var Slug_Mass                   = 0.1;
 var Slug_MaxForce               = 10000.0;
 var Slug_Scale                  = Bot_Scale;
 var Slug_Persistance            = 1.0;
-var Slug_Damage                 = 49;
+var Slug_Damage                 = 100;
 
 var ShotGun_FiringFreq          = 1;
 var ShotGun_DefaultRounds       = 15;
 var ShotGun_MaxRoundsCarried    = 50;
-var ShotGun_NumBallsInShell     = 7;
-var ShotGun_Spread              = 0.33;
+var ShotGun_NumBallsInShell     = 20;
+var ShotGun_Spread              = 0.05;
 var ShotGun_IdealRange          = 100;
 var ShotGun_SoundRange          = 400;
 
@@ -183,5 +184,5 @@ var Pellet_MaxSpeed             = 5000;
 var Pellet_Mass                 = 0.1;
 var Pellet_MaxForce             = 1000.0;
 var Pellet_Scale                = Bot_Scale;
-var Pellet_Persistance          = .5;
-var Pellet_Damage               = 7;
+var Pellet_Persistance          = 1.0;
+var Pellet_Damage               = 6;

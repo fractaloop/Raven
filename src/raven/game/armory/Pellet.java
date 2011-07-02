@@ -24,11 +24,9 @@ public class Pellet extends RavenProjectile {
 				RavenScript.getInt("Pellet_Damage"),
 				RavenScript.getDouble("Pellet_Scale"),
 				RavenScript.getDouble("Pellet_MaxSpeed"),
-				RavenScript.getDouble("Pellet_Mass"),
+				RavenScript.getInt("Pellet_Mass"),
 				RavenScript.getDouble("Pellet_MaxForce"));
 		pelletTimePersist = RavenScript.getDouble("Pellet_Persistance");
-		setPos(shooter.pos());
-		
 	}
 
 
@@ -46,8 +44,6 @@ public class Pellet extends RavenProjectile {
 	{
 		if ((pelletTimePersist > 0) && HasImpacted()) {
 			GameCanvas.yellowPen();
-//System.out.println(origin + " - origin");
-//System.out.println(impactPoint + " - impactPoint");
 			GameCanvas.line(origin, impactPoint);
 
 			GameCanvas.brownBrush();
@@ -59,24 +55,11 @@ public class Pellet extends RavenProjectile {
 	{
 		if (!HasImpacted())
 		{
-
-//			Vector2D velocity2 = vTarget.sub(pos());
-//			velocity2 = velocity2.mul(maxSpeed() * delta);
-
-			//calculate the steering force
-//			Vector2D DesiredVelocity = velocity2;
-//			DesiredVelocity.normalize();
-	
-//			velocity = heading().mul(maxSpeed() * delta);
-//			vTarget.normalize();
-			velocity = vTarget.mul(maxSpeed() * delta);
-//System.out.println(heading());
-//System.out.println(vTarget);
 			//calculate the steering force
 			Vector2D DesiredVelocity = this.velocity().mul(this.maxSpeed());
-			DesiredVelocity = DesiredVelocity.mul(maxSpeed());
 
 			Vector2D sf = DesiredVelocity.sub(this.velocity());
+
 			//update the position
 			Vector2D accel = sf.div(this.mass());
 
@@ -101,11 +84,9 @@ public class Pellet extends RavenProjectile {
 		//a shot gun shell is an instantaneous projectile so it only gets the chance
 		//to update once 
 		isImpacted = true;
+
 		//first find the closest wall that this ray intersects with. Then we
 		//can test against all entities within this range.
-//System.out.println("setting impactPoint from findclosest point of intersection with walls");
-//System.out.println(origin);
-//System.out.println(impactPoint);
 		Double distToClosestImpact = Geometry.FindClosestPointOfIntersectionWithWalls(origin,
 				position,
 				impactPoint,
@@ -118,17 +99,15 @@ public class Pellet extends RavenProjectile {
 		//if no bots hit just return;
 		if (hit == null)
 			return;
+
 		//determine the impact point with the bot's bounding circle so that the
 		//shell can be rendered properly
 		// note: this will not be null since we already know it hit it!
-//System.out.println("Setting impactPoint from getLineSegment...");
-//System.out.println(origin);
-//System.out.println(impactPoint);
-
 		impactPoint = Geometry.GetLineSegmentCircleClosestIntersectionPoint(origin,
 				impactPoint,
 				hit.pos(),
 				hit.getBRadius());
+
 		//send a message to the bot to let it know it's been hit, and who the
 		//shot came from
 		Dispatcher.dispatchMsg(Dispatcher.SEND_MSG_IMMEDIATELY,

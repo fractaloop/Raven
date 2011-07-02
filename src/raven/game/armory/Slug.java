@@ -25,7 +25,7 @@ public class Slug extends RavenProjectile {
 				RavenScript.getInt("Slug_Damage"),
 				RavenScript.getDouble("Slug_Scale"),
 				RavenScript.getDouble("Slug_MaxSpeed"),
-				RavenScript.getDouble("Slug_Mass"),
+				RavenScript.getInt("Slug_Mass"),
 				RavenScript.getDouble("Slug_MaxForce"));
 		slugTimePersist = RavenScript.getDouble("Slug_Persistance");
 	}
@@ -109,7 +109,6 @@ public class Slug extends RavenProjectile {
 		{
 			isDead = true;
 		}
-		slugTimePersist -= delta;
 	}
 
 

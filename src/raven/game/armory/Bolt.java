@@ -26,7 +26,7 @@ public class Bolt extends RavenProjectile {
 				RavenScript.getInt("Bolt_Damage"),
 				RavenScript.getDouble("Bolt_Scale"),
 				RavenScript.getDouble("Bolt_MaxSpeed"),
-				RavenScript.getDouble("Bolt_Mass"),
+				RavenScript.getInt("Bolt_Mass"),
 				RavenScript.getDouble("Bolt_MaxForce")
 		);	
 	}
@@ -41,7 +41,7 @@ public class Bolt extends RavenProjectile {
 	{
 		if(!HasImpacted())
 		{
-			velocity = heading().mul(maxSpeed() * delta);
+			velocity = heading().mul(maxSpeed());
 
 			//make sure vehicle does not exceed maximum velocity
 			velocity.truncate(maxSpeed());

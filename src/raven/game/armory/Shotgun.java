@@ -97,13 +97,13 @@ public class Shotgun extends RavenWeapon {
 				//determine deviation from target using a bell curve type distribution
 
 				double deviation = RandUtils.RandInRange(0, spread) + RandUtils.RandInRange(0, spread) - spread;
+
 				Vector2D AdjustedTarget = position.sub(getOwner().pos());
 
 				//rotate the target vector by the deviation
 				Transformations.Vec2DRotateAroundOrigin(AdjustedTarget, deviation);
-				AdjustedTarget.normalize();
 				//add a pellet to the game world
-				getOwner().getWorld().addShotGunPellet(getOwner(), AdjustedTarget);
+				getOwner().getWorld().addShotGunPellet(getOwner(), AdjustedTarget.add(getOwner().pos()));
 			}
 
 			decrementRoundsLeft();
@@ -142,9 +142,6 @@ public class Shotgun extends RavenWeapon {
 			desire = getFuzzyModule().Defuzzify("Desirability", FuzzyModule.DefuzzifyMethod.max_av);
 			setLastDesireability(desire);
 		}
-		
-		// if out of ammo, do not choose weapon
-		if (getRoundsRemaining() == 0) { desire = 0; }
 
 		return desire;
 	}

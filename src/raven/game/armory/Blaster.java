@@ -74,13 +74,13 @@ public class Blaster extends RavenWeapon {
 			
 			
 		}
-//		System.out.println("time left: " + timeUntilAvailable);
+		System.out.println("time left: " + timeUntilAvailable);
 	}
 
 	@Override
 	public double GetDesireability(double distanceToTarget){
 		getFuzzyModule().Fuzzify("DistToTarget", distanceToTarget);
-		double desire = getFuzzyModule().Defuzzify("Desirability", FuzzyModule.DefuzzifyMethod.max_av);
+		double desire = getFuzzyModule().Defuzzify("Desireability", FuzzyModule.DefuzzifyMethod.max_av);
 		setLastDesireability(desire);
 
 		return desire;

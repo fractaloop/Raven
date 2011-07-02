@@ -23,7 +23,7 @@ public class Rocket extends RavenProjectile {
 				RavenScript.getInt("Rocket_Damage"),
 				RavenScript.getDouble("Rocket_Scale"),
 				RavenScript.getDouble("Rocket_MaxSpeed"),
-				RavenScript.getDouble("Rocket_Mass"),
+				RavenScript.getInt("Rocket_Mass"),
 				RavenScript.getDouble("Rocket_MaxForce")
 		);	
 		currentBlastRadius = 0.0;
@@ -81,10 +81,11 @@ public class Rocket extends RavenProjectile {
 		if (dist != null)
 		{
 			isImpacted = true;
+
 			//test for bots within the blast radius and inflict damage
 			InflictDamageOnBotsWithinBlastRadius();
 
-			//position = impactPoint;
+			position = impactPoint;
 
 			return;
 		}
@@ -113,10 +114,10 @@ public class Rocket extends RavenProjectile {
 		}
 	}
 
-	public void update(double delta){
+	public void update(){
 		if (!isImpacted)
 		{
-			velocity = heading().mul(maxSpeed() * delta);
+			velocity = heading().mul(maxSpeed());
 
 			//make sure vehicle does not exceed maximum velocity
 			velocity.truncate(maxSpeed());

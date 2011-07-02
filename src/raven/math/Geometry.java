@@ -137,7 +137,8 @@ public class Geometry {
 		if( (r > 0) && (r < 1) && (s > 0) && (s < 1) )
 		{
 			distToThisIP.dist = A.distance(B) * r;
-			point.setValue(A.add(B.sub(A).mul(r)));
+
+			point = A.add(B.sub(A).mul(r));
 
 			return true;
 		}
@@ -145,6 +146,7 @@ public class Geometry {
 		else
 		{
 			distToThisIP.dist = 0.0;
+
 			return false;
 		}
 	}
@@ -157,14 +159,15 @@ public class Geometry {
 		
 		for (Wall2D wall : walls)
 		{
-			DistanceHolder dist = new DistanceHolder();
-			dist.dist = 0.0;
+			double d = 0.0;
 			Vector2D point = new Vector2D();
-			if (lineIntersection2D(A, B, wall.from(), wall.to(), dist, point))
+			DistanceHolder holder = new DistanceHolder();
+			holder.dist = d;
+			if (lineIntersection2D(A, B, wall.from(), wall.to(), holder, point))
 			{
-				if (dist.dist < distance)
+				if (holder.dist < distance)
 				{
-					distance = dist.dist;
+					distance = holder.dist;
 					if(impactPoint == null) impactPoint = new Vector2D();
 					impactPoint.setValue(point);
 				}
@@ -189,11 +192,8 @@ public class Geometry {
 		  //point A so there is no intersection possible. If the local x pos minus the 
 		  //radius is greater than length A-B then the circle cannot intersect the 
 		  //line segment
-//System.out.println("LocalPos.x+radius " + LocalPos.x+radius);
-//System.out.println("LocalPos.x-radius squared " + ((LocalPos.x-radius)*(LocalPos.x-radius)));
-//System.out.println("B.distanceSq(A) " + B.distanceSq(A));
-		  if ( (LocalPos.x+radius >= 0) )//&&
-		     //( (LocalPos.x-radius)*(LocalPos.x-radius) <= B.distanceSq(A)) )
+		  if ( (LocalPos.x+radius >= 0) &&
+		     ( (LocalPos.x-radius)*(LocalPos.x-radius) <= B.distanceSq(A)) )
 		  {
 		     //if the distance from the x axis to the object's position is less
 		     //than its radius then there is a potential intersection.
