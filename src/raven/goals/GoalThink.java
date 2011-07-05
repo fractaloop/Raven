@@ -94,6 +94,7 @@ public class GoalThink extends GoalComposite<RavenBot> {
 			if( desire >= best ) {
 				best = desire;
 				MostDesirable = eval;
+				Log.debug("GoalThink", "Evaluator " + MostDesirable.getGoalType() + " - " + desire);
 			}
 		}
 		Log.debug("GoalThink", "Evaluator " + MostDesirable.getGoalType() + " was found for bot " + m_pOwner.ID());

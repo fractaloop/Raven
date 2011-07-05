@@ -124,14 +124,23 @@ public class Goal_TraverseEdge extends GoalComposite<RavenBot> {
 
 	@Override
 	public void render(){
-		if (m_iStatus == Goal.CurrentStatus.active)
-		{
-			GameCanvas.bluePen();
-			GameCanvas.line(m_pOwner.pos(), m_Edge.Destination());
-			GameCanvas.greenBrush();
-			GameCanvas.blackPen();
-			GameCanvas.circle(m_Edge.Destination(), 3);
-		}
+	//	if (m_iStatus != Goal.CurrentStatus.completed) {
+			if (m_iStatus == Goal.CurrentStatus.active)
+			{
+				GameCanvas.bluePen();
+				GameCanvas.line(m_pOwner.pos(), m_Edge.Destination());
+				GameCanvas.greenBrush();
+				GameCanvas.blackPen();
+				GameCanvas.circle(m_Edge.Destination(), 3);
+			}
+			else {
+				GameCanvas.blackPen();
+				GameCanvas.line(m_Edge.Source(), m_Edge.Destination());
+				GameCanvas.redBrush();
+				GameCanvas.blackPen();
+				GameCanvas.circle(m_Edge.Destination(), 3);
+			}
+	//	}
 	}
 
 

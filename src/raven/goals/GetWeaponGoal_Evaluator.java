@@ -52,6 +52,8 @@ public class GetWeaponGoal_Evaluator extends Goal_Evaluator {
 			RavenFeature.Clamp(Desirability, 0, 1);
 
 			Desirability *= getBias();
+			
+			Desirability = 0;
 
 			return Desirability;
 		}

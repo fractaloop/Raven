@@ -20,6 +20,8 @@ public class ExploreGoal_Evaluator extends Goal_Evaluator {
 		double Desirability = 0.05;
 
 		Desirability *= getBias();
+		
+		//Desirability = 0;
 
 		return Desirability;
 	}

@@ -71,8 +71,9 @@ public class Goal_FollowPath extends GoalComposite<RavenBot> {
 		// forward the request to the subgoals
 		// in this case we imitate goalComposite . render()
 		for(Goal goal : m_SubGoals) {
-			goal.render();
-
+			if (!goal.isComplete()) {
+				goal.render();
+			}
 		}
 	}
 

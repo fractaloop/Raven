@@ -1,6 +1,7 @@
 package raven.game;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import raven.game.interfaces.IRavenBot;
 import raven.game.interfaces.IRavenTargetingSystem;
@@ -309,9 +310,15 @@ public class RavenBot extends MovingEntity implements IRavenBot {
 		}
 
 		GameCanvas.bluePen();
-
-		vecBotVBTrans = new ArrayList<Vector2D>(Transformations.WorldTransform(
-				vecBotVB, pos(), facing(), facing().perp(), scale()));
+		
+		if (this.getTargetSys().isTargetShootable()) {
+			vecBotVBTrans = new ArrayList<Vector2D>(Transformations.WorldTransform(
+					vecBotVB, pos(), facing(), facing().perp(), scale()));
+		}
+		else {
+			vecBotVBTrans = new ArrayList<Vector2D>(Transformations.WorldTransform(
+					vecBotVB, pos(), heading(), heading().perp(), scale()));
+		}
 
 		GameCanvas.closedShape(vecBotVBTrans);
 
@@ -389,6 +396,7 @@ public class RavenBot extends MovingEntity implements IRavenBot {
 
 			// appraise and arbitrate between all possible high level goals
 			if (goalArbitrationRegulator.isReady()) {
+			//	brain.process(delta);
 				brain.Arbitrate();
 			}
 
