@@ -25,6 +25,8 @@ public class AttackTargetGoal_Evaluator extends Goal_Evaluator {
 			//bias the value according to the personality of the bot
 			Desirability *= getBias();
 		}
+		
+		//Desirability = 0;
 
 		return Desirability;
 
