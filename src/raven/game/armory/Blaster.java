@@ -79,12 +79,8 @@ public class Blaster extends RavenWeapon {
 			
 			//time next available is 1second/times per second!
 			UpdateTimeWeaponIsNextAvailable();
-			
-			getOwner().getWorld().getMap().addSoundTrigger(getOwner(), RavenScript.getDouble("Blaster_SoundRange"));
-			
-			
+			getOwner().getWorld().getMap().addSoundTrigger(getOwner(), RavenScript.getDouble("Blaster_SoundRange"));	
 		}
-		System.out.println("time left: " + timeUntilAvailable);
 	}
 
 	@Override

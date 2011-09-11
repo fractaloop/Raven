@@ -24,7 +24,7 @@ public class Pellet extends RavenProjectile {
 				RavenScript.getInt("Pellet_Damage"),
 				RavenScript.getDouble("Pellet_Scale"),
 				RavenScript.getDouble("Pellet_MaxSpeed"),
-				RavenScript.getInt("Pellet_Mass"),
+				RavenScript.getDouble("Pellet_Mass"),
 				RavenScript.getDouble("Pellet_MaxForce"));
 		pelletTimePersist = RavenScript.getDouble("Pellet_Persistance");
 	}
@@ -42,7 +42,7 @@ public class Pellet extends RavenProjectile {
 
 	public void render()
 	{
-		if ((pelletTimePersist > 0) && HasImpacted()) {
+		if ((pelletTimePersist > 0) && HasImpacted() && impactPoint != null) {
 			GameCanvas.yellowPen();
 			GameCanvas.line(origin, impactPoint);
 
@@ -56,7 +56,9 @@ public class Pellet extends RavenProjectile {
 		if (!HasImpacted())
 		{
 			//calculate the steering force
-			Vector2D DesiredVelocity = this.velocity().mul(this.maxSpeed());
+			Vector2D DesiredVelocity = vTarget.sub(position);
+			DesiredVelocity.normalize();
+			DesiredVelocity = DesiredVelocity.mul(maxSpeed());	
 
 			Vector2D sf = DesiredVelocity.sub(this.velocity());
 

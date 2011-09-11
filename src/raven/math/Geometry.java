@@ -118,7 +118,7 @@ public class Geometry {
 		return null;
 	}
 
-	public static boolean lineIntersection2D(Vector2D A, Vector2D B, Vector2D C, Vector2D D, DistanceHolder distToThisIP, Vector2D point) {
+	public static Vector2D lineIntersection2D(Vector2D A, Vector2D B, Vector2D C, Vector2D D, DistanceHolder distToThisIP) {
 		double rTop = (A.y-C.y)*(D.x-C.x)-(A.x-C.x)*(D.y-C.y);
 		double rBot = (B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x);
 
@@ -128,7 +128,7 @@ public class Geometry {
 		if ( (rBot == 0) || (sBot == 0))
 		{
 			//lines are parallel
-			return false;
+			return null;
 		}
 
 		double r = rTop/rBot;
@@ -138,16 +138,16 @@ public class Geometry {
 		{
 			distToThisIP.dist = A.distance(B) * r;
 
-			point = A.add(B.sub(A).mul(r));
+			Vector2D point = A.add(B.sub(A).mul(r));
 
-			return true;
+			return point;
 		}
 
 		else
 		{
 			distToThisIP.dist = 0.0;
 
-			return false;
+			return null;
 		}
 	}
 
@@ -160,10 +160,10 @@ public class Geometry {
 		for (Wall2D wall : walls)
 		{
 			double d = 0.0;
-			Vector2D point = new Vector2D();
 			DistanceHolder holder = new DistanceHolder();
 			holder.dist = d;
-			if (lineIntersection2D(A, B, wall.from(), wall.to(), holder, point))
+			Vector2D point = lineIntersection2D(A, B, wall.from(), wall.to(), holder);
+			if(point != null)
 			{
 				if (holder.dist < distance)
 				{

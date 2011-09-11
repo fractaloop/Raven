@@ -23,7 +23,7 @@ public class Rocket extends RavenProjectile {
 				RavenScript.getInt("Rocket_Damage"),
 				RavenScript.getDouble("Rocket_Scale"),
 				RavenScript.getDouble("Rocket_MaxSpeed"),
-				RavenScript.getInt("Rocket_Mass"),
+				RavenScript.getDouble("Rocket_Mass"),
 				RavenScript.getDouble("Rocket_MaxForce")
 		);	
 		currentBlastRadius = 0.0;
@@ -114,16 +114,26 @@ public class Rocket extends RavenProjectile {
 		}
 	}
 
-	public void update(){
+	public void update(double delta){
 		if (!isImpacted)
 		{
-			velocity = heading().mul(maxSpeed());
+			//calculate the steering force
+			Vector2D DesiredVelocity = vTarget.sub(position);
+			DesiredVelocity.normalize();
+			DesiredVelocity = DesiredVelocity.mul(maxSpeed());	
 
-			//make sure vehicle does not exceed maximum velocity
-			velocity.truncate(maxSpeed());
+			Vector2D sf = DesiredVelocity.sub(velocity);
 
 			//update the position
-			position = position.add(velocity);
+			Vector2D accel = sf.div(mass);
+
+			velocity = velocity.add(accel);
+
+			//make sure the slug does not exceed maximum velocity
+			velocity.truncate(maxSpeed);
+
+			//update the position
+			position = position.add(velocity); 
 
 			TestForImpact();  
 		}

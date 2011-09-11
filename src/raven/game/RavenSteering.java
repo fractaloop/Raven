@@ -276,7 +276,6 @@ public class RavenSteering {
 		int ClosestWall = -1;
 
 		Vector2D SteeringForce = new Vector2D();
-		Vector2D point = new Vector2D();         //used for storing temporary info
 		Vector2D ClosestPoint=new Vector2D();  //holds the closest intersection point
 
 		//examine each feeler in turn
@@ -285,12 +284,13 @@ public class RavenSteering {
 			//run through each wall checking for any intersection points
 			for (int w=0; w<walls.size(); ++w)
 			{
-				if (Geometry.lineIntersection2D(ravenBot.pos(),
+				Vector2D point = Geometry.lineIntersection2D(ravenBot.pos(),
 						feelers.get(flr),
 						walls.get(w).from(),
 						walls.get(w).to(),
-						DistToThisIP,
-						point))
+						DistToThisIP);
+				
+				if(point != null)
 				{
 					//is this the closest found so far? If so keep a record
 							if (DistToThisIP.dist < DistToClosestIP)

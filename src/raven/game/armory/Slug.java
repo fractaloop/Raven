@@ -25,7 +25,7 @@ public class Slug extends RavenProjectile {
 				RavenScript.getInt("Slug_Damage"),
 				RavenScript.getDouble("Slug_Scale"),
 				RavenScript.getDouble("Slug_MaxSpeed"),
-				RavenScript.getInt("Slug_Mass"),
+				RavenScript.getDouble("Slug_Mass"),
 				RavenScript.getDouble("Slug_MaxForce"));
 		slugTimePersist = RavenScript.getDouble("Slug_Persistance");
 	}
@@ -37,7 +37,7 @@ public class Slug extends RavenProjectile {
 
 		//first find the closest wall that this ray intersects with. Then we
 		//can test against all entities within this range.
-		Double distToClosestImpact = Geometry.FindClosestPointOfIntersectionWithWalls(origin,
+		Geometry.FindClosestPointOfIntersectionWithWalls(origin,
 				position,
 				impactPoint,
 				world.getMap().getWalls());
@@ -108,6 +108,10 @@ public class Slug extends RavenProjectile {
 		else if (!IsVisibleToPlayer())
 		{
 			isDead = true;
+		}
+		if (HasImpacted()){
+			// we need to update the render timer!
+			slugTimePersist -= delta;
 		}
 	}
 
