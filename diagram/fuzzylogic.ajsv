@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--AgileJ Ltd. (http://www.agilej.com)-->
+<ajsv>
+    <diagram style="defaultDiagramStyle" version="1.7.4.v20110506-1155">
+        <class className="raven.goals.fuzzy.FuzzySetSingleton" project="Raven" xLocation="3232" yLocation="42"/>
+        <class className="raven.goals.fuzzy.FuzzyRule" project="Raven" xLocation="2805" yLocation="-256"/>
+        <class className="raven.goals.fuzzy.FuzzyModule" project="Raven" xLocation="4125" yLocation="698"/>
+        <class className="raven.goals.fuzzy.FzVery" project="Raven" xLocation="1783" yLocation="705"/>
+        <class className="raven.goals.fuzzy.FuzzyTerm" project="Raven" xLocation="2808" yLocation="79"/>
+        <class className="raven.goals.fuzzy.FzAnd" project="Raven" xLocation="2231" yLocation="677"/>
+        <class className="raven.goals.fuzzy.FuzzyVariable" project="Raven" xLocation="3233" yLocation="368"/>
+        <class className="raven.goals.fuzzy.FuzzySetTriangle" project="Raven" xLocation="4125" yLocation="347"/>
+        <class className="raven.goals.fuzzy.FzFairly" project="Raven" xLocation="1449" yLocation="349"/>
+        <class className="raven.goals.fuzzy.FuzzySet" project="Raven" xLocation="2319" yLocation="-62"/>
+        <class className="raven.goals.fuzzy.FuzzySetLeftShoulder" project="Raven" xLocation="2592" yLocation="349"/>
+        <class className="raven.goals.fuzzy.FzSet" project="Raven" xLocation="1838" yLocation="-22"/>
+        <class className="raven.goals.fuzzy.FuzzySetRightShoulder" project="Raven" xLocation="1923" yLocation="351"/>
+        <class className="raven.goals.fuzzy.FzOr" project="Raven" xLocation="3856" yLocation="-1"/>
+    </diagram>
+</ajsv>

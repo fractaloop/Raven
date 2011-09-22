@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--AgileJ Ltd. (http://www.agilej.com)-->
+<ajsv>
+    <diagram style="defaultDiagramStyle" version="1.7.4.v20110506-1155">
+        <class className="raven.game.interfaces.IRavenBot" project="Raven" xLocation="883" yLocation="-406"/>
+        <class className="raven.game.RavenBot" project="Raven" xLocation="-28" yLocation="26"/>
+    </diagram>
+</ajsv>

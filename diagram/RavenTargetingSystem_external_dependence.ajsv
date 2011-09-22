@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--AgileJ Ltd. (http://www.agilej.com)-->
+<ajsv>
+    <diagram style="defaultDiagramStyle" version="1.7.4.v20110506-1155">
+        <class className="raven.game.RavenTargetingSystem" project="Raven" xLocation="1576" yLocation="-284"/>
+        <class className="java.lang.Double" project="Raven" xLocation="639" yLocation="-43"/>
+        <class className="raven.game.RavenBot" project="Raven" xLocation="2371" yLocation="-86"/>
+        <class className="raven.game.interfaces.IRavenTargetingSystem" project="Raven" xLocation="2382" yLocation="-460"/>
+        <class className="raven.math.Vector2D" project="Raven" xLocation="1412" yLocation="164"/>
+        <class className="java.util.List" project="Raven" xLocation="1741" yLocation="910"/>
+        <class className="raven.game.interfaces.IRavenBot" project="Raven" xLocation="3339" yLocation="-426"/>
+    </diagram>
+</ajsv>

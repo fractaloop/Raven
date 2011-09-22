@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--AgileJ Ltd. (http://www.agilej.com)-->
+<ajsv>
+    <diagram style="defaultDiagramStyle" version="1.7.4.v20110506-1155">
+        <class className="raven.game.armory.RavenProjectile" project="Raven" xLocation="2613" yLocation="-46"/>
+        <class className="raven.game.armory.RocketLauncher" project="Raven" xLocation="4227" yLocation="1024"/>
+        <class className="raven.game.armory.Pellet" project="Raven" xLocation="2997" yLocation="633"/>
+        <class className="raven.game.armory.Shotgun" project="Raven" xLocation="4588" yLocation="779"/>
+        <class className="raven.game.armory.Bolt" project="Raven" xLocation="2343" yLocation="340"/>
+        <class className="raven.game.armory.Rocket" project="Raven" xLocation="2397" yLocation="541"/>
+        <class className="raven.game.armory.Railgun" project="Raven" xLocation="3791" yLocation="734"/>
+        <class className="raven.game.armory.Slug" project="Raven" xLocation="3119" yLocation="407"/>
+        <class className="raven.game.armory.RavenWeapon" project="Raven" xLocation="4137" yLocation="-117"/>
+        <class className="raven.game.armory.Blaster" project="Raven" xLocation="5006" yLocation="1001"/>
+    </diagram>
+</ajsv>

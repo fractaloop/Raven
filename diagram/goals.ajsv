@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--AgileJ Ltd. (http://www.agilej.com)-->
+<ajsv>
+    <diagram style="defaultDiagramStyle" version="1.7.4.v20110506-1155">
+        <class className="raven.goals.Goal_FollowPath" project="Raven" xLocation="4302" yLocation="556"/>
+        <class className="raven.goals.Goal_AttackTarget" project="Raven" xLocation="3613" yLocation="-158"/>
+        <class className="raven.goals.Goal_NegotiateDoor" project="Raven" xLocation="5028" yLocation="257"/>
+        <class className="raven.goals.ExploreGoal_Evaluator" project="Raven" xLocation="1675" yLocation="1377"/>
+        <class className="raven.goals.AttackTargetGoal_Evaluator" project="Raven" xLocation="2998" yLocation="1385"/>
+        <class className="raven.goals.Goal" project="Raven" xLocation="2471" yLocation="-200"/>
+        <class className="raven.goals.Goal_HuntTarget" project="Raven" xLocation="3945" yLocation="941"/>
+        <class className="raven.goals.Goal_Pursuit" project="Raven" xLocation="3071" yLocation="-40"/>
+        <class className="raven.goals.GetWeaponGoal_Evaluator" project="Raven" xLocation="3053" yLocation="1034"/>
+        <class className="raven.goals.Goal_MoveToPosition" project="Raven" xLocation="4689" yLocation="-160"/>
+        <class className="raven.goals.RavenFeature" project="Raven" xLocation="3078" yLocation="1605"/>
+        <class className="raven.goals.GoalComposite" project="Raven" xLocation="3663" yLocation="160"/>
+        <class className="raven.goals.Goal_DodgeSideToSide" project="Raven" xLocation="4524" yLocation="1097"/>
+        <class className="raven.goals.Goal_Evaluator" project="Raven" xLocation="2336" yLocation="1255"/>
+        <class className="raven.goals.Goal_TraverseEdge" project="Raven" xLocation="5086" yLocation="575"/>
+        <class className="raven.goals.GetHealthGoal_Evaluator" project="Raven" xLocation="2396" yLocation="1643"/>
+        <class className="raven.goals.Goal_GetItem" project="Raven" xLocation="3641" yLocation="477"/>
+        <class className="raven.goals.GoalThink" project="Raven" xLocation="1683" yLocation="568"/>
+        <class className="raven.goals.Goal_Wander" project="Raven" xLocation="3998" yLocation="1257"/>
+        <class className="raven.goals.Goal_SeekToPosition" project="Raven" xLocation="4378" yLocation="187"/>
+        <class className="raven.goals.Goal_Explore" project="Raven" xLocation="4519" yLocation="820"/>
+    </diagram>
+</ajsv>

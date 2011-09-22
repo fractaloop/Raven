@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--AgileJ Ltd. (http://www.agilej.com)-->
+<ajsv>
+    <diagram style="defaultDiagramStyle" version="1.7.4.v20110506-1155">
+        <class className="raven.game.RavenGame" project="Raven" xLocation="3969" yLocation="1347"/>
+        <class className="raven.game.RavenBot" project="Raven" xLocation="5497" yLocation="40"/>
+        <class className="raven.game.RavenUserOptions" project="Raven" xLocation="1901" yLocation="1327"/>
+        <class className="raven.game.Team" project="Raven" xLocation="4904" yLocation="917"/>
+        <class className="raven.game.BaseGameEntity" project="Raven" xLocation="3573" yLocation="278"/>
+        <class className="raven.game.RavenSensoryMemory" project="Raven" xLocation="6556" yLocation="453"/>
+        <class className="raven.game.RavenMap" project="Raven" xLocation="2556" yLocation="1743"/>
+        <class className="raven.game.RavenWeaponSystem" project="Raven" xLocation="4967" yLocation="1862"/>
+        <class className="raven.game.GraveMarkers" project="Raven" xLocation="6475" yLocation="1325"/>
+        <class className="raven.game.RavenObject" project="Raven" xLocation="3334" yLocation="1113"/>
+        <class className="raven.game.RavenDoor" project="Raven" xLocation="2505" yLocation="1032"/>
+        <class className="raven.game.RavenSteering" project="Raven" xLocation="6137" yLocation="1860"/>
+        <class className="raven.game.EntityManager" project="Raven" xLocation="4219" yLocation="725"/>
+        <class className="raven.game.MovingEntity" project="Raven" xLocation="2138" yLocation="350"/>
+        <class className="raven.game.RavenTargetingSystem" project="Raven" xLocation="4859" yLocation="-410"/>
+    </diagram>
+</ajsv>
